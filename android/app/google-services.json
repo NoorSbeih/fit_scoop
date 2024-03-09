@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "737437055403",
+    "project_id": "fitscoop-eac87",
+    "storage_bucket": "fitscoop-eac87.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737437055403:android:dac3a4f9d5a141cf26baee",
+        "android_client_info": {
+          "package_name": "com.example.fit_scoop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXWcnXjHZZh_mOf-ecwAne3lMwFqihMS8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
