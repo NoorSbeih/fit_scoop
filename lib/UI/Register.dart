@@ -111,6 +111,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.0), // Add horizontal padding
+
               child: Text(
                 'Unit of Measure',
                 style: TextStyle(

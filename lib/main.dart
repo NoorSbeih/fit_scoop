@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'Register.dart';
+import 'UI/Register.dart';
 
 void main() {
   runApp(const MyApp());
