@@ -1,8 +1,21 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'UI/Register.dart';
 
-void main() {
+void main() async {
+  print("Ba70000");
+  WidgetsFlutterBinding.ensureInitialized();
+  await  Firebase.initializeApp(
+
+    options: const FirebaseOptions(
+      apiKey: 'AIzaSyBXWcnXjHZZh_mOf-ecwAne3lMwFqihMS8',
+      appId: '1:737437055403:android:dac3a4f9d5a141cf26baee',
+      messagingSenderId: '737437055403',
+      projectId: 'fitscoop-eac87',
+      storageBucket: 'fitscoop-eac87.appspot.com',
+  ),
+  );
   runApp(const MyApp());
 }
 
@@ -23,7 +36,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
   final String title;
