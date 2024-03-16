@@ -1,9 +1,9 @@
 
-import 'package:fit_scoop/Models/userRegister.dart';
+import 'package:fit_scoop/Controllers/register_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../Classes/Register.dart';
+import '../../Models/user_model.dart';
 
 class Register extends StatelessWidget {
 
@@ -198,7 +198,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   String fullName=_fullNameController.text;
                   String email=_emailController.text;
                   String password=_passwordController.text;
-                  userRegister register=userRegister();
+                  RegisterController register=RegisterController();
                   register.storeRegisterData(fullName, email, password, _selectedUnitMeasure);
                   print('Register button pressed');
                 },
