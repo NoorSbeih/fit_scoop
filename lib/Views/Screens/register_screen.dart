@@ -1,6 +1,8 @@
 import 'package:fit_scoop/Controllers/register_controller.dart';
+import 'package:fit_scoop/Views/Screens/page_view.screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Models/user_model.dart';
 import '../../Services/authentication_service.dart';
@@ -198,26 +200,20 @@ class _RegisterPageState extends State<RegisterPage> {
                   String fullName=_fullNameController.text;
                   String email=_emailController.text;
                   String password=_passwordController.text;
-
-                  AuthenticationService auth=AuthenticationService();
                   try {
-                    dynamic result = await auth.signUpWithEmail(
-                        email, password);
-                    RegisterController register = RegisterController();
-                    register.storeRegisterData(
-                        fullName, email, password, _selectedUnitMeasure);
+                    SharedPreferences prefs =await SharedPreferences.getInstance() ;
+                    prefs.setString('unitOfMeasure', _selectedUnitMeasure! as String);
 
-                    print('Register button pressed');
-                  }catch (e) {
-               showDialog(
-                 context: context,
-               builder: (context) {
-            return AlertDialog(
-    content: Text('Error signing up: $e'),
-    );
-    },
-    );
-    }
+                  } catch (e) {
+                    print('Error initializing SharedPreferences: $e');
+                  }
+                  RegisterController register=RegisterController();
+                  register.storeRegisterData(fullName, email, password);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
+                  );
+                  print('Register button pressed');
                 },
 
                 style: ButtonStyle(
