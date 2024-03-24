@@ -1,4 +1,3 @@
-enum UnitMeasure { imperial, metric }
 
 class User {
  late String userName;
@@ -11,7 +10,6 @@ class User {
   return {
    'userName': userName,
    'email': email,
-
   };
  }
 }

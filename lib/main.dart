@@ -1,8 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:fit_scoop/Test%20Files/home_view.dart';
-import 'package:fit_scoop/Test%20Files/sign_up_view.dart';
 import 'package:flutter/material.dart';
 
+import 'Views/Screens/home_page_screen.dart';
 import 'Views/Screens/register_screen.dart';
 
 void main() async {
@@ -34,13 +33,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomeView(),
-      routes: {
-        '/sign_up_view': (context) => SignUpPage(),
-        '/home_view': (context) => const HomeView(),
-        '/register': (context) => Register(),
+      home: MyHomePage(title: '',),
+    /*  routes: {
+       // '/sign_up_view': (context) => SignUpPage(),
+      //  '/home_view': (context) => const HomeView(),
+      //  '/register': (context) => Register(),
 
-      },
+      },*/
 
     );
   }

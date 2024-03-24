@@ -1,7 +1,9 @@
 
 import 'package:fit_scoop/Controllers/register_controller.dart';
+import 'package:fit_scoop/Views/Screens/page_view.screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Models/user_model.dart';
 
@@ -35,13 +37,12 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  UnitMeasure _selectedUnitMeasure = UnitMeasure.imperial;
- int _selectedValue = 0;
+  String? _selectedUnitMeasure;
+
 
   @override
   void initState() {
     super.initState();
-     _selectedValue = 0;
   }
 
 
@@ -137,7 +138,7 @@ class _RegisterPageState extends State<RegisterPage> {
                child: Row(
                   children: [
                     Radio(
-                      value: UnitMeasure.imperial,
+                      value: "imperial",
                       groupValue:  _selectedUnitMeasure,
                       onChanged: (value) {
                         setState(() {
@@ -163,7 +164,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),),
                     const SizedBox(width: 20), // Adjust as needed for spacing
                     Radio(
-                      value: UnitMeasure.metric,
+                      value:"metric",
                       groupValue:  _selectedUnitMeasure,
                       onChanged: (value) {
                         setState(() {
@@ -194,12 +195,23 @@ class _RegisterPageState extends State<RegisterPage> {
             Padding(
               padding:const EdgeInsets.all(20.0),
               child:ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   String fullName=_fullNameController.text;
                   String email=_emailController.text;
                   String password=_passwordController.text;
+                  try {
+                    SharedPreferences prefs =await SharedPreferences.getInstance() ;
+                    prefs.setString('unitOfMeasure', _selectedUnitMeasure!);
+
+                  } catch (e) {
+                    print('Error initializing SharedPreferences: $e');
+                  }
                   RegisterController register=RegisterController();
-                  register.storeRegisterData(fullName, email, password, _selectedUnitMeasure);
+                  register.storeRegisterData(fullName, email, password);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
+                  );
                   print('Register button pressed');
                 },
 

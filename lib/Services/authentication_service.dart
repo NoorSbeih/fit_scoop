@@ -1,10 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-
 class AuthenticationService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
-
   // Sign Up with Email & Password
   Future<User?> signUpWithEmail(String email, String password) async {
     try {
@@ -30,7 +26,7 @@ class AuthenticationService {
     }
   }
 
-  Future<User?> signInWithGoogle() async {
+ /* Future<User?> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       if (googleUser != null) {
@@ -47,7 +43,7 @@ class AuthenticationService {
       print("Error signing in with Google: $error");
       return null;
     }
-  }
+  }*/
 
   // Sign Out
   Future<void> signOut() async {
