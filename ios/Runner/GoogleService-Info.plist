@@ -26,5 +26,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:737437055403:ios:3776bec61db6338326baee</string>
+	<key>DATABASE_URL</key>
+	<string>https://fitscoop-eac87-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>
