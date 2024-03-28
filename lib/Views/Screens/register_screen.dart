@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Models/user_model.dart';
 import '../../Services/authentication_service.dart';
+import '../../Services/email.dart';
 
 class Register extends StatelessWidget {
 
@@ -205,13 +206,22 @@ class _RegisterPageState extends State<RegisterPage> {
                   } catch (e) {
                     print('Error initializing SharedPreferences: $e');
                   }
-                  RegisterController register=RegisterController();
-                  register.storeRegisterData(fullName, email, password);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
-                  );
-                  print('Register button pressed');
+
+
+
+                  EmailValidator emailValidation= new EmailValidator();
+
+                  if( emailValidation.isEmailValid(_emailController.text)){
+                    RegisterController register=RegisterController();
+                    register.storeRegisterData(fullName, email, password);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
+                    );
+                }
+                  else{
+                  print('Is email valid? ${emailValidation.isEmailValid(_emailController.text)}');
+                  }
                 },
 
                 style: ButtonStyle(
@@ -307,7 +317,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 onPressed: () {
                   // Corrected function body
                   print('Register button pressed');
-
                   AuthenticationService auth= AuthenticationService();
                   auth.signUpWithGoogle(context, mounted);
                 },
