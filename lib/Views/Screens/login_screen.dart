@@ -94,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
               child: TextField(
                 decoration: InputDecoration(
                   labelText: 'Email',
-                  labelStyle: TextStyle(color: Colors.white, fontSize: 18),
+                  labelStyle: TextStyle(color: Colors.white, fontSize: 14),
                   errorText: emailErrorText.isNotEmpty ? emailErrorText : null,
                 ),
                 style: const TextStyle(color: Colors.white),
@@ -113,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: !passwordVisible,
                 decoration:  InputDecoration(
                   labelText: 'Password',
-                  labelStyle: TextStyle(color:Colors.white, fontSize: 18),
+                  labelStyle: TextStyle(color:Colors.white, fontSize: 14),
                   errorText: _passwordErrorText.isNotEmpty ? _passwordErrorText : null,
                   suffixIcon: IconButton(
                   icon: Icon(passwordVisible? Icons.visibility: Icons.visibility_off),
@@ -162,6 +162,19 @@ class _LoginPageState extends State<LoginPage> {
                     String email = _emailController.text.trim();
                     String password = _passwordController.text.trim();
 
+                    if (password.isEmpty ||  email.isEmpty) {
+                      if (password.isEmpty) {
+                        setState(() {
+                          _passwordErrorText = 'Please enter your password';
+                        });
+                      }
+                      if(email.isEmpty){
+                        setState(() {
+                          emailErrorText = 'Please enter your password';
+                        });
+                      }
+                    }
+
                     EmailValidator eV=new EmailValidator();
                     if (eV.validateEmail(email)!="") {
                       setState(() {
@@ -169,12 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                       });
                       return;
                     }
-                    if (password.isEmpty ) {
-                      setState(() {
-                        _passwordErrorText = 'Please enter your password';
-                      });
-                      return;
-                    }
+
 
                     if(eV.validateEmail(email)=="" && !password.isEmpty) {
                       LoginController loginController = LoginController();
