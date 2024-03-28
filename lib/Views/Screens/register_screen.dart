@@ -123,7 +123,7 @@ class _RegisterPageState extends State<RegisterPage> {
             Padding(
               padding: const EdgeInsets.only(bottom: 25,left: 8),
               child:TextField(
-                obscureText: true,
+                obscureText: !passwordVisible,
                 decoration:  InputDecoration(
                   labelText: 'Password',
                   labelStyle: TextStyle(color:Colors.white, fontSize: 14),
