@@ -1,6 +1,4 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:fit_scoop/Test%20Files/home_view.dart';
-import 'package:fit_scoop/Test%20Files/sign_up_view.dart';
 import 'package:fit_scoop/Views/Screens/home_page_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +6,6 @@ import 'Views/Screens/login_screen.dart';
 import 'Views/Screens/register_screen.dart';
 
 void main() async {
-  print("Ba70000");
   WidgetsFlutterBinding.ensureInitialized();
   await  Firebase.initializeApp(
 
@@ -37,13 +34,6 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: MyHomePage(title: '',),
-      routes: {
-        '/sign_up_view': (context) => SignUpPage(),
-        '/home_view': (context) => const HomeView(),
-        '/register': (context) => Register(),
-        '/login': (context) => Login(),
-
-      },
 
     );
   }

@@ -38,13 +38,11 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  UnitMeasure _selectedUnitMeasure = UnitMeasure.imperial;
-  int _selectedValue = 0;
+  String _selectedUnitMeasure ="imperial";
 
   @override
   void initState() {
     super.initState();
-    _selectedValue = 0;
   }
 
 
@@ -140,7 +138,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Row(
                       children: [
                         Radio(
-                          value: UnitMeasure.imperial,
+                          value:"imperial",
                           groupValue:  _selectedUnitMeasure,
                           onChanged: (value) {
                             setState(() {
@@ -166,7 +164,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),),
                         const SizedBox(width: 20), // Adjust as needed for spacing
                         Radio(
-                          value: UnitMeasure.metric,
+                          value: "metric",
                           groupValue:  _selectedUnitMeasure,
                           onChanged: (value) {
                             setState(() {
@@ -203,7 +201,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   String password=_passwordController.text;
                   try {
                     SharedPreferences prefs =await SharedPreferences.getInstance() ;
-                    prefs.setString('unitOfMeasure', _selectedUnitMeasure! as String);
+                    prefs.setString('unitOfMeasure', _selectedUnitMeasure);
 
                   } catch (e) {
                     print('Error initializing SharedPreferences: $e');

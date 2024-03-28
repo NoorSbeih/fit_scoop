@@ -1,4 +1,6 @@
- import 'package:fit_scoop/Views/Screens/register_screen.dart';
+
+
+import 'package:fit_scoop/Views/Screens/register_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,14 +10,32 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'birth_gender_screen.dart';
 import 'body_fat_screen.dart';
+import 'goals_page_screen.dart';
 import 'height_weight_screen.dart';
-
  class CustomPageView extends StatelessWidget {
    final  controller=PageController();
-   void nextPage() {
-     controller.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
+   int currentPageIndex = 0;
+   void nextPage(BuildContext context) {
+     if (currentPageIndex <1) {
+       currentPageIndex = controller.page!.round();
+       print( currentPageIndex);
+       controller.nextPage(
+         duration: Duration(milliseconds: 300),
+         curve: Curves.ease,
+       );
+     } else {
+       print('Navigating to MyHomePage');
+       Navigator.push(
+         context,
+         MaterialPageRoute(builder: (context) => GoalsPage()),
+       );
+     }
    }
 
+  /* void nextPage() {
+     controller.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
+   }
+*/
    @override
    Widget build(BuildContext context) {
      return Scaffold(
@@ -47,7 +67,7 @@ import 'height_weight_screen.dart';
 
            ElevatedButton(
 
-             onPressed: nextPage,
+             onPressed: () => nextPage(context),
              style: ButtonStyle(
                backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0FE8040)), // Change color to blue
                fixedSize: MaterialStateProperty.all<Size>(const Size(190, 50)),

@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 
 import '../Screens/height_weight_screen.dart';
 
+
 class custom_widget {
   static Widget customTextWidget(String text, double fontSize) {
     return Text(
@@ -32,7 +33,7 @@ class custom_widget {
   static Widget textFormFieldWidget(String hinttext,
       TextEditingController controller, BuildContext context, String text,
       Widget Function() buildTwoNumberPicker) {
-    return GestureDetector(
+      return GestureDetector(
       onTap: () {
         _showDialog(context, text, buildTwoNumberPicker,controller);
       },
@@ -70,7 +71,7 @@ class custom_widget {
 
 // Function to show the dialog
   static void _showDialog(BuildContext context, String text, Widget Function() buildPicker, TextEditingController controller) {
-     showDialog(
+      showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -112,8 +113,10 @@ class custom_widget {
                   padding: EdgeInsets.only(left: 0), // Adjust padding as needed
                   child: TextButton(
                     onPressed: () {
+                      _textvalue(text,controller);
+
                       //controller.text = Page2.result; // Update the TextEditingController with the selected value
-                      Navigator.of(context).pop(); // Close the dialog
+                      Navigator.of(context).pop();
                     },
                     child: customTextWidget("OK", 15),
                   ),
@@ -125,89 +128,28 @@ class custom_widget {
       },
     );
   }
+     static void _textvalue(String field,TextEditingController controller) {
+        switch (field) {
+         case 'Feet & Inches':
+          controller.text=RegisterPage2.feet.toString()+"'"+RegisterPage2.inches.toString();
+          RegisterPage2.heightresult= controller.text;
+          break;
+          case 'Kilograms':
+            controller.text=RegisterPage2.kg.toString();
+            RegisterPage2.weightresult= controller.text+" "+"kg";
+          break;
 
-}
-/*static Widget textFormFieldWidget(String hinttext, TextEditingController controller,BuildContext context,String text, Widget Function() buildTwoNumberPicker ) {
-  return TextFormField(
-  controller: controller,
-  readOnly: true,
-  style: TextStyle(color: Colors.white),
-  decoration: InputDecoration(
-  hintText: hinttext,
-  hintStyle: const TextStyle(
-  color: Colors.white, // Change hint text color
-  fontSize: 16.0,
-  ),
-    suffixIcon: IconButton(
-      onPressed: () {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: customTextWidget("Height",20),
-              backgroundColor:Color(0xFF2C2A2A),
-              content: Container(
-                height: 240, // Adjust height of the dialog content
-                child: Column(
-                 children:[
-                  Row(
-                    children: [
-                      customTextWidget(text,17),
-                      Icon(Icons.arrow_drop_down_outlined, color:Colors.white),
-                    ],
-                  ),
-                   SizedBox(height:40),
-                   buildTwoNumberPicker(),
-                  ],
-                )
-              ),
-              actions: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end, // Align buttons to the right
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 100, right: 0), // Adjust padding as needed
-                      child: TextButton(
-                        onPressed: () {
-                          // Handle "OK" button pressed
-                          Navigator.of(context).pop(); // Close the dialog
-                        },
-                        child: customTextWidget("CANCEL", 15),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 0), // Adjust padding as needed
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop(); // Close the dialog
-                        },
-                        child: customTextWidget("OK", 15),
-                      ),
-                    ),
-                  ],
-                ),
+          case 'Pounds':
+          controller.text=RegisterPage2.pound.toString();
+          RegisterPage2.weightresult= controller.text+" "+"lbs";
+          break;
+          case 'Centimeter':
+            controller.text=RegisterPage2.cm.toString();
+            RegisterPage2.heightresult= controller.text+" "+"cm";
+            break;
+        default:
+          break;
+      }
 
-              ],
-            );
-          },
-        );
-      },
-      icon: Icon(Icons.arrow_drop_down_outlined), // Use any icon you want
-    ),
-
-  enabledBorder: OutlineInputBorder(
-  borderSide: BorderSide(color: Colors.white), // Change the color of the border
-  borderRadius: BorderRadius.circular(10.0),
-  ),
-  focusedBorder: OutlineInputBorder(
-  borderSide: BorderSide(color: Colors.white), // Change the color of the focused border
-  borderRadius: BorderRadius.circular(10.0),
-  ),
-  contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
-  ),
-   );
   }
-
-
-
-}*/
+}

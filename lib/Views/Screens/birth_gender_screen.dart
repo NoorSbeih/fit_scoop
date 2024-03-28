@@ -3,6 +3,7 @@ import 'package:fit_scoop/Controllers/register_controller.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:intl/intl.dart';
 
@@ -17,9 +18,11 @@ class Page1 extends StatelessWidget {
     );
   }
 }
-
-
 class RegisterPage1 extends StatefulWidget {
+
+  static String selectedgender="Male";
+  static String formateddate="";
+
   const RegisterPage1({Key? key}) : super(key: key);
 
 
@@ -28,13 +31,12 @@ class RegisterPage1 extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage1> {
-  String? _selectedgender;
   TextEditingController _dateController = TextEditingController();
+
 
   @override
   void initState() {
     super.initState();
-    _selectedgender="Male";
   }
   DateTime? _selectedDate; // Initialize with null or another default value
 
@@ -44,14 +46,16 @@ class _RegisterPageState extends State<RegisterPage1> {
       initialDate: _selectedDate ?? DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
-    ).then((pickedDate) {
+    ).then((pickedDate) async {
       if (pickedDate != null) {
-        setState(() {
-          _selectedDate = pickedDate;
-          String formattedDate = DateFormat('dd/MM/yyyy').format(_selectedDate!);
-          print(formattedDate);
-          _dateController.text = formattedDate ; // Update text field value
+           setState((){
+           _selectedDate = pickedDate;
+           RegisterPage1.formateddate = DateFormat('dd/MM/yyyy').format(_selectedDate!);
+           print(RegisterPage1.formateddate);
+          _dateController.text = RegisterPage1.formateddate ; // Update text field value
         });
+      //     SharedPreferences prefs =await SharedPreferences.getInstance() ;
+         //  prefs.setString('birthdate',formattedDate);
       } else {
         print("No date selected");
       }
@@ -145,11 +149,13 @@ class _RegisterPageState extends State<RegisterPage1> {
                     children: [
                       Radio(
                         value:"Male",
-                        groupValue: _selectedgender,
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedgender= value!;
+                        groupValue: RegisterPage1.selectedgender,
+                        onChanged: (value) async {
+                          setState(()  {
+                            RegisterPage1.selectedgender= value!;
                           });
+                   //       SharedPreferences prefs =await SharedPreferences.getInstance() ;
+                     //     prefs.setString('Gender',  _selectedgender!);
                         },
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         fillColor: MaterialStateColor.resolveWith(
@@ -167,11 +173,13 @@ class _RegisterPageState extends State<RegisterPage1> {
                       const SizedBox(width: 20), // Adjust as needed for spacing
                       Radio(
                         value: "Female",
-                        groupValue: _selectedgender,
-                        onChanged: (value) {
+                        groupValue: RegisterPage1.selectedgender,
+                        onChanged: (value) async {
                           setState(() {
-                            _selectedgender = value!;
+                            RegisterPage1.selectedgender = value!;
                           });
+                         // SharedPreferences prefs =await SharedPreferences.getInstance() ;
+                         // prefs.setString('Gender',  _selectedgender!);
                         },
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         fillColor: MaterialStateColor.resolveWith(
