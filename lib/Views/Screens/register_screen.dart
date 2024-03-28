@@ -47,6 +47,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   void initState() {
     super.initState();
+    passwordVisible=false;
   }
 
 
