@@ -8,6 +8,7 @@ import '../../Controllers/login_controller.dart';
 import '../../Models/user_model.dart';
 
 import '../../Services/authentication_service.dart';
+import '../../Services/email.dart';
 import '../../Services/user_data_service.dart';
 
 
@@ -35,6 +36,7 @@ class LoginPage extends StatefulWidget {
   final String title;
 
 
+
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -42,10 +44,14 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  String emailErrorText = '';
+  String _passwordErrorText = '';
+  bool passwordVisible=false;
 
   @override
   void initState() {
     super.initState();
+    passwordVisible=false;
   }
 
 
@@ -53,8 +59,10 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     print("HHHH");
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFF2C2A2A),
       body: Container(
+        height: MediaQuery.of(context).size.height,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -83,25 +91,46 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Padding(
               padding: EdgeInsets.all(8.0),
-              child:TextField(
-                decoration: const InputDecoration(
-                    hintText: 'Email',
-                    hintStyle: TextStyle(color:Colors.white,fontSize: 18)
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Email',
+                  hintStyle: TextStyle(color: Colors.white, fontSize: 18),
+                  errorText: emailErrorText.isNotEmpty ? emailErrorText : null,
                 ),
                 style: const TextStyle(color: Colors.white),
                 controller: _emailController,
+                onChanged: (_) {
+                  setState(() {
+                    emailErrorText = '';
+                  });
+                },
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.only(bottom: 25,left: 8),
               child:TextField(
-                obscureText: true,
-                decoration: const InputDecoration(
+                obscureText: !passwordVisible,
+                decoration:  InputDecoration(
                   hintText: 'Password',
                   hintStyle: TextStyle(color:Colors.white, fontSize: 18),
-                ),
+                  errorText: _passwordErrorText.isNotEmpty ? _passwordErrorText : null,
+                  suffixIcon: IconButton(
+                  icon: Icon(passwordVisible? Icons.visibility: Icons.visibility_off),
+                  onPressed: () {
+                   setState(() {
+                   passwordVisible = !passwordVisible;
+                   });
+                   },
+                  ),
+    ),
                 style: const TextStyle(color: Colors.white),
                 controller: _passwordController,
+    onChanged: (_) {
+      setState(() {
+        _passwordErrorText = '';
+      });
+    },
               ),
             ),
             Align(
@@ -129,50 +158,37 @@ class _LoginPageState extends State<LoginPage> {
                     String email = _emailController.text.trim();
                     String password = _passwordController.text.trim();
 
-                    LoginController login = LoginController();
-//                     login.signInUsingEmailPassword(email, password)
-//                         .then((user) {
-//                       if (user != null) {
-//                         print('User logged in successfully: ${user.uid}');
-// // Proceed with your app logic after successful login
-//                       } else {
-//                         print('User authentication failed.');
-// // Handle failed authentication
-//                       }
-//                     });
-//                     AuthenticationService auth=AuthenticationService();
-//                     dynamic result = await auth.signInWithEmailAndPassword(email,password);
-//                     if (result.uid == null) { //null means unsuccessfull authentication
-//                       showDialog(
-//                           context: context,
-//                           builder: (context) {
-//                             return AlertDialog(
-//                               content: Text(result.code),
-//                             );
-//                           });
-//                     }else if (result.uid != null){
-//                       UserCredential userCredential = result;
-//
-//                         print(result.uid);
-//
-//
-//                     }
+                    EmailValidator eV=new EmailValidator();
+                    if (eV.validateEmail(email)!="") {
+                      setState(() {
+                        emailErrorText =eV.validateEmail(email);
+                      });
+                      return;
+                    }
+                    if (password.isEmpty ) {
+                      setState(() {
+                        _passwordErrorText = 'Please enter your password';
+                      });
+                      return;
+                    }
 
-                    LoginController loginController = LoginController();
-                    loginController.signInWithEmailAndPassword(email, password)
-                        .then((user) {
-                      if (user != null) {
-                        print('User logged in successfully:');
-                        // Proceed with your app logic after successful login
-                        // loginController.getUserData(user.uid);
-                        final UserDataService _userDataService = UserDataService();
-                        _userDataService.getUserData(email);
-
-                      } else {
-                        print('User authentication failed.');
-                        // Handle failed authentication
-                      }
-                    });
+                    if(eV.validateEmail(email)=="" && !password.isEmpty) {
+                      LoginController loginController = LoginController();
+                      loginController.signInWithEmailAndPassword(
+                          email, password)
+                          .then((user) {
+                        if (user != null) {
+                          print('User logged in successfully:');
+                          // Proceed with your app logic after successful login
+                          // loginController.getUserData(user.uid);
+                          final UserDataService _userDataService = UserDataService();
+                          _userDataService.getUserData(email);
+                        } else {
+                          print('User authentication failed.');
+                          // Handle failed authentication
+                        }
+                      });
+                    }
                   },
                 style: ButtonStyle(
                   backgroundColor:
