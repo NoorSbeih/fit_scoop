@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_scoop/Controllers/register_controller.dart';
 import 'package:fit_scoop/Views/Screens/register_screen.dart';
+import 'package:fit_scoop/Views/Screens/reset_password.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,6 @@ class Login extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
@@ -93,8 +93,8 @@ class _LoginPageState extends State<LoginPage> {
               padding: EdgeInsets.all(8.0),
               child: TextField(
                 decoration: InputDecoration(
-                  hintText: 'Email',
-                  hintStyle: TextStyle(color: Colors.white, fontSize: 18),
+                  labelText: 'Email',
+                  labelStyle: TextStyle(color: Colors.white, fontSize: 18),
                   errorText: emailErrorText.isNotEmpty ? emailErrorText : null,
                 ),
                 style: const TextStyle(color: Colors.white),
@@ -112,8 +112,8 @@ class _LoginPageState extends State<LoginPage> {
               child:TextField(
                 obscureText: !passwordVisible,
                 decoration:  InputDecoration(
-                  hintText: 'Password',
-                  hintStyle: TextStyle(color:Colors.white, fontSize: 18),
+                  labelText: 'Password',
+                  labelStyle: TextStyle(color:Colors.white, fontSize: 18),
                   errorText: _passwordErrorText.isNotEmpty ? _passwordErrorText : null,
                   suffixIcon: IconButton(
                   icon: Icon(passwordVisible? Icons.visibility: Icons.visibility_off),
@@ -139,6 +139,10 @@ class _LoginPageState extends State<LoginPage> {
                 onTap: () {
                   // Add your navigation logic here
                   print("Forgot Password tapped");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ResetPasswordPage()),
+                  );
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(10.0),
