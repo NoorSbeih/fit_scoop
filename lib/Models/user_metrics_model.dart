@@ -2,13 +2,11 @@ class Body_Metrics {
 
   late String birth_date;
   late String gender;
-
-  Body_Metrics(
-      this.birth_date, this.gender, this.height, this.weight);
-
   late String height;
   late String weight;
   late int body_fat;
+  Body_Metrics(
+      this.birth_date, this.gender, this.height, this.weight);
 
   Map<String, dynamic> toJsonWithoutBodyFat() {
     return {

@@ -23,7 +23,7 @@ class RegisterController {
       print('Error saving data: $error');
     }
   }
-  void storeBodyMetrics(String birthdate,String gender, String height,String weight ) {
+  void storeBodyMetricsWithoutBodyFat(String birthdate,String gender,String height,String weight ) {
     try {
       Body_Metrics body_metrics = Body_Metrics(birthdate,gender,height,weight);
 
@@ -34,5 +34,7 @@ class RegisterController {
     } catch (error) {
       print('Error saving data: $error');
     }
+  }
+  void storeBodyMetricsWithBodyFat(String birthdate,String gender,String height,String weight ) {
   }
 }

@@ -34,7 +34,7 @@ class _GoalsPageState extends State<GoalsPage> {
 
   void _loadPreferences() async {
     RegisterController register=RegisterController();
-    register.storeBodyMetrics(RegisterPage1.formateddate,RegisterPage1.selectedgender,RegisterPage2.heightresult,RegisterPage2.weightresult);
+    register.storeBodyMetricsWithoutBodyFat(RegisterPage1.formateddate,RegisterPage1.selectedgender,RegisterPage2.heightresult,RegisterPage2.weightresult);
     }
 
   @override

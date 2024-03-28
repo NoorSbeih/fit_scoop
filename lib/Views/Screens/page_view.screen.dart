@@ -69,7 +69,7 @@ import 'height_weight_screen.dart';
 
              onPressed: () => nextPage(context),
              style: ButtonStyle(
-               backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0FE8040)), // Change color to blue
+               backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0FE8040)),
                fixedSize: MaterialStateProperty.all<Size>(const Size(190, 50)),
                shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                      (Set<MaterialState> states) {

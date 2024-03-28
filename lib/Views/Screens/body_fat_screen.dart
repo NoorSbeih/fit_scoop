@@ -15,6 +15,7 @@ class Page3 extends StatelessWidget {
 
 
 class RegisterPage3 extends StatefulWidget {
+  static double _currentValue=50 ;
   const RegisterPage3({Key? key}) : super(key: key);
 
 
@@ -23,7 +24,7 @@ class RegisterPage3 extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage3> {
-late double _currentValue=50 ;
+
   @override
   void initState() {
     super.initState();
@@ -36,8 +37,29 @@ late double _currentValue=50 ;
     body:Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+
         Padding(
-          padding: const EdgeInsets.only(top:70,left:16,bottom: 10),
+          padding: const EdgeInsets.only(top:40,right:25),
+          child: Align(
+            alignment: Alignment.topRight,
+            child: InkWell(
+              onTap: () {
+              },
+              child: const Text(
+                'Skip',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF0FE8040),
+                ),
+              ),
+          ),
+
+        ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top:20,left:16,bottom: 10),
           child: Align(
             alignment: Alignment.centerLeft,
             child: custom_widget.startTextWidget("Body Fat Percentage"),
@@ -61,7 +83,7 @@ late double _currentValue=50 ;
                 custom_widget.customTextWidget("Body Fat %",20),
                 SizedBox(width: 200,),
                 Text(
-                      "${_currentValue.round()}%",
+                      "${RegisterPage3._currentValue.round()}%",
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
 
@@ -82,12 +104,12 @@ late double _currentValue=50 ;
                     valueIndicatorColor: const Color(0xFF0FF954D),
                   ),
                   child: Slider(
-                    value: _currentValue,
+                    value: RegisterPage3._currentValue,
                     min: 0.0,
                     max: 100.0,
                     onChanged: (newValue) {
                       setState(() {
-                        _currentValue = newValue;
+                        RegisterPage3._currentValue = newValue;
                       });
                     },
                   ),
