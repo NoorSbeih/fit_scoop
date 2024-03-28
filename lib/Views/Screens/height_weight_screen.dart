@@ -8,8 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../Models/user_model.dart';
 
 
-class Page2 extends StatelessWidget {
-  static String result="";
+ class Page2 extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
@@ -18,16 +18,19 @@ class Page2 extends StatelessWidget {
   }
 }
 class RegisterPage2 extends StatefulWidget{
-const RegisterPage2({Key? key}) : super(key: key);
-
+  static int feet = 5;
+  static int inches = 6;
+  static int cm = 150;
+  static int pound = 100;
+  static int kg= 50;
+  static String heightresult= "";
+  static String weightresult= "";
+  const RegisterPage2({Key? key}) : super(key: key);
 
 @override
 State<RegisterPage2> createState() => _RegisterPageState();
 }
 class _RegisterPageState extends State<RegisterPage2> {
-  int feet = 5;
-  int inches = 6;
-  int cm = 150;
   late String _selectedValue="";
   late TextEditingController  selectedHeight = TextEditingController();
   late TextEditingController  selectedWeight = TextEditingController();
@@ -44,8 +47,6 @@ void _loadPreferences() async{
       _selectedValue=unitOfMeasure!;
     });
 }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +95,7 @@ void _loadPreferences() async{
           padding: EdgeInsets.all(15),
           child: _selectedValue == 'imperial'
               ? _buildImperialWeightPicker(context)
-              :  _buildImperialWeightPicker(context),
+              :  _buildMetricWeightPicker(context),
         ),
 
       ],
@@ -102,7 +103,10 @@ void _loadPreferences() async{
   );
   }
   Widget _buildImperialWeightPicker (BuildContext context) {
-    return custom_widget.textFormFieldWidget("Select Weight",  selectedWeight,context,"Pounds",_buildNumberPickerInPound);
+    return custom_widget.textFormFieldWidget("Select Weight",selectedWeight,context,"Pounds",_buildNumberPickerInPound);
+  }
+  Widget _buildMetricWeightPicker (BuildContext context) {
+    return custom_widget.textFormFieldWidget("Select Weight",selectedWeight,context,"Kilograms",_buildNumberPickerInKg);
   }
   Widget _buildMetricPicker(BuildContext context) {
     return custom_widget.textFormFieldWidget("Select Height ",  selectedHeight,context,"Centimeter",_buildNumberPickerInCm);
@@ -114,9 +118,9 @@ void _loadPreferences() async{
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildNumberPicker(feet,"ft",0,10,47),
+        _buildNumberPicker(RegisterPage2.feet,"ft",0,10,47),
          SizedBox(width:20),
-        _buildNumberPicker(inches,"in",5,12,47),
+        _buildNumberPicker(RegisterPage2.inches,"in",5,12,47),
       ],
     );
   }
@@ -124,7 +128,15 @@ void _loadPreferences() async{
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildNumberPicker(cm,"cm",100,200,80),
+        _buildNumberPicker(RegisterPage2.cm,"cm",100,200,80),
+      ],
+    );
+  }
+  Widget _buildNumberPickerInKg() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _buildNumberPicker(RegisterPage2.kg,"kg",30,200,80),
       ],
     );
   }
@@ -132,11 +144,35 @@ void _loadPreferences() async{
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-
+        _buildNumberPicker(RegisterPage2.pound,"lbs",100,200,80),
       ],
     );
   }
 
+ void updateValue(String field, int value) {
+    setState(() {
+      switch (field) {
+        case 'ft':
+          RegisterPage2.feet = value;
+          print(RegisterPage2.feet);
+          break;
+          case 'cm':
+          RegisterPage2.cm = value;
+          break;
+          case 'in':
+          RegisterPage2.inches = value;
+          break;
+          case 'lbs':
+          RegisterPage2.pound = value;
+          break;
+          case 'kg':
+          RegisterPage2.kg = value;
+          break;
+        default:
+          break;
+      }
+    });
+  }
 
 
 
@@ -156,7 +192,7 @@ void _loadPreferences() async{
              onChanged: (value) {
                setState(() {
                   x=value;
-                  selectedHeight.text=x.toString();
+                  updateValue(text, value);
                });
              },
              selectedTextStyle: TextStyle(fontSize: 16, color: Colors.white),
