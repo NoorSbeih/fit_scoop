@@ -1,12 +1,11 @@
+
 import 'package:fit_scoop/Controllers/register_controller.dart';
 import 'package:fit_scoop/Views/Screens/page_view.screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../Models/user_model.dart';
-import '../../Services/authentication_service.dart';
-import '../../Services/email.dart';
+import '../../Models/user_model.dart';
 
 class Register extends StatelessWidget {
 
@@ -38,16 +37,12 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  String _selectedUnitMeasure ="imperial";
-  String emailErrorText = '';
-  String passwordErrorText = '';
-  String nameErrorText = '';
-  bool passwordVisible=false;
+  String? _selectedUnitMeasure;
+
 
   @override
   void initState() {
     super.initState();
-    passwordVisible=false;
   }
 
 
@@ -55,14 +50,14 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+
       backgroundColor:Color(0xFF2C2A2A),
       body: Container(
-        child: Column (
+    child: Column (
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(16.0),
               child: Text("Join The Club ",style:
               TextStyle(
                 color: Colors.white, // Change color to blue
@@ -74,7 +69,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
 
             const Padding(
-              padding: EdgeInsets.only(bottom:20.0), // Add padding from the bottom only
+              padding: EdgeInsets.only(bottom:60.0), // Add padding from the bottom only
               child: Text(
                 "The ultimate fitness application",
                 style: TextStyle(
@@ -89,75 +84,49 @@ class _RegisterPageState extends State<RegisterPage> {
             Padding(
               padding:EdgeInsets.all(8),
               child: TextField(
-                decoration:  InputDecoration(
-                    labelText: 'Full Name',
-                    labelStyle: TextStyle(color:Colors.white,fontSize: 14),
-                  errorText: nameErrorText.isNotEmpty ? nameErrorText : null,
+                decoration: const InputDecoration(
+                    hintText: 'Full Name',
+                    hintStyle: TextStyle(color:Colors.white,fontSize: 18)
                 ),
                 style: const TextStyle(color: Colors.white),
                 controller: _fullNameController,
-                onChanged: (_) {
-                  setState(() {
-                    nameErrorText = '';
-                  });
-                },
               ),
             ),
-            Padding(
+             Padding(
               padding: EdgeInsets.all(8.0),
               child:TextField(
-                decoration:  InputDecoration(
-                    labelText: 'Email',
-                    labelStyle: TextStyle(color:Colors.white,fontSize: 14),
-                  errorText: emailErrorText.isNotEmpty ? emailErrorText : null,
+                decoration: const InputDecoration(
+                    hintText: 'Email',
+                    hintStyle: TextStyle(color:Colors.white,fontSize: 18)
                 ),
                 style: const TextStyle(color: Colors.white),
                 controller: _emailController,
-                onChanged: (_) {
-                  setState(() {
-                    emailErrorText = '';
-                  });
-                },
               ),
             ),
-            Padding(
+             Padding(
               padding: const EdgeInsets.only(bottom: 25,left: 8),
               child:TextField(
-                obscureText: !passwordVisible,
-                decoration:  InputDecoration(
-                  labelText: 'Password',
-                  labelStyle: TextStyle(color:Colors.white, fontSize: 14),
-                  errorText: passwordErrorText.isNotEmpty ? passwordErrorText : null,
-                  suffixIcon: IconButton(
-                    icon: Icon(passwordVisible? Icons.visibility: Icons.visibility_off),
-                    onPressed: () {
-                      setState(() {
-                        passwordVisible = !passwordVisible;
-                      });
-                    },
-                  ),
+                obscureText: true,
+                decoration: const InputDecoration(
+                    hintText: 'Password',
+                    hintStyle: TextStyle(color:Colors.white, fontSize: 18),
                 ),
                 style: const TextStyle(color: Colors.white),
                 controller: _passwordController,
-                onChanged: (_) {
-                  setState(() {
-                    passwordErrorText = '';
-                  });
-                },
               ),
             ),
             const Padding(
               padding: EdgeInsets.only(left: 8.0),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
-                  'Unit of Measure', // Add your hint text here
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontFamily: 'Roboto',
+                 child: Text(
+                    'Unit of Measure', // Add your hint text here
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontFamily: 'Roboto',
+                    ),
                   ),
-                ),
 
               ),
 
@@ -166,60 +135,60 @@ class _RegisterPageState extends State<RegisterPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(padding: EdgeInsets.only(top: 10.0),
-                    child: Row(
-                      children: [
-                        Radio(
-                          value:"imperial",
-                          groupValue:  _selectedUnitMeasure,
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedUnitMeasure= value!;
-                            });
-                          },
-                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          fillColor: MaterialStateColor.resolveWith(
-                                (Set<MaterialState> states) {
-                              if (states.contains(MaterialState.selected)) {
-                                return Colors.white; // Change the selected color
-                              }
-                              return Colors.transparent; // Change the unselected color
-                            },
-                          ),
+               child: Row(
+                  children: [
+                    Radio(
+                      value: "imperial",
+                      groupValue:  _selectedUnitMeasure,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedUnitMeasure= value!;
+                        });
+                      },
+               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+               fillColor: MaterialStateColor.resolveWith(
+                    (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.selected)) {
+                    return Colors.white; // Change the selected color
+                  }
+                  return Colors.transparent; // Change the unselected color
+                },
+              ),
 
-                        ),
+                    ),
 
-                        const Text('Imperial', style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontFamily: 'Roboto',
-                        ),),
-                        const SizedBox(width: 20), // Adjust as needed for spacing
-                        Radio(
-                          value: "metric",
-                          groupValue:  _selectedUnitMeasure,
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedUnitMeasure = value!;
-                            });
-                          },
-                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          fillColor: MaterialStateColor.resolveWith(
-                                (Set<MaterialState> states) {
-                              if (states.contains(MaterialState.selected)) {
-                                return Colors.white; // Change the selected color
-                              }
-                              return Colors.transparent;
-                            },
-                          ),
-                        ),
+                    const Text('Imperial', style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontFamily: 'Roboto',
+                    ),),
+                    const SizedBox(width: 20), // Adjust as needed for spacing
+                    Radio(
+                      value:"metric",
+                      groupValue:  _selectedUnitMeasure,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedUnitMeasure = value!;
+                        });
+                      },
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      fillColor: MaterialStateColor.resolveWith(
+                  (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.selected)) {
+                  return Colors.white; // Change the selected color
+                  }
+                    return Colors.transparent;
+    },
+                    ),
+                    ),
 
-                        const Text('Metric', style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontFamily: 'Roboto',
-                        ),),
-                      ],
-                    )
+                    const Text('Metric', style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontFamily: 'Roboto',
+                    ),),
+                  ],
+                )
                 ),
               ],
             ),
@@ -232,45 +201,18 @@ class _RegisterPageState extends State<RegisterPage> {
                   String password=_passwordController.text;
                   try {
                     SharedPreferences prefs =await SharedPreferences.getInstance() ;
-                    prefs.setString('unitOfMeasure', _selectedUnitMeasure);
+                    prefs.setString('unitOfMeasure', _selectedUnitMeasure!);
 
                   } catch (e) {
                     print('Error initializing SharedPreferences: $e');
                   }
-                  if (password.isEmpty ||  email.isEmpty || fullName.isEmpty) {
-                    if (password.isEmpty){
-                    setState(() {
-                      passwordErrorText = 'Please enter your password';
-                    });
-                   }
-                     if(email.isEmpty){
-                      setState(() {
-                        emailErrorText = 'Please enter your email';
-                      });
-                      }
-                     if(fullName.isEmpty){
-                      setState(() {
-                        nameErrorText = 'Please enter your full name';
-                      });
-                     }
-
-                  }
-                  EmailValidator eV=new EmailValidator();
-                  if (eV.validateEmail(email)!="") {
-                    setState(() {
-                      emailErrorText =eV.validateEmail(email);
-                    });
-                    return;
-                  }
-
-                  if(eV.validateEmail(email)=="" && !password.isEmpty && !fullName.isEmpty ) {
-                    RegisterController register=RegisterController();
-                    register.storeRegisterData(fullName, email, password);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
-                    );
-                  }
+                  RegisterController register=RegisterController();
+                  register.storeRegisterData(fullName, email, password);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
+                  );
+                  print('Register button pressed');
                 },
 
                 style: ButtonStyle(
@@ -295,32 +237,32 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             const Padding(padding:EdgeInsets.all(8.0),
-                child:Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        color: Colors.grey,
-                        thickness: 1.0,
-                      ),
+           child:Row(
+              children: [
+                Expanded(
+                  child: Divider(
+                    color: Colors.grey,
+                    thickness: 1.0,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Text(
+                    'OR',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 16.0,
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Text(
-                        'OR',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 16.0,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        color: Colors.grey,
-                        thickness: 1.0,
-                      ),
-                    ),
-                  ],
-                )
+                  ),
+                ),
+                Expanded(
+                  child: Divider(
+                    color: Colors.grey,
+                    thickness: 1.0,
+                  ),
+                ),
+              ],
+            )
 
             ),
             Padding(
@@ -361,13 +303,11 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             Padding(
-              padding:const EdgeInsets.all(10.0),
-              child: ElevatedButton.icon(
+              padding:const EdgeInsets.only(left:8,right:8),
+              child:ElevatedButton(
                 onPressed: () {
                   // Corrected function body
                   print('Register button pressed');
-                  AuthenticationService auth= AuthenticationService();
-                  auth.signUpWithGoogle(context, mounted);
                 },
 
                 style: ButtonStyle(
@@ -381,13 +321,22 @@ class _RegisterPageState extends State<RegisterPage> {
                     },
                   ),
                 ),
-                icon: Image.asset('images/google.jpg', width: 24, height: 24),
-                label: const Text(
-                  'SIGN IN WITH GOOGLE',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.facebook, // Add your icon here
+                      color: Colors.white, // Color of the icon
+                    ),
+                    SizedBox(width: 8), // Adjust the spacing between the icon and text
+                    Text('Sign up with GOOGLE',
+                      style:
+                      TextStyle(
+                        fontSize: 18,
+                        color:Color(0xFF2C2A2A),
+
+                      ),),
+                  ],
                 ),
 
               ),
@@ -397,7 +346,7 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
 
-    );
+     );
 
 
 
@@ -405,3 +354,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   }
 }
+
+
+
+

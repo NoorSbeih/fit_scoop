@@ -1,40 +1,33 @@
-import 'package:firebase_database/firebase_database.dart';
-import 'package:fit_scoop/Models/user_metrics_model.dart';
-import 'package:fit_scoop/Models/user_model.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import '../Services/Database Services/user_service.dart';
 import '../Services/authentication_service.dart';
 
 class RegisterController {
+  final AuthenticationService _authService = AuthenticationService();
+  final UserService _userService = UserService();
 
-  void storeRegisterData(String fullName, String email, String password) {
+  Future<void> storeRegisterData(String name, String email, String password) async {
     try {
-      User register = User(fullName, email);
-      AuthenticationService auth= AuthenticationService();
-      auth.signUpWithEmail(email, password);
-      final databaseReference = FirebaseDatabase.instance.reference().child('Data');
-      DatabaseReference newRef = databaseReference.push();
-      newRef.set(register.toJson());
-      User.key = newRef.key!;
-      print("KEYYY"+User.key);
-      /*final databaseReference = FirebaseDatabase.instance.reference().child('Data');
-      databaseReference.push().set(register.toJson());*/
+      // Attempt to sign up the user with FirebaseAuth
+      UserCredential userCredential = (await _authService.signUpWithEmail(email, password)) as UserCredential;
+      String userId = userCredential.user!.uid; // Get the newly created user ID
+
+      // Prepare user data
+      Map<String, dynamic> userData = {
+        // 'id': userId, // Depending on your UserService implementation, you might not need to pass this
+        'name': name,
+        'email': email,
+        'profilePictureUrl': '',
+        'bodyMetrics': null,
+        'followedUserIds': [],
+        'savedWorkoutIds': [],
+      };
+
+
+      await _userService.addUserDetails(userId, userData);
       print('Data saved successfully!');
     } catch (error) {
       print('Error saving data: $error');
     }
-  }
-  void storeBodyMetricsWithoutBodyFat(String birthdate,String gender,String height,String weight ) {
-    try {
-      Body_Metrics body_metrics = Body_Metrics(birthdate,gender,height,weight);
-
-      final databaseReference = FirebaseDatabase.instance.reference().child('Data');
-      DatabaseReference newRef = databaseReference.child(User.key).child('Body Metrics');
-      newRef.set(body_metrics.toJsonWithoutBodyFat());
-      print('Data saved successfully!');
-    } catch (error) {
-      print('Error saving data: $error');
-    }
-  }
-  void storeBodyMetricsWithBodyFat(String birthdate,String gender,String height,String weight ) {
   }
 }

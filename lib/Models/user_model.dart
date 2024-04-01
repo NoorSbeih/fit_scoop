@@ -1,22 +1,35 @@
+import 'body_metrics_model.dart';
+
+enum UnitMeasure { imperial, metric }
 
 class User {
-  late String userName;
-  late String email;
-  late String password;
-  static late String key;
-  User(this.userName, this.email);
+  final String id;
+  final String name;
+  final String email;
+  final String? profilePictureUrl;
+  final BodyMetrics? bodyMetrics;
+  final List<String> followedUserIds; // References to User IDs
+  final List<String> savedWorkoutIds; // References to Workout IDs
 
-  get displayName => userName;
+  User({
+    required this.id,
+    required this.name,
+    required this.email,
+    this.profilePictureUrl,
+    this.bodyMetrics,
+    this.followedUserIds = const [],
+    this.savedWorkoutIds = const [],
+  });
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
-      'userName': userName,
+      'id': id,
+      'name': name,
       'email': email,
-
+      'profilePictureUrl': profilePictureUrl,
+      'bodyMetrics': bodyMetrics?.toMap(), // Assuming BodyMetrics has a toMap() method
+      'followedUserIds': followedUserIds,
+      'savedWorkoutIds': savedWorkoutIds,
     };
   }
-
-
-  }
-
-
+}
