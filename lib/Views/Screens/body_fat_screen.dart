@@ -38,28 +38,13 @@ class _RegisterPageState extends State<RegisterPage3> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
 
-        Padding(
-          padding: const EdgeInsets.only(top:40,right:25),
-          child: Align(
-            alignment: Alignment.topRight,
-            child: InkWell(
-              onTap: () {
-              },
-              child: const Text(
-                'Skip',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF0FE8040),
-                ),
-              ),
-          ),
 
-        ),
-        ),
+    Padding(
+    padding: const EdgeInsets.only(top:30,right:25,bottom:10),
+    child: custom_widget.skipButtom(),
+  ),
         Padding(
-          padding: const EdgeInsets.only(top:20,left:16,bottom: 10),
+          padding: const EdgeInsets.only(left:16,bottom:10),
           child: Align(
             alignment: Alignment.centerLeft,
             child: custom_widget.startTextWidget("Body Fat Percentage"),
