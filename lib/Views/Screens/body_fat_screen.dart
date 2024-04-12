@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 import 'package:input_slider/input_slider.dart';
 
+import 'goals_screen.dart';
+
 class Page3 extends StatelessWidget {
 
   @override
@@ -41,7 +43,26 @@ class _RegisterPageState extends State<RegisterPage3> {
 
     Padding(
     padding: const EdgeInsets.only(top:30,right:25,bottom:10),
-    child: custom_widget.skipButtom(),
+    child: Align(
+      alignment: Alignment.topRight,
+      child: InkWell(
+        onTap: () {
+
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => RegisterPage4()));
+
+        },
+        child: const Text(
+          'Skip',
+          style: TextStyle(
+            fontSize: 16.0,
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF0FE8040),
+          ),
+        ),
+      ),
+
+    )
   ),
         Padding(
           padding: const EdgeInsets.only(left:16,bottom:10),
@@ -56,7 +77,7 @@ class _RegisterPageState extends State<RegisterPage3> {
           child: Align(
             alignment: Alignment.centerLeft,
             child:custom_widget.customTextWidget("Your body fat percentage helps us accurately determine your body type and give you the most fitting workout schedule.",15),
-          ),// Add padding from the bottom only
+          )
 
         ),
         Padding(

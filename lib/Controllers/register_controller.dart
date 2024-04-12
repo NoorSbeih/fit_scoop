@@ -3,14 +3,15 @@ import '../Services/Database Services/user_service.dart';
 import '../Services/authentication_service.dart';
 
 class RegisterController {
+
   final AuthenticationService _authService = AuthenticationService();
   final UserService _userService = UserService();
-
   Future<void> storeRegisterData(String name, String email, String password) async {
     try {
       // Attempt to sign up the user with FirebaseAuth
-      UserCredential userCredential = (await _authService.signUpWithEmail(email, password)) as UserCredential;
-      String userId = userCredential.user!.uid; // Get the newly created user ID
+      User? user = await _authService.signUpWithEmail(email, password);
+      if (user != null) {
+        String userId = user.uid; // Get the newly created user ID// Get the newly created user ID
 
       // Prepare user data
       Map<String, dynamic> userData = {
@@ -25,7 +26,7 @@ class RegisterController {
 
 
       await _userService.addUserDetails(userId, userData);
-      print('Data saved successfully!');
+      print('Data saved successfully!');}
     } catch (error) {
       print('Error saving data: $error');
     }

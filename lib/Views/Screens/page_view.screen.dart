@@ -18,7 +18,7 @@ import 'height_weight_screen.dart';
    int currentPageIndex = 0;
    void nextPage(BuildContext context) {
 
-         currentPageIndex = controller.page!.round();
+       currentPageIndex = controller.page!.round();
        print( currentPageIndex);
        controller.nextPage(
          duration: Duration(milliseconds: 300),
