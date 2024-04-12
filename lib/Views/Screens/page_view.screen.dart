@@ -1,6 +1,7 @@
 
 
 import 'package:fit_scoop/Views/Screens/register_screen.dart';
+import 'package:fit_scoop/Views/Screens/select_day_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -44,19 +45,20 @@ import 'height_weight_screen.dart';
          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
          children: [
            SizedBox(
-             height: 500,
+             height: 600,
              child: PageView(
                controller: controller,
                children:  const [
                  RegisterPage1(),
                  RegisterPage2(),
                  RegisterPage3(),
+                 RegisterPage6(),
                ],
              ),
            ),
            SmoothPageIndicator(
              controller:controller
-             , count: 3,
+             , count: 4,
                effect: SwapEffect(
                activeDotColor:Color(0xFF0FE8040) ,
                dotColor: Colors.deepOrangeAccent.withOpacity(0.5),

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Models/user_model.dart';
+import '../../Services/email.dart';
 
 class Register extends StatelessWidget {
 
@@ -37,12 +38,17 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  String emailErrorText = '';
+  String nameErrorText = '';
+  String passwordErrorText = '';
+  bool passwordVisible=false;
   String? _selectedUnitMeasure;
 
 
   @override
   void initState() {
     super.initState();
+    passwordVisible=false;
   }
 
 
@@ -50,10 +56,10 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-
+      resizeToAvoidBottomInset: false,
       backgroundColor:Color(0xFF2C2A2A),
       body: Container(
-    child: Column (
+       child: Column (
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Padding(
@@ -84,35 +90,61 @@ class _RegisterPageState extends State<RegisterPage> {
             Padding(
               padding:EdgeInsets.all(8),
               child: TextField(
-                decoration: const InputDecoration(
-                    hintText: 'Full Name',
-                    hintStyle: TextStyle(color:Colors.white,fontSize: 18)
+                decoration:  InputDecoration(
+                    labelText: 'Full Name',
+                    labelStyle: TextStyle(color:Colors.white,fontSize: 14),
+                    errorText: nameErrorText.isNotEmpty ? nameErrorText : null,
                 ),
                 style: const TextStyle(color: Colors.white),
                 controller: _fullNameController,
+                onChanged: (_) {
+                  setState(() {
+                    nameErrorText = '';
+                  });
+                },
               ),
             ),
              Padding(
               padding: EdgeInsets.all(8.0),
               child:TextField(
-                decoration: const InputDecoration(
-                    hintText: 'Email',
-                    hintStyle: TextStyle(color:Colors.white,fontSize: 18)
+                decoration:  InputDecoration(
+                  labelText: 'Email',
+                  labelStyle: TextStyle(color: Colors.white, fontSize: 14),
+                  errorText: emailErrorText.isNotEmpty ? emailErrorText : null,
                 ),
                 style: const TextStyle(color: Colors.white),
                 controller: _emailController,
+                onChanged: (_) {
+                  setState(() {
+                    emailErrorText = '';
+                  });
+                },
               ),
             ),
              Padding(
               padding: const EdgeInsets.only(bottom: 25,left: 8),
               child:TextField(
                 obscureText: true,
-                decoration: const InputDecoration(
-                    hintText: 'Password',
-                    hintStyle: TextStyle(color:Colors.white, fontSize: 18),
+                decoration:  InputDecoration(
+                    labelText: 'Password',
+                    labelStyle: TextStyle(color:Colors.white, fontSize: 14),
+                  errorText: passwordErrorText.isNotEmpty ? passwordErrorText : null,
+                  suffixIcon: IconButton(
+                    icon: Icon(passwordVisible? Icons.visibility: Icons.visibility_off),
+                    onPressed: () {
+                      setState(() {
+                        passwordVisible = !passwordVisible;
+                      });
+                    },
+                  ),
                 ),
                 style: const TextStyle(color: Colors.white),
                 controller: _passwordController,
+                onChanged: (_) {
+                  setState(() {
+                    passwordErrorText = '';
+                  });
+                },
               ),
             ),
             const Padding(
@@ -123,7 +155,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     'Unit of Measure', // Add your hint text here
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: 14,
                       fontFamily: 'Roboto',
                     ),
                   ),
@@ -159,7 +191,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     const Text('Imperial', style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: 14,
                       fontFamily: 'Roboto',
                     ),),
                     const SizedBox(width: 20), // Adjust as needed for spacing
@@ -184,7 +216,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     const Text('Metric', style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: 14,
                       fontFamily: 'Roboto',
                     ),),
                   ],
@@ -199,20 +231,57 @@ class _RegisterPageState extends State<RegisterPage> {
                   String fullName=_fullNameController.text;
                   String email=_emailController.text;
                   String password=_passwordController.text;
-                  try {
-                    SharedPreferences prefs =await SharedPreferences.getInstance() ;
-                    prefs.setString('unitOfMeasure', _selectedUnitMeasure!);
 
-                  } catch (e) {
-                    print('Error initializing SharedPreferences: $e');
+                  if (password.isEmpty ||  email.isEmpty || fullName.isEmpty) {
+                    if (password.isEmpty) {
+                      setState(() {
+                        passwordErrorText = 'Please enter your password';
+                      });
+                    }
+                    if (email.isEmpty) {
+                      setState(() {
+                        emailErrorText = 'Please enter your email';
+                      });
+                    }
+                    if (fullName.isEmpty) {
+                      setState(() {
+                        nameErrorText = 'Please enter your name';
+                      });
+                    }
                   }
-                  RegisterController register=RegisterController();
-                  register.storeRegisterData(fullName, email, password);
+
+                  EmailValidator eV=new EmailValidator();
+                  if (eV.validateEmail(email)!="") {
+                    setState(() {
+                      emailErrorText =eV.validateEmail(email);
+                    });
+                    return;
+                  }
+
+
+                  // if(eV.validateEmail(email)=="" && !password.isEmpty && !fullName.isEmpty) {
+                  //   try {
+                  //     SharedPreferences prefs =await SharedPreferences.getInstance() ;
+                  //     prefs.setString('unitOfMeasure', _selectedUnitMeasure!);
+                  //
+                  //   } catch (e) {
+                  //     print('Error initializing SharedPreferences: $e');
+                  //   }
+                  //   RegisterController register=RegisterController();
+                  //   register.storeRegisterData(fullName, email, password);
+                  //   Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
+                  //   );
+                  //   print('Register button pressed');
+                  // }
+
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
-                  );
-                  print('Register button pressed');
+                          context,
+                          MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
+                        );
+
+
                 },
 
                 style: ButtonStyle(

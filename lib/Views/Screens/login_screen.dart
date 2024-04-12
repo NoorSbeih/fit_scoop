@@ -126,9 +126,9 @@ class _LoginPageState extends State<LoginPage> {
     ),
                 style: const TextStyle(color: Colors.white),
                 controller: _passwordController,
-    onChanged: (_) {
-      setState(() {
-        _passwordErrorText = '';
+                onChanged: (_) {
+                  setState(() {
+                 _passwordErrorText = '';
       });
     },
               ),
@@ -170,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                       }
                       if(email.isEmpty){
                         setState(() {
-                          emailErrorText = 'Please enter your password';
+                          emailErrorText = 'Please enter your email';
                         });
                       }
                     }
