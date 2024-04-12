@@ -21,9 +21,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const SizedBox(height: 500),
-          const Padding(padding:EdgeInsets.only(left:20),
-            child:Text("FitScoop. ",style:
+          SizedBox(height: deviceWidth(context) * 1.4),
+        Padding(padding:EdgeInsets.only(left:deviceWidth(context) * 0.08),
+            child:const Text("FitScoop. ",style:
             TextStyle(
               color: Colors.white, // Change color to blue
               fontSize: 35, // Set font size to 18
@@ -33,8 +33,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
 
-          const Padding(padding:EdgeInsets.only(left:20),
-            child:Text(
+           Padding(padding:EdgeInsets.only(left:deviceWidth(context) * 0.08),
+            child:const Text(
               "Your Daily Dose of Fitness",
               style: TextStyle(
                 color: Colors.white,
@@ -108,5 +108,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
     );
+
   }
+  double deviceHeight(BuildContext context) => MediaQuery.of(context).size.height;
+
+  double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
 }
