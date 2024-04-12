@@ -6,16 +6,16 @@ class Page4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: RegisterPage4(),
+    return  MaterialApp(
+      home: RegisterPage4(skipToNextPage: () {},),
     );
   }
 }
 
 
 class RegisterPage4 extends StatefulWidget {
-
-  const RegisterPage4({Key? key}) : super(key: key);
+  final VoidCallback skipToNextPage;
+  RegisterPage4({super.key, required this.skipToNextPage});
   @override
   State<RegisterPage4> createState() => _RegisterPageState();
 }
@@ -38,7 +38,7 @@ List<String> _selectedGoals = [];
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(top:30,right:25,bottom:10),
-                child: custom_widget.skipButtom(),
+                child: custom_widget.skipButtom(widget.skipToNextPage),
               ),
               Padding(
                 padding: const EdgeInsets.only(left:16),

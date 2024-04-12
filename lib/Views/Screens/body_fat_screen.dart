@@ -7,10 +7,13 @@ import 'goals_screen.dart';
 
 class Page3 extends StatelessWidget {
 
+
+
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: RegisterPage3(),
+    return  MaterialApp(
+      home: RegisterPage3( skipToNextPage: () {
+      },),
     );
   }
 }
@@ -18,7 +21,8 @@ class Page3 extends StatelessWidget {
 
 class RegisterPage3 extends StatefulWidget {
   static double _currentValue=50 ;
-  const RegisterPage3({Key? key}) : super(key: key);
+  final VoidCallback skipToNextPage;
+  RegisterPage3({super.key, required this.skipToNextPage});
 
 
   @override
@@ -45,22 +49,7 @@ class _RegisterPageState extends State<RegisterPage3> {
     padding: const EdgeInsets.only(top:30,right:25,bottom:10),
     child: Align(
       alignment: Alignment.topRight,
-      child: InkWell(
-        onTap: () {
-
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => RegisterPage4()));
-
-        },
-        child: const Text(
-          'Skip',
-          style: TextStyle(
-            fontSize: 16.0,
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF0FE8040),
-          ),
-        ),
-      ),
+      child: custom_widget.skipButtom(widget.skipToNextPage),
 
     )
   ),

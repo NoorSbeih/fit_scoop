@@ -31,11 +31,12 @@ class custom_widget {
     );
   }
 
-  static Widget skipButtom(){
+  static Widget skipButtom(VoidCallback skipToNextPage){
    return  Align(
       alignment: Alignment.topRight,
       child: InkWell(
         onTap: () {
+          skipToNextPage();
         },
         child: const Text(
           'Skip',
