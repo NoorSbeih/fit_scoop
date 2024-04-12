@@ -9,7 +9,12 @@ class UserService {
   final CollectionReference _userCollection = FirebaseFirestore.instance.collection('users');
 
   Future<void> addUserDetails(String userId, Map<String, dynamic> userDetails) async {
-    await _userCollection.doc(userId).set(userDetails);
+    try {
+      await _userCollection.doc(userId).set(userDetails);
+      print('User details added successfully');
+    } catch (e) {
+      print('Error adding user details: $e');
+    }
   }
   Future<void> updateUserProfile(model.User user) async {
     await _userCollection.doc(user.id).update(user.toMap());

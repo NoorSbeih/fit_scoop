@@ -3,12 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 import 'package:input_slider/input_slider.dart';
 
+import 'goals_screen.dart';
+
 class Page3 extends StatelessWidget {
+
+
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: RegisterPage3(),
+    return  MaterialApp(
+      home: RegisterPage3( skipToNextPage: () {
+      },),
     );
   }
 }
@@ -16,7 +21,8 @@ class Page3 extends StatelessWidget {
 
 class RegisterPage3 extends StatefulWidget {
   static double _currentValue=50 ;
-  const RegisterPage3({Key? key}) : super(key: key);
+  final VoidCallback skipToNextPage;
+  RegisterPage3({super.key, required this.skipToNextPage});
 
 
   @override
@@ -38,28 +44,17 @@ class _RegisterPageState extends State<RegisterPage3> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
 
-        Padding(
-          padding: const EdgeInsets.only(top:40,right:25),
-          child: Align(
-            alignment: Alignment.topRight,
-            child: InkWell(
-              onTap: () {
-              },
-              child: const Text(
-                'Skip',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF0FE8040),
-                ),
-              ),
-          ),
 
-        ),
-        ),
+    Padding(
+    padding: const EdgeInsets.only(top:30,right:25,bottom:10),
+    child: Align(
+      alignment: Alignment.topRight,
+      child: custom_widget.skipButtom(widget.skipToNextPage),
+
+    )
+  ),
         Padding(
-          padding: const EdgeInsets.only(top:20,left:16,bottom: 10),
+          padding: const EdgeInsets.only(left:16,bottom:10),
           child: Align(
             alignment: Alignment.centerLeft,
             child: custom_widget.startTextWidget("Body Fat Percentage"),
@@ -71,7 +66,7 @@ class _RegisterPageState extends State<RegisterPage3> {
           child: Align(
             alignment: Alignment.centerLeft,
             child:custom_widget.customTextWidget("Your body fat percentage helps us accurately determine your body type and give you the most fitting workout schedule.",15),
-          ),// Add padding from the bottom only
+          )
 
         ),
         Padding(

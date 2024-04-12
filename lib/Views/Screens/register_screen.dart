@@ -74,9 +74,9 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
 
-            const Padding(
-              padding: EdgeInsets.only(bottom:60.0), // Add padding from the bottom only
-              child: Text(
+           Padding(
+              padding: EdgeInsets.only( bottom: deviceHeight(context) * 0.06,), // Add padding from the bottom only
+              child: const Text(
                 "The ultimate fitness application",
                 style: TextStyle(
                   color: Colors.white,
@@ -417,11 +417,10 @@ class _RegisterPageState extends State<RegisterPage> {
 
      );
 
-
-
-
-
   }
+  double deviceHeight(BuildContext context) => MediaQuery.of(context).size.height;
+
+  double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
 }
 
 

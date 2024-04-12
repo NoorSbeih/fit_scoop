@@ -18,6 +18,7 @@ class custom_widget {
     );
   }
 
+
   static Widget startTextWidget(String text) {
     return Text(
       text,
@@ -27,6 +28,27 @@ class custom_widget {
         fontWeight: FontWeight.bold, // Make text bold
         fontFamily: 'Montserrat', // Specify font family (optional)
       ),
+    );
+  }
+
+  static Widget skipButtom(VoidCallback skipToNextPage){
+   return  Align(
+      alignment: Alignment.topRight,
+      child: InkWell(
+        onTap: () {
+          skipToNextPage();
+        },
+        child: const Text(
+          'Skip',
+          style: TextStyle(
+            fontSize: 16.0,
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF0FE8040),
+          ),
+        ),
+      ),
+
     );
   }
 
