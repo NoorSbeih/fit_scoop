@@ -1,21 +1,49 @@
 import 'exercise_model.dart';
 
+// models/workout_model.dart
+
 class Workout {
   final String id;
   final String name;
-  final String? description;
-  final List<Exercise> exercises;
+  final String description;
+  final List<String> exercises;
   final int duration;
-  final String? intensity;
+  final String intensity;
   final String creatorId;
 
   Workout({
     required this.id,
     required this.name,
-    this.description,
+    required this.description,
     required this.exercises,
     required this.duration,
-    this.intensity,
+    required this.intensity,
     required this.creatorId,
   });
+
+  // Convert WorkoutModel to a map (for Firestore)
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'exercises': exercises,
+      'duration': duration,
+      'intensity': intensity,
+      'creatorId': creatorId,
+    };
+  }
+
+  // Convert Firestore data to WorkoutModel
+  factory Workout.fromMap(String id, Map<String, dynamic> map) {
+    return Workout(
+      id: id,
+      name: map['name'],
+      description: map['description'],
+      exercises: List<String>.from(map['exercises'] ?? []),
+      duration: map['duration'],
+      intensity: map['intensity'],
+      creatorId: map['creatorId'],
+    );
+  }
 }

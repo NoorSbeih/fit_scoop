@@ -32,4 +32,16 @@ class User {
       'savedWorkoutIds': savedWorkoutIds,
     };
   }
+  factory User.fromMap(Map<String, dynamic> map) {
+    return User(
+      id: map['id'],
+      name: map['name'],
+      email: map['email'],
+      profilePictureUrl: map['profilePictureUrl'],
+      bodyMetrics: BodyMetrics.fromMap(map['bodyMetrics']),
+      followedUserIds: List<String>.from(map['followedUserIds']),
+      savedWorkoutIds: List<String>.from(map['savedWorkoutIds']),
+    );
+  }
+
 }

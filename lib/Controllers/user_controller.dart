@@ -12,7 +12,7 @@ class UserController {
 
   Future<void> updateUserProfile(User user) async {
     try {
-      await _userService.updateUserProfile(user);
+      await _userService.updateUser(user);
       // Optionally: Update UI or state to reflect the profile update
       currentUser = user;
     } catch (e) {
