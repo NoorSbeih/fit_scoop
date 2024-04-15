@@ -6,14 +6,16 @@ import 'package:flutter/material.dart';
 class card_widget {
   static Widget customcardWidget(
       String title, String text, bool isSelected) {
-    return Card(
+    return SizedBox(
+        height: 105, // Fixed height for the card
+        child: Card(
       margin: const EdgeInsets.all(10),
       color: const Color(0xFF383838),
       shape: RoundedRectangleBorder(
-        // Add border shape
+          borderRadius: BorderRadius.circular(5),
         side: BorderSide(
           color: isSelected ? Color(0xFF0FE8040): Colors.white,
-          width: 2,
+          width: 1,
         ),
       ),
       child: Column(
@@ -21,21 +23,9 @@ class card_widget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: EdgeInsets.only(left: 10, top: 5),
+            padding: EdgeInsets.only(left: 10, top: 10),
             child: Text(
               title,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 19,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Montserrat',
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 10, bottom: 10),
-            child: Text(
-              text,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16,
@@ -43,9 +33,21 @@ class card_widget {
                 fontFamily: 'Montserrat',
               ),
             ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 10, bottom: 10,top:2),
+            child: Text(
+              text,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+                fontFamily: 'Montserrat',
+              ),
+            ),
           )
         ],
       ),
+        ),
     );
   }
 

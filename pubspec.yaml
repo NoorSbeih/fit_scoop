@@ -49,6 +49,7 @@ dependencies:
   intl: ^0.19.0
   numberpicker: ^2.1.2
   input_slider: ^0.3.1
+  flutter_holo_date_picker: ^1.1.3
 
 
 

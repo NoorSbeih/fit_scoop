@@ -40,7 +40,7 @@ class _RegisterPageState extends State<RegisterPage1> {
   }
   DateTime? _selectedDate; // Initialize with null or another default value
 
-  void _selectDate(BuildContext context) {;
+  void _selectDate(BuildContext context) {
   showDatePicker(
     context: context,
     initialDate: _selectedDate ?? DateTime.now(),
@@ -73,7 +73,7 @@ class _RegisterPageState extends State<RegisterPage1> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(top:70,left:16,bottom: 10),
+            padding: const EdgeInsets.only(top:60,left:16,bottom: 10),
             child: Align(
               alignment: Alignment.centerLeft,
               child: custom_widget.startTextWidget("Lets get started!"),
@@ -82,23 +82,40 @@ class _RegisterPageState extends State<RegisterPage1> {
           ),
 
           Padding(
-            padding: const EdgeInsets.only(bottom:60.0,left:16),
+            padding: const EdgeInsets.only(top:10,bottom:25.0,left:16),
             child: Align(
               alignment: Alignment.centerLeft,
               child:custom_widget.customTextWidget("Please Enter Your Birth date and Gender ",15),
             ),// Add padding from the bottom only
+          ),
+           Padding(
+             padding: EdgeInsets.only(left: 20.0,top:30),
+            child: Align(
+             alignment: Alignment.centerLeft,
+             child:RichText(
+            textAlign: TextAlign.left,
+            text: const TextSpan(
+              text: "Birth Date",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20.0,
+              ),
+              children: [
+              TextSpan(
+              text: ' *',
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 20.0,
+              ),
+    ),
+              ],
 
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 20.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: custom_widget.customTextWidget("Birth Date",20),
-            ),
           ),
+           ),
+           ),
           Padding(
               padding: EdgeInsets.all(15),
-
               child :TextFormField(
                 controller: _dateController,
                 readOnly: true,
@@ -133,12 +150,31 @@ class _RegisterPageState extends State<RegisterPage1> {
                 ),
               )
           ),
-
+          SizedBox(height: 15),
           Padding(
             padding: EdgeInsets.only(left: 20.0,top:20),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: custom_widget.customTextWidget("Gender",20),
+              child: RichText(
+                textAlign: TextAlign.left,
+                text: const TextSpan(
+                  text: "Gender",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: ' *',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                  ],
+
+                ),
+              ),
             ),
           ),
           Column(

@@ -7,15 +7,15 @@ class Page5 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: RegisterPage5(skipToNextPage: () {},),
+      home: RegisterPage5(),
     );
   }
 }
 
 
 class RegisterPage5 extends StatefulWidget {
-  final VoidCallback skipToNextPage;
-  RegisterPage5({super.key, required this.skipToNextPage});
+
+  RegisterPage5();
   @override
   State<RegisterPage5> createState() => _RegisterPageState();
 }
@@ -37,11 +37,7 @@ class _RegisterPageState extends State<RegisterPage5> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top:30,right:25,bottom:10),
-                child: custom_widget.skipButtom(widget.skipToNextPage),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left:16),
+                padding: const EdgeInsets.only(left:16,top:10,bottom: 10),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: custom_widget.startTextWidget("Almost done!"),

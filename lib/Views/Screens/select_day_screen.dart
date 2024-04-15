@@ -5,9 +5,10 @@ import 'package:input_slider/input_slider.dart';
 
 class Page6 extends StatelessWidget {
 
+  const Page6({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
       home: RegisterPage6(),
     );
   }
@@ -15,7 +16,7 @@ class Page6 extends StatelessWidget {
 
 
 class RegisterPage6 extends StatefulWidget {
-  static double _currentValue=50 ;
+
   const RegisterPage6({Key? key}) : super(key: key);
 
 
@@ -26,6 +27,9 @@ class RegisterPage6 extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage6> {
   List<bool> isSelected = [false, false, false, false, false, false, false];
   List<String> _daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+   bool showError=false;
+  String check="";
+
   @override
   void initState() {
     super.initState();
@@ -40,51 +44,63 @@ class _RegisterPageState extends State<RegisterPage6> {
       body:Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-
+          // Padding(
+          //   padding: const EdgeInsets.only(top:40,right:25),
+          //   child: Align(
+          //     alignment: Alignment.topRight,
+          //     child: InkWell(
+          //       onTap: () {
+          //       },
+          //       child: const Text(
+          //         'Skip',
+          //         style: TextStyle(
+          //           fontSize: 18.0,
+          //           fontFamily: 'Montserrat',
+          //           fontWeight: FontWeight.bold,
+          //           color: Color(0xFF0FE8040),
+          //         ),
+          //       ),
+          //     ),
+          //
+          //   ),
+          // ),
           Padding(
-            padding: const EdgeInsets.only(top:40,right:25),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: InkWell(
-                onTap: () {
-                },
-                child: const Text(
-                  'Skip',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF0FE8040),
-                  ),
-                ),
-              ),
-
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top:20,left:16,bottom: 10),
+            padding: const EdgeInsets.only(top:10,left:16,bottom: 10),
             child: Align(
               alignment: Alignment.centerLeft,
               child: custom_widget.startTextWidget("One more step!"),
             ),
-
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom:60.0,left:16,right:16),
+            padding: const EdgeInsets.only(bottom:20.0,left:16,right:16),
             child: Align(
               alignment: Alignment.centerLeft,
               child:custom_widget.customTextWidget("Finally, choose the days of the week you wish to work out in.",15),
-            ),// Add padding from the bottom only
-
+            ),
           ),
+        const Padding(
+            padding: EdgeInsets.only(top:10,left:16,bottom: 10),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+            'Please choose at least one day!',
+            style: TextStyle(
+              fontSize: 15.0,
+              fontFamily: 'Montserrat',
+              color: Colors.red,
+             ),
+            ),
+          ),
+          ),
+
           GridView.builder(
             shrinkWrap: true,
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(15),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              mainAxisSpacing: 10.0,
+              mainAxisSpacing: 15.0,
               crossAxisSpacing: 17.0,
-              childAspectRatio: 4.0,
+              childAspectRatio: 3.0,
             ),
             itemCount: 7, // Number of days in a week
             itemBuilder: (BuildContext context, int index) {
@@ -97,11 +113,11 @@ class _RegisterPageState extends State<RegisterPage6> {
                     });
                   },
                   style: ElevatedButton.styleFrom(
-                     foregroundColor: Colors.white, backgroundColor: Colors.black,
+                     foregroundColor: Colors.white, backgroundColor:Color(0xFF383838),
                     shape:  RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                       side: BorderSide(
-                        color: isSelected[index] ? const Color(0xFF0FE8040):Colors.white,
+                        color: isSelected[index] ?  Color(0xFF0FE8040):Colors.white,
                         width:1,
                       )
                     ),
@@ -129,5 +145,12 @@ class _RegisterPageState extends State<RegisterPage6> {
       }
     }
     return selectedDays.join(', ');
+  }
+  void showErrorMessage() {
+    if (_getSelectedDays == null) {
+      setState(() {
+        showError = true;
+      });
+    }
   }
 }

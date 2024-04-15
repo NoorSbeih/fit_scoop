@@ -54,7 +54,7 @@ void _loadPreferences() async{
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top:70,left:16,bottom: 10),
+          padding: const EdgeInsets.only(top:10,left:16,bottom: 10),
           child: Align(
             alignment: Alignment.centerLeft,
             child: custom_widget.startTextWidget("Weight and Height"),
@@ -73,7 +73,26 @@ void _loadPreferences() async{
           padding: const EdgeInsets.only(left: 20.0),
            child:Align(
              alignment: Alignment.centerLeft,
-             child:custom_widget.customTextWidget("Height",20),
+             child:RichText(
+               textAlign: TextAlign.left,
+               text: const TextSpan(
+                 text: "Height",
+                 style: TextStyle(
+                   color: Colors.white,
+                   fontSize: 20.0,
+                 ),
+                 children: [
+                   TextSpan(
+                     text: ' *',
+                     style: TextStyle(
+                       color: Colors.red,
+                       fontSize: 20.0,
+                     ),
+                   ),
+                 ],
+
+               ),
+             ),
            )
         ),
     Padding(
@@ -82,11 +101,31 @@ void _loadPreferences() async{
             ? _buildImperialPicker(context)
             : _buildMetricPicker(context),
     ),
+        SizedBox(height: 20),
         Padding(
             padding: const EdgeInsets.only(left: 20.0),
             child:Align(
               alignment: Alignment.centerLeft,
-              child:custom_widget.customTextWidget("Weight",20),
+              child:RichText(
+                textAlign: TextAlign.left,
+                text: const TextSpan(
+                  text: "Weight",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: ' *',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                  ],
+
+                ),
+              ),
             )
         ),
         Padding(

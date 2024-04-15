@@ -7,15 +7,14 @@ class Page4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
-      home: RegisterPage4(skipToNextPage: () {},),
+      home: RegisterPage4(),
     );
   }
 }
 
 
 class RegisterPage4 extends StatefulWidget {
-  final VoidCallback skipToNextPage;
-  RegisterPage4({super.key, required this.skipToNextPage});
+  RegisterPage4();
   @override
   State<RegisterPage4> createState() => _RegisterPageState();
 }
@@ -37,11 +36,7 @@ List<String> _selectedGoals = [];
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top:30,right:25,bottom:10),
-                child: custom_widget.skipButtom(widget.skipToNextPage),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left:16),
+                padding: const EdgeInsets.only(top:10,left:16,bottom: 10),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: custom_widget.startTextWidget("Goals"),
@@ -50,7 +45,7 @@ List<String> _selectedGoals = [];
               ),
 
               Padding(
-                padding: const EdgeInsets.only(bottom: 10.0, left: 16),
+                padding: const EdgeInsets.only(bottom: 30.0, left: 16),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: custom_widget.customTextWidget(

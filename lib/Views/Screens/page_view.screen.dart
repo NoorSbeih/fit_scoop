@@ -22,7 +22,7 @@ import 'height_weight_screen.dart';
 class _CustomPageViewState extends State<CustomPageView> {
   final controller = PageController();
   int currentPageIndex = 0;
-  bool canSwipe = false;
+  bool showError=false;
 
    @override
    void initState() {
@@ -33,8 +33,7 @@ class _CustomPageViewState extends State<CustomPageView> {
        });
      });
    }
-  bool isDataFilled() {
-     print("jjjj");
+  bool isDataFilled_Page1() {
     return RegisterPage1.selectedgender.isNotEmpty && RegisterPage1.formateddate.isNotEmpty;
   }
   bool isDataFilled2() {
@@ -45,35 +44,14 @@ class _CustomPageViewState extends State<CustomPageView> {
 
   void nextPage(BuildContext context) {
     if (currentPageIndex < 5) {
-      if (isDataFilled()) {
         currentPageIndex = controller.page!.round();
         print(currentPageIndex);
         controller.nextPage(
           duration: Duration(milliseconds: 300),
           curve: Curves.ease,
         );
-      }
     }}
 
-  void skipToNextPage() {
-    if (currentPageIndex < 5) {
-      if (currentPageIndex >= 2 || (currentPageIndex == 0 && isDataFilled()) || (currentPageIndex == 1 && isDataFilled2())) {
-        controller.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
-      }
-    }
-  }
-
-  void updateDataFilledStatus() {
-    setState(() {
-      if (currentPageIndex == 0) {
-        canSwipe = isDataFilled();
-      } else if (currentPageIndex == 1) {
-        canSwipe = isDataFilled2();
-      } else {
-        canSwipe = true; // Allow swipe for other pages
-      }
-    });
-  }
      @override
      Widget build(BuildContext context) {
        return Scaffold(
@@ -81,28 +59,36 @@ class _CustomPageViewState extends State<CustomPageView> {
          body: Column(
            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
            children: [
+             if (currentPageIndex > 0)
+           AppBar(
+             backgroundColor: Colors.transparent, // Optional: To make the app bar transparent
+             elevation: 0,
+           leading: IconButton(
+           onPressed: () {
+         if (currentPageIndex > 0) {
+           controller.previousPage(
+             duration: Duration(milliseconds: 300),
+             curve: Curves.ease,
+           );
+         }
+       },
+       icon: Icon(Icons.arrow_back),
+       color: Colors.orange,
+       ),
+           ),
              SizedBox(
                height: 600,
                child: PageView(
                  controller: controller,
+                 physics:  NeverScrollableScrollPhysics(),
                  children: [
                    RegisterPage1(),
                    RegisterPage2(),
-                   RegisterPage3(skipToNextPage: skipToNextPage,),
-                   RegisterPage4(skipToNextPage: skipToNextPage,),
-                   RegisterPage5(skipToNextPage: skipToNextPage,),
+                   RegisterPage3(),
+                   RegisterPage4(),
+                   RegisterPage5(),
                    RegisterPage6(),
                  ],
-               ),
-             ),
-             SmoothPageIndicator(
-               controller: controller
-               , count: 6,
-               effect: SwapEffect(
-                   activeDotColor: Color(0xFF0FE8040),
-                   dotColor: Colors.deepOrangeAccent.withOpacity(0.5),
-                   dotHeight: 15,
-                   dotWidth: 15
                ),
              ),
 
@@ -110,15 +96,22 @@ class _CustomPageViewState extends State<CustomPageView> {
 
               onPressed: () {
                 print(currentPageIndex);
-                if (currentPageIndex == 0) {
-                  if (isDataFilled()) {
-                    nextPage(context);
-                  }
-                } else if (currentPageIndex == 1) {
+                if (currentPageIndex == 0  && !isDataFilled_Page1()) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please fill in all required fields.'),
+                      ),
+                  );}
+                else if (currentPageIndex == 5 && showError) {
+
+
+                }
+                else if (currentPageIndex == 1) {
                   if (isDataFilled2()) {
                     nextPage(context);
                   }
-                } else if (currentPageIndex < 5) {
+
+                } else  {
                   nextPage(context);
                 }
               },
@@ -133,6 +126,7 @@ class _CustomPageViewState extends State<CustomPageView> {
                        borderRadius: BorderRadius.circular(
                            10.0), // Border radius
                      );
+
                    },
                  ),
                ),
@@ -155,6 +149,7 @@ class _CustomPageViewState extends State<CustomPageView> {
 
        );
      }
+
    }
 
 
