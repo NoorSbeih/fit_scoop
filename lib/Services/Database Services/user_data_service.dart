@@ -6,7 +6,7 @@ class UserDataService {
     final snapshot = await ref.orderByChild('email').equalTo(email).once();
 
     if (snapshot != null) {
-      // Access the DataSnapshot object from the DatabaseEvent
+   
       DataSnapshot dataSnapshot = snapshot.snapshot;
       print(dataSnapshot.value);
     } else {
