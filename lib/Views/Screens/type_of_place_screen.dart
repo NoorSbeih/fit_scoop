@@ -7,15 +7,15 @@ class Page5 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: RegisterPage5(skipToNextPage: () {},),
+      home: RegisterPage5(),
     );
   }
 }
 
 
 class RegisterPage5 extends StatefulWidget {
-  final VoidCallback skipToNextPage;
-  RegisterPage5({super.key, required this.skipToNextPage});
+
+  RegisterPage5();
   @override
   State<RegisterPage5> createState() => _RegisterPageState();
 }
@@ -36,12 +36,9 @@ class _RegisterPageState extends State<RegisterPage5> {
         body: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+
               Padding(
-                padding: const EdgeInsets.only(top:30,right:25,bottom:10),
-                child: custom_widget.skipButtom(widget.skipToNextPage),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left:16),
+                padding:  EdgeInsets.only(left:16,top:deviceWidth(context)*0.2),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: custom_widget.startTextWidget("Almost done!"),
@@ -86,6 +83,9 @@ class _RegisterPageState extends State<RegisterPage5> {
         )
     );
   }
+  double deviceHeight(BuildContext context) => MediaQuery.of(context).size.height;
+
+  double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
   Widget cardWidget(String title, String description) {
     bool isSelected = _selectedGoals.contains(title);
 

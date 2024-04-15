@@ -88,9 +88,9 @@ class _CustomPageViewState extends State<CustomPageView> {
                  children: [
                    RegisterPage1(),
                    RegisterPage2(),
-                   RegisterPage3(skipToNextPage: skipToNextPage,),
-                   RegisterPage4(skipToNextPage: skipToNextPage,),
-                   RegisterPage5(skipToNextPage: skipToNextPage,),
+                   RegisterPage3(),
+                   RegisterPage4(),
+                   RegisterPage5(),
                    RegisterPage6(),
                  ],
                ),

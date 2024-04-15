@@ -12,8 +12,7 @@ class Page3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
-      home: RegisterPage3( skipToNextPage: () {
-      },),
+      home: RegisterPage3(),
     );
   }
 }
@@ -21,8 +20,7 @@ class Page3 extends StatelessWidget {
 
 class RegisterPage3 extends StatefulWidget {
   static double _currentValue=50 ;
-  final VoidCallback skipToNextPage;
-  RegisterPage3({super.key, required this.skipToNextPage});
+  RegisterPage3();
 
 
   @override
@@ -45,16 +43,8 @@ class _RegisterPageState extends State<RegisterPage3> {
       children: [
 
 
-    Padding(
-    padding: const EdgeInsets.only(top:30,right:25,bottom:10),
-    child: Align(
-      alignment: Alignment.topRight,
-      child: custom_widget.skipButtom(widget.skipToNextPage),
-
-    )
-  ),
         Padding(
-          padding: const EdgeInsets.only(left:16,bottom:10),
+          padding: EdgeInsets.only(left:16,bottom:10,top: deviceWidth(context) * 0.2),
           child: Align(
             alignment: Alignment.centerLeft,
             child: custom_widget.startTextWidget("Body Fat Percentage"),
@@ -117,6 +107,8 @@ class _RegisterPageState extends State<RegisterPage3> {
       ],
     ),
   );
-
   }
+  double deviceHeight(BuildContext context) => MediaQuery.of(context).size.height;
+
+  double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
 }

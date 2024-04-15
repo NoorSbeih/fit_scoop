@@ -42,27 +42,7 @@ class _RegisterPageState extends State<RegisterPage6> {
         children: [
 
           Padding(
-            padding: const EdgeInsets.only(top:40,right:25),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: InkWell(
-                onTap: () {
-                },
-                child: const Text(
-                  'Skip',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF0FE8040),
-                  ),
-                ),
-              ),
-
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top:20,left:16,bottom: 10),
+            padding:  EdgeInsets.only(top:deviceWidth(context)*0.2,left:16,bottom: 10),
             child: Align(
               alignment: Alignment.centerLeft,
               child: custom_widget.startTextWidget("One more step!"),
@@ -119,7 +99,9 @@ class _RegisterPageState extends State<RegisterPage6> {
       ),
     );
   }
+  double deviceHeight(BuildContext context) => MediaQuery.of(context).size.height;
 
+  double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
   String _getSelectedDays() {
     List<String> days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     List<String> selectedDays = [];
