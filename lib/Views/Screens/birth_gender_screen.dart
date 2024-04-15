@@ -41,25 +41,25 @@ class _RegisterPageState extends State<RegisterPage1> {
   DateTime? _selectedDate; // Initialize with null or another default value
 
   void _selectDate(BuildContext context) {;
-    showDatePicker(
-      context: context,
-      initialDate: _selectedDate ?? DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    ).then((pickedDate) async {
-      if (pickedDate != null) {
-           setState((){
-           _selectedDate = pickedDate;
-           RegisterPage1.formateddate = DateFormat('dd/MM/yyyy').format(_selectedDate!);
-           print(RegisterPage1.formateddate);
-          _dateController.text = RegisterPage1.formateddate ; // Update text field value
-        });
+  showDatePicker(
+    context: context,
+    initialDate: _selectedDate ?? DateTime.now(),
+    firstDate: DateTime(1900),
+    lastDate: DateTime.now(),
+  ).then((pickedDate) async {
+    if (pickedDate != null) {
+      setState((){
+        _selectedDate = pickedDate;
+        RegisterPage1.formateddate = DateFormat('dd/MM/yyyy').format(_selectedDate!);
+        print(RegisterPage1.formateddate);
+        _dateController.text = RegisterPage1.formateddate ; // Update text field value
+      });
       //     SharedPreferences prefs =await SharedPreferences.getInstance() ;
-         //  prefs.setString('birthdate',formattedDate);
-      } else {
-        print("No date selected");
-      }
-    });
+      //  prefs.setString('birthdate',formattedDate);
+    } else {
+      print("No date selected");
+    }
+  });
   }
 
 
@@ -72,67 +72,67 @@ class _RegisterPageState extends State<RegisterPage1> {
       body: Column (
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-           Padding(
+          Padding(
             padding: const EdgeInsets.only(top:70,left:16,bottom: 10),
-             child: Align(
-               alignment: Alignment.centerLeft,
-               child: custom_widget.startTextWidget("Lets get started!"),
-             ),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: custom_widget.startTextWidget("Lets get started!"),
+            ),
 
           ),
 
-           Padding(
+          Padding(
             padding: const EdgeInsets.only(bottom:60.0,left:16),
-             child: Align(
-               alignment: Alignment.centerLeft,
-               child:custom_widget.customTextWidget("Please Enter Your Birth date and Gender ",15),
-             ),// Add padding from the bottom only
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child:custom_widget.customTextWidget("Please Enter Your Birth date and Gender ",15),
+            ),// Add padding from the bottom only
 
           ),
-         Padding(
+          Padding(
             padding: EdgeInsets.only(left: 20.0),
             child: Align(
               alignment: Alignment.centerLeft,
               child: custom_widget.customTextWidget("Birth Date",20),
             ),
           ),
-    Padding(
-    padding: EdgeInsets.all(15),
+          Padding(
+              padding: EdgeInsets.all(15),
 
-    child :TextFormField(
-      controller: _dateController,
-      readOnly: true,
-      style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        hintText: 'DD/MM/YYYY',
-        hintStyle: const TextStyle(
-          color: Colors.white, // Change hint text color
-          fontSize: 16.0, // Change hint text font size
-          fontStyle: FontStyle.italic, // Change hint text font style
-        ),
-        prefixIcon: IconButton(
-        onPressed: () => _selectDate(context),
-        icon: const Icon(
-        Icons.calendar_month_outlined,
-        color: Color(0xff0fe8040), // Change the color of the icon
-    ),
-    ),
-
-
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white), // Change the color of the border
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white), // Change the color of the focused border
-          borderRadius: BorderRadius.circular(10.0),
-        ),
+              child :TextFormField(
+                controller: _dateController,
+                readOnly: true,
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  hintText: 'DD/MM/YYYY',
+                  hintStyle: const TextStyle(
+                    color: Colors.white, // Change hint text color
+                    fontSize: 16.0, // Change hint text font size
+                    fontStyle: FontStyle.italic, // Change hint text font style
+                  ),
+                  prefixIcon: IconButton(
+                    onPressed: () => _selectDate(context),
+                    icon: const Icon(
+                      Icons.calendar_month_outlined,
+                      color: Color(0xff0fe8040), // Change the color of the icon
+                    ),
+                  ),
 
 
-        contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
-      ),
-    )
-    ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white), // Change the color of the border
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white), // Change the color of the focused border
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+
+
+                  contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+                ),
+              )
+          ),
 
           Padding(
             padding: EdgeInsets.only(left: 20.0,top:20),
@@ -154,8 +154,8 @@ class _RegisterPageState extends State<RegisterPage1> {
                           setState(()  {
                             RegisterPage1.selectedgender= value!;
                           });
-                   //       SharedPreferences prefs =await SharedPreferences.getInstance() ;
-                     //     prefs.setString('Gender',  _selectedgender!);
+                          //       SharedPreferences prefs =await SharedPreferences.getInstance() ;
+                          //     prefs.setString('Gender',  _selectedgender!);
                         },
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         fillColor: MaterialStateColor.resolveWith(
@@ -178,8 +178,8 @@ class _RegisterPageState extends State<RegisterPage1> {
                           setState(() {
                             RegisterPage1.selectedgender = value!;
                           });
-                         // SharedPreferences prefs =await SharedPreferences.getInstance() ;
-                         // prefs.setString('Gender',  _selectedgender!);
+                          // SharedPreferences prefs =await SharedPreferences.getInstance() ;
+                          // prefs.setString('Gender',  _selectedgender!);
                         },
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         fillColor: MaterialStateColor.resolveWith(
@@ -206,7 +206,6 @@ class _RegisterPageState extends State<RegisterPage1> {
 
   }
 }
-
 
 
 
