@@ -19,7 +19,7 @@ class Page3 extends StatelessWidget {
 
 
 class RegisterPage3 extends StatefulWidget {
-  static double _currentValue=50 ;
+  static double currentValue=50 ;
   RegisterPage3();
 
 
@@ -32,6 +32,7 @@ class _RegisterPageState extends State<RegisterPage3> {
   @override
   void initState() {
     super.initState();
+
   }
 
   @override
@@ -69,7 +70,7 @@ class _RegisterPageState extends State<RegisterPage3> {
                 custom_widget.customTextWidget("Body Fat %",20),
                 SizedBox(width: 200,),
                 Text(
-                      "${RegisterPage3._currentValue.round()}%",
+                      "${RegisterPage3.currentValue.round()}%",
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
 
@@ -90,12 +91,12 @@ class _RegisterPageState extends State<RegisterPage3> {
                     valueIndicatorColor: const Color(0xFF0FF954D),
                   ),
                   child: Slider(
-                    value: RegisterPage3._currentValue,
+                    value: RegisterPage3.currentValue,
                     min: 0.0,
-                    max: 100.0,
+                    max: 50.0,
                     onChanged: (newValue) {
                       setState(() {
-                        RegisterPage3._currentValue = newValue;
+                        RegisterPage3.currentValue = newValue;
                       });
                     },
                   ),

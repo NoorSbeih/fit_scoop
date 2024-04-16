@@ -2,6 +2,7 @@
 
 import 'package:fit_scoop/Views/Screens/register_screen.dart';
 import 'package:fit_scoop/Views/Screens/select_day_screen.dart';
+import 'package:fit_scoop/Views/Screens/test_screen.dart';
 import 'package:fit_scoop/Views/Screens/type_of_place_screen.dart';
 import 'package:fit_scoop/Views/Screens/goals_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -161,9 +162,12 @@ class _CustomPageViewState extends State<CustomPageView> {
     String formattedDate = '${parts[2]}-${parts[0]}-${parts[1]}T00:00:00';
     DateTime dateTime = DateTime.parse(formattedDate);
     model.BodyMetrics bodyMetrics= model.BodyMetrics(id:id,height: RegisterPage2.heightresult,weight: RegisterPage2.weightresult,birthDate: dateTime,
-    gender: RegisterPage1.selectedgender,fitnessGoal:RegisterPage4.selectedGoals,gymOrHome: RegisterPage5.typeOfPlace);
+    bodyFat: RegisterPage3.currentValue,gender: RegisterPage1.selectedgender,fitnessGoal:RegisterPage4.selectedGoals,gymOrHome: RegisterPage5.typeOfPlace);
     _bodyMetricService.addBodyMetrics(bodyMetrics);
-
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => TestPage()), // Replace SecondPage() with the desired page widget
+    );
   }
 
 }

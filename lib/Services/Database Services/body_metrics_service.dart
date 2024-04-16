@@ -5,17 +5,17 @@ import '../../Models/body_metrics_model.dart';
 
 class BodyMetricsService {
   final CollectionReference _bodyMetricsRef = FirebaseFirestore.instance.collection('bodyMetrics');
-
+  final CollectionReference _usersRef = FirebaseFirestore.instance.collection('users');
   Future<void> addBodyMetrics(BodyMetrics bodyMetrics) async {
     try {
       await _bodyMetricsRef.doc(bodyMetrics.id).set(bodyMetrics.toMap());
+      await _usersRef.doc(bodyMetrics.id).update({'bodyMetrics': bodyMetrics.id});
     } catch (e) {
       print('Error adding body metrics: $e');
       throw e;
     }
   }
 
-  // Update existing body metrics document in Firestore
   Future<void> updateBodyMetrics(BodyMetrics bodyMetrics) async {
     try {
       await _bodyMetricsRef.doc(bodyMetrics.id).update(bodyMetrics.toMap());

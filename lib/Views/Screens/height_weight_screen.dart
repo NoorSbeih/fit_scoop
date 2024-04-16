@@ -35,7 +35,11 @@ class _RegisterPageState extends State<RegisterPage2> {
 
   void initState() {
     super.initState();
-    _loadPreferences(); // Load the preference when the widget is initialized
+    _loadPreferences();
+    selectedHeight.text=RegisterPage2.heightresult;
+    selectedWeight.text=RegisterPage2.weightresult;
+
+
   }
 
 void _loadPreferences() async{

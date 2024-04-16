@@ -3,8 +3,6 @@ import 'package:fit_scoop/Controllers/register_controller.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:intl/intl.dart';
 
 import '../../Models/user_model.dart';
@@ -37,6 +35,8 @@ class _RegisterPageState extends State<RegisterPage1> {
   @override
   void initState() {
     super.initState();
+    _dateController.text = RegisterPage1.formateddate;
+
   }
   DateTime? _selectedDate; // Initialize with null or another default value
 
