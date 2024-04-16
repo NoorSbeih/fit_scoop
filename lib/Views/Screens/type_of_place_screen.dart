@@ -49,7 +49,10 @@ class _RegisterPageState extends State<RegisterPage5> {
                 padding: const EdgeInsets.only(bottom: 10.0, left: 16),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: custom_widget.customTextWidget(
+                  child:
+
+
+                  custom_widget.customTextWidget(
                       "Choose what type of place you go to in order to exercise", 15),
 
                 ), // Add padding from the bottom only

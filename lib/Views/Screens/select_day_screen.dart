@@ -8,7 +8,7 @@ class Page6 extends StatelessWidget {
   const Page6({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return  const MaterialApp(
       home: RegisterPage6(),
     );
   }
@@ -16,7 +16,8 @@ class Page6 extends StatelessWidget {
 
 
 class RegisterPage6 extends StatefulWidget {
-
+  static String daysSelected= "";
+  static List<bool> isSelected = [false, false, false, false, false, false, false];
   const RegisterPage6({Key? key}) : super(key: key);
 
 
@@ -25,10 +26,9 @@ class RegisterPage6 extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage6> {
-  List<bool> isSelected = [false, false, false, false, false, false, false];
-  List<String> _daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-   bool showError=false;
-  String check="";
+
+  final List<String> _daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
 
   @override
   void initState() {
@@ -44,26 +44,6 @@ class _RegisterPageState extends State<RegisterPage6> {
       body:Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // Padding(
-          //   padding: const EdgeInsets.only(top:40,right:25),
-          //   child: Align(
-          //     alignment: Alignment.topRight,
-          //     child: InkWell(
-          //       onTap: () {
-          //       },
-          //       child: const Text(
-          //         'Skip',
-          //         style: TextStyle(
-          //           fontSize: 18.0,
-          //           fontFamily: 'Montserrat',
-          //           fontWeight: FontWeight.bold,
-          //           color: Color(0xFF0FE8040),
-          //         ),
-          //       ),
-          //     ),
-          //
-          //   ),
-          // ),
           Padding(
             padding: const EdgeInsets.only(top:10,left:16,bottom: 10),
             child: Align(
@@ -109,15 +89,16 @@ class _RegisterPageState extends State<RegisterPage6> {
                 child: ElevatedButton(
                   onPressed: () {
                     setState(() {
-                      isSelected[index] = !isSelected[index];
+                      RegisterPage6.isSelected[index] = !RegisterPage6.isSelected[index];
                     });
+                    _getSelectedDays();
                   },
                   style: ElevatedButton.styleFrom(
                      foregroundColor: Colors.white, backgroundColor:Color(0xFF383838),
                     shape:  RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                       side: BorderSide(
-                        color: isSelected[index] ?  Color(0xFF0FE8040):Colors.white,
+                        color: RegisterPage6.isSelected[index] ?  Color(0xFF0FE8040):Colors.white,
                         width:1,
                       )
                     ),
@@ -139,18 +120,12 @@ class _RegisterPageState extends State<RegisterPage6> {
   String _getSelectedDays() {
     List<String> days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     List<String> selectedDays = [];
-    for (int i = 0; i < isSelected.length; i++) {
-      if (isSelected[i]) {
+    for (int i = 0; i < RegisterPage6.isSelected.length; i++) {
+      if (RegisterPage6.isSelected[i]) {
         selectedDays.add(days[i]);
       }
     }
+    RegisterPage6.daysSelected=selectedDays.join(', ');
     return selectedDays.join(', ');
-  }
-  void showErrorMessage() {
-    if (_getSelectedDays == null) {
-      setState(() {
-        showError = true;
-      });
-    }
   }
 }

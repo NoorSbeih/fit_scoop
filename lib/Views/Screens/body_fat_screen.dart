@@ -43,8 +43,6 @@ class _RegisterPageState extends State<RegisterPage3> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
 
-
-
         Padding(
           padding: const EdgeInsets.only(top:10,left:16,bottom:10),
           child: Align(

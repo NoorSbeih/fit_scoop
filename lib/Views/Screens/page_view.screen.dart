@@ -27,7 +27,7 @@ import '/Models/body_metrics_model.dart' as model;
 class _CustomPageViewState extends State<CustomPageView> {
   final controller = PageController();
   int currentPageIndex = 0;
-  bool showError=false;
+
 
    @override
    void initState() {
@@ -102,22 +102,29 @@ class _CustomPageViewState extends State<CustomPageView> {
               onPressed: () {
                 print(currentPageIndex);
                 if (currentPageIndex == 0  && !isDataFilled_Page1()) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Please fill in all required fields.'),
-                      ),
-                  );}
+                   showError();
+                       }
                 else if (currentPageIndex >= 5 ) {
-                  finishRegistration(context);
+                  if(!RegisterPage6.daysSelected.isEmpty){
+                    print("yess");
+                 // finishRegistration(context);
+                }}
+                else if (currentPageIndex == 1 && !isDataFilled2()) {
+                    showError();
+
                 }
-                else if (currentPageIndex == 1) {
-                  if (isDataFilled2()) {
-                    nextPage(context);
+                else if (currentPageIndex == 3 && RegisterPage4.selectedGoals.isEmpty) {
+                    showError();
+                }
+                else if (currentPageIndex == 4 && RegisterPage5.typeOfPlace.isEmpty) {
+                    showError();
+                }
+                else if (currentPageIndex == 4 && RegisterPage5.typeOfPlace.isEmpty) {
+                    showError();
                   }
-                } else  {
+                else  {
                   nextPage(context);
                 }
-
               },
                style: ButtonStyle(
                  backgroundColor: MaterialStateProperty.all<Color>(
@@ -170,6 +177,12 @@ class _CustomPageViewState extends State<CustomPageView> {
     );
   }
 
+
+  SnackBar showError() {
+    return const SnackBar(
+      content: Text('Please fill in all required fields.'),
+    );
+  }
 }
 
 
