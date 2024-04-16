@@ -21,8 +21,11 @@ class RegisterPage2 extends StatefulWidget{
   static int cm = 150;
   static int pound = 100;
   static int kg= 50;
-  static String heightresult= "";
-  static String weightresult= "";
+  static double heightresult=0;
+  static double weightresult=0;
+  static String textResultHeight="";
+  static String textResultWeight="";
+
   const RegisterPage2({Key? key}) : super(key: key);
 
 @override
@@ -36,8 +39,9 @@ class _RegisterPageState extends State<RegisterPage2> {
   void initState() {
     super.initState();
     _loadPreferences();
-    selectedHeight.text=RegisterPage2.heightresult;
-    selectedWeight.text=RegisterPage2.weightresult;
+
+    selectedHeight.text=RegisterPage2.textResultHeight.toString();
+    selectedWeight.text=RegisterPage2.textResultWeight.toString();
 
 
   }

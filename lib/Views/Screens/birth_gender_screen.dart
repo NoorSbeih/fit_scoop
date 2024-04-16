@@ -20,7 +20,6 @@ class RegisterPage1 extends StatefulWidget {
 
   static String selectedgender="Male";
   static String formateddate="";
-
   const RegisterPage1({Key? key}) : super(key: key);
 
 

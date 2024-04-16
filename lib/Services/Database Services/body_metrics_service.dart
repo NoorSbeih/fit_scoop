@@ -8,8 +8,9 @@ class BodyMetricsService {
   final CollectionReference _usersRef = FirebaseFirestore.instance.collection('users');
   Future<void> addBodyMetrics(BodyMetrics bodyMetrics) async {
     try {
-      await _bodyMetricsRef.doc(bodyMetrics.id).set(bodyMetrics.toMap());
-      await _usersRef.doc(bodyMetrics.id).update({'bodyMetrics': bodyMetrics.id});
+      DocumentReference documentRef = await _bodyMetricsRef.add(bodyMetrics.toMap());
+      String documentId = documentRef.id;
+      await _usersRef.doc(bodyMetrics.user_id).update({'bodyMetrics':documentId});
     } catch (e) {
       print('Error adding body metrics: $e');
       throw e;
@@ -18,7 +19,7 @@ class BodyMetricsService {
 
   Future<void> updateBodyMetrics(BodyMetrics bodyMetrics) async {
     try {
-      await _bodyMetricsRef.doc(bodyMetrics.id).update(bodyMetrics.toMap());
+     // await _bodyMetricsRef.doc(bodyMetrics.id).update(bodyMetrics.toMap());
     } catch (e) {
       print('Error updating body metrics: $e');
       throw e;

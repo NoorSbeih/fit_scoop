@@ -42,8 +42,7 @@ class _CustomPageViewState extends State<CustomPageView> {
     return RegisterPage1.selectedgender.isNotEmpty && RegisterPage1.formateddate.isNotEmpty;
   }
   bool isDataFilled2() {
-    print("jjjj2");
-    return RegisterPage2.heightresult.isNotEmpty && RegisterPage2.weightresult.isNotEmpty;
+    return RegisterPage2.heightresult.toString().isNotEmpty && RegisterPage2.weightresult.toString().isNotEmpty;
   }
 
 
@@ -107,7 +106,7 @@ class _CustomPageViewState extends State<CustomPageView> {
                 else if (currentPageIndex >= 5 ) {
                   if(!RegisterPage6.daysSelected.isEmpty){
                     print("yess");
-                 // finishRegistration(context);
+                   finishRegistration(context);
                 }}
                 else if (currentPageIndex == 1 && !isDataFilled2()) {
                     showError(context);
@@ -119,8 +118,9 @@ class _CustomPageViewState extends State<CustomPageView> {
                 else if (currentPageIndex == 4 && RegisterPage5.typeOfPlace.isEmpty) {
                     showError(context);
                 }
-                else if (currentPageIndex == 5 && RegisterPage6.daysSelected.isEmpty) {
-                    showError(context);
+                else if (currentPageIndex == 5&& RegisterPage6.daysSelected.isEmpty) {
+                   showError(context);
+                   // finishRegistration(context);
                   }
                 else  {
                   nextPage(context);
@@ -168,8 +168,8 @@ class _CustomPageViewState extends State<CustomPageView> {
     List<String> parts = dateString.split('/');
     String formattedDate = '${parts[2]}-${parts[0]}-${parts[1]}T00:00:00';
     DateTime dateTime = DateTime.parse(formattedDate);
-    model.BodyMetrics bodyMetrics= model.BodyMetrics(id:id,height: RegisterPage2.heightresult,weight: RegisterPage2.weightresult,birthDate: dateTime,
-    bodyFat: RegisterPage3.currentValue,gender: RegisterPage1.selectedgender,fitnessGoal:RegisterPage4.selectedGoals,gymOrHome: RegisterPage5.typeOfPlace);
+    model.BodyMetrics bodyMetrics= model.BodyMetrics(user_id:id,height: RegisterPage2.heightresult,weight: RegisterPage2.weightresult,birthDate: dateTime,
+    bodyFat: RegisterPage3.currentValue,gender: RegisterPage1.selectedgender,fitnessGoal:RegisterPage4.selectedGoals,gymOrHome: RegisterPage5.typeOfPlace,);
     _bodyMetricService.addBodyMetrics(bodyMetrics);
     Navigator.push(
       context,

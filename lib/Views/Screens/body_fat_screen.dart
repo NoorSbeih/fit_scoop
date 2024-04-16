@@ -16,13 +16,9 @@ class Page3 extends StatelessWidget {
     );
   }
 }
-
-
 class RegisterPage3 extends StatefulWidget {
   static double currentValue=50 ;
   RegisterPage3();
-
-
   @override
   State<RegisterPage3> createState() => _RegisterPageState();
 }

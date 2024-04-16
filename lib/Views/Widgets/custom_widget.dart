@@ -154,24 +154,31 @@ class custom_widget {
         switch (field) {
          case 'Feet & Inches':
           controller.text=RegisterPage2.feet.toString()+"'"+RegisterPage2.inches.toString();
-          RegisterPage2.heightresult= controller.text;
+          int inches=(RegisterPage2.feet*12)+RegisterPage2.inches;
+          double convertToinches=inches*2.54;
+          RegisterPage2.textResultHeight=  controller.text;
+          RegisterPage2.heightresult= convertToinches;
           break;
           case 'Kilograms':
             controller.text=RegisterPage2.kg.toString();
-            RegisterPage2.weightresult= controller.text+" "+"kg";
+            RegisterPage2.textResultWeight=  controller.text;
+            RegisterPage2.weightresult= double.parse(controller.text);
           break;
 
           case 'Pounds':
           controller.text=RegisterPage2.pound.toString();
-          RegisterPage2.weightresult= controller.text+" "+"lbs";
+          RegisterPage2.textResultWeight=  controller.text;
+          double convertToKg=double.parse(controller.text)*0.453592;
+          RegisterPage2.weightresult= convertToKg;
           break;
           case 'Centimeter':
             controller.text=RegisterPage2.cm.toString();
-            RegisterPage2.heightresult= controller.text+" "+"cm";
+            RegisterPage2.textResultHeight=  controller.text;
+            RegisterPage2.heightresult=double.parse(controller.text);
             break;
         default:
           break;
       }
-
   }
+
 }

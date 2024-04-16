@@ -1,9 +1,9 @@
 
 class BodyMetrics {
-  final String id;
- // final String user_id; // User ID associated with these metrics
-  final String height;
-  final String  weight;
+ // final String id;
+  final String user_id; // User ID associated with these metrics
+  final double height;
+  final double  weight;
   final DateTime birthDate;
   final String gender;
   final double bodyFat;
@@ -11,8 +11,8 @@ class BodyMetrics {
   final String gymOrHome;
 
   BodyMetrics({
-    required this.id,
-   // required this.user_id,
+  //  required this.id,
+    required this.user_id,
     required this.height,
     required this.weight,
     required this.birthDate,
@@ -25,7 +25,7 @@ class BodyMetrics {
   // Convert BodyMetricsModel to a map (for Firestore)
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      'user_id':user_id,
       'height': height,
       'weight': weight,
       'birthDate': birthDate,
@@ -45,8 +45,8 @@ class BodyMetrics {
       bodyFat: map['bodyFat'],
       fitnessGoal: map['fitnessGoal'],
       gymOrHome: map['gymOrHome'],
-      id: map['id'],
-   //   user_id:map['user_id']
+   //   id: map['id'],
+     user_id:map['user_id']
     );
   }
 }

@@ -7,7 +7,7 @@ class User {
   final String name;
   final String email;
   final String? profilePictureUrl;
-  final BodyMetrics? bodyMetrics;
+  final String? bodyMetrics;
   final List<String> followedUserIds; // References to User IDs
   final List<String> savedWorkoutIds; // References to Workout IDs
 
@@ -27,7 +27,7 @@ class User {
       'name': name,
       'email': email,
       'profilePictureUrl': profilePictureUrl,
-      'bodyMetrics': bodyMetrics?.toMap(), // Assuming BodyMetrics has a toMap() method
+      'bodyMetrics': bodyMetrics, // Assuming BodyMetrics has a toMap() method
       'followedUserIds': followedUserIds,
       'savedWorkoutIds': savedWorkoutIds,
     };
@@ -38,7 +38,7 @@ class User {
       name: map['name'],
       email: map['email'],
       profilePictureUrl: map['profilePictureUrl'],
-      bodyMetrics: BodyMetrics.fromMap(map['bodyMetrics']),
+      bodyMetrics: map['bodyMetrics'],
       followedUserIds: List<String>.from(map['followedUserIds']),
       savedWorkoutIds: List<String>.from(map['savedWorkoutIds']),
     );
