@@ -3,6 +3,7 @@
 import 'package:fit_scoop/Views/Screens/register_screen.dart';
 import 'package:fit_scoop/Views/Screens/select_day_screen.dart';
 import 'package:fit_scoop/Views/Screens/type_of_place_screen.dart';
+import 'package:fit_scoop/Views/Screens/goals_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,10 +11,13 @@ import 'package:flutter/material.dart';
  import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../Services/Database Services/body_metrics_service.dart';
 import 'birth_gender_screen.dart';
 import 'body_fat_screen.dart';
 import 'goals_screen.dart';
 import 'height_weight_screen.dart';
+import 'package:fit_scoop/Controllers/register_controller.dart';
+import '/Models/body_metrics_model.dart' as model;
  class CustomPageView extends StatefulWidget {
    @override
    _CustomPageViewState createState() => _CustomPageViewState();
@@ -102,18 +106,17 @@ class _CustomPageViewState extends State<CustomPageView> {
                         content: Text('Please fill in all required fields.'),
                       ),
                   );}
-                else if (currentPageIndex == 5 && showError) {
-
-
+                else if (currentPageIndex >= 5 ) {
+                  finishRegistration(context);
                 }
                 else if (currentPageIndex == 1) {
                   if (isDataFilled2()) {
                     nextPage(context);
                   }
-
                 } else  {
                   nextPage(context);
                 }
+
               },
                style: ButtonStyle(
                  backgroundColor: MaterialStateProperty.all<Color>(
@@ -150,7 +153,20 @@ class _CustomPageViewState extends State<CustomPageView> {
        );
      }
 
-   }
+  void finishRegistration(BuildContext context) {
+    BodyMetricsService _bodyMetricService=new BodyMetricsService();
+    String id=RegisterController.userId;
+    String dateString = RegisterPage1.formateddate;
+    List<String> parts = dateString.split('/');
+    String formattedDate = '${parts[2]}-${parts[0]}-${parts[1]}T00:00:00';
+    DateTime dateTime = DateTime.parse(formattedDate);
+    model.BodyMetrics bodyMetrics= model.BodyMetrics(id:id,height: RegisterPage2.heightresult,weight: RegisterPage2.weightresult,birthDate: dateTime,
+    gender: RegisterPage1.selectedgender,fitnessGoal:RegisterPage4.selectedGoals,gymOrHome: RegisterPage5.typeOfPlace);
+    _bodyMetricService.addBodyMetrics(bodyMetrics);
+
+  }
+
+}
 
 
 

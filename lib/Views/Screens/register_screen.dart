@@ -259,24 +259,24 @@ class _RegisterPageState extends State<RegisterPage> {
                   }
 
 
-                  // if(eV.validateEmail(email)=="" && !password.isEmpty && !fullName.isEmpty) {
-                  //   try {
-                  //     SharedPreferences prefs =await SharedPreferences.getInstance() ;
-                  //     prefs.setString('unitOfMeasure', _selectedUnitMeasure!);
-                  //
-                  //   } catch (e) {
-                  //     print('Error initializing SharedPreferences: $e');
-                  //   }
-                  //   RegisterController register=RegisterController();
-                  //   register.storeRegisterData(fullName, email, password);
-                  //   Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
-                  //   );
-                  //   print('Register button pressed');
-                  // }
+                   if(eV.validateEmail(email)=="" && !password.isEmpty && !fullName.isEmpty) {
+                    try {
+                      SharedPreferences prefs =await SharedPreferences.getInstance() ;
+                     prefs.setString('unitOfMeasure', _selectedUnitMeasure!);
 
-                  Navigator.push(
+                   } catch (e) {
+                      print('Error initializing SharedPreferences: $e');
+                        }
+                        RegisterController register=RegisterController();
+                         register.storeRegisterData(fullName, email, password);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
+                        );
+                        print('Register button pressed');
+                      }
+
+                      Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
                         );

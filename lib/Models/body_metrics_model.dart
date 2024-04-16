@@ -1,11 +1,11 @@
 
 class BodyMetrics {
   final String id; // User ID associated with these metrics
-  final double height;
-  final double weight;
+  final String height;
+  final String  weight;
   final DateTime birthDate;
   final String gender;
-  final String fitnessGoal;
+  final List <String> fitnessGoal;
   final String gymOrHome;
 
   BodyMetrics({

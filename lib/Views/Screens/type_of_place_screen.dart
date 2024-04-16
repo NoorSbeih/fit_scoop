@@ -14,14 +14,14 @@ class Page5 extends StatelessWidget {
 
 
 class RegisterPage5 extends StatefulWidget {
-
+  static String typeOfPlace="";
   RegisterPage5();
   @override
   State<RegisterPage5> createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage5> {
-  List<String> _selectedGoals = [];
+
   @override
   void initState() {
     super.initState();
@@ -83,16 +83,13 @@ class _RegisterPageState extends State<RegisterPage5> {
     );
   }
   Widget cardWidget(String title, String description) {
-    bool isSelected = _selectedGoals.contains(title);
+    bool isSelected =RegisterPage5.typeOfPlace == title;
 
     return GestureDetector(
       onTap: () {
         setState(() {
-          if (isSelected) {
-            _selectedGoals.remove(title);
-          } else {
-            _selectedGoals.add(title);
-          }
+          RegisterPage5.typeOfPlace=title;
+
         });
       },
       child: card_widget.customcardWidget(

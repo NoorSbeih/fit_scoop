@@ -7,12 +7,13 @@ class RegisterController {
 
   final AuthenticationService _authService = AuthenticationService();
   final UserService _userService = UserService();
+  static late String userId;
   Future<void> storeRegisterData(String name, String email, String password) async {
     try {
       // Attempt to sign up the user with FirebaseAuth
       User? user = await _authService.signUpWithEmail(email, password);
       if (user != null) {
-        String userId = user.uid; // Get the newly created user ID// Get the newly created user ID
+        userId = user.uid; // Get the newly created user ID// Get the newly created user ID
 
       // Prepare user data
       Map<String, dynamic> userData = {
