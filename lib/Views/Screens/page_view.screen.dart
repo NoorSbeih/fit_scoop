@@ -102,7 +102,7 @@ class _CustomPageViewState extends State<CustomPageView> {
               onPressed: () {
                 print(currentPageIndex);
                 if (currentPageIndex == 0  && !isDataFilled_Page1()) {
-                   showError();
+                   showError(context);
                        }
                 else if (currentPageIndex >= 5 ) {
                   if(!RegisterPage6.daysSelected.isEmpty){
@@ -110,17 +110,17 @@ class _CustomPageViewState extends State<CustomPageView> {
                  // finishRegistration(context);
                 }}
                 else if (currentPageIndex == 1 && !isDataFilled2()) {
-                    showError();
+                    showError(context);
 
                 }
                 else if (currentPageIndex == 3 && RegisterPage4.selectedGoals.isEmpty) {
-                    showError();
+                    showError(context);
                 }
                 else if (currentPageIndex == 4 && RegisterPage5.typeOfPlace.isEmpty) {
-                    showError();
+                    showError(context);
                 }
-                else if (currentPageIndex == 4 && RegisterPage5.typeOfPlace.isEmpty) {
-                    showError();
+                else if (currentPageIndex == 4 && RegisterPage6.daysSelected.isEmpty) {
+                    showError(context);
                   }
                 else  {
                   nextPage(context);
@@ -178,9 +178,11 @@ class _CustomPageViewState extends State<CustomPageView> {
   }
 
 
-  SnackBar showError() {
-    return const SnackBar(
-      content: Text('Please fill in all required fields.'),
+  void showError(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Please fill in all required fields.'),
+      ),
     );
   }
 }
