@@ -119,7 +119,7 @@ class _CustomPageViewState extends State<CustomPageView> {
                 else if (currentPageIndex == 4 && RegisterPage5.typeOfPlace.isEmpty) {
                     showError(context);
                 }
-                else if (currentPageIndex == 4 && RegisterPage6.daysSelected.isEmpty) {
+                else if (currentPageIndex == 5 && RegisterPage6.daysSelected.isEmpty) {
                     showError(context);
                   }
                 else  {
