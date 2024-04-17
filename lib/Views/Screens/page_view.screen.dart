@@ -105,7 +105,6 @@ class _CustomPageViewState extends State<CustomPageView> {
                        }
                 else if (currentPageIndex >= 5 ) {
                   if(!RegisterPage6.daysSelected.isEmpty){
-                    print("yess");
                    finishRegistration(context);
                 }}
                 else if (currentPageIndex == 1 && !isDataFilled2()) {
