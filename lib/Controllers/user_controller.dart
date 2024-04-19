@@ -5,20 +5,55 @@ import '../Services/Database Services/user_service.dart';
 
 
 class UserController {
-  final UserService _userService = UserService();
+  final _userService = UserService();
 
-  User? currentUser;
-
-
-  Future<void> updateUserProfile(User user) async {
+  Future<void> updateProfile(User user) async {
     try {
+      // Update user profile in Firestore
       await _userService.updateUser(user);
-      // Optionally: Update UI or state to reflect the profile update
-      currentUser = user;
     } catch (e) {
+      print('Error updating user profile: $e');
+      throw e;
+    }
+  }
 
-      print(e.toString());
+  Future<void> followUser(String currentUserId, String followUserId) async {
+    try {
+      // Follow user with UserService
+      await _userService.followUser(currentUserId, followUserId);
+    } catch (e) {
+      print('Error following user: $e');
+      throw e;
+    }
+  }
+
+  Future<void> unfollowUser(String currentUserId, String unfollowUserId) async {
+    try {
+      // Unfollow user with UserService
+      await _userService.unfollowUser(currentUserId, unfollowUserId);
+    } catch (e) {
+      print('Error unfollowing user: $e');
+      throw e;
+    }
+  }
+
+  Future<void> saveWorkout(String userId, String workoutId) async {
+    try {
+      // Save workout to user's savedWorkoutIds
+      await _userService.saveWorkout(userId, workoutId);
+    } catch (e) {
+      print('Error saving workout: $e');
+      throw e;
+    }
+  }
+
+  Future<void> unsaveWorkout(String userId, String workoutId) async {
+    try {
+      // Unsave workout from user's savedWorkoutIds
+      await _userService.unsaveWorkout(userId, workoutId);
+    } catch (e) {
+      print('Error unsaving workout: $e');
+      throw e;
     }
   }
 }
-
