@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class LoginController {
+  static String user_id="";
   Future<User?> signInWithEmailAndPassword(String email,
       String password) async {
     try {
@@ -13,6 +15,7 @@ class LoginController {
         password: password,
       );
       User? user = userCredential.user;
+      user_id=user!.uid;
       return user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -23,20 +26,34 @@ class LoginController {
     } catch (e) {
       print('An error occurred: $e');
     }
+    return null;
+  }
+
+
+  Future<String?> getUserBodyMetric() async {
+    try {
+
+      CollectionReference users = FirebaseFirestore.instance.collection('users');
+      DocumentSnapshot snapshot = await users.doc(user_id).get();
+      if (snapshot.exists) {
+
+        Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+        final String? bodyMetrics = data?['bodyMetrics'];
+        return bodyMetrics;
+
+      } else {
+        print('No data available for user_id: $user_id');
+        return null;
+      }
+    } catch (error) {
+      print('Error fetching user data: $error');
       return null;
     }
   }
 
+}
 
-  getUserData(String email) async {
-    final ref = FirebaseDatabase.instance.ref();
-    final snapshot = await ref.child('users/$email').get();
-    if (snapshot.exists) {
-      print(snapshot.value);
-    } else {
-      print('No data available.');
-    }
-  }
+
 
 Future<void> refreshIdToken() async {
   User? user = FirebaseAuth.instance.currentUser;
