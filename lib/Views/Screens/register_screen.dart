@@ -228,11 +228,12 @@ class _RegisterPageState extends State<RegisterPage> {
               padding:const EdgeInsets.all(20.0),
               child:ElevatedButton(
                 onPressed: () async {
-                  String fullName=_fullNameController.text;
-                  String email=_emailController.text;
-                  String password=_passwordController.text;
+                  String fullName = _fullNameController.text;
+                  String email = _emailController.text;
+                  String password = _passwordController.text;
 
-                  if (password.isEmpty ||  email.isEmpty || fullName.isEmpty) {
+                  // Validate form fields
+                  if (password.isEmpty || email.isEmpty || fullName.isEmpty) {
                     if (password.isEmpty) {
                       setState(() {
                         passwordErrorText = 'Please enter your password';
@@ -248,41 +249,40 @@ class _RegisterPageState extends State<RegisterPage> {
                         nameErrorText = 'Please enter your name';
                       });
                     }
+                    return; // Exit the function if any field is empty
                   }
 
-                  EmailValidator eV=new EmailValidator();
-                  if (eV.validateEmail(email)!="") {
+                  // Validate email format
+                  EmailValidator eV = EmailValidator();
+                  String? emailError = eV.validateEmail(email);
+                  if (emailError.isNotEmpty) {
                     setState(() {
-                      emailErrorText =eV.validateEmail(email);
+                      emailErrorText = emailError;
                     });
-                    return;
+                    return; // Exit the function if email is invalid
                   }
 
+                  // If everything is valid, proceed with registration
+                  try {
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    prefs.setString('unitOfMeasure', _selectedUnitMeasure!);
 
-                   if(eV.validateEmail(email)=="" && !password.isEmpty && !fullName.isEmpty) {
-                    try {
-                      SharedPreferences prefs =await SharedPreferences.getInstance() ;
-                     prefs.setString('unitOfMeasure', _selectedUnitMeasure!);
+                    RegisterController register = RegisterController();
+                    await register.storeRegisterData(fullName, email, password);
 
-                   } catch (e) {
-                      print('Error initializing SharedPreferences: $e');
-                        }
-                        RegisterController register=RegisterController();
-                         register.storeRegisterData(fullName, email, password);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
-                        );
-                        print('Register button pressed');
-                      }
-
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
-                        );
-
-
+                    // Navigate to the next page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CustomPageView()),
+                    );
+                  } catch (e) {
+                    setState(() {
+                      emailErrorText = "Email already exists";
+                    });
+                  }
                 },
+
+
 
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0FE8040)), // Change color to blue
