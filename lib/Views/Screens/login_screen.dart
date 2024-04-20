@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_scoop/Controllers/register_controller.dart';
+import 'package:fit_scoop/Views/Screens/page_view.screen.dart';
 import 'package:fit_scoop/Views/Screens/register_screen.dart';
 import 'package:fit_scoop/Views/Screens/reset_password.dart';
 import 'package:flutter/cupertino.dart';
@@ -188,11 +189,14 @@ class _LoginPageState extends State<LoginPage> {
                       LoginController loginController = LoginController();
                       loginController.signInWithEmailAndPassword(
                           email, password)
-                          .then((user) {
+                          .then((user) async {
                         if (user != null) {
-                          print('User logged in successfully:');
-                          // Proceed with your app logic after successful login
-                          // loginController.getUserData(user.uid);
+                           if(await loginController.getUserBodyMetric()==null){
+                             Navigator.push(
+                               context,
+                               MaterialPageRoute(builder: (context) => CustomPageView()),
+                             );
+                           }
                           final UserDataService _userDataService = UserDataService();
                           _userDataService.getUserData(email);
                         } else {

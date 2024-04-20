@@ -19,7 +19,7 @@ class BodyMetricsService {
 
   Future<void> updateBodyMetrics(BodyMetrics bodyMetrics) async {
     try {
-     // await _bodyMetricsRef.doc(bodyMetrics.id).update(bodyMetrics.toMap());
+     // await _bodyMetricsRef.doc(bodyMetrics.id).update(bodyMetrics.toMap
     } catch (e) {
       print('Error updating body metrics: $e');
       throw e;
