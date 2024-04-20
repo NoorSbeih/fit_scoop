@@ -3,9 +3,11 @@ import 'package:fit_scoop/Controllers/register_controller.dart';
 import 'package:fit_scoop/Views/Screens/page_view.screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Models/user_model.dart';
+import '../../Services/authentication_service.dart';
 import '../../Services/email.dart';
 
 class Register extends StatelessWidget {
@@ -263,13 +265,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     try {
                       SharedPreferences prefs =await SharedPreferences.getInstance() ;
                      prefs.setString('unitOfMeasure', _selectedUnitMeasure!);
-                      // RegisterController register=RegisterController();
-                      // register.storeRegisterData(fullName, email, password);
+                       RegisterController register=RegisterController();
+                       register.storeRegisterData(fullName, email, password);
 
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
+                      );
 
                    } catch (e) {
                       print('Error initializing SharedPreferences: $e');
@@ -279,14 +281,17 @@ class _RegisterPageState extends State<RegisterPage> {
                         print('Register button pressed');
                       }
 
-
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
+                  );
 
 
                 },
 
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0FE8040)), // Change color to blue
-                  fixedSize: MaterialStateProperty.all<Size>(const Size(400, 50)),
+                  fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
                   shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                         (Set<MaterialState> states) {
                       return RoundedRectangleBorder(
@@ -343,7 +348,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0316FF6)), // Change color to blue
-                  fixedSize: MaterialStateProperty.all<Size>(const Size(400, 50)),
+                  fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
                   shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                         (Set<MaterialState> states) {
                       return RoundedRectangleBorder(
@@ -377,11 +382,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 onPressed: () {
                   // Corrected function body
                   print('Register button pressed');
+
+                  AuthenticationService auth= AuthenticationService();
+                  auth.signUpWithGoogle(context, mounted);
                 },
 
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFFFFFFF)), // Change color to blue
-                  fixedSize: MaterialStateProperty.all<Size>(const Size(400, 50)),
+                  fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
                   shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                         (Set<MaterialState> states) {
                       return RoundedRectangleBorder(
@@ -390,15 +398,16 @@ class _RegisterPageState extends State<RegisterPage> {
                     },
                   ),
                 ),
-                child: const Row(
+                child:  Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
-                      Icons.facebook, // Add your icon here
-                      color: Colors.white, // Color of the icon
-                    ),
+                    SvgPicture.asset(
+                      'images/icons8-google.svg',
+                      width: 24,
+                      height: 24,
+                    ), // Add your icon here
                     SizedBox(width: 8), // Adjust the spacing between the icon and text
-                    Text('Sign up with GOOGLE',
+                    const Text('Sign up with GOOGLE',
                       style:
                       TextStyle(
                         fontSize: 18,
