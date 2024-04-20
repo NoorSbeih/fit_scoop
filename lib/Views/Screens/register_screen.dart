@@ -263,23 +263,23 @@ class _RegisterPageState extends State<RegisterPage> {
                     try {
                       SharedPreferences prefs =await SharedPreferences.getInstance() ;
                      prefs.setString('unitOfMeasure', _selectedUnitMeasure!);
+                      // RegisterController register=RegisterController();
+                      // register.storeRegisterData(fullName, email, password);
+
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
+                      // );
 
                    } catch (e) {
                       print('Error initializing SharedPreferences: $e');
                         }
-                        RegisterController register=RegisterController();
-                         register.storeRegisterData(fullName, email, password);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
-                        );
+
+
                         print('Register button pressed');
                       }
 
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
-                        );
+
 
 
                 },
