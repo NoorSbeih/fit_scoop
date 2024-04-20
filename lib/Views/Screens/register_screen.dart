@@ -42,7 +42,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String nameErrorText = '';
   String passwordErrorText = '';
   bool passwordVisible=false;
-  String? _selectedUnitMeasure;
+  String? _selectedUnitMeasure="imperial";
 
 
   @override
@@ -183,7 +183,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   if (states.contains(MaterialState.selected)) {
                     return Colors.white; // Change the selected color
                   }
-                  return Colors.transparent; // Change the unselected color
+                  return Colors.white; // Change the unselected color
                 },
               ),
 
@@ -209,7 +209,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   if (states.contains(MaterialState.selected)) {
                   return Colors.white; // Change the selected color
                   }
-                    return Colors.transparent;
+                    return Colors.white;
     },
                     ),
                     ),

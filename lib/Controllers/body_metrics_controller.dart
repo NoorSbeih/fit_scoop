@@ -8,7 +8,6 @@ class BodyMetricsController {
 
   Future<void> addBodyMetrics(BodyMetrics bodyMetrics) async {
     try {
-      // Add body metrics to the database using the BodyMetricsService
       await _bodyMetricsService.addBodyMetrics(bodyMetrics);
     } catch (e) {
       print('Error adding body metrics: $e');

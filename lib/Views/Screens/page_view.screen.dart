@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
  import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../Controllers/body_metrics_controller.dart';
 import '../../Services/Database Services/body_metrics_service.dart';
 import 'birth_gender_screen.dart';
 import 'body_fat_screen.dart';
@@ -161,7 +162,7 @@ class _CustomPageViewState extends State<CustomPageView> {
      }
 
   void finishRegistration(BuildContext context) {
-    BodyMetricsService _bodyMetricService=new BodyMetricsService();
+    BodyMetricsController _bodyMetricController=new BodyMetricsController();
     String id=RegisterController.userId;
     String dateString = RegisterPage1.formateddate;
     List<String> parts = dateString.split('/');
@@ -169,7 +170,7 @@ class _CustomPageViewState extends State<CustomPageView> {
     DateTime dateTime = DateTime.parse(formattedDate);
     model.BodyMetrics bodyMetrics= model.BodyMetrics(user_id:id,height: RegisterPage2.heightresult,weight: RegisterPage2.weightresult,birthDate: dateTime,
     bodyFat: RegisterPage3.currentValue,gender: RegisterPage1.selectedgender,fitnessGoal:RegisterPage4.selectedGoals,gymOrHome: RegisterPage5.typeOfPlace,);
-    _bodyMetricService.addBodyMetrics(bodyMetrics);
+    _bodyMetricController.addBodyMetrics(bodyMetrics);
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => TestPage()), // Replace SecondPage() with the desired page widget

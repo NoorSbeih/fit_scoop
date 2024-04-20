@@ -201,7 +201,6 @@ class _LoginPageState extends State<LoginPage> {
                           _userDataService.getUserData(email);
                         } else {
                           print('User authentication failed.');
-                          // Handle failed authentication
                         }
                       });
                     }
