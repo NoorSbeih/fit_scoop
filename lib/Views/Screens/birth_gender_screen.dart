@@ -3,6 +3,9 @@ import 'package:fit_scoop/Controllers/register_controller.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_holo_date_picker/date_picker.dart';
+import 'package:flutter_holo_date_picker/date_picker_theme.dart';
+import 'package:flutter_holo_date_picker/i18n/date_picker_i18n.dart';
 import 'package:intl/intl.dart';
 
 import '../../Models/user_model.dart';
@@ -39,27 +42,31 @@ class _RegisterPageState extends State<RegisterPage1> {
   }
   DateTime? _selectedDate; // Initialize with null or another default value
 
-  void _selectDate(BuildContext context) {
-  showDatePicker(
-    context: context,
-    initialDate: _selectedDate ?? DateTime.now(),
-    firstDate: DateTime(1900),
-    lastDate: DateTime.now(),
-  ).then((pickedDate) async {
+  void _selectDate(BuildContext context) async {
+    DateTime? pickedDate = await DatePicker.showSimpleDatePicker(
+      context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(1980),
+      lastDate: DateTime.now(),
+      dateFormat: "dd-MMMM-yyyy",
+      locale: DateTimePickerLocale.en_us,
+      looping: true,
+      textColor: Colors.black,
+    );
+
     if (pickedDate != null) {
-      setState((){
+      setState(() {
         _selectedDate = pickedDate;
-        RegisterPage1.formateddate = DateFormat('dd/MM/yyyy').format(_selectedDate!);
-        print(RegisterPage1.formateddate);
-        _dateController.text = RegisterPage1.formateddate ; // Update text field value
+        RegisterPage1.formateddate =
+            DateFormat('dd/MM/yyyy').format(_selectedDate!);
+        _dateController.text = RegisterPage1.formateddate;
       });
-      //     SharedPreferences prefs =await SharedPreferences.getInstance() ;
-      //  prefs.setString('birthdate',formattedDate);
     } else {
-      print("No date selected");
+      print("Date selection canceled");
     }
-  });
   }
+
+
 
 
   @override
@@ -198,7 +205,7 @@ class _RegisterPageState extends State<RegisterPage1> {
                             if (states.contains(MaterialState.selected)) {
                               return Colors.white; // Change the selected color
                             }
-                            return Colors.transparent; // Change the unselected color
+                            return Colors.white; // Change the unselected color
                           },
                         ),
 
@@ -222,7 +229,7 @@ class _RegisterPageState extends State<RegisterPage1> {
                             if (states.contains(MaterialState.selected)) {
                               return Colors.white; // Change the selected color
                             }
-                            return Colors.transparent;
+                            return Colors.white;
                           },
                         ),
                       ),

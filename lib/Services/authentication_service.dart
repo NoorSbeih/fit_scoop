@@ -1,10 +1,13 @@
 
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
+
+import 'package:firebase_auth/firebase_auth.dart' ;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import '../Models/user_model.dart' as model;
+import 'Database Services/user_service.dart';
 
 class AuthenticationService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -35,51 +38,10 @@ class AuthenticationService {
     }
   }
 
-  // Future<void> signInWithGoogle() async {
-  //
-  //   try {
-  //     final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-  //     if (googleUser != null) {
-  //       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-  //       final OAuthCredential credential = GoogleAuthProvider.credential(
-  //         idToken: googleAuth.idToken,
-  //         accessToken: googleAuth.accessToken,
-  //       );
-  //       final UserCredential userCredential = await _auth.signInWithCredential(credential);
-  //
-  //       // // Save user data to Firebase Realtime Database
-  //       // await saveUserDataToDatabase(userCredential.user);
-  //       //
-  //       // // Navigate to home screen
-  //       // Navigator.pushReplacementNamed(context, '/home_view');
-  //
-  //
-  //       if (userCredential.additionalUserInfo!.isNewUser) {
-  //         await FirebaseFirestore.instance
-  //             .collection('Users')
-  //             .doc(userCredential.user!.uid)
-  //             .set({
-  //           "Name": userCredential.user!.displayName,
-  //           "Email": userCredential.user!.email,
-  //         });
-  //       }
-  //
-  //       if (mounted) return;
-  //       InfoBox.show(context, InfoBox.success, "Signed In With Google");
-  //
-  //
-  //     } on Exception catch (e) {
-  //     if (mounted) return;
-  //     InfoBox.show(context, InfoBox.success, e.toString());
-  //   }
-  // }
 
 
 
-  Future<void> signUpWithGoogle(
-      BuildContext context,
-      bool mounted,
-      ) async {
+  Future<void> signUpWithGoogle(BuildContext context, bool mounted) async {
     final googleSignIn = GoogleSignIn();
     final googleUser = await googleSignIn.signIn();
     if (googleUser == null) return;
@@ -95,41 +57,38 @@ class AuthenticationService {
       final authResult = await FirebaseAuth.instance.signInWithCredential(credential);
 
       if (authResult.additionalUserInfo!.isNewUser) {
-        // await FirebaseFirestore.instance
-        //     .collection('Data')
-        //     .doc(authResult.user!.uid)
-        //     .set({
-        //   "userName": authResult.user!.displayName,
-        //   "email": authResult.user!.email,
-        // });
-        saveUserDataToDatabase(authResult.user!);
+        await saveUserDataToDatabase(authResult.user!);
       }
-      print("helllllllllllllllllo");
+      print("Hello");
       print(authResult.user!.displayName);
 
       if (mounted) return;
       InfoBox.show(context, InfoBox.success, "Signed In With Google");
       print("Signed In With Google");
 
-    } on Exception catch (e) {
+    } on FirebaseAuthException catch (e) {
       if (mounted) return;
-      print(e.toString());
-      InfoBox.show(context, InfoBox.success, e.toString());
+      print("Firebase Auth Error: $e");
+      InfoBox.show(context, InfoBox.success, "Firebase Auth Error: $e");
+    } catch (e) {
+      if (mounted) return;
+      print("Error: $e");
+      InfoBox.show(context, InfoBox.success, "Error: $e");
     }
   }
 
   Future<void> saveUserDataToDatabase(User user) async {
-    // Example: Save user data to Firebase Realtime Database
-    await FirebaseDatabase.instance
-        .reference()
-        .child('Data')
-        .child(user.uid)
-        .set({
-      'name': user.displayName,
-      'email': user.email,
+    try {
+      final UserService _userService = UserService();
+      model.User usermodel = model.User(id: user.uid, name: user.displayName.toString(), email: user.email.toString());
 
-    });
+      await _userService.addUser(usermodel);
+      print('Data saved successfully!');
+    } catch (error) {
+      print('Error saving data: $error');
+    }
   }
+
 
 
 

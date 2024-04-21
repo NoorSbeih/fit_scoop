@@ -5,6 +5,7 @@ import 'package:fit_scoop/Views/Screens/register_screen.dart';
 import 'package:fit_scoop/Views/Screens/reset_password.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../Controllers/login_controller.dart';
 import '../../Models/user_model.dart';
@@ -201,7 +202,9 @@ class _LoginPageState extends State<LoginPage> {
                           _userDataService.getUserData(email);
                         } else {
                           print('User authentication failed.');
-                          // Handle failed authentication
+                          setState(() {
+                            _passwordErrorText = 'Incorrect password';
+                          });
                         }
                       });
                     }
@@ -219,7 +222,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 child: const Text(
-                  'SIGN IN',
+                  'Sign in',
                   style: TextStyle(
                     fontSize: 20,
                     color: Color(0xFF2C2A2A),
@@ -281,7 +284,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: ElevatedButton.icon(
+              child: ElevatedButton(
                 onPressed: () async {
                   print("SIGN IN WITH GOOGLE");
                   AuthenticationService auth= AuthenticationService();
@@ -299,14 +302,25 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                 ),
-                icon: Image.asset('images/google.jpg', width: 24, height: 24),
-                label: const Text(
-                  'SIGN IN WITH GOOGLE',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child:  Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SvgPicture.asset(
+                      'images/icons8-google.svg',
+                      width: 24,
+                      height: 24,
+                    ), // Add your icon here
+                    const SizedBox(width: 8), // Adjust the spacing between the icon and text
+                    const Text('Sign up with GOOGLE',
+                      style:
+                      TextStyle(
+                        fontSize: 18,
+                        color:Color(0xFF2C2A2A),
+
+                      ),),
+                  ],
                 ),
+
               ),
             ),
             GestureDetector(
