@@ -281,7 +281,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         print('Register button pressed');
                       }
 
-
+Navigator.push(
+  context,
+  MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
+);
 
 
                 },
