@@ -261,14 +261,14 @@ class _LoginPageState extends State<LoginPage> {
 
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ElevatedButton.icon(
+              padding:const EdgeInsets.only(left:8,right:8,bottom:10),
+              child:ElevatedButton(
                 onPressed: () {
-                  print("hi");
+                  print('Register button pressed');
                 },
+
                 style: ButtonStyle(
-                  backgroundColor:
-                  MaterialStateProperty.all<Color>(const Color(0xFF0316FF6)),
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0316FF6)), // Change color to blue
                   fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
                   shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                         (Set<MaterialState> states) {
@@ -278,12 +278,27 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                 ),
-                icon: const Icon(Icons.facebook,color: Colors.white),
-                label: const Text('SIGN IN WITH FACEBOOK' ,style: TextStyle(color: Colors.white)),
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.facebook, // Add your icon here
+                      color: Colors.white, // Color of the icon
+                    ),
+                    SizedBox(width: 8), // Adjust the spacing between the icon and text
+                    Text('Sign up with facebook',
+                      style:
+                      TextStyle(
+                        fontSize: 18,
+                        color:Colors.white,
+                      ),),
+                  ],
+                ),
+
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.only(left:8,right:8),
               child: ElevatedButton(
                 onPressed: () async {
                   print("SIGN IN WITH GOOGLE");
@@ -333,7 +348,7 @@ class _LoginPageState extends State<LoginPage> {
               child: const Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Text(
-                  "Don't have an Account? SIGN UP",
+                  "Don't have account? Sign up",
                   style: TextStyle(color: Colors.white),
                 ),
               ),

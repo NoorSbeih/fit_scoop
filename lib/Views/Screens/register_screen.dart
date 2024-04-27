@@ -3,9 +3,11 @@ import 'package:fit_scoop/Controllers/register_controller.dart';
 import 'package:fit_scoop/Views/Screens/page_view.screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Models/user_model.dart';
+import '../../Services/authentication_service.dart';
 import '../../Services/email.dart';
 
 class Register extends StatelessWidget {
@@ -42,7 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String nameErrorText = '';
   String passwordErrorText = '';
   bool passwordVisible=false;
-  String? _selectedUnitMeasure;
+  String? _selectedUnitMeasure="imperial";
 
 
   @override
@@ -183,7 +185,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   if (states.contains(MaterialState.selected)) {
                     return Colors.white; // Change the selected color
                   }
-                  return Colors.transparent; // Change the unselected color
+                  return Colors.white; // Change the unselected color
                 },
               ),
 
@@ -209,7 +211,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   if (states.contains(MaterialState.selected)) {
                   return Colors.white; // Change the selected color
                   }
-                    return Colors.transparent;
+                    return Colors.white;
     },
                     ),
                     ),
@@ -228,12 +230,11 @@ class _RegisterPageState extends State<RegisterPage> {
               padding:const EdgeInsets.all(20.0),
               child:ElevatedButton(
                 onPressed: () async {
-                  String fullName = _fullNameController.text;
-                  String email = _emailController.text;
-                  String password = _passwordController.text;
+                  String fullName=_fullNameController.text;
+                  String email=_emailController.text;
+                  String password=_passwordController.text;
 
-                  // Validate form fields
-                  if (password.isEmpty || email.isEmpty || fullName.isEmpty) {
+                  if (password.isEmpty ||  email.isEmpty || fullName.isEmpty) {
                     if (password.isEmpty) {
                       setState(() {
                         passwordErrorText = 'Please enter your password';
@@ -249,44 +250,48 @@ class _RegisterPageState extends State<RegisterPage> {
                         nameErrorText = 'Please enter your name';
                       });
                     }
-                    return; // Exit the function if any field is empty
                   }
 
-                  // Validate email format
-                  EmailValidator eV = EmailValidator();
-                  String? emailError = eV.validateEmail(email);
-                  if (emailError.isNotEmpty) {
+                  EmailValidator eV=new EmailValidator();
+                  if (eV.validateEmail(email)!="") {
                     setState(() {
-                      emailErrorText = emailError;
+                      emailErrorText =eV.validateEmail(email);
                     });
-                    return; // Exit the function if email is invalid
+                    return;
                   }
 
-                  // If everything is valid, proceed with registration
-                  try {
-                    SharedPreferences prefs = await SharedPreferences.getInstance();
-                    prefs.setString('unitOfMeasure', _selectedUnitMeasure!);
 
-                    RegisterController register = RegisterController();
-                    await register.storeRegisterData(fullName, email, password);
+                   if(eV.validateEmail(email)=="" && !password.isEmpty && !fullName.isEmpty) {
+                    try {
+                      SharedPreferences prefs =await SharedPreferences.getInstance() ;
+                     prefs.setString('unitOfMeasure', _selectedUnitMeasure!);
+                       RegisterController register=RegisterController();
+                       register.storeRegisterData(fullName, email, password);
 
-                    // Navigate to the next page
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CustomPageView()),
-                    );
-                  } catch (e) {
-                    setState(() {
-                      emailErrorText = "Email already exists";
-                    });
-                  }
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
+                      );
+
+                   } catch (e) {
+                      print('Error initializing SharedPreferences: $e');
+                        }
+
+
+                        print('Register button pressed');
+                      }
+
+Navigator.push(
+  context,
+  MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
+);
+
+
                 },
-
-
 
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0FE8040)), // Change color to blue
-                  fixedSize: MaterialStateProperty.all<Size>(const Size(400, 50)),
+                  fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
                   shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                         (Set<MaterialState> states) {
                       return RoundedRectangleBorder(
@@ -343,7 +348,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0316FF6)), // Change color to blue
-                  fixedSize: MaterialStateProperty.all<Size>(const Size(400, 50)),
+                  fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
                   shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                         (Set<MaterialState> states) {
                       return RoundedRectangleBorder(
@@ -377,11 +382,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 onPressed: () {
                   // Corrected function body
                   print('Register button pressed');
+
+                  AuthenticationService auth= AuthenticationService();
+                  auth.signUpWithGoogle(context, mounted);
                 },
 
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFFFFFFF)), // Change color to blue
-                  fixedSize: MaterialStateProperty.all<Size>(const Size(400, 50)),
+                  fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
                   shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                         (Set<MaterialState> states) {
                       return RoundedRectangleBorder(
@@ -390,15 +398,16 @@ class _RegisterPageState extends State<RegisterPage> {
                     },
                   ),
                 ),
-                child: const Row(
+                child:  Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
-                      Icons.facebook, // Add your icon here
-                      color: Colors.white, // Color of the icon
-                    ),
+                    SvgPicture.asset(
+                      'images/icons8-google.svg',
+                      width: 24,
+                      height: 24,
+                    ), // Add your icon here
                     SizedBox(width: 8), // Adjust the spacing between the icon and text
-                    Text('Sign up with GOOGLE',
+                    const Text('Sign up with GOOGLE',
                       style:
                       TextStyle(
                         fontSize: 18,

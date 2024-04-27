@@ -51,7 +51,8 @@ class _RegisterPageState extends State<RegisterPage1> {
       dateFormat: "dd-MMMM-yyyy",
       locale: DateTimePickerLocale.en_us,
       looping: true,
-      textColor: Colors.black,
+      textColor: Colors.white,
+      backgroundColor: Color(0xFF2C2A2A), // Set the background color here
     );
 
     if (pickedDate != null) {
