@@ -27,6 +27,26 @@ class WorkoutService {
     }
   }
 
+  Future<List<Map<String, dynamic>>> getAllWorkouts() async {
+    try {
+      var querySnapshot = await _workoutsRef.get();
+      return querySnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+    } catch (e) {
+      print('Error getting all workouts: $e');
+      throw e;
+    }
+  }
+  Future<List<Workout>> getWorkoutsByUserId(String userId) async {
+    try {
+      var querySnapshot = await _workoutsRef.where('creatorId', isEqualTo: userId).get();
+      return querySnapshot.docs
+          .map((doc) => Workout.fromMap(doc.id, doc.data() as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      print('Error getting workouts by user ID: $e');
+      throw e;
+    }
+  }
   // Retrieve workout document from Firestore based on workout ID
   Future<Workout?> getWorkout(String id) async {
     try {
