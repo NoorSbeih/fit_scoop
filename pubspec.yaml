@@ -86,6 +86,16 @@ flutter:
         - images/obesity.JPG
         - images/extremeobesity.JPG
         - images/icons8-google.svg
+        - images/heart_unclicked.svg
+        - images/home_unclicked.svg
+        - images/community_unclicked.svg
+        - images/plus_unclicked.svg
+        - images/profile_unclicked.svg
+        - images/heart_clicked.svg
+        - images/home_clicked.svg
+        - images/profile_clicked.svg
+        - images/plus_clicked.svg
+        - images/community_clicked.svg
     #   - images/a_dot_ham.jpeg
 
     # An image asset can refer to one or more resolution-specific "variants", see

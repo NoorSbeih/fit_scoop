@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
+
+import '../Widgets/bottom_navbar.dart';
 class Test extends StatelessWidget {
 
   @override
@@ -46,6 +48,7 @@ class _TestPageState extends State<TestPage> {
 
           ],
       ),
+      bottomNavigationBar: MyNavigationBar(),
     );
 
   }

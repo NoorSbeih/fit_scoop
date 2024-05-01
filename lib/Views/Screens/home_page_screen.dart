@@ -1,3 +1,4 @@
+import 'package:fit_scoop/Views/Screens/test_screen.dart';
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
 import 'register_screen.dart';
@@ -77,9 +78,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     // Corrected function body
                     print('Sign in');
 
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => Login()),
+
+
+
+
                     Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Login()), // Replace SecondPage() with the desired page widget
+                    context,
+                    MaterialPageRoute(builder: (context) => TestPage()),
                     );
                   },
                   style: ButtonStyle(
