@@ -78,16 +78,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     // Corrected function body
                     print('Sign in');
 
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => Login()),
-
-
-
-
                     Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => TestPage()),
+                      context,
+                      MaterialPageRoute(builder: (context) => Login()),
+
                     );
                   },
                   style: ButtonStyle(
