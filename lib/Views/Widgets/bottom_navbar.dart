@@ -194,6 +194,7 @@ class _MyNavigationBarState extends State<MyNavigationBar > {
               'images/profile_clicked.svg',
               width: 24, // Adjust the width as needed
               height: 24,
+              color: Color(0xFF1F6969)
 
             ),
           ),
