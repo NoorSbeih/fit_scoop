@@ -6,7 +6,7 @@ class Workout {
   final String id;
   final String name;
   final String description;
-  final List<String> exercises;
+  final List<Map<String,dynamic>> exercises;
   final int duration;
   final String intensity;
   final String creatorId;
@@ -27,7 +27,11 @@ class Workout {
       'id': id,
       'name': name,
       'description': description,
-      'exercises': exercises,
+      'exercises': exercises.map((exercise) => {
+        'id': exercise['id'],
+        'sets': exercise['sets'],
+        'weight': exercise['weight'],
+      }).toList(),
       'duration': duration,
       'intensity': intensity,
       'creatorId': creatorId,
@@ -40,7 +44,7 @@ class Workout {
       id: id,
       name: map['name'],
       description: map['description'],
-      exercises: List<String>.from(map['exercises'] ?? []),
+      exercises: List<Map<String,dynamic>>.from(map['exercises'] ?? []),
       duration: map['duration'],
       intensity: map['intensity'],
       creatorId: map['creatorId'],
