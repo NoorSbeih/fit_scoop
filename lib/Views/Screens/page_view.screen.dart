@@ -168,8 +168,8 @@ class _CustomPageViewState extends State<CustomPageView> {
     List<String> parts = dateString.split('/');
     String formattedDate = '${parts[2]}-${parts[0]}-${parts[1]}T00:00:00';
     DateTime dateTime = DateTime.parse(formattedDate);
-    model.BodyMetrics bodyMetrics= model.BodyMetrics(user_id:id,height: RegisterPage2.heightresult,weight: RegisterPage2.weightresult,birthDate: dateTime,
-    bodyFat: RegisterPage3.currentValue,gender: RegisterPage1.selectedgender,fitnessGoal:RegisterPage4.selectedGoals,gymOrHome: RegisterPage5.typeOfPlace,);
+    model.BodyMetrics bodyMetrics= model.BodyMetrics(userId:id,height: RegisterPage2.heightresult,weight: RegisterPage2.weightresult,birthDate: dateTime,
+    bodyFat: RegisterPage3.currentValue,gender: RegisterPage1.selectedgender,fitnessGoal:RegisterPage4.selectedGoals,gymType: RegisterPage5.typeOfPlace,);
     _bodyMetricController.addBodyMetrics(bodyMetrics);
     Navigator.push(
       context,
