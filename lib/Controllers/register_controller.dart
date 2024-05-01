@@ -24,6 +24,7 @@ class RegisterController {
         throw 'User sign up failed'; // Throw an error if user is null
       }
     } catch (error) {
+
       throw 'Error saving data: $error'; // Throw the error to propagate it up
     }
   }

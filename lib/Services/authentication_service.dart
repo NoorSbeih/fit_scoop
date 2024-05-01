@@ -14,7 +14,8 @@ class AuthenticationService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   // Sign Up with Email & Password
-  Future<User?> signUpWithEmail(String email, String password) async {
+  Future<User?>
+  signUpWithEmail(String email, String password) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       return result.user;
