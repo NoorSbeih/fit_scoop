@@ -10,13 +10,10 @@ class RegisterController {
 
   Future<void> storeRegisterData(String name, String email, String password) async {
     try {
-      // Attempt to sign up the user with FirebaseAuth
       User? user = await _authService.signUpWithEmail(email, password);
       if (user != null) {
         userId = user.uid; // Get the newly created user ID
-
-        // Prepare user data
-        model.User usermodel = model.User(id: userId, name: name, email: email);
+        model.User_model usermodel = model.User_model(id: userId, name: name, email: email);
 
         await _userService.addUser(usermodel);
         print('Data saved successfully!');
