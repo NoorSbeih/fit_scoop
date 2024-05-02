@@ -13,6 +13,7 @@ import '../../Models/user_model.dart';
 import '../../Services/authentication_service.dart';
 import '../../Services/email.dart';
 import '../../Services/Database Services/user_data_service.dart';
+import '../Widgets/bottom_navbar.dart';
 
 
 class Login extends StatelessWidget {
@@ -345,6 +346,8 @@ class _LoginPageState extends State<LoginPage> {
                   MaterialPageRoute(builder: (context) => Register()),
                 );
               },
+
+
               child: const Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Text(
