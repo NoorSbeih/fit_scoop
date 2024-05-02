@@ -5,6 +5,7 @@ import 'package:fit_scoop/Views/Screens/select_day_screen.dart';
 import 'package:fit_scoop/Views/Screens/test_screen.dart';
 import 'package:fit_scoop/Views/Screens/type_of_place_screen.dart';
 import 'package:fit_scoop/Views/Screens/goals_screen.dart';
+import 'package:fit_scoop/Views/Screens/workout_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -168,12 +169,12 @@ class _CustomPageViewState extends State<CustomPageView> {
     List<String> parts = dateString.split('/');
     String formattedDate = '${parts[2]}-${parts[0]}-${parts[1]}T00:00:00';
     DateTime dateTime = DateTime.parse(formattedDate);
-    model.BodyMetrics bodyMetrics= model.BodyMetrics(user_id:id,height: RegisterPage2.heightresult,weight: RegisterPage2.weightresult,birthDate: dateTime,
-    bodyFat: RegisterPage3.currentValue,gender: RegisterPage1.selectedgender,fitnessGoal:RegisterPage4.selectedGoals,gymOrHome: RegisterPage5.typeOfPlace,);
+    model.BodyMetrics bodyMetrics= model.BodyMetrics(userId:id,height: RegisterPage2.heightresult,weight: RegisterPage2.weightresult,birthDate: dateTime,
+    bodyFat: RegisterPage3.currentValue,gender: RegisterPage1.selectedgender,fitnessGoal:RegisterPage4.selectedGoals,gymType: RegisterPage5.typeOfPlace,);
     _bodyMetricController.addBodyMetrics(bodyMetrics);
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => TestPage()), // Replace SecondPage() with the desired page widget
+      MaterialPageRoute(builder: (context) => WorkoutPagee()), // Replace SecondPage() with the desired page widget
     );
   }
 

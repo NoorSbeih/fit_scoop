@@ -36,6 +36,7 @@ dependencies:
   google_fonts: ^6.2.1
   google_sign_in: ^6.2.1
   cloud_firestore: ^4.15.10
+  uuid: ^3.0.4
 
 
 

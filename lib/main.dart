@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'Views/Screens/home_page_screen.dart';
 import 'Views/Screens/register_screen.dart';
+import 'Controllers/workout_controller.dart';
 
 void main() async {
   print("Ba70000");
@@ -20,6 +21,7 @@ void main() async {
   runApp(const MyApp());
 }
 
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
         useMaterial3: true,
       ),
-      home: MyHomePage(title: '',),
+      home: const MyHomePage(title: '',),
     /*  routes: {
        // '/sign_up_view': (context) => SignUpPage(),
       //  '/home_view': (context) => const HomeView(),

@@ -10,7 +10,7 @@ class BodyMetricsService {
     try {
       DocumentReference documentRef = await _bodyMetricsRef.add(bodyMetrics.toMap());
       String documentId = documentRef.id;
-      await _usersRef.doc(bodyMetrics.user_id).update({'bodyMetrics':documentId});
+      await _usersRef.doc(bodyMetrics.userId).update({'bodyMetrics':documentId});
     } catch (e) {
       print('Error adding body metrics: $e');
       throw e;
