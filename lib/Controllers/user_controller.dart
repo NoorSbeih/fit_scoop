@@ -7,7 +7,7 @@ import '../Services/Database Services/user_service.dart';
 class UserController {
   final _userService = UserService();
 
-  Future<void> updateProfile(User user) async {
+  Future<void> updateProfile(User_model user) async {
     try {
       // Update user profile in Firestore
       await _userService.updateUser(user);

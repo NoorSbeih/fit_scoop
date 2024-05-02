@@ -81,7 +81,7 @@ class AuthenticationService {
   Future<void> saveUserDataToDatabase(User user) async {
     try {
       final UserService _userService = UserService();
-      model.User usermodel = model.User(id: user.uid, name: user.displayName.toString(), email: user.email.toString());
+      model.User_model usermodel = model.User_model(id: user.uid, name: user.displayName.toString(), email: user.email.toString());
 
       await _userService.addUser(usermodel);
       print('Data saved successfully!');

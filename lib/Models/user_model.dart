@@ -2,7 +2,7 @@ import 'body_metrics_model.dart';
 
 enum UnitMeasure { imperial, metric }
 
-class User {
+class User_model {
   final String id;
   final String name;
   final String email;
@@ -11,7 +11,7 @@ class User {
   final List<String> followedUserIds; // References to User IDs
   final List<String> savedWorkoutIds; // References to Workout IDs
 
-  User({
+  User_model({
     required this.id,
     required this.name,
     required this.email,
@@ -32,8 +32,8 @@ class User {
       'savedWorkoutIds': savedWorkoutIds,
     };
   }
-  factory User.fromMap(Map<String, dynamic> map) {
-    return User(
+  factory User_model.fromMap(Map<String, dynamic> map) {
+    return User_model(
       id: map['id'],
       name: map['name'],
       email: map['email'],
@@ -43,5 +43,6 @@ class User {
       savedWorkoutIds: List<String>.from(map['savedWorkoutIds']),
     );
   }
+
 
 }

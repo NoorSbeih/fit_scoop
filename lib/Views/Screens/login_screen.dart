@@ -10,9 +10,11 @@ import 'package:flutter_svg/svg.dart';
 import '../../Controllers/login_controller.dart';
 import '../../Models/user_model.dart';
 
+import '../../Models/user_singleton.dart';
 import '../../Services/authentication_service.dart';
 import '../../Services/email.dart';
 import '../../Services/Database Services/user_data_service.dart';
+import '../Widgets/bottom_navbar.dart';
 
 
 class Login extends StatelessWidget {
@@ -192,11 +194,15 @@ class _LoginPageState extends State<LoginPage> {
                           email, password)
                           .then((user) async {
                         if (user != null) {
+
                            if(await loginController.getUserBodyMetric()==null){
                              Navigator.push(
                                context,
                                MaterialPageRoute(builder: (context) => CustomPageView()),
                              );
+                           }
+                           else{
+
                            }
                           final UserDataService _userDataService = UserDataService();
                           _userDataService.getUserData(email);
@@ -345,6 +351,8 @@ class _LoginPageState extends State<LoginPage> {
                   MaterialPageRoute(builder: (context) => Register()),
                 );
               },
+
+
               child: const Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Text(

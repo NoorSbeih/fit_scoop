@@ -28,6 +28,13 @@ class _TestPageState extends State<TestPage> {
     super.initState();
   }
 
+  int _selectedIndex = 0;
+
+  void _onNavBarItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -48,7 +55,8 @@ class _TestPageState extends State<TestPage> {
 
           ],
       ),
-      bottomNavigationBar: MyNavigationBar(),
+      bottomNavigationBar: MyNavigationBar( selectedIndex: _selectedIndex,
+        onItemSelected: _onNavBarItemTapped,),
     );
 
   }

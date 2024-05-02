@@ -2,8 +2,8 @@
     <application
             android:label="fit_scoop"
             android:name="${applicationName}"
-
-            android:icon="@mipmap/ic_launcher">
+            android:icon="@mipmap/ic_launcher"
+            android:enableOnBackInvokedCallback="true">
         <activity
                 android:name=".MainActivity"
                 android:exported="true"
@@ -19,6 +19,7 @@
             <meta-data
                     android:name="io.flutter.embedding.android.NormalTheme"
                     android:resource="@style/NormalTheme"
+                    android:enableOnBackInvokedCallback="true"
             />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

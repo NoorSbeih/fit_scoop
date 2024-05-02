@@ -1,5 +1,7 @@
+import 'package:fit_scoop/Views/Screens/library/library_screen.dart';
 import 'package:fit_scoop/Views/Screens/test_screen.dart';
 import 'package:flutter/material.dart';
+import '../Widgets/bottom_navbar.dart';
 import 'login_screen.dart';
 import 'register_screen.dart';
 
@@ -81,7 +83,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => Login()),
-
                     );
                   },
                   style: ButtonStyle(

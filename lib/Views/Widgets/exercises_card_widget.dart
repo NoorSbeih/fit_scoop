@@ -8,13 +8,10 @@ class exercises_card {
       height: 105,
       child: Card(
         margin: const EdgeInsets.all(10),
-        color: const Color(0xFF383838),
+        color: Color(0xFF2C2A2A),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
-          side: BorderSide(
-            color: isSelected ? Color(0xFF0FE8040) : Colors.white,
-            width: 1,
-          ),
+
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,7 +21,7 @@ class exercises_card {
               height: double.infinity,
               width: 80,
               color: Colors.grey, // Placeholder color for the image
-              child: Icon(
+              child: const Icon(
                 Icons.photo, // Placeholder icon for the image
                 color: Colors.white,
               ),

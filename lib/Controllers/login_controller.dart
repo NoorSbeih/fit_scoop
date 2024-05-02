@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
+
+import '../Models/user_model.dart';
+import '../Models/user_singleton.dart';
 
 class LoginController {
   static String user_id="";
@@ -15,6 +17,7 @@ class LoginController {
         password: password,
       );
       User? user = userCredential.user;
+
       user_id=user!.uid;
       return user;
     } on FirebaseAuthException catch (e) {
@@ -32,12 +35,14 @@ class LoginController {
 
   Future<String?> getUserBodyMetric() async {
     try {
-
+  //  User _user;
       CollectionReference users = FirebaseFirestore.instance.collection('users');
       DocumentSnapshot snapshot = await users.doc(user_id).get();
       if (snapshot.exists) {
 
         Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+        User_model user = User_model.fromMap(data!);
+        UserSingleton.getInstance().setUser(user);
         final String? bodyMetrics = data?['bodyMetrics'];
         return bodyMetrics;
 

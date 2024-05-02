@@ -6,7 +6,7 @@ import '../../Models/user_model.dart' as model;
 class UserService {
   final CollectionReference _usersRef = FirebaseFirestore.instance.collection('users');
 
-  Future<void> addUser(model.User user) async {
+  Future<void> addUser(model.User_model user) async {
     try {
       await _usersRef.doc(user.id).set(user.toMap());
     } catch (e) {
@@ -15,7 +15,7 @@ class UserService {
     }
   }
 
-  Future<void> updateUser(model.User user) async {
+  Future<void> updateUser(model.User_model user) async {
     try {
       await _usersRef.doc(user.id).update(user.toMap());
     } catch (e) {
@@ -24,11 +24,11 @@ class UserService {
     }
   }
 
-  Future<model.User?> getUser(String id) async {
+  Future<model.User_model?> getUser(String id) async {
     try {
       var snapshot = await _usersRef.doc(id).get();
       if (snapshot.exists && snapshot.data() != null) {
-        return model.User.fromMap(snapshot.data() as Map<String, dynamic>);
+        return model.User_model.fromMap(snapshot.data() as Map<String, dynamic>);
       }
       return null;
     } catch (e) {
