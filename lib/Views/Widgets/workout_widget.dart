@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class workout_widget {
-  static Widget customcardWidget(int intensity, String name, String duration,
+  static Widget customcardWidget(int intensity, String name, int duration,
       String noExercises, bool isSelected) {
     return SizedBox(
       height: 110,

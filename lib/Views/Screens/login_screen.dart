@@ -3,6 +3,7 @@ import 'package:fit_scoop/Controllers/register_controller.dart';
 import 'package:fit_scoop/Views/Screens/page_view.screen.dart';
 import 'package:fit_scoop/Views/Screens/register_screen.dart';
 import 'package:fit_scoop/Views/Screens/reset_password.dart';
+import 'package:fit_scoop/Views/Screens/test_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -195,14 +196,20 @@ class _LoginPageState extends State<LoginPage> {
                           .then((user) async {
                         if (user != null) {
 
-                           if(await loginController.getUserBodyMetric()==null){
-                             Navigator.push(
-                               context,
-                               MaterialPageRoute(builder: (context) => CustomPageView()),
-                             );
-                           }
-                           else{
+                           // if(await loginController.getUserBodyMetric()==null){
+                           //   Navigator.push(
+                           //     context,
+                           //     MaterialPageRoute(builder: (context) => CustomPageView()),
+                           //   );
+                           // }
+                          if(await loginController.getUserBodyMetric()==null){
 
+                          }
+                           else{
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Test()),
+                            );
                            }
                           final UserDataService _userDataService = UserDataService();
                           _userDataService.getUserData(email);
