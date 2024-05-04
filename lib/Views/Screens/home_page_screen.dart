@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0FE8040)), // Change color to blue
+                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF00DBAB4)), // Change color to blue
                     fixedSize: MaterialStateProperty.all<Size>(const Size(150, 60)),
                   ),
                   child: const Text('Sign up',
@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     );
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0FE8040)), // Change color to blue
+                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF00DBAB4)), // Change color to blue
                     fixedSize: MaterialStateProperty.all<Size>(const Size(150, 60)),
                   ),
 

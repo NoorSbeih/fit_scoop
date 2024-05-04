@@ -44,7 +44,7 @@ class custom_widget {
             fontSize: 16.0,
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.bold,
-            color: Color(0xFF0FE8040),
+            color: Color(0xFF00DBAB4),
           ),
         ),
       ),

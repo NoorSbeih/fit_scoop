@@ -224,7 +224,7 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 style: ButtonStyle(
                   backgroundColor:
-                  MaterialStateProperty.all<Color>(const Color(0xFF0FE8040)),
+                  MaterialStateProperty.all<Color>(const Color(0xFF00DBAB4)),
                   fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
                   shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                         (Set<MaterialState> states) {
