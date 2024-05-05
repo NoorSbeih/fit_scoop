@@ -4,7 +4,6 @@ import 'package:fit_scoop/Views/Screens/page_view.screen.dart';
 import 'package:fit_scoop/Views/Screens/register_screen.dart';
 import 'package:fit_scoop/Views/Screens/reset_password.dart';
 import 'package:fit_scoop/Views/Screens/test_screen.dart';
-import 'package:fit_scoop/Views/Screens/current_workout_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -197,12 +196,15 @@ class _LoginPageState extends State<LoginPage> {
                           .then((user) async {
                         if (user != null) {
 
-                           if(await loginController.getUserBodyMetric()==null){
-                             Navigator.push(
-                               context,
-                               MaterialPageRoute(builder: (context) => CustomPageView()),
-                             );
-                           }
+                           // if(await loginController.getUserBodyMetric()==null){
+                           //   Navigator.push(
+                           //     context,
+                           //     MaterialPageRoute(builder: (context) => CustomPageView()),
+                           //   );
+                           // }
+                          if(await loginController.getUserBodyMetric()==null){
+
+                          }
                            else{
                              Navigator.push(
                                context,
@@ -356,6 +358,8 @@ class _LoginPageState extends State<LoginPage> {
                   MaterialPageRoute(builder: (context) => Register()),
                 );
               },
+
+
               child: const Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Text(

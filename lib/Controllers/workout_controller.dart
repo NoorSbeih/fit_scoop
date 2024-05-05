@@ -54,14 +54,24 @@ class WorkoutController {
       throw e;
     }
   }
-  Future<List<Workout>> getWorkoutsByUserId(String userId) async {
+  Future<List<Workout>> getWorkoutsByUserId(String? userId) async {
     try {
-      return await _workoutService.getWorkoutsByUserId(userId);
+      if (userId == null) {
+        throw ArgumentError.notNull('userId');
+      }
+
+      List<Workout> workouts = await _workoutService.getWorkoutsByUserId(userId);
+      if (workouts.isEmpty) {
+        print('No workouts found for user ID: $userId');
+      }
+      return workouts;
     } catch (e) {
       // Handle error
       print('Error getting workouts by user ID: $e');
       throw e;
     }
   }
+
+
 // Add more methods as needed
 }

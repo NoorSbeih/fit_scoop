@@ -7,7 +7,6 @@ import '../../../Controllers/workout_controller.dart';
 import '../../../Models/workout_model.dart';
 import '../../Widgets/bottom_navbar.dart';
 
-
 class LibraryPage extends StatelessWidget {
   const LibraryPage({Key? key}) : super(key: key);
 
@@ -28,8 +27,9 @@ class LibraryScreen extends StatefulWidget {
 
 class _LibraryScreen extends State<LibraryScreen>
     with SingleTickerProviderStateMixin {
-    late TabController _tabController;
-     List<Workout> workouts=[];
+  late TabController _tabController;
+  List<Workout> workouts = [];
+
   @override
   void initState() {
     super.initState();
@@ -37,41 +37,46 @@ class _LibraryScreen extends State<LibraryScreen>
     fetchData();
   }
 
-    late List<Workout> filteredWorkouts = [];
+  late List<Workout> filteredWorkouts = [];
 
-    void filterWorkouts(String query) {
-      setState(() {
-        filteredWorkouts = workouts
-            .where((workout) =>
-            workout.name.toLowerCase().contains(query.toLowerCase()))
-            .toList();
-      });
-    }
+  void filterWorkouts(String query) {
+    setState(() {
+      filteredWorkouts = workouts
+          .where((workout) =>
+              workout.name.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    });
+  }
 
+  void fetchData() async {
+    try {
+      UserSingleton userSingleton = UserSingleton.getInstance();
+      User_model user = userSingleton.getUser();
 
-    void fetchData() async {
-      try {
-        UserSingleton userSingleton = UserSingleton.getInstance();
-        User_model user = userSingleton.getUser();
+      if (user != null && user.id != null) {
         String userId = user.id;
         WorkoutController controller = WorkoutController();
-        List<Workout> filteredWorkouts = await controller.getWorkoutsByUserId(userId); // Await the result here
+        List<Workout> filteredWorkouts = await controller.getWorkoutsByUserId(userId);
         setState(() {
           workouts = filteredWorkouts;
-
         });
-      } catch (e) {
-        // Handle error
-        print('Error getting workouts by user ID: $e');
-        throw e;
+      } else {
+        print('User or user ID is null.');
       }
+    } catch (e) {
+      print('Error getting workouts by user ID: $e');
+      throw e;
     }
+  }
+
+
+
+
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
   }
-
 
   int _selectedIndex = 3;
 
@@ -83,7 +88,6 @@ class _LibraryScreen extends State<LibraryScreen>
 
   @override
   Widget build(BuildContext context) {
-
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -109,8 +113,14 @@ class _LibraryScreen extends State<LibraryScreen>
                 IconButton(
                   icon: Icon(Icons.search),
                   color: Color(0xFF0dbab4),
-                  onPressed: () {
-                    // Add functionality for the second search icon
+                  onPressed: () async {
+                    final String? query = await showSearch(
+                      context: context,
+                      delegate: WorkoutSearchDelegate(workouts),
+                    );
+                    if (query != null && query.isNotEmpty) {
+                      filterWorkouts(query);
+                    }
                   },
                 ),
               ],
@@ -137,22 +147,11 @@ class _LibraryScreen extends State<LibraryScreen>
               child: ListView.builder(
                 itemCount: workouts.length,
                 itemBuilder: (context, index) {
-                 // var workout = workouts[index];
-                  var workout = workouts[index];
-                  int intensity=0;
-                  if( workout.intensity=="Low"){
-                    intensity=1;
-                  } else  if(  workout.intensity=="Medium"){
-                    intensity=2;
-                  }else  if(  workout.intensity=="High"){
-                    intensity=3;
-                  }
+                  // var workout = workouts[index];
+                  Workout workout = workouts[index];
                   return workout_widget.customcardWidget(
-                    intensity ,
-                    workout.name,
-                    workout.duration,
-                    workout.exercises.length.toString(),
-                    false,
+                   workout,
+                    false,context
                   );
                 },
               ),
@@ -163,11 +162,14 @@ class _LibraryScreen extends State<LibraryScreen>
         bottomNavigationBar: MyNavigationBar(
           selectedIndex: _selectedIndex,
           onItemSelected: _onNavBarItemTapped,
+
+
         ),
       ),
     );
   }
 }
+
 class WorkoutSearchDelegate extends SearchDelegate<String> {
   final List<Workout> workouts;
 
@@ -208,9 +210,9 @@ class WorkoutSearchDelegate extends SearchDelegate<String> {
     final List<Workout> suggestionList = query.isEmpty
         ? []
         : workouts
-        .where((workout) =>
-        workout.name.toLowerCase().contains(query.toLowerCase()))
-        .toList();
+            .where((workout) =>
+                workout.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
 
     return ListView.builder(
       itemCount: suggestionList.length,

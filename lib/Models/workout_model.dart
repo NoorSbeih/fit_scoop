@@ -12,6 +12,8 @@ class Workout {
   final int duration;
   final String intensity;
   final String creatorId;
+   final int numberOfSaves;
+  final List<String> reviews;
 
   Workout({
     required this.id,
@@ -21,6 +23,9 @@ class Workout {
     required this.duration,
     required this.intensity,
     required this.creatorId,
+   required this.numberOfSaves,
+    required this.reviews,
+
   });
 
   // Convert WorkoutModel to a map (for Firestore)
@@ -37,6 +42,8 @@ class Workout {
       'duration': duration,
       'intensity': intensity,
       'creatorId': creatorId,
+      'numberOfSaves': numberOfSaves,
+      // 'reviews': reviews,
     };
   }
 
@@ -50,6 +57,8 @@ class Workout {
       duration: map['duration'],
       intensity: map['intensity'],
       creatorId: map['creatorId'],
+      numberOfSaves: map['numberOfSaves'],
+      reviews: List<String>.from(map['reviews'] ?? []),
     );
   }
 
