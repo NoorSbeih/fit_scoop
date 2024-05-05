@@ -32,6 +32,7 @@ class ExerciseService {
     try {
       var snapshot = await _exercisesRef.doc(id).get();
       if (snapshot.exists && snapshot.data() != null) {
+        print("it is existttt");
         return Exercise.fromMap(id, snapshot.data() as Map<String, dynamic>);
       }
       return null; // Exercise not found

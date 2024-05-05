@@ -15,6 +15,14 @@ class ExerciseController {
       throw e;
     }
   }
+  Future<Exercise?> getExercise(String id) async {
+    try {
+      return await _exerciseService.getExercise(id);
+    } catch (e) {
+      print('Error getting workout: $e');
+      throw e;
+    }
+  }
 
   Future<void> updateExercise(Exercise exercise) async {
     try {

@@ -39,7 +39,6 @@ class WorkoutController {
 
   Future<Workout?> getWorkout(String id) async {
     try {
-      // Get the workout from Firestore
       return await _workoutService.getWorkout(id);
     } catch (e) {
       print('Error getting workout: $e');

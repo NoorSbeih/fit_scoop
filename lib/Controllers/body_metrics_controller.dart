@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../Models/body_metrics_model.dart';
 import '../Services/Database Services/body_metrics_service.dart';
 
@@ -34,16 +36,13 @@ class BodyMetricsController {
       throw e;
     }
   }
- 
-  Future<BodyMetrics?> fetchBodyMetrics(String userid) async {
+  Future<BodyMetrics?> fetchBodyMetrics(String userId) async {
     try {
-      // Fetch body metrics from the database using the BodyMetricsService
-      return await _bodyMetricsService.getBodyMetrics(userid);
+      return await _bodyMetricsService.getBodyMetrics(userId);
     } catch (e) {
-      print('Error fetching body metrics: $e');
+      print('Error getting workout: $e');
       throw e;
     }
-  }
 
-// Add more methods as needed
+  }
 }

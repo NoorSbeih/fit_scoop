@@ -71,7 +71,7 @@ class _RegisterPageState extends State<RegisterPage5> {
                 child:cardWidget("Small gym","small gym that has a limited amount of equipment that just get the job done."),
               ),
 
-           /*   Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child:cardWidget("Home","Work-out at home with every limited equipment such as dumbbells,pull-up bars,etc."),
               ),
@@ -80,11 +80,8 @@ class _RegisterPageState extends State<RegisterPage5> {
               Align(
                 alignment: Alignment.centerLeft,
                 child:cardWidget("Bodyweight training","Work-out with little to no equipment with exercises that use your bodyweight."),
-              ),*/
-              Align(
-                alignment: Alignment.centerLeft,
-                child:testingWidget("Leg","4 sets","12kg")
               ),
+
 
             ]
         )
@@ -103,24 +100,6 @@ class _RegisterPageState extends State<RegisterPage5> {
       child: card_widget.customcardWidget(
         title,
         description,
-        isSelected,
-      ),
-    );
-  }
-  Widget testingWidget(String title, String description,String name) {
-    bool isSelected =RegisterPage5.typeOfPlace == title;
-
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          RegisterPage5.typeOfPlace=title;
-
-        });
-      },
-      child: exercises_card.customcardWidget(
-        title,
-        description,
-        name,
         isSelected,
       ),
     );
