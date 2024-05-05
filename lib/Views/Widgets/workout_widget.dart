@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import '../../Models/workout_model.dart';
+import '../Screens/library/workout_detail_screen.dart';
+
 class workout_widget {
-  static Widget customcardWidget(int intensity, String name, int duration,
-      String noExercises, bool isSelected) {
+  static Widget customcardWidget(Workout workout,isSelected, BuildContext context) {
+
+    int intensity = 0;
+    if (workout.intensity == "Low") {
+      intensity = 1;
+    } else if (workout.intensity == "Medium") {
+      intensity = 2;
+    } else if (workout.intensity == "High") {
+      intensity = 3;
+    }
     return SizedBox(
       height: 110,
       width: 300,
@@ -49,7 +60,7 @@ class workout_widget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          name,
+                          workout.name,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 16,
@@ -59,7 +70,7 @@ class workout_widget {
                         ),
                         SizedBox(height: 2),
                         Text(
-                          '$duration MINS | $noExercises EXERCISES',
+                          '${workout.duration} MINS | ${workout.exercises.length} EXERCISES',
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 14,
@@ -75,7 +86,13 @@ class workout_widget {
               ),
               const Spacer(),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+
+             Navigator.push(context,MaterialPageRoute(
+               builder: (context) => DetailPage(workout: workout),
+          ),
+         );
+                },
                 child: Container(
                   margin: const EdgeInsets.only(left: 10),
                   child: const Icon(

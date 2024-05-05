@@ -34,6 +34,13 @@ class ReviewController {
       throw e;
     }
   }
-  
-// Add more methods as needed
+  Future<List<Review>> getReviewsByWorkoutId(String workoutId) async {
+    try {
+      // Get reviews for the specific workout ID from the database using the ReviewService
+      return await _reviewService.getReviewsByWorkoutId(workoutId);
+    } catch (e) {
+      print('Error getting reviews for workout ID $workoutId: $e');
+      throw e;
+    }
+  }
 }

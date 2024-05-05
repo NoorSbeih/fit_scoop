@@ -50,4 +50,18 @@ class ReviewService {
       throw e;
     }
   }
+
+
+  Future<List<Review>> getReviewsByWorkoutId(String workoutId) async {
+    try {
+      QuerySnapshot snapshot = await _reviewsRef.where('workoutId', isEqualTo: workoutId).get();
+      List<Review> reviews = snapshot.docs.map((doc) => Review.fromMap(doc.id, doc.data() as Map<String, dynamic>)).toList();
+      return reviews;
+    } catch (e) {
+      print('Error getting reviews by workout ID: $e');
+      throw e;
+    }
+  }
+
+
 }

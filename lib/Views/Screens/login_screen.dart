@@ -206,6 +206,8 @@ class _LoginPageState extends State<LoginPage> {
 
                           }
                            else{
+
+                             print("hdhdhdhd"+user.uid);
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => Test()),
