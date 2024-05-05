@@ -129,7 +129,7 @@ class _CustomPageViewState extends State<CustomPageView> {
               },
                style: ButtonStyle(
                  backgroundColor: MaterialStateProperty.all<Color>(
-                     const Color(0xFF0FE8040)),
+                     const Color(0xFF00DBAB4)),
                  fixedSize: MaterialStateProperty.all<Size>(
                      const Size(190, 50)),
                  shape: MaterialStateProperty.resolveWith<OutlinedBorder>(

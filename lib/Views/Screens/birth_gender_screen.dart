@@ -138,7 +138,7 @@ class _RegisterPageState extends State<RegisterPage1> {
                     onPressed: () => _selectDate(context),
                     icon: const Icon(
                       Icons.calendar_month_outlined,
-                      color: Color(0xff0fe8040), // Change the color of the icon
+                      color: Color(0xff00DBAB4), // Change the color of the icon
                     ),
                   ),
 

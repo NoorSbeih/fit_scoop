@@ -98,7 +98,7 @@ class _RegisterPageState extends State<RegisterPage6> {
                     shape:  RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                       side: BorderSide(
-                        color: RegisterPage6.isSelected[index] ?  Color(0xFF0FE8040):Colors.white,
+                        color: RegisterPage6.isSelected[index] ?  Color(0xFF00DBAB4):Colors.white,
                         width:1,
                       )
                     ),

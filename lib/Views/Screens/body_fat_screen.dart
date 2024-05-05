@@ -112,7 +112,7 @@ class _RegisterPageState extends State<RegisterPage3> {
                 data: SliderTheme.of(context).copyWith(
                   activeTrackColor: const Color(0xFF0FFA466),
                   inactiveTrackColor: const Color(0xFF04d4d4d),
-                  thumbColor: const Color(0xFF0FE8040),
+                  thumbColor: const Color(0xFF00DBAB4),
                   overlayColor: const Color(0xFF0FF954D).withAlpha(32),
                   valueIndicatorColor: const Color(0xFF0FF954D),
                 ),

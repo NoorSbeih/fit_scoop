@@ -14,7 +14,7 @@ class card_widget {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         side: BorderSide(
-          color: isSelected ? Color(0xFF0FE8040): Colors.white,
+          color: isSelected ? Color(0xFF00DBAB4): Colors.white,
           width: 1,
         ),
       ),
