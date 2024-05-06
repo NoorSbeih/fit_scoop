@@ -30,10 +30,12 @@ class WorkoutPagee extends StatefulWidget{
 
 class _WorkoutPageState extends State<WorkoutPagee> {
   int _selectedIndex = 3;
+  Workout? currentWorkout;
 
   void _onNavBarItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+
     });
   }
   late List<Map<String, dynamic>> exercises = [];
@@ -58,8 +60,9 @@ class _WorkoutPageState extends State<WorkoutPagee> {
       BodyMetrics? metrics = await controller.fetchBodyMetrics(bodyMetricId!);
       print(metrics?.workoutSchedule);
       if (metrics != null) {
-        Workout? currentWorkout = await Calculate(metrics.workoutSchedule);
-        setState(() {
+        currentWorkout = await Calculate(metrics.workoutSchedule);
+        setState(()  {
+
           exercises = currentWorkout!.exercises;
           intensity=checkIntensity( currentWorkout!.intensity);
            name=currentWorkout!.name;
@@ -107,10 +110,14 @@ class _WorkoutPageState extends State<WorkoutPagee> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
-            child: Align(
+            child: currentWorkout != null
+                ? Align(
               alignment: Alignment.centerLeft,
-              child: workout_widget.customcardWidget(
-                  intensity, name, duration, exercises.length.toString(), false),
+              child: workout_widget.customcardWidget(currentWorkout!, false, context),
+            )
+                : const Align(
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(),
             ),
           ),
           const SizedBox(height: 10.0),

@@ -102,7 +102,7 @@ List<String> muscleGroups = exercise.muscleGroups;
               padding: EdgeInsets.only( left: 16, bottom: 10),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: custom_widget.WorkoutTexttWidget(description,12),
+                child: custom_widget.WorkoutTexttWidget(description,14),
               ),
             ),
             Padding(
@@ -113,10 +113,10 @@ List<String> muscleGroups = exercise.muscleGroups;
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 16,bottom:129),
+              padding: EdgeInsets.only(left: 16,bottom:98),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: custom_widget.WorkoutTexttWidget(target,12),
+                child: custom_widget.WorkoutTexttWidget(target,14),
               ),
             ),
 

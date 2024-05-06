@@ -16,6 +16,7 @@ import '../../Services/authentication_service.dart';
 import '../../Services/email.dart';
 import '../../Services/Database Services/user_data_service.dart';
 import '../Widgets/bottom_navbar.dart';
+import 'current_workout_screen.dart';
 
 
 class Login extends StatelessWidget {
