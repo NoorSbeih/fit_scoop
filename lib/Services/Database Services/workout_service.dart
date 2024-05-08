@@ -7,7 +7,6 @@ import '../../Models/workout_model.dart';
 class WorkoutService {
   final CollectionReference _workoutsRef = FirebaseFirestore.instance.collection('workouts');
 
-  // Add new workout document to Firestore
   Future<void> addWorkout(Workout workout) async {
     try {
       await _workoutsRef.doc(workout.id).set(workout.toMap());
@@ -47,16 +46,21 @@ class WorkoutService {
       throw e;
     }
   }
+
   // Retrieve workout document from Firestore based on workout ID
   Future<Workout?> getWorkout(String id) async {
     try {
-      var snapshot = await _workoutsRef.doc(id).get();
+
+      var snapshot = await _workoutsRef.doc("a910a339-e4c9-4392-9443-79ab8b83a131").get();
       if (snapshot.exists && snapshot.data() != null) {
         return Workout.fromMap(id, snapshot.data() as Map<String, dynamic>);
+      } else {
+        print('Workout with ID $id does not exist or snapshot data is null.');
+
       }
-      return null; // Workout not found
-    } catch (e) {
+    } catch (e, stackTrace) {
       print('Error getting workout: $e');
+      print('Stack Trace: $stackTrace');
       throw e;
     }
   }

@@ -16,6 +16,7 @@ import '../../Services/authentication_service.dart';
 import '../../Services/email.dart';
 import '../../Services/Database Services/user_data_service.dart';
 import '../Widgets/bottom_navbar.dart';
+import 'current_workout_screen.dart';
 
 
 class Login extends StatelessWidget {
@@ -206,12 +207,10 @@ class _LoginPageState extends State<LoginPage> {
 
                           }
                            else{
-
-                             print("hdhdhdhd"+user.uid);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => Test()),
-                            );
+                             Navigator.push(
+                               context,
+                               MaterialPageRoute(builder: (context) => WorkoutPage()), // Replace SecondPage() with the desired page widget
+                             );
                            }
                           final UserDataService _userDataService = UserDataService();
                           _userDataService.getUserData(email);

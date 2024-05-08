@@ -17,9 +17,9 @@ class workout_widget {
     }
     return SizedBox(
       height: 110,
-      width: 300,
+
       child: Card(
-        margin: const EdgeInsets.only(left:35,right:35,top:15),
+        margin: const EdgeInsets.only(left:20,right:20,top:15),
         color: const Color(0xFF2C2A2A),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),

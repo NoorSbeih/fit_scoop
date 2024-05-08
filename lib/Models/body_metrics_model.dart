@@ -1,16 +1,20 @@
 
+import 'dart:convert';
+import 'dart:core';
+import 'dart:core';
+
 import 'package:fit_scoop/Models/workout_model.dart';
 
 class BodyMetrics {
   final String userId; // User ID associated with these metrics
   final double height;
   final double weight;
-  final DateTime birthDate;
+  final String birthDate;
   final String gender;
   final double bodyFat;
   final List<String> fitnessGoal;
   final String gymType;
-  final List<List<String>> workoutSchedule; // List of workouts for each day
+  final List<String> workoutSchedule; // List of workouts for each day
 
   BodyMetrics({
     required this.userId,
@@ -21,8 +25,8 @@ class BodyMetrics {
     required this.bodyFat,
     required this.fitnessGoal,
     required this.gymType,
-    List<List<String>>? workoutSchedule, // Optional parameter for workout schedule
-  }) : this.workoutSchedule = workoutSchedule ?? List.generate(7, (_) => []);
+    List<String>? workoutSchedule,
+  }) : this.workoutSchedule = workoutSchedule ?? List.filled(7, '');
 
   // Convert BodyMetricsModel to a map (for Firestore)
   Map<String, dynamic> toMap() {
@@ -47,12 +51,40 @@ class BodyMetrics {
       birthDate: map['birthDate'],
       gender: map['gender'],
       bodyFat: map['bodyFat'],
-      fitnessGoal: List<String>.from(map['fitnessGoal'] ?? []),
+      fitnessGoal:map['fitnessGoal'].cast<String>(),
       gymType: map['gymType'],
-      workoutSchedule: List<List<String>>.from(map['workoutSchedule'] ?? List.generate(7, (_) => [])),
+      workoutSchedule: map['workoutSchedule'].cast<String>(),
     );
   }
+
+
+
 }
 
+/*List<String> convert(List<dynamic> x){
+List<dynamic> fitnessGoalList =x;
+List<String> fitnessGoal = fitnessGoalList.cast<String>();
+return fitnessGoal;
+}
+List<List<String>> convert2(dynamic x) {
+  if (x is List<dynamic>) {
 
-
+    return x.map((dynamic item) {
+      if (item is List<dynamic>) {
+        return item.map((dynamic innerItem) => innerItem.toString()).toList();
+      } else {
+        return [item.toString()];
+      }
+    }).toList();
+  } else if (x is String) {
+    try {
+      List<dynamic> parsedList = jsonDecode(x);
+      if (parsedList is List<dynamic>) {
+        return convert2(parsedList);
+      }
+    } catch (e) {
+      print('Error parsing workout schedule JSON: $e');
+    }
+  }
+  return [];
+}*/

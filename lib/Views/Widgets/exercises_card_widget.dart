@@ -1,17 +1,17 @@
+import 'package:fit_scoop/Views/Screens/exercise_details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class exercises_card {
   static Widget customcardWidget(
-      String name, String sets, String weight, bool isSelected) {
+      String name, String sets, String weight,BuildContext context,String id,int duration) {
     return SizedBox(
       height: 105,
       child: Card(
-        margin: const EdgeInsets.all(10),
+        margin: const EdgeInsets.only(left: 20, right: 20, top: 15),
         color: Color(0xFF2C2A2A),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
-
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,7 +32,7 @@ class exercises_card {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left:7,top: 15),
+                    padding: const EdgeInsets.only(left: 7, top: 15),
                     child: Text(
                       name,
                       style: const TextStyle(
@@ -44,7 +44,7 @@ class exercises_card {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left:7,bottom: 10, top: 1),
+                    padding: EdgeInsets.only(left: 7, bottom: 10, top: 1),
                     child: Text(
                       sets + " | " + weight,
                       style: const TextStyle(
@@ -58,21 +58,43 @@ class exercises_card {
                 ],
               ),
             ),
-      GestureDetector(
-        onTap: () {
+            GestureDetector(
+              onTap: () {
+                print("popppp"+id);
+                // Show the bottom sheet from bottom to up
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                  ),
+                  builder: (BuildContext context) {
+                    return Container(
+                      height: MediaQuery.of(context).size.height * 0.89,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                        border: Border.all(
+                          width: 2.0, // Border width
+                        ),
+                      ),
+                      child: ExerciseDetailsPage(id: id,sets:sets,duration:duration),
+                    );
+                  },
+                );
 
-        },
-           child:Container(
-              margin: EdgeInsets.all(16),
-              child: Icon(
-                Icons.more_horiz_outlined,
-                color: Colors.white,
+              },
+              child: Container(
+                margin: EdgeInsets.all(16),
+                child: Icon(
+                  Icons.more_horiz_outlined,
+                  color: Color(0xFF0dbab4),
+                ),
               ),
             ),
-      ),
           ],
         ),
       ),
     );
+
   }
 }

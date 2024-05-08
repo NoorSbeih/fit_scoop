@@ -1,0 +1,241 @@
+import 'package:fit_scoop/Controllers/body_metrics_controller.dart';
+import 'package:fit_scoop/Models/body_metrics_model.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:fit_scoop/Models/user_model.dart';
+import '../../Controllers/workout_controller.dart';
+import 'package:fit_scoop/Views/Widgets/exercises_card_widget.dart';
+import 'package:fit_scoop/Views/Widgets/workout_widget.dart';
+import '../../Models/user_singleton.dart';
+import '../../Models/workout_model.dart';
+import '../Widgets/bottom_navbar.dart';
+class WorkoutPage extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: WorkoutPagee (),
+    );
+  }
+}
+
+class WorkoutPagee extends StatefulWidget{
+
+
+  const WorkoutPagee ({Key? key}) : super(key: key);
+
+  @override
+  State<WorkoutPagee > createState() => _WorkoutPageState();
+}
+
+class _WorkoutPageState extends State<WorkoutPagee> {
+  int _selectedIndex = 3;
+  Workout? currentWorkout;
+
+  void _onNavBarItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+
+    });
+  }
+  late List<Map<String, dynamic>> exercises = [];
+
+   int intensity=0;
+   String name="";
+  int duration=0;
+
+  void initState() {
+    super.initState();
+    fetchData();
+
+  }
+
+  void fetchData() async {
+    try {
+      UserSingleton userSingleton = UserSingleton.getInstance();
+      User_model user = userSingleton.getUser();
+      String? bodyMetricId = user.bodyMetrics;
+      print(bodyMetricId); // Assuming you want the user's UID
+      BodyMetricsController controller = new BodyMetricsController();
+      BodyMetrics? metrics = await controller.fetchBodyMetrics(bodyMetricId!);
+      print(metrics?.workoutSchedule);
+      if (metrics != null) {
+        currentWorkout = await Calculate(metrics.workoutSchedule);
+        setState(()  {
+
+          exercises = currentWorkout!.exercises;
+          intensity=checkIntensity( currentWorkout!.intensity);
+           name=currentWorkout!.name;
+           duration=currentWorkout!.duration;
+          print(exercises);
+          buildExerciseCards(exercises);
+        });
+      } else {
+        // Handle case where metrics is null
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
+      // Handle error if needed
+    }
+  }
+
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Color(0xFF2C2A2A),
+      appBar: AppBar(
+        backgroundColor: Color(0xFF2C2A2A), // Match with scaffold background color
+        leading: IconButton(
+          icon: const Icon(Icons.menu,  color: Color(0xFF0dbab4),),
+          onPressed: () {
+            // Handle settings icon pressed
+          },
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings,color: Color(0xFF0dbab4),),
+            onPressed: () {
+              // Handle menu icon pressed
+            },
+          ),
+        ],
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: currentWorkout != null
+                ? Align(
+              alignment: Alignment.centerLeft,
+              child: workout_widget.customcardWidget(currentWorkout!, false, context),
+            )
+                : const Align(
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(),
+            ),
+          ),
+          const SizedBox(height: 10.0),
+          const Padding(
+            padding: EdgeInsets.only(left: 20, right: 20),
+            child: Divider(
+              color: Colors.grey,
+              thickness: 1.0,
+            ),
+          ), // Adjust the height as needed for spacing
+          Expanded(
+            child: buildExerciseCards(exercises),
+          ),
+          Container(
+            alignment: Alignment.center,
+            height: 80.0, // Set a fixed height for the button container
+            child: ElevatedButton(
+              onPressed: () async {},
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0dbab4)),
+                fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
+                shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
+                      (Set<MaterialState> states) {
+                    return RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0), // Border radius
+                    );
+                  },
+                ),
+              ),
+              child: const Text(
+                'BEGIN WORKOUT',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Color(0xFF2C2A2A),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: MyNavigationBar(
+        selectedIndex: _selectedIndex,
+        onItemSelected: _onNavBarItemTapped,
+      ),
+    );
+  }
+
+  Widget buildExerciseCards(exercises) {
+    return ListView.builder(
+      itemCount: exercises.length,
+      itemBuilder: (context, index) {
+        Map<String, dynamic> exercise = exercises[index];
+        String id=exercise['id'];
+        final name = exercise['name'];
+        final sets = exercise['sets'];
+        final weight = exercise['weight'];
+        if (name != null && sets != null && weight != null) {
+          return exercises_card.customcardWidget(
+            name.toString(),
+            sets.toString(),
+            weight.toString(),
+            context,
+            id,
+            duration,
+
+          );
+        } else {
+
+          return SizedBox(); // Placeholder widget, replace it with your preferred widget
+        }
+      },
+    );
+  }
+
+
+
+  Future<Workout?> Calculate(List<String> workoutSchedule) async {
+    int currentDayOfWeek = DateTime.now().weekday;
+    print("The day of the week");
+    print(getDayOfWeek(currentDayOfWeek ));
+    String currentWorkoutId = workoutSchedule[getDayOfWeek(currentDayOfWeek )];
+    print(currentWorkoutId);
+    print("IDDDD");
+    WorkoutController controller = new WorkoutController();
+    return controller.getWorkout(currentWorkoutId);
+  }
+
+  int getDayOfWeek(int day) {
+    switch (day) {
+      case DateTime.saturday:
+        return 0;
+      case DateTime.sunday:
+        return 1;
+      case DateTime.monday:
+        return 2;
+      case DateTime.tuesday:
+        return 3;
+      case DateTime.wednesday:
+        return 4;
+      case DateTime.thursday:
+        return 5;
+      case DateTime.friday:
+        return 6;
+      default:
+        return 7;
+    }
+
+    }
+  int checkIntensity (String intensity){
+    if( intensity=="Low"){
+     return 1;
+    } else  if(intensity=="Medium"){
+    return 2;
+    }else  if(intensity=="High"){
+      return 3;
+    }
+    return 0;
+  }
+
+
+}

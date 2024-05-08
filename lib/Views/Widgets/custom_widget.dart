@@ -30,27 +30,30 @@ class custom_widget {
       ),
     );
   }
-
-  static Widget skipButtom(VoidCallback skipToNextPage){
-   return  Align(
-      alignment: Alignment.topRight,
-      child: InkWell(
-        onTap: () {
-          skipToNextPage();
-        },
-        child: const Text(
-          'Skip',
-          style: TextStyle(
-            fontSize: 16.0,
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF00DBAB4),
-          ),
-        ),
+  static Widget WorkoutTitletWidget(String text,Color color) {
+    return Text(
+      text,
+      style: TextStyle(
+        color:color, // Change color to blue
+        fontSize: 24, // Set font size to 18
+        fontWeight: FontWeight.bold, // Make text bold
+        fontFamily: 'bebas neue', // Specify font family (optional)
       ),
-
     );
   }
+  static Widget WorkoutTexttWidget(String text,double font) {
+    return Text(
+      text,
+      style:  TextStyle(
+        color: Colors.white, // Change color to blue
+        fontSize: font, // Set font size to 18
+        fontWeight: FontWeight.bold, // Make text bold
+        fontFamily: 'source sans pro', // Specify font family (optional)
+      ),
+    );
+  }
+
+
 
   static Widget textFormFieldWidget(String hinttext,
       TextEditingController controller, BuildContext context, String text,

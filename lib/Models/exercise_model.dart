@@ -15,7 +15,6 @@ class Exercise {
     required this.muscleGroups,
   });
 
-  // Convert ExerciseModel to a map (for Firestore)
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -26,15 +25,14 @@ class Exercise {
     };
   }
 
-  // Convert Firestore data to ExerciseModel
   factory Exercise.fromMap(String id, Map<String, dynamic> map) {
     return Exercise(
       id: id,
       name: map['name'],
       description: map['description'],
       type: map['type'],
-      muscleGroups: List<String>.from(map['muscleGroups'] ?? []),
+      muscleGroups:map['muscleGroups'].cast<String>(),
     );
   }
-}
 
+}

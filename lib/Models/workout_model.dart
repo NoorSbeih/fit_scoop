@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'exercise_model.dart';
 
 // models/workout_model.dart
@@ -51,7 +53,7 @@ class Workout {
       id: id,
       name: map['name'],
       description: map['description'],
-      exercises: List<Map<String,dynamic>>.from(map['exercises'] ?? []),
+      exercises: parseExercises(map['exercises']),
       duration: map['duration'],
       intensity: map['intensity'],
       creatorId: map['creatorId'],
@@ -59,4 +61,32 @@ class Workout {
       reviews: List<String>.from(map['reviews'] ?? []),
     );
   }
+
+}
+List<Map<String, dynamic>> parseExercises(dynamic exercises) {
+  List<Map<String, dynamic>> parsedExercises = [];
+
+  if (exercises is List<dynamic>) {
+    // If exercises is already a list, return it directly
+    return List<Map<String, dynamic>>.from(exercises);
+  } else if (exercises is String) {
+    // If exercises is a string, parse it as JSON
+    try {
+      List<dynamic> parsedList = jsonDecode(exercises);
+      if (parsedList is List<dynamic>) {
+        // Check if the parsed result is indeed a list
+        for (var item in parsedList) {
+          if (item is Map<String, dynamic>) {
+            parsedExercises.add(item);
+          } else {
+            print('Invalid exercise format: $item');
+          }
+        }
+      }
+    } catch (e) {
+      print('Error parsing exercises: $e');
+    }
+  }
+
+  return parsedExercises;
 }
