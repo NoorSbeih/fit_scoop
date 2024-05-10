@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 import '../../Widgets/bottom_navbar.dart';
 import 'createworkout2.dart';
 
@@ -53,16 +53,20 @@ class _createWorkout1  extends State<createWorkout1> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-    Padding(
-    padding: const EdgeInsets.only(bottom: 10,left:16,right:16),
-       child: TextField(
-         decoration: InputDecoration(
-           hintText: 'Workout Name ', // Your hint text goes here
-           border: UnderlineInputBorder(
-             borderSide: BorderSide(color: Colors.transparent), // Transparent color to hide border
-           ),
-           focusedBorder: UnderlineInputBorder(
-             borderSide: BorderSide(color: Colors.white), // Transparent color to hide border
+    const Padding(
+    padding: EdgeInsets.only(bottom: 10,left:16,right:16),
+       child:Padding(
+         padding: EdgeInsets.only(bottom: 10, left: 16, right: 16),
+         child: TextField(
+           decoration: InputDecoration(
+             hintText: 'Workout Name',
+             hintStyle: TextStyle(fontSize: 18, color: Colors.white), // Set color to white
+             border: UnderlineInputBorder(
+               borderSide: BorderSide(color: Colors.transparent),
+             ),
+             focusedBorder: UnderlineInputBorder(
+               borderSide: BorderSide(color: Colors.white),
+             ),
            ),
          ),
        )
@@ -70,9 +74,12 @@ class _createWorkout1  extends State<createWorkout1> {
 
 
 
+
+
+
     ),
           Padding(
-            padding: const EdgeInsets.only(left:16.0,right: 10),
+            padding: const EdgeInsets.only(left:16.0,right: 16),
             child: ElevatedButton(
               onPressed: () async {
                 Navigator.push(
