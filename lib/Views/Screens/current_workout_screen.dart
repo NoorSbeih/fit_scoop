@@ -198,7 +198,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
     int currentDayOfWeek = DateTime.now().weekday;
     print("The day of the week");
     print(getDayOfWeek(currentDayOfWeek ));
-    String currentWorkoutId = workoutSchedule[getDayOfWeek(currentDayOfWeek )];
+    String currentWorkoutId = workoutSchedule[0];
     print(currentWorkoutId);
     print("IDDDD");
     WorkoutController controller = new WorkoutController();
