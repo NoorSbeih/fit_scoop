@@ -19,7 +19,7 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   bool isLiked = false;
-  late List<Review> _reviews;
+   List<Review> _reviews=[];
   @override
   void initState() {
     super.initState();
@@ -198,7 +198,7 @@ class _DetailPageState extends State<DetailPage> {
               "RATINGS AND REVIEWS",
               style: TextStyle(fontSize: 25,color:Color(0xFF0dbab4), fontFamily: 'BebasNeue'),
             ),
-            RatingSummary(
+           RatingSummary(
               counter: _ratingSummaryData['counter'] ?? 0,
               average: (_ratingSummaryData['average'] ?? 0.0).isFinite ? (_ratingSummaryData['average'] ?? 0.0) : 0.0,
               showAverage: _ratingSummaryData['showAverage'] ?? false,
@@ -217,16 +217,11 @@ class _DetailPageState extends State<DetailPage> {
               averageStyle: TextStyle(color: Colors.white, fontSize: 75, fontFamily: 'BebasNeue'),
             ),
 
-
-
-
-
-            const SizedBox(height: 2),
           const Divider(
             color: Colors.grey,
             thickness: 1.0,
           ),
-            SizedBox(height: 3),
+            SizedBox(height: 1),
             ElevatedButton(
               onPressed: () {
                 // Add your button functionality here

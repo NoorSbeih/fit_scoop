@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../Screens/add/createworkout1.dart';
 import '../Screens/library/library_screen.dart';
 
 
@@ -35,7 +36,11 @@ class MyNavigationBar extends StatelessWidget {
       // Handle Search item tap
         break;
       case 2:
-      // Handle Profile item tap
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => createWorkout1()),
+        );
         break;
       case 3:
         Navigator.push(

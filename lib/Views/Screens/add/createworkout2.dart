@@ -3,15 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../Widgets/bottom_navbar.dart';
-import 'createworkout2.dart';
 
-class createWorkout1 extends StatefulWidget {
+class createWorkout2 extends StatefulWidget {
 
   @override
-  _createWorkout1  createState() => _createWorkout1();
+  _createWorkout2  createState() => _createWorkout2();
 }
 
-class _createWorkout1  extends State<createWorkout1> {
+class _createWorkout2  extends State<createWorkout2> {
+
   int _selectedIndex = 2;
   @override
   void initState() {
@@ -48,37 +48,6 @@ class _createWorkout1  extends State<createWorkout1> {
           ),
         ],
       ),
-    body: Padding(
-    padding: const EdgeInsets.only(left:15.0,right: 10),
-      child: ElevatedButton(
-        onPressed: () async {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => createWorkout2()),
-          );
-
-
-        },
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0dbab4)),
-          fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
-          shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
-                (Set<MaterialState> states) {
-              return RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0), // Border radius
-              );
-            },
-          ),
-        ),
-        child: const Text(
-          'Next',
-          style: TextStyle(
-            fontSize: 20,
-            color: Color(0xFF2C2A2A),
-          ),
-        ),
-      ),
-    ),
       bottomNavigationBar: MyNavigationBar(
         selectedIndex: _selectedIndex,
         onItemSelected: _onNavBarItemTapped,
