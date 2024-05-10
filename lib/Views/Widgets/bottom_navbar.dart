@@ -1,9 +1,9 @@
+import 'package:fit_scoop/Views/Screens/current_workout_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../Screens/library/library_screen.dart';
-import '../Screens/test_screen.dart';
 
 
 
@@ -28,7 +28,7 @@ class MyNavigationBar extends StatelessWidget {
       case 0:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Test()),
+          MaterialPageRoute(builder: (context) => WorkoutPage()),
         );
         break;
       case 1:

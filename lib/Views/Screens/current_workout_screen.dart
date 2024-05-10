@@ -29,7 +29,7 @@ class WorkoutPagee extends StatefulWidget{
 }
 
 class _WorkoutPageState extends State<WorkoutPagee> {
-  int _selectedIndex = 3;
+  int _selectedIndex = 0;
   Workout? currentWorkout;
 
   void _onNavBarItemTapped(int index) {
