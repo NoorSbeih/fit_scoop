@@ -12,8 +12,9 @@ class Workout {
   final int duration;
   final String intensity;
   final String creatorId;
-   final int numberOfSaves;
+  final int numberOfSaves;
   final List<String> reviews;
+  final bool isPrivate;
 
   Workout({
     required this.id,
@@ -23,8 +24,9 @@ class Workout {
     required this.duration,
     required this.intensity,
     required this.creatorId,
-   required this.numberOfSaves,
+    required this.numberOfSaves,
     required this.reviews,
+    required this.isPrivate,
 
   });
 
@@ -59,6 +61,7 @@ class Workout {
       creatorId: map['creatorId'],
       numberOfSaves: map['numberOfSaves'],
       reviews: List<String>.from(map['reviews'] ?? []),
+      isPrivate: map['isPrivate'],
     );
   }
 
