@@ -50,7 +50,7 @@ Exercise? exercise=await controller.getExercise(widget.id) ;
 setState(() {
 name=exercise!.name;
 description=exercise.description;
-List<String> muscleGroups = exercise.muscleGroups;
+List<String> muscleGroups = exercise.secondaryMuscleGroups;
  target = muscleGroups.join(', ');
 
 });

@@ -39,6 +39,14 @@ class _createWorkout1  extends State<createWorkout1> {
             // Handle settings icon pressed
           },
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings, color: Color(0xFF0dbab4),),
+            onPressed: () {
+              // Handle menu icon pressed
+            },
+          ),
+        ],
       ),
     body: Padding(
     padding: const EdgeInsets.only(left:15.0,right: 10),
@@ -71,7 +79,6 @@ class _createWorkout1  extends State<createWorkout1> {
         ),
       ),
     ),
-
       bottomNavigationBar: MyNavigationBar(
         selectedIndex: _selectedIndex,
         onItemSelected: _onNavBarItemTapped,

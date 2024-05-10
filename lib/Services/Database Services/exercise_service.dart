@@ -51,4 +51,21 @@ class ExerciseService {
       throw e;
     }
   }
+  Future<List<Exercise>> getExercisesByMainMuscle(String mainMuscle) async {
+    try {
+      QuerySnapshot querySnapshot = await _exercisesRef
+          .where('mainMuscle', isEqualTo: mainMuscle)
+          .get();
+
+      List<Exercise> exercises = querySnapshot.docs
+          .map((doc) =>
+          Exercise.fromMap(doc.id, doc.data() as Map<String, dynamic>))
+          .toList();
+
+      return exercises;
+    } catch (e) {
+      print('Error getting exercises by main muscle: $e');
+      throw e;
+    }
+  }
 }
