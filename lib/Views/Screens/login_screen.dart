@@ -3,7 +3,6 @@ import 'package:fit_scoop/Controllers/register_controller.dart';
 import 'package:fit_scoop/Views/Screens/page_view.screen.dart';
 import 'package:fit_scoop/Views/Screens/register_screen.dart';
 import 'package:fit_scoop/Views/Screens/reset_password.dart';
-import 'package:fit_scoop/Views/Screens/test_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

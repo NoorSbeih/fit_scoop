@@ -113,7 +113,7 @@ List<String> muscleGroups = exercise.muscleGroups;
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 16,bottom:98),
+              padding: EdgeInsets.only(left: 16,bottom:90),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: custom_widget.WorkoutTexttWidget(target,14),

@@ -2,7 +2,6 @@
 
 import 'package:fit_scoop/Views/Screens/register_screen.dart';
 import 'package:fit_scoop/Views/Screens/select_day_screen.dart';
-import 'package:fit_scoop/Views/Screens/test_screen.dart';
 import 'package:fit_scoop/Views/Screens/type_of_place_screen.dart';
 import 'package:fit_scoop/Views/Screens/goals_screen.dart';
 import 'package:fit_scoop/Views/Screens/current_workout_screen.dart';
