@@ -19,76 +19,12 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   bool isLiked = false;
-  late Future<List<Review>> _reviewsFuture;
+  late List<Review> _reviews;
   @override
   void initState() {
     super.initState();
     fetchReviews();
   }
-  // void fetchReviews() async {
-  //   try {
-  //     ReviewController controller = ReviewController();
-  //     List<Review> reviews = await controller.getReviewsByWorkoutId(widget.workout.id);
-  //     int totalRating = 0;
-  //     int totalReviews = reviews.length;
-  //     int counterFiveStars = 0;
-  //     int counterFourStars = 0;
-  //     int counterThreeStars = 0;
-  //     int counterTwoStars = 0;
-  //     int counterOneStars = 0;
-  //
-  //     if(totalReviews>0) {
-  //       for (int i = 0; i < totalReviews; i++) {
-  //         int rating = reviews[i].rating;
-  //         totalRating += rating;
-  //         switch (rating) {
-  //           case 5:
-  //             counterFiveStars++;
-  //             break;
-  //           case 4:
-  //             counterFourStars++;
-  //             break;
-  //           case 3:
-  //             counterThreeStars++;
-  //             break;
-  //           case 2:
-  //             counterTwoStars++;
-  //             break;
-  //           case 1:
-  //             counterOneStars++;
-  //             break;
-  //           default:
-  //             break;
-  //         }
-  //       }
-  //       double averageRating=0;
-  //       averageRating = totalReviews > 0 ? totalRating / totalReviews : 0;
-  //
-  //       setState(() {
-  //         _ratingSummaryData = {
-  //           'counter': totalReviews,
-  //           'showCounter': false,
-  //           'average':  averageRating.isFinite ? averageRating : 0,
-  //           'showAverage': true,
-  //           'color': Color(0xFF0dbab4),
-  //           'counterFiveStars': counterFiveStars,
-  //           'counterFourStars': counterFourStars,
-  //           'counterThreeStars': counterThreeStars,
-  //           'counterTwoStars': counterTwoStars,
-  //           'counterOneStars': counterOneStars,
-  //         };
-  //       });
-  //     }
-  //     else{
-  //       print('No reviews');
-  //     }
-  //
-  //
-  //   } catch (e) {
-  //     print('Error getting workouts by user ID: $e');
-  //     throw e;
-  //   }
-  // }
   void fetchReviews() async {
     try {
       ReviewController controller = ReviewController();
@@ -124,14 +60,16 @@ class _DetailPageState extends State<DetailPage> {
             break;
         }
       }
-      double averageRating=0;
-      averageRating = totalReviews > 0 ? totalRating / totalReviews : 0;
+      print('Total Reviews: $totalReviews, Total Rating: $totalRating');
+
+      double averageRating = totalReviews > 0 ? totalRating / totalReviews : 0;
+
+
       setState(() {
-        _reviewsFuture = Future.value(reviews);
         _ratingSummaryData = {
           'counter': totalReviews,
           'showCounter': false,
-          'average': averageRating.isFinite ? averageRating : 0, // Check if averageRating is finite
+          'average': averageRating,
           'showAverage': true,
           'color': Color(0xFF0dbab4),
           'counterFiveStars': counterFiveStars,
@@ -140,6 +78,7 @@ class _DetailPageState extends State<DetailPage> {
           'counterTwoStars': counterTwoStars,
           'counterOneStars': counterOneStars,
         };
+        _reviews=reviews;
       });
 
     } catch (e) {
@@ -154,8 +93,10 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("Average value: ${_ratingSummaryData['average']}");
-    print("Is average NaN: ${(_ratingSummaryData['average'] ?? 0).toDouble().isNaN}");
+    double averageRating = _ratingSummaryData['average'] ?? 0;
+    if (!averageRating.isFinite) {
+      averageRating = 0;
+    }
 
 
     return Scaffold(
@@ -228,7 +169,9 @@ class _DetailPageState extends State<DetailPage> {
                       ? 1
                       : widget.workout.intensity == 'Medium'
                       ? 2
-                      : 3,
+                      : widget.workout.intensity == 'High'
+                      ? 3
+                      : 0,
                   direction: Axis.horizontal,
                   itemCount: 3,
                   itemSize: 24.0,
@@ -236,7 +179,7 @@ class _DetailPageState extends State<DetailPage> {
                     Icons.star,
                     color: Color(0xFF0dbab4),
                   ),
-                  ignoreGestures: true, onRatingUpdate: (double value) {  },
+                  ignoreGestures: true, onRatingUpdate: (double value) { print(value); },
                 ),
               ],
             ),
@@ -257,7 +200,7 @@ class _DetailPageState extends State<DetailPage> {
             ),
             RatingSummary(
               counter: _ratingSummaryData['counter'] ?? 0,
-              average: (_ratingSummaryData['average'] ?? 0).toDouble().isNaN || (_ratingSummaryData['average'] ?? 0).toDouble().isInfinite ? 0 : (_ratingSummaryData['average'] ?? 0),
+              average: (_ratingSummaryData['average'] ?? 0.0).isFinite ? (_ratingSummaryData['average'] ?? 0.0) : 0.0,
               showAverage: _ratingSummaryData['showAverage'] ?? false,
               color: _ratingSummaryData['color'] ?? Colors.white,
               counterFiveStars: _ratingSummaryData['counterFiveStars'] ?? 0,
@@ -273,6 +216,7 @@ class _DetailPageState extends State<DetailPage> {
               labelStyle: TextStyle(color: Colors.white),
               averageStyle: TextStyle(color: Colors.white, fontSize: 75, fontFamily: 'BebasNeue'),
             ),
+
 
 
 
