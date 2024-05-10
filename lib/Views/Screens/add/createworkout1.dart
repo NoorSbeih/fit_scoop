@@ -48,37 +48,70 @@ class _createWorkout1  extends State<createWorkout1> {
           ),
         ],
       ),
-    body: Padding(
-    padding: const EdgeInsets.only(left:15.0,right: 10),
-      child: ElevatedButton(
-        onPressed: () async {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => createWorkout2()),
-          );
+    body:
+    Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+    Padding(
+    padding: const EdgeInsets.only(bottom: 10,left:16,right:16),
+       child: TextField(
+         decoration: InputDecoration(
+           hintText: 'Workout Name ', // Your hint text goes here
+           border: UnderlineInputBorder(
+             borderSide: BorderSide(color: Colors.transparent), // Transparent color to hide border
+           ),
+           focusedBorder: UnderlineInputBorder(
+             borderSide: BorderSide(color: Colors.white), // Transparent color to hide border
+           ),
+         ),
+       )
 
 
-        },
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0dbab4)),
-          fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
-          shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
-                (Set<MaterialState> states) {
-              return RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0), // Border radius
-              );
-            },
-          ),
-        ),
-        child: const Text(
-          'Next',
-          style: TextStyle(
-            fontSize: 20,
-            color: Color(0xFF2C2A2A),
-          ),
-        ),
-      ),
+
+
     ),
+          Padding(
+            padding: const EdgeInsets.only(left:16.0,right: 10),
+            child: ElevatedButton(
+              onPressed: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => createWorkout2()),
+                );
+
+
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0dbab4)),
+                fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
+                shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
+                      (Set<MaterialState> states) {
+                    return RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0), // Border radius
+                    );
+                  },
+                ),
+              ),
+              child: const Text(
+                'Next',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Color(0xFF2C2A2A),
+                ),
+              ),
+            ),
+          ),
+      ],
+    ),
+
+
+
+
+
+
+
+
       bottomNavigationBar: MyNavigationBar(
         selectedIndex: _selectedIndex,
         onItemSelected: _onNavBarItemTapped,

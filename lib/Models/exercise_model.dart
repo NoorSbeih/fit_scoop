@@ -23,7 +23,8 @@ class Exercise {
       'name': name,
       'description': description,
       'type': type,
-      'muscleGroups': secondaryMuscleGroups,
+      'mainMuscle': mainMuscle,
+      'secondaryMuscleGroups':secondaryMuscleGroups
     };
   }
 
@@ -34,7 +35,7 @@ class Exercise {
       description: map['description'],
       type: map['type'],
       mainMuscle: map['mainMuscle'],
-      secondaryMuscleGroups:map['muscleGroups'].cast<String>(),
+      secondaryMuscleGroups:map['secondaryMuscleGroups'].cast<String>(),
     );
   }
 
