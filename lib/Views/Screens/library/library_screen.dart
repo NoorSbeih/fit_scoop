@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import '../../../Controllers/workout_controller.dart';
 import '../../../Models/workout_model.dart';
-import '../../Widgets/bottom_navbar.dart';
 
 class LibraryPage extends StatelessWidget {
   const LibraryPage({Key? key}) : super(key: key);
@@ -159,12 +158,7 @@ class _LibraryScreen extends State<LibraryScreen>
             Center(child: Text('Tab 2 Content')),
           ],
         ),
-        bottomNavigationBar: MyNavigationBar(
-          selectedIndex: _selectedIndex,
-          onItemSelected: _onNavBarItemTapped,
 
-
-        ),
       ),
     );
   }
