@@ -1,10 +1,11 @@
 
 
+import 'package:fit_scoop/Views/Screens/main_page_screen.dart';
 import 'package:fit_scoop/Views/Screens/register_screen.dart';
 import 'package:fit_scoop/Views/Screens/select_day_screen.dart';
 import 'package:fit_scoop/Views/Screens/type_of_place_screen.dart';
 import 'package:fit_scoop/Views/Screens/goals_screen.dart';
-import 'package:fit_scoop/Views/Screens/current_workout_screen.dart';
+import 'package:fit_scoop/Views/Screens/Workout/current_workout_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -174,7 +175,7 @@ class _CustomPageViewState extends State<CustomPageView> {
     _bodyMetricController.addBodyMetrics(bodyMetrics);
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => WorkoutPagee()), // Replace SecondPage() with the desired page widget
+      MaterialPageRoute(builder: (context) => HomePage()), // Replace SecondPage() with the desired page widget
     );
   }
 
