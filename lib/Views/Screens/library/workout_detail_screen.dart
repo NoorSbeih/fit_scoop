@@ -14,34 +14,39 @@ import '../../../Models/workout_model.dart';
 
 class DetailPage extends StatefulWidget {
   final Workout workout;
+  final Function(Workout, bool) updateSavedWorkouts;
 
-  const DetailPage({Key? key, required this.workout}) : super(key: key);
+  const DetailPage({Key? key, required this.workout, required this.updateSavedWorkouts}) : super(key: key);
+
+ // const DetailPage({Key? key, required this.workout}) : super(key: key);
 
   @override
   _DetailPageState createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
-  late bool isLiked ;
-  List<Review>? _reviews=[];
-    int numberOfSaves=0;
-   int no=0;
+  late bool isLiked;
+
+  List<Review>? _reviews = [];
+  int numberOfSaves = 0;
+  int no = 0;
 
   @override
   void initState() {
     super.initState();
     fetchReviews();
     numberOfSaves = widget.workout.numberOfSaves;
-    no=numberOfSaves;
+    no = numberOfSaves;
     isLiked = liked(widget.workout.id);
 
     print(isLiked);
-
   }
+
   void fetchReviews() async {
     try {
       ReviewController controller = ReviewController();
-      List<Review> reviews = await controller.getReviewsByWorkoutId(widget.workout.id);
+      List<Review> reviews = await controller.getReviewsByWorkoutId(
+          widget.workout.id);
       double totalRating = 0;
       int totalReviews = reviews.length;
       int counterFiveStars = 0;
@@ -77,7 +82,7 @@ class _DetailPageState extends State<DetailPage> {
 
       double averageRating = totalReviews > 0 ? totalRating / totalReviews : 0;
 
-      if(averageRating!="Null" && totalReviews!="Null" ) {
+      if (averageRating != "Null" && totalReviews != "Null") {
         setState(() {
           _ratingSummaryData = {
             'counter': totalReviews,
@@ -101,29 +106,28 @@ class _DetailPageState extends State<DetailPage> {
   }
 
 
-
   Map<String, dynamic> _ratingSummaryData = {};
 
   @override
   Widget build(BuildContext context) {
-
     double averageRating = _ratingSummaryData['average'] ?? 0;
-    if (!averageRating.isFinite || averageRating.isNaN ) {
+    if (!averageRating.isFinite || averageRating.isNaN) {
       averageRating = 0;
     }
     return Scaffold(
-      backgroundColor:Color(0xFF2C2A2A),
+      backgroundColor: Color(0xFF2C2A2A),
       appBar: AppBar(
-        backgroundColor:Color(0xFF2C2A2A),
+        backgroundColor: Color(0xFF2C2A2A),
       ),
-      body:Padding(
-        padding: const EdgeInsets.only(left:15.0,right: 10),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 15.0, right: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Text(
               widget.workout.name,
-              style: const TextStyle(color: Colors.white,fontSize:25, fontFamily: 'BebasNeue'),
+              style: const TextStyle(
+                  color: Colors.white, fontSize: 25, fontFamily: 'BebasNeue'),
             ),
             Container(
               height: 200,
@@ -145,15 +149,15 @@ class _DetailPageState extends State<DetailPage> {
                     IconButton(
                       icon: Icon(Icons.rate_review_sharp),
                       color: Colors.white,
-                      onPressed: () async {
-                      },
+                      onPressed: () async {},
                     ),
                     IconButton(
                       icon: SvgPicture.asset(
                         'images/heart_clicked.svg',
                         width: 24,
                         height: 24,
-                        color: isLiked ? Color(0xFF0dbab4):Colors.white , // Change color based on isLiked
+                        color: isLiked ? Color(0xFF0dbab4) : Colors
+                            .white, // Change color based on isLiked
                       ),
                       onPressed: () async {
                         setState(() {
@@ -161,26 +165,28 @@ class _DetailPageState extends State<DetailPage> {
                           if (isLiked) {
                             no = numberOfSaves + 1;
                           } else {
-                            no = numberOfSaves-1;
+                            no = numberOfSaves - 1;
                           }
                         });
 
-                        UserSingleton userSingleton = UserSingleton.getInstance();
+                        UserSingleton userSingleton = UserSingleton
+                            .getInstance();
                         User_model user = userSingleton.getUser();
 
                         if (user != null && user.id != null) {
                           String userId = user.id;
                           UserController controller = UserController();
                           if (isLiked) {
-                            await controller.saveWorkout(userId, widget.workout.id);
+                            await controller.saveWorkout(
+                                userId, widget.workout.id);
                             liked(widget.workout.id);
                           } else {
-                            await controller.unsaveWorkout(userId, widget.workout.id);
+                            await controller.unsaveWorkout(
+                                userId, widget.workout.id);
                           }
-                         widget.workout.updateNumberOfSaves(no);
-
+                          widget.workout.updateNumberOfSaves(no);
+                          widget.updateSavedWorkouts(widget.workout, isLiked);
                         }
-
                       },
                     ),
                   ],
@@ -191,13 +197,15 @@ class _DetailPageState extends State<DetailPage> {
                 ),
               ],
             ),
-            SizedBox(height:5),
+            SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 const Text(
                   'INTENSITY ',
-                  style: TextStyle(fontSize: 25,color: Color(0xFF0dbab4),fontFamily: 'BebasNeue'),
+                  style: TextStyle(fontSize: 25,
+                      color: Color(0xFF0dbab4),
+                      fontFamily: 'BebasNeue'),
                 ),
                 RatingBar.builder(
                   initialRating: widget.workout.intensity == 'Low'
@@ -210,7 +218,8 @@ class _DetailPageState extends State<DetailPage> {
                   direction: Axis.horizontal,
                   itemCount: 3,
                   itemSize: 24.0,
-                  itemBuilder: (context, _) => const Icon(
+                  itemBuilder: (context, _) =>
+                  const Icon(
                     Icons.star,
                     color: Color(0xFF0dbab4),
                   ),
@@ -223,24 +232,30 @@ class _DetailPageState extends State<DetailPage> {
               ],
             ),
             SizedBox(height: 5),
-           const Text(
+            const Text(
               'DESCRIPTION',
-              style: TextStyle(fontSize: 25,color: Color(0xFF0dbab4),fontFamily: 'BebasNeue'),
+              style: TextStyle(fontSize: 25,
+                  color: Color(0xFF0dbab4),
+                  fontFamily: 'BebasNeue'),
 
-        ),
+            ),
             SizedBox(height: 2),
             Text(
               widget.workout.description,
-              style: TextStyle(fontSize: 20,color: Colors.white),
+              style: TextStyle(fontSize: 20, color: Colors.white),
             ),
 
             const Text(
               "RATINGS AND REVIEWS",
-              style: TextStyle(fontSize: 25,color:Color(0xFF0dbab4), fontFamily: 'BebasNeue'),
+              style: TextStyle(fontSize: 25,
+                  color: Color(0xFF0dbab4),
+                  fontFamily: 'BebasNeue'),
             ),
             RatingSummary(
               counter: _ratingSummaryData['counter'] ?? 0,
-              average: (_ratingSummaryData['average'] ?? 0.0).isFinite ? (_ratingSummaryData['average'] ?? 0.0) : 0.0,
+              average: (_ratingSummaryData['average'] ?? 0.0).isFinite
+                  ? (_ratingSummaryData['average'] ?? 0.0)
+                  : 0.0,
               showAverage: _ratingSummaryData['showAverage'] ?? false,
               color: _ratingSummaryData['color'] ?? Colors.white,
               counterFiveStars: _ratingSummaryData['counterFiveStars'] ?? 0,
@@ -254,7 +269,8 @@ class _DetailPageState extends State<DetailPage> {
               labelCounterFourStarsStyle: const TextStyle(color: Colors.white),
               labelCounterFiveStarsStyle: const TextStyle(color: Colors.white),
               labelStyle: const TextStyle(color: Colors.white),
-              averageStyle: const TextStyle(color: Colors.white, fontSize: 75, fontFamily: 'BebasNeue'),
+              averageStyle: const TextStyle(
+                  color: Colors.white, fontSize: 75, fontFamily: 'BebasNeue'),
             ),
             const Divider(
               color: Colors.grey,
@@ -266,7 +282,8 @@ class _DetailPageState extends State<DetailPage> {
                 print('Your button action');
               },
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0dbab4)), // Change color to blue
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    const Color(0xFF0dbab4)), // Change color to blue
                 fixedSize: MaterialStateProperty.all<Size>(const Size(350, 30)),
                 shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                       (Set<MaterialState> states) {
@@ -278,7 +295,7 @@ class _DetailPageState extends State<DetailPage> {
               ),
               child: const Text(
                 'Try this workout',
-                style: TextStyle(fontSize: 22,color: Colors.white),
+                style: TextStyle(fontSize: 22, color: Colors.white),
               ),
             ),
 
@@ -287,17 +304,17 @@ class _DetailPageState extends State<DetailPage> {
       ),
     );
   }
-}
 
 
-bool liked(String id){
-  UserSingleton userSingleton = UserSingleton.getInstance();
-  User_model user = userSingleton.getUser();
-  List<String> ids = user.savedWorkoutIds;
-  print("dhdhdhd");
-  print(user.id);
-for(int i=0;i<ids.length;i++){
-  print(ids[i]);
-}
-  return ids.contains(id);
+  bool liked(String id) {
+    UserSingleton userSingleton = UserSingleton.getInstance();
+    User_model user = userSingleton.getUser();
+    List<String> ids = user.savedWorkoutIds;
+    print("dhdhdhd");
+    print(user.id);
+    for (int i = 0; i < ids.length; i++) {
+      print(ids[i]);
+    }
+    return ids.contains(id);
+  }
 }

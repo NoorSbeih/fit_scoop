@@ -116,9 +116,8 @@ class _LibraryScreen extends State<LibraryScreen>
         }
         // Add the new workouts to savedWorkouts
         savedWorkouts.addAll(newSavedWorkouts);
-        setState(() {
           filteredsavedWorkouts = savedWorkouts;
-        });
+
 
         return savedWorkouts;
       } else {
@@ -129,6 +128,25 @@ class _LibraryScreen extends State<LibraryScreen>
       print('Error getting workouts by user ID: $e');
       throw e;
     }
+  }
+
+
+  void updateSavedWorkouts(Workout workout, bool liked) {
+    setState(() {
+      if (liked) {
+        savedWorkouts.add(workout);
+      } else {
+        savedWorkouts.remove(workout);
+      }
+      filteredsavedWorkouts = List.from(savedWorkouts);
+    });
+  }
+
+  Future<void> _handleRefresh() async {
+    setState(() {
+      filteredsavedWorkouts = savedWorkouts;
+    });
+    fetchData();
   }
 
   @override
@@ -159,7 +177,9 @@ class _LibraryScreen extends State<LibraryScreen>
             ],
           ),
         ),
-        body: TabBarView(
+        body: RefreshIndicator(
+        onRefresh: _handleRefresh,
+         child:TabBarView(
           controller: _tabController,
           children: <Widget>[
             Center(
@@ -212,6 +232,16 @@ class _LibraryScreen extends State<LibraryScreen>
                           workout,
                           false,
                           context,
+                              (Workout workout, bool liked) {
+                            setState(() {
+                              if (liked) {
+                                savedWorkouts.add(workout);
+                              } else {
+                                savedWorkouts.remove(workout);
+                              }
+                              filteredsavedWorkouts = List.from(savedWorkouts);
+                            });
+                          },
                         );
                       },
                     ),
@@ -261,41 +291,65 @@ class _LibraryScreen extends State<LibraryScreen>
                       },
                     ),
                   ),
+                  // Expanded(
+                  //   child: FutureBuilder<List<Workout>>(
+                  //     future: savedWorkoutsFuture,
+                  //     // Use the savedWorkoutsFuture variable
+                  //     builder: (context, snapshot) {
+                  //       if (snapshot.connectionState ==
+                  //           ConnectionState.waiting) {
+                  //         return CircularProgressIndicator();
+                  //       } else if (snapshot.hasError) {
+                  //         return Text('Error: ${snapshot.error}');
+                  //       } else {
+                  //         List<Workout> filteredSavedWorkouts =
+                  //             snapshot.data ?? [];
+                  //         if (_searchQuery.isNotEmpty) {
+                  //           filteredSavedWorkouts = filteredSavedWorkouts
+                  //               .where((workout) => workout.name
+                  //                   .toLowerCase()
+                  //                   .contains(_searchQuery.toLowerCase()))
+                  //               .toList();
+                  //         }
+                  //         if (filteredSavedWorkouts.isEmpty) {
+                  //           return Text('No saved workouts');
+                  //         } else {
+                  //           return ListView.builder(
+                  //             itemCount: filteredSavedWorkouts.length, itemBuilder: (context, index) {
+                  //               Workout workout = filteredSavedWorkouts[index];
+                  //               return workout_widget.customcardWidget(
+                  //                 workout,
+                  //                 false,
+                  //                 context,
+                  //               );
+                  //             },
+                  //           );
+                  //         }
+                  //       }
+                  //     },
+                  //   ),
+                  // ),
+
                   Expanded(
-                    child: FutureBuilder<List<Workout>>(
-                      future: savedWorkoutsFuture,
-                      // Use the savedWorkoutsFuture variable
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        } else if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        } else {
-                          List<Workout> filteredSavedWorkouts =
-                              snapshot.data ?? [];
-                          if (_searchQuery.isNotEmpty) {
-                            filteredSavedWorkouts = filteredSavedWorkouts
-                                .where((workout) => workout.name
-                                    .toLowerCase()
-                                    .contains(_searchQuery.toLowerCase()))
-                                .toList();
-                          }
-                          if (filteredSavedWorkouts.isEmpty) {
-                            return Text('No saved workouts');
-                          } else {
-                            return ListView.builder(
-                              itemCount: filteredSavedWorkouts.length, itemBuilder: (context, index) {
-                                Workout workout = filteredSavedWorkouts[index];
-                                return workout_widget.customcardWidget(
-                                  workout,
-                                  false,
-                                  context,
-                                );
-                              },
-                            );
-                          }
-                        }
+                    child: ListView.builder(
+                      itemCount: filteredsavedWorkouts.length,
+                      itemBuilder: (context, index) {
+                        Workout workout = filteredsavedWorkouts[index];
+                        return workout_widget.customcardWidget(
+                          workout,
+                          false,
+                          context,
+                              (Workout workout, bool liked) {
+                            setState(() {
+                              if (liked) {
+                                savedWorkouts.add(workout);
+                              } else {
+                                savedWorkouts.remove(workout);
+                              }
+                              filteredsavedWorkouts = List.from(savedWorkouts);
+                            });
+                          },
+                        );
                       },
                     ),
                   ),
@@ -304,7 +358,7 @@ class _LibraryScreen extends State<LibraryScreen>
             ),
           ],
         ),
-
+        ),
       ),
     );
   }

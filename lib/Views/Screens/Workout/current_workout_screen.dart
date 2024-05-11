@@ -114,7 +114,11 @@ class _WorkoutPageState extends State<WorkoutPagee> {
             child: currentWorkout != null
                 ? Align(
               alignment: Alignment.centerLeft,
-              child: workout_widget.customcardWidget(currentWorkout!, false, context),
+              child: workout_widget.customcardWidget(currentWorkout!, false, context,
+                    (Workout workout, bool liked) {
+                },
+
+              ),
             )
                 : const Align(
               alignment: Alignment.center,
