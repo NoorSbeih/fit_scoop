@@ -29,22 +29,49 @@ class _LibraryScreen extends State<LibraryScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   List<Workout> workouts = [];
+  List<Workout> savedWorkouts = [];
+  late Future<List<Workout>> savedWorkoutsFuture;
+  late TextEditingController _myWorkoutsSearchController;
+  late TextEditingController _savedWorkoutsSearchController;
+  late String _searchQuery = '';
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     fetchData();
+    savedWorkoutsFuture = SavedWorkout();
+    _myWorkoutsSearchController = TextEditingController();
+    _savedWorkoutsSearchController = TextEditingController(); // Add this line
   }
 
   late List<Workout> filteredWorkouts = [];
 
+  late List<Workout> filteredsavedWorkouts = [];
+
   void filterWorkouts(String query) {
     setState(() {
-      filteredWorkouts = workouts
-          .where((workout) =>
-              workout.name.toLowerCase().contains(query.toLowerCase()))
-          .toList();
+      if (query.isEmpty) {
+        filteredWorkouts = List.from(workouts);
+      } else {
+        filteredWorkouts = workouts
+            .where((workout) =>
+                workout.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      }
+    });
+  }
+
+  void filtersavedWorkouts(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        filteredsavedWorkouts = List.from(savedWorkouts);
+      } else {
+        filteredsavedWorkouts = savedWorkouts
+            .where((workout) =>
+                workout.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      }
     });
   }
 
@@ -56,9 +83,9 @@ class _LibraryScreen extends State<LibraryScreen>
       if (user != null && user.id != null) {
         String userId = user.id;
         WorkoutController controller = WorkoutController();
-        List<Workout> filteredWorkouts = await controller.getWorkoutsByUserId(userId);
+        workouts = await controller.getWorkoutsByUserId(userId);
         setState(() {
-          workouts = filteredWorkouts;
+          filteredWorkouts = workouts;
         });
       } else {
         print('User or user ID is null.');
@@ -69,12 +96,41 @@ class _LibraryScreen extends State<LibraryScreen>
     }
   }
 
+  Future<List<Workout>> SavedWorkout() async {
+    try {
+      print("hii");
+      UserSingleton userSingleton = UserSingleton.getInstance();
+      User_model user = userSingleton.getUser();
 
+      List<String> ids = user.savedWorkoutIds;
+      if (user != null && user.id != null) {
+        WorkoutController controller = WorkoutController();
+        savedWorkouts.clear(); // Clear the list before adding new items
+        for (int i = 0; i < ids.length; i++) {
+          Workout? workout = await controller.getWorkout(ids[i]);
+          print(workout?.id);
+          savedWorkouts.add(workout!);
+        }
+        setState(() {
+          filteredsavedWorkouts = savedWorkouts;
+        });
 
+        return savedWorkouts;
+      } else {
+        print('User or user ID is null.');
+        return [];
+      }
+    } catch (e) {
+      print('Error getting workouts by user ID: $e');
+      throw e;
+    }
+  }
 
   @override
   void dispose() {
     _tabController.dispose();
+    _myWorkoutsSearchController.dispose();
+    _savedWorkoutsSearchController.dispose();
     super.dispose();
   }
 
@@ -94,38 +150,6 @@ class _LibraryScreen extends State<LibraryScreen>
         backgroundColor: const Color(0xFF2C2A2A),
         appBar: AppBar(
           backgroundColor: const Color(0xFF2C2A2A),
-          actions: [
-            Row(
-              children: [
-                IconButton(
-                  icon: Icon(Icons.filter_list_alt),
-                  color: Color(0xFF0dbab4),
-                  onPressed: () async {
-                    final String? query = await showSearch(
-                      context: context,
-                      delegate: WorkoutSearchDelegate(workouts),
-                    );
-                    if (query != null && query.isNotEmpty) {
-                      filterWorkouts(query);
-                    }
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.search),
-                  color: Color(0xFF0dbab4),
-                  onPressed: () async {
-                    final String? query = await showSearch(
-                      context: context,
-                      delegate: WorkoutSearchDelegate(workouts),
-                    );
-                    if (query != null && query.isNotEmpty) {
-                      filterWorkouts(query);
-                    }
-                  },
-                ),
-              ],
-            ),
-          ],
           bottom: TabBar(
             controller: _tabController,
             labelColor: Colors.white,
@@ -140,30 +164,153 @@ class _LibraryScreen extends State<LibraryScreen>
         ),
         body: TabBarView(
           controller: _tabController,
-          children: [
-            Visibility(
-              visible: _tabController.index == 0,
-              maintainState: true,
-              child: ListView.builder(
-                itemCount: workouts.length,
-                itemBuilder: (context, index) {
-                  // var workout = workouts[index];
-                  Workout workout = workouts[index];
-                  return workout_widget.customcardWidget(
-                   workout,
-                    false,context
-                  );
-                },
+          children: <Widget>[
+            Center(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 0.0),
+                    child: TextField(
+                      controller: _savedWorkoutsSearchController,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        hintText: 'Search...',
+                        hintStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 1.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 1.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 1.0),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 12.0),
+                        prefixIcon: const Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        ),
+                      ),
+                      onChanged: (query) {
+                        setState(() {
+                          _searchQuery = query;
+                        });
+                        filtersavedWorkouts(query);
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: filteredWorkouts.length,
+                      itemBuilder: (context, index) {
+                        Workout workout = filteredWorkouts[index];
+                        return workout_widget.customcardWidget(
+                          workout,
+                          false,
+                          context,
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
-            Center(child: Text('Tab 2 Content')),
+            Center(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 0.0),
+                    child: TextField(
+                      controller: _savedWorkoutsSearchController,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        hintText: 'Search...',
+                        hintStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 1.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 1.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 1.0),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 12.0),
+                        prefixIcon: const Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        ),
+                      ),
+                      onChanged: (query) {
+                        setState(() {
+                          _searchQuery = query;
+                          print(_searchQuery);
+                        });
+                        filtersavedWorkouts(query);
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: FutureBuilder<List<Workout>>(
+                      future: savedWorkoutsFuture,
+                      // Use the savedWorkoutsFuture variable
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          List<Workout> filteredSavedWorkouts =
+                              snapshot.data ?? [];
+                          if (_searchQuery.isNotEmpty) {
+                            filteredSavedWorkouts = filteredSavedWorkouts
+                                .where((workout) => workout.name
+                                    .toLowerCase()
+                                    .contains(_searchQuery.toLowerCase()))
+                                .toList();
+                          }
+                          if (filteredSavedWorkouts.isEmpty) {
+                            return Text('No saved workouts');
+                          } else {
+                            return ListView.builder(
+                              itemCount: filteredSavedWorkouts.length,
+                              itemBuilder: (context, index) {
+                                Workout workout = filteredSavedWorkouts[index];
+                                return workout_widget.customcardWidget(
+                                  workout,
+                                  false,
+                                  context,
+                                );
+                              },
+                            );
+                          }
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
         bottomNavigationBar: MyNavigationBar(
           selectedIndex: _selectedIndex,
           onItemSelected: _onNavBarItemTapped,
-
-
         ),
       ),
     );

@@ -146,40 +146,44 @@ class _createWorkout2  extends State<createWorkout2> {
               },
               activeColor: Color(0xFF0dbab4),
             ),
-              const SizedBox(height: 16.0),
-        Padding(
-          padding: EdgeInsets.only(top:60),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed:() {
-                      print(label);
-                      print(isPrivate);
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0dbab4)),
-                      fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
-                      shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
-                            (Set<MaterialState> states) {
-                          return RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0), // Border radius
-                          );
-                        },
+
+            Padding(
+              padding: const EdgeInsets.only(top: 50),
+              child: SingleChildScrollView( // Wrap the Row with SingleChildScrollView
+                scrollDirection: Axis.horizontal, // Allow horizontal scrolling
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        print(label);
+                        print(isPrivate);
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0dbab4)),
+                        fixedSize: MaterialStateProperty.all<Size>(const Size(335, 50)),
+                        shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
+                              (Set<MaterialState> states) {
+                            return RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            );
+                          },
+                        ),
+                      ),
+                      child: const Text(
+                        'Finish',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Color(0xFF2C2A2A),
+                        ),
                       ),
                     ),
-                    child: const Text(
-                      'Finish',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Color(0xFF2C2A2A),
-                    ),
-                  ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-        ),
-              ],
+            ),
+
+          ],
             ),
       ),
       bottomNavigationBar: MyNavigationBar(

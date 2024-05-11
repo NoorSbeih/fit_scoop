@@ -54,6 +54,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
     try {
       UserSingleton userSingleton = UserSingleton.getInstance();
       User_model user = userSingleton.getUser();
+
       String? bodyMetricId = user.bodyMetrics;
       print(bodyMetricId); // Assuming you want the user's UID
       BodyMetricsController controller = new BodyMetricsController();

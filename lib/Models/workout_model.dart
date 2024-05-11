@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import '../Controllers/workout_controller.dart';
 import 'exercise_model.dart';
 
 // models/workout_model.dart
@@ -16,6 +17,8 @@ class Workout {
   final List<String> reviews;
   final bool isPrivate;
 
+
+
   Workout({
     required this.id,
     required this.name,
@@ -29,6 +32,34 @@ class Workout {
     required this.isPrivate,
 
   });
+
+
+  Future<void> updateNumberOfSaves(int newNumberOfSaves) async {
+    try {
+      WorkoutController workoutController = WorkoutController();
+
+      // Create a new instance of Workout with the updated numberOfSaves
+      Workout updatedWorkout = Workout(
+        id: id,
+        name: name,
+        description: description,
+        exercises: exercises,
+        duration: duration,
+        intensity: intensity,
+        creatorId: creatorId,
+        numberOfSaves: newNumberOfSaves,
+        reviews: reviews,
+        isPrivate: isPrivate,
+      );
+
+      await workoutController.updateWorkout(updatedWorkout);
+
+      print(updatedWorkout.numberOfSaves);
+    } catch (e) {
+      print('Error updating numberOfSaves: $e');
+      throw e;
+    }
+  }
 
   // Convert WorkoutModel to a map (for Firestore)
   Map<String, dynamic> toMap() {
@@ -45,7 +76,7 @@ class Workout {
       'intensity': intensity,
       'creatorId': creatorId,
       'numberOfSaves': numberOfSaves,
-      // 'reviews': reviews,
+      'isPrivate': isPrivate,
     };
   }
 
@@ -93,3 +124,5 @@ List<Map<String, dynamic>> parseExercises(dynamic exercises) {
 
   return parsedExercises;
 }
+
+

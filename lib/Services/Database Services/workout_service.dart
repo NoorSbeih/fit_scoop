@@ -51,7 +51,7 @@ class WorkoutService {
   Future<Workout?> getWorkout(String id) async {
     try {
 
-      var snapshot = await _workoutsRef.doc("a910a339-e4c9-4392-9443-79ab8b83a131").get();
+      var snapshot = await _workoutsRef.doc(id).get();
       if (snapshot.exists && snapshot.data() != null) {
         return Workout.fromMap(id, snapshot.data() as Map<String, dynamic>);
       } else {

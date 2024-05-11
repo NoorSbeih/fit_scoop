@@ -87,7 +87,6 @@ class workout_widget {
               const Spacer(),
               GestureDetector(
                 onTap: () {
-
              Navigator.push(context,MaterialPageRoute(
                builder: (context) => DetailPage(workout: workout),
           ),
