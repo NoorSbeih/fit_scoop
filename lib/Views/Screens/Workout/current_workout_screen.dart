@@ -3,12 +3,12 @@ import 'package:fit_scoop/Models/body_metrics_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_scoop/Models/user_model.dart';
-import '../../Controllers/workout_controller.dart';
+import '../../../Controllers/workout_controller.dart';
 import 'package:fit_scoop/Views/Widgets/exercises_card_widget.dart';
 import 'package:fit_scoop/Views/Widgets/workout_widget.dart';
-import '../../Models/user_singleton.dart';
-import '../../Models/workout_model.dart';
-import '../Widgets/bottom_navbar.dart';
+import '../../../Models/user_singleton.dart';
+import '../../../Models/workout_model.dart';
+import '../main_page_screen.dart';
 class WorkoutPage extends StatelessWidget {
 
   @override
@@ -159,10 +159,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
           ),
         ],
       ),
-      bottomNavigationBar: MyNavigationBar(
-        selectedIndex: _selectedIndex,
-        onItemSelected: _onNavBarItemTapped,
-      ),
+
     );
   }
 

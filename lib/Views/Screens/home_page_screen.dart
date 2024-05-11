@@ -1,6 +1,4 @@
-import 'package:fit_scoop/Views/Screens/library/library_screen.dart';
 import 'package:flutter/material.dart';
-import '../Widgets/bottom_navbar.dart';
 import 'login_screen.dart';
 import 'register_screen.dart';
 

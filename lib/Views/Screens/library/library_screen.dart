@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import '../../../Controllers/workout_controller.dart';
 import '../../../Models/workout_model.dart';
-import '../../Widgets/bottom_navbar.dart';
 
 class LibraryPage extends StatelessWidget {
   const LibraryPage({Key? key}) : super(key: key);
@@ -85,7 +84,7 @@ class _LibraryScreen extends State<LibraryScreen>
         WorkoutController controller = WorkoutController();
         workouts = await controller.getWorkoutsByUserId(userId);
         setState(() {
-          filteredWorkouts = workouts;
+          filteredWorkouts= workouts;
         });
       } else {
         print('User or user ID is null.');
@@ -248,7 +247,7 @@ class _LibraryScreen extends State<LibraryScreen>
                           borderSide:
                               BorderSide(color: Colors.white, width: 1.0),
                         ),
-                        contentPadding: EdgeInsets.symmetric(
+                        contentPadding: const EdgeInsets.symmetric(
                             horizontal: 16.0, vertical: 12.0),
                         prefixIcon: const Icon(
                           Icons.search,
@@ -308,10 +307,7 @@ class _LibraryScreen extends State<LibraryScreen>
             ),
           ],
         ),
-        bottomNavigationBar: MyNavigationBar(
-          selectedIndex: _selectedIndex,
-          onItemSelected: _onNavBarItemTapped,
-        ),
+
       ),
     );
   }

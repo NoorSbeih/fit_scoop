@@ -1,67 +1,39 @@
-import 'package:fit_scoop/Views/Screens/current_workout_screen.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:fit_scoop/Views/Screens/Workout/current_workout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../Profile/profile_screen.dart';
+import 'Community/community_screen.dart';
+import 'add/createworkout1.dart';
+import 'library/library_screen.dart';
 
-import '../Screens/add/createworkout1.dart';
-import '../Screens/library/library_screen.dart';
 
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
+  @override
+  _HomePageState createState() => _HomePageState();
+}
 
-class MyNavigationBar extends StatelessWidget {
-  final int selectedIndex;
-  final Function(int) onItemSelected;
+class _HomePageState extends State<HomePage> {
+  int selectedPage = 0;
 
-  MyNavigationBar({required this.selectedIndex, required this.onItemSelected});
-
-  // void _onItemTapped(int index) {
-  //     selectedIndex = index;
-  //     if (index == 3) { // Assuming 3 is the index of the "Library" icon
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(builder: (context) => LibraryPage()),
-  //       );
-  //     }
-  // }
-
-  void _handleItemTapped(BuildContext context,int index) {
-    switch (index) {
-      case 0:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => WorkoutPage()),
-        );
-        break;
-      case 1:
-      // Handle Search item tap
-        break;
-      case 2:
-      case 0:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => createWorkout1()),
-        );
-        break;
-      case 3:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => LibraryPage()),
-        );
-        break;
-    }
-  }
+  final _pageOptions = [
+    WorkoutPage(),
+    CommunityPage(),
+    createWorkout1(),
+    LibraryPage(),
+    ProfilePage(),
+  ];
 
 
   @override
   Widget build(BuildContext context) {
 
-    return BottomNavigationBar(
-    currentIndex: selectedIndex,
-    onTap: (index) {
-      onItemSelected(index);
-      _handleItemTapped(context,index);
-    },
-        items:  <BottomNavigationBarItem>[
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: _pageOptions[selectedPage],
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
           BottomNavigationBarItem(
             label: "Home",
             icon: SvgPicture.asset(
@@ -144,12 +116,18 @@ class MyNavigationBar extends StatelessWidget {
             ),
           ),
         ],
+        onTap: (int index) {
+          setState(() {
+            selectedPage = index;
+          });
+        },
+
         type: BottomNavigationBarType.fixed,
         backgroundColor: Color(0xFF2C2A2A),
         unselectedItemColor: Colors.white,
         selectedItemColor: Color(0xFF0dbab4),
         selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-
+      )
       );
   }
 }
