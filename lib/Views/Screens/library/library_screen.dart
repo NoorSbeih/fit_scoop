@@ -95,21 +95,27 @@ class _LibraryScreen extends State<LibraryScreen>
     }
   }
 
+
   Future<List<Workout>> SavedWorkout() async {
     try {
-      print("hii");
       UserSingleton userSingleton = UserSingleton.getInstance();
       User_model user = userSingleton.getUser();
 
       List<String> ids = user.savedWorkoutIds;
       if (user != null && user.id != null) {
         WorkoutController controller = WorkoutController();
-        savedWorkouts.clear(); // Clear the list before adding new items
+        List<Workout> newSavedWorkouts = []; // Create a new list to store the workouts
         for (int i = 0; i < ids.length; i++) {
           Workout? workout = await controller.getWorkout(ids[i]);
+          print("ffff");
           print(workout?.id);
-          savedWorkouts.add(workout!);
+          // Check if the workout already exists in savedWorkouts
+          if (!savedWorkouts.contains(workout)) {
+            newSavedWorkouts.add(workout!);
+          }
         }
+        // Add the new workouts to savedWorkouts
+        savedWorkouts.addAll(newSavedWorkouts);
         setState(() {
           filteredsavedWorkouts = savedWorkouts;
         });
@@ -131,14 +137,6 @@ class _LibraryScreen extends State<LibraryScreen>
     _myWorkoutsSearchController.dispose();
     _savedWorkoutsSearchController.dispose();
     super.dispose();
-  }
-
-  int _selectedIndex = 3;
-
-  void _onNavBarItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
   }
 
   @override
@@ -201,7 +199,7 @@ class _LibraryScreen extends State<LibraryScreen>
                         setState(() {
                           _searchQuery = query;
                         });
-                        filtersavedWorkouts(query);
+                        filterWorkouts(query);
                       },
                     ),
                   ),
@@ -287,8 +285,7 @@ class _LibraryScreen extends State<LibraryScreen>
                             return Text('No saved workouts');
                           } else {
                             return ListView.builder(
-                              itemCount: filteredSavedWorkouts.length,
-                              itemBuilder: (context, index) {
+                              itemCount: filteredSavedWorkouts.length, itemBuilder: (context, index) {
                                 Workout workout = filteredSavedWorkouts[index];
                                 return workout_widget.customcardWidget(
                                   workout,

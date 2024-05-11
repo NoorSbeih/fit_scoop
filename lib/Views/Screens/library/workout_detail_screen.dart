@@ -223,13 +223,12 @@ class _DetailPageState extends State<DetailPage> {
               ],
             ),
             SizedBox(height: 5),
-        const Flexible(
-            child: Text(
+           const Text(
               'DESCRIPTION',
               style: TextStyle(fontSize: 25,color: Color(0xFF0dbab4),fontFamily: 'BebasNeue'),
-            ),
+
         ),
-            SizedBox(height: 5),
+            SizedBox(height: 2),
             Text(
               widget.workout.description,
               style: TextStyle(fontSize: 20,color: Colors.white),
