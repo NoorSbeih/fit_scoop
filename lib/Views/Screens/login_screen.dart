@@ -13,9 +13,8 @@ import '../../Models/user_model.dart';
 import '../../Models/user_singleton.dart';
 import '../../Services/authentication_service.dart';
 import '../../Services/email.dart';
-import '../../Services/Database Services/user_data_service.dart';
-import '../Widgets/bottom_navbar.dart';
-import 'current_workout_screen.dart';
+import 'main_page_screen.dart';
+import 'Workout/current_workout_screen.dart';
 
 
 class Login extends StatelessWidget {
@@ -62,7 +61,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("HHHH");
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFF2C2A2A),
@@ -208,11 +206,9 @@ class _LoginPageState extends State<LoginPage> {
                            else{
                              Navigator.push(
                                context,
-                               MaterialPageRoute(builder: (context) => WorkoutPage()), // Replace SecondPage() with the desired page widget
+                               MaterialPageRoute(builder: (context) => HomePage()), // Replace SecondPage() with the desired page widget
                              );
                            }
-                          final UserDataService _userDataService = UserDataService();
-                          _userDataService.getUserData(email);
                         } else {
                           print('User authentication failed.');
                           setState(() {

@@ -100,9 +100,9 @@ class _DetailPageState extends State<DetailPage> {
 
 
     return Scaffold(
-      backgroundColor:Color(0xFF2C2A2A),
+      backgroundColor:const Color(0xFF2C2A2A),
       appBar: AppBar(
-        backgroundColor:Color(0xFF2C2A2A),
+        backgroundColor:const Color(0xFF2C2A2A),
       ),
       body: Padding(
         padding: const EdgeInsets.only(left:15.0,right: 10),
@@ -199,7 +199,7 @@ class _DetailPageState extends State<DetailPage> {
               style: TextStyle(fontSize: 25,color:Color(0xFF0dbab4), fontFamily: 'BebasNeue'),
             ),
            RatingSummary(
-              counter: _ratingSummaryData['counter'] ?? 0,
+              counter:  _ratingSummaryData['counter'] ?? 0,
               average: (_ratingSummaryData['average'] ?? 0.0).isFinite ? (_ratingSummaryData['average'] ?? 0.0) : 0.0,
               showAverage: _ratingSummaryData['showAverage'] ?? false,
               color: _ratingSummaryData['color'] ?? Colors.white,

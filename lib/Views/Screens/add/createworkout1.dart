@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
-import '../../Widgets/bottom_navbar.dart';
+import '../main_page_screen.dart';
 import 'createworkout2.dart';
 
 class createWorkout1 extends StatefulWidget {
@@ -12,18 +12,11 @@ class createWorkout1 extends StatefulWidget {
 }
 
 class _createWorkout1  extends State<createWorkout1> {
-  int _selectedIndex = 2;
   @override
   void initState() {
     super.initState();
   }
 
-  void _onNavBarItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,18 +104,6 @@ class _createWorkout1  extends State<createWorkout1> {
           ),
       ],
     ),
-
-
-
-
-
-
-
-
-      bottomNavigationBar: MyNavigationBar(
-        selectedIndex: _selectedIndex,
-        onItemSelected: _onNavBarItemTapped,
-      ),
     );
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-import '../../Widgets/bottom_navbar.dart';
+import '../main_page_screen.dart';
 
 class createWorkout2 extends StatefulWidget {
 
@@ -13,7 +13,7 @@ class createWorkout2 extends StatefulWidget {
 
 class _createWorkout2  extends State<createWorkout2> {
 
-  int _selectedIndex = 2;
+
   bool isPrivate = true;
   double rating = 0;
   String label="Beginner";
@@ -21,12 +21,6 @@ class _createWorkout2  extends State<createWorkout2> {
   @override
   void initState() {
     super.initState();
-  }
-
-  void _onNavBarItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
   }
 
   @override
@@ -182,10 +176,7 @@ class _createWorkout2  extends State<createWorkout2> {
               ],
             ),
       ),
-      bottomNavigationBar: MyNavigationBar(
-        selectedIndex: _selectedIndex,
-        onItemSelected: _onNavBarItemTapped,
-      ),
+
     );
   }
 }
