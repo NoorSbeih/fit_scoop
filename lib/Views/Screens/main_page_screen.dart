@@ -10,6 +10,8 @@ import 'library/library_screen.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -17,7 +19,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int selectedPage = 0;
 
-  final _pageOptions = [
+  final List <Widget> _pageOptions = [
     WorkoutPage(),
     CommunityPage(),
     createWorkout1(),
@@ -32,7 +34,18 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: _pageOptions[selectedPage],
-      bottomNavigationBar: BottomNavigationBar(
+
+
+
+      bottomNavigationBar: SizedBox(
+        height: 83,
+        child: BottomNavigationBar(
+        onTap: (int index) {
+          setState(() {
+            print("Selected page: $index");
+            selectedPage = index;
+          });
+        },
         items: [
           BottomNavigationBarItem(
             label: "Home",
@@ -42,11 +55,12 @@ class _HomePageState extends State<HomePage> {
               height: 24, // Adjust the height as needed
               color: Colors.white,
             ),
+
             activeIcon: SvgPicture.asset(
               'images/home_clicked.svg',
               width: 24, // Adjust the width as needed
               height: 24, // Adjust the height as needed
-                color: Color(0xFF0dbab4)
+                color: const Color(0xFF0dbab4)
             ),
           ),
           BottomNavigationBarItem(
@@ -66,20 +80,27 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             label: "",
-            icon: Center(
-              child: SvgPicture.asset(
-                'images/plus_unclicked.svg',
-                width: 35,
-                height: 35,
-                color: Colors.white,
+
+            icon: Padding(
+              padding: EdgeInsets.only(top: 8.0), // Adjust the top padding as needed
+              child: Center(
+                child: SvgPicture.asset(
+                  'images/plus_unclicked.svg',
+                  width: 40,
+                  height: 40,
+                  color: Colors.white,
+                ),
               ),
             ),
-            activeIcon: Center(
-              child: SvgPicture.asset(
-                'images/plus_clicked.svg',
-                width: 35,
-                height: 35,
-                color: Color(0xFF0dbab4),
+            activeIcon: Padding(
+              padding: EdgeInsets.only(top: 8.0), // Adjust the top padding as needed
+              child: Center(
+                child: SvgPicture.asset(
+                  'images/plus_clicked.svg',
+                  width: 40,
+                  height: 40,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
@@ -116,18 +137,15 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ],
-        onTap: (int index) {
-          setState(() {
-            selectedPage = index;
-          });
-        },
+
 
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Color(0xFF2C2A2A),
+        backgroundColor: Color(0xFF605D5D),
         unselectedItemColor: Colors.white,
         selectedItemColor: Color(0xFF0dbab4),
         selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
       )
-      );
+      )
+    );
   }
 }
