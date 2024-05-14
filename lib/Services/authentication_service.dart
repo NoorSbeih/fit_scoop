@@ -5,25 +5,30 @@ import 'package:firebase_auth/firebase_auth.dart' ;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Models/user_model.dart' as model;
 import 'Database Services/user_service.dart';
 
 class AuthenticationService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
 
   // Sign Up with Email & Password
-  Future<User?>
-  signUpWithEmail(String email, String password) async {
+  Future<User?> signUpWithEmail(String email, String password) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+
+      // Save user authentication state
+      await _persistUser(result.user!);
+
       return result.user;
     } catch (e) {
       print(e.toString());
       return null;
     }
   }
+
 
   // Sign In with Email & Password
   Future<User?> signInWithEmailAndPassword(String email, String password) async {
@@ -32,13 +37,16 @@ class AuthenticationService {
         email: email,
         password: password,
       );
+
+      // Save user authentication state
+      await _persistUser(userCredential.user!);
+
       return userCredential.user;
     } catch (error) {
       print("Error signing in: $error");
       return null;
     }
   }
-
 
 
 
@@ -60,21 +68,13 @@ class AuthenticationService {
       if (authResult.additionalUserInfo!.isNewUser) {
         await saveUserDataToDatabase(authResult.user!);
       }
-      print("Hello");
-      print(authResult.user!.displayName);
 
-      if (mounted) return;
-      InfoBox.show(context, InfoBox.success, "Signed In With Google");
-      print("Signed In With Google");
+      // Save user authentication state
+      await _persistUser(authResult.user!);
 
-    } on FirebaseAuthException catch (e) {
-      if (mounted) return;
-      print("Firebase Auth Error: $e");
-      InfoBox.show(context, InfoBox.success, "Firebase Auth Error: $e");
+      // Show success message
     } catch (e) {
-      if (mounted) return;
-      print("Error: $e");
-      InfoBox.show(context, InfoBox.success, "Error: $e");
+      // Handle errors
     }
   }
 
@@ -91,16 +91,42 @@ class AuthenticationService {
   }
 
 
+  Future<void> _persistUser(User user) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('userUid', user.uid);
+    } catch (error) {
+      print("Error persisting user: $error");
+    }
+  }
 
 
 
+  Future<User?> getAuthenticatedUser() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? userUid = prefs.getString('userUid');
 
-
+      if (userUid != null) {
+        // User is authenticated, return the user
+        return _auth.currentUser;
+      } else {
+        // User is not authenticated
+        return null;
+      }
+    } catch (error) {
+      print("Error retrieving user: $error");
+      return null;
+    }
+  }
 
 
   // Sign Out
   Future<void> signOut() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.remove('userUid');
+
       await _auth.signOut();
     } catch (error) {
       print("Error signing out: $error");

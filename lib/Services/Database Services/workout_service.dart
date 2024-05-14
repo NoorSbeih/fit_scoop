@@ -62,6 +62,7 @@ class WorkoutService {
       print('Stack Trace: $stackTrace');
       throw e;
     }
+    return null;
   }
 
   // Delete workout document from Firestore based on workout ID

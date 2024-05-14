@@ -42,6 +42,17 @@ class ExerciseService {
     }
   }
 
+  // method to get exercise name from id
+  Future<String> getExerciseName(String id) async {
+    try {
+      Exercise? exercise = await getExercise(id);
+      return exercise?.name ?? '';
+    } catch (e) {
+      print('Error getting exercise name: $e');
+      throw e;
+    }
+  }
+
 
 
 

@@ -29,15 +29,8 @@ class WorkoutPagee extends StatefulWidget{
 }
 
 class _WorkoutPageState extends State<WorkoutPagee> {
-  int _selectedIndex = 0;
   Workout? currentWorkout;
 
-  void _onNavBarItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-
-    });
-  }
   late List<Map<String, dynamic>> exercises = [];
 
    int intensity=0;
@@ -68,8 +61,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
           intensity=checkIntensity( currentWorkout!.intensity);
            name=currentWorkout!.name;
            duration=currentWorkout!.duration;
-          print(exercises);
-          buildExerciseCards(exercises);
+
         });
       } else {
         // Handle case where metrics is null
@@ -184,7 +176,6 @@ class _WorkoutPageState extends State<WorkoutPagee> {
             context,
             id,
             duration,
-
           );
         } else {
 

@@ -23,6 +23,15 @@ class ExerciseController {
       throw e;
     }
   }
+  //method to get exercise name by id
+  Future<String> getExerciseName(String id) async {
+    try {
+      return await _exerciseService.getExerciseName(id);
+    } catch (e) {
+      print('Error getting exercise name: $e');
+      throw e;
+    }
+  }
 
   Future<void> updateExercise(Exercise exercise) async {
     try {
