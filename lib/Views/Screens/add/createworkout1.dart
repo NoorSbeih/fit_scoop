@@ -12,8 +12,11 @@ class createWorkout1 extends StatefulWidget {
 }
 
 class _createWorkout1 extends State<createWorkout1> {
+  TextEditingController nameController =new TextEditingController();
+  static String name="";
   @override
   void initState() {
+
     super.initState();
   }
   void handleExerciseAdded() {
@@ -57,10 +60,11 @@ class _createWorkout1 extends State<createWorkout1> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            const Padding(
+             Padding(
               padding: EdgeInsets.only(left: 16, right: 16),
               child: TextField(
-                decoration: InputDecoration(
+                controller:nameController,
+                decoration: const InputDecoration(
                   hintText: 'Workout Name',
                   hintStyle: TextStyle(fontSize: 18, color: Colors.white),
                   border: UnderlineInputBorder(
@@ -75,7 +79,7 @@ class _createWorkout1 extends State<createWorkout1> {
 
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(left: 0, right: 0),
+                padding: const EdgeInsets.only(bottom:5),
                 child: retrieveAddedExercise(addExercise.exercises),
               ),
             ),
@@ -121,7 +125,7 @@ class _createWorkout1 extends State<createWorkout1> {
       padding: const EdgeInsets.only(left: 16, right: 16),
       child: GestureDetector(
         onTap: () async {
-          // Navigate to the addExercise screen
+          name=nameController.text;
           Navigator.push(
             context,
             MaterialPageRoute(
