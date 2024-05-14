@@ -53,6 +53,22 @@ class ExerciseService {
     }
   }
 
+
+
+
+
+  Future<List<Exercise>> getAllExercises() async {
+    try {
+      QuerySnapshot snapshot = await _exercisesRef.get();
+      List<Exercise> exercises = snapshot.docs.map((doc) {
+        return Exercise.fromMap(doc.id, doc.data() as Map<String, dynamic>);
+      }).toList();
+      return exercises;
+    } catch (e) {
+      print('Error getting exercises: $e');
+      throw e;
+    }
+  }
   // Delete exercise document from Firestore based on exercise ID
   Future<void> deleteExercise(String id) async {
     try {

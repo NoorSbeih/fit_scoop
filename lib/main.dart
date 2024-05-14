@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
 import 'Views/Screens/home_page_screen.dart';
 import 'Views/Screens/register_screen.dart';
 import 'Controllers/workout_controller.dart';

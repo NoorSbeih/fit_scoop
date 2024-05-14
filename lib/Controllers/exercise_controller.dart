@@ -42,6 +42,11 @@ class ExerciseController {
       throw e;
     }
   }
+  Future<List<Exercise>> getExercisesByStartingLetter(String letter) async {
+    List<Exercise> allExercises = await _exerciseService.getAllExercises();
+    return allExercises.where((exercise) => exercise.name.startsWith(letter)).toList();
+
+  }
 
   Future<void> deleteExercise(String id) async {
     try {

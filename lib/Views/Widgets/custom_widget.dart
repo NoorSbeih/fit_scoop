@@ -17,8 +17,17 @@ class custom_widget {
       ),
     );
   }
-
-
+  static Widget customTextWidgetForExersiceCard(String text, double fontSize) {
+  return Text(
+        text,
+  style:  TextStyle(
+  color: Colors.white,
+  fontSize: fontSize,
+  fontWeight: FontWeight.bold,
+  fontFamily: 'Montserrat',
+    ),
+    );
+  }
   static Widget startTextWidget(String text) {
     return Text(
       text,
