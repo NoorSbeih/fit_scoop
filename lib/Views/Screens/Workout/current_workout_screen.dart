@@ -177,7 +177,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
         final sets = exercise['sets'];
         final weight = exercise['weight'];
         if (name != null && sets != null && weight != null) {
-          return exercises_card.customcardWidget(
+          return exercises_card.customExerciseCardWidget(
             name.toString(),
             sets.toString(),
             weight.toString(),

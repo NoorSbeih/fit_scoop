@@ -47,7 +47,6 @@ class WorkoutService {
     }
   }
 
-  // Retrieve workout document from Firestore based on workout ID
   Future<Workout?> getWorkout(String id) async {
     try {
 
