@@ -64,6 +64,7 @@ class _createWorkout1 extends State<createWorkout1> {
               padding: EdgeInsets.only(left: 16, right: 16),
               child: TextField(
                 controller:nameController,
+                style: TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
                   hintText: 'Workout Name',
                   hintStyle: TextStyle(fontSize: 18, color: Colors.white),
@@ -126,6 +127,7 @@ class _createWorkout1 extends State<createWorkout1> {
       child: GestureDetector(
         onTap: () async {
           name=nameController.text;
+          print(name);
           Navigator.push(
             context,
             MaterialPageRoute(
