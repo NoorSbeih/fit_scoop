@@ -35,8 +35,6 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       body: _pageOptions[selectedPage],
 
-
-
       bottomNavigationBar: SizedBox(
         height: 83,
         child: BottomNavigationBar(

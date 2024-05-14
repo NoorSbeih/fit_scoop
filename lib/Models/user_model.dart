@@ -10,6 +10,7 @@ class User_model {
   final String? bodyMetrics;
   final List<String> followedUserIds; // References to User IDs
   final List<String> savedWorkoutIds; // References to Workout IDs
+  final String? bio;
 
   User_model({
     required this.id,
@@ -19,6 +20,7 @@ class User_model {
     this.bodyMetrics,
     this.followedUserIds = const [],
     this.savedWorkoutIds = const [],
+    this.bio
   });
 
   Map<String, dynamic> toMap() {
@@ -30,6 +32,7 @@ class User_model {
       'bodyMetrics': bodyMetrics, // Assuming BodyMetrics has a toMap() method
       'followedUserIds': followedUserIds,
       'savedWorkoutIds': savedWorkoutIds,
+      'bio': bio,
     };
   }
   factory User_model.fromMap(Map<String, dynamic> map) {
@@ -41,6 +44,7 @@ class User_model {
       bodyMetrics: map['bodyMetrics'],
       followedUserIds: List<String>.from(map['followedUserIds']),
       savedWorkoutIds: List<String>.from(map['savedWorkoutIds']),
+      bio: map['bio'],
     );
   }
 

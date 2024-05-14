@@ -291,44 +291,6 @@ class _LibraryScreen extends State<LibraryScreen>
                       },
                     ),
                   ),
-                  // Expanded(
-                  //   child: FutureBuilder<List<Workout>>(
-                  //     future: savedWorkoutsFuture,
-                  //     // Use the savedWorkoutsFuture variable
-                  //     builder: (context, snapshot) {
-                  //       if (snapshot.connectionState ==
-                  //           ConnectionState.waiting) {
-                  //         return CircularProgressIndicator();
-                  //       } else if (snapshot.hasError) {
-                  //         return Text('Error: ${snapshot.error}');
-                  //       } else {
-                  //         List<Workout> filteredSavedWorkouts =
-                  //             snapshot.data ?? [];
-                  //         if (_searchQuery.isNotEmpty) {
-                  //           filteredSavedWorkouts = filteredSavedWorkouts
-                  //               .where((workout) => workout.name
-                  //                   .toLowerCase()
-                  //                   .contains(_searchQuery.toLowerCase()))
-                  //               .toList();
-                  //         }
-                  //         if (filteredSavedWorkouts.isEmpty) {
-                  //           return Text('No saved workouts');
-                  //         } else {
-                  //           return ListView.builder(
-                  //             itemCount: filteredSavedWorkouts.length, itemBuilder: (context, index) {
-                  //               Workout workout = filteredSavedWorkouts[index];
-                  //               return workout_widget.customcardWidget(
-                  //                 workout,
-                  //                 false,
-                  //                 context,
-                  //               );
-                  //             },
-                  //           );
-                  //         }
-                  //       }
-                  //     },
-                  //   ),
-                  // ),
 
                   Expanded(
                     child: ListView.builder(
