@@ -103,6 +103,8 @@ flutter:
         - images/plus_clicked.svg
         - images/community_clicked.svg
         - images/jumpingJacks.jpg
+        - images/profile-circle-svgrepo-com.svg
+        - images/write-svgrepo-com.svg
     #   - images/a_dot_ham.jpeg
 
     # An image asset can refer to one or more resolution-specific "variants", see
