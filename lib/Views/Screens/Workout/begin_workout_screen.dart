@@ -84,12 +84,7 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => WorkoutPage(),
-                          ),
-                        );
+
                       },
                       child: custom_widget.customTextWidget("YES", 18),
                     ),
