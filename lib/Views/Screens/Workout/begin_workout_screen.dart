@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fit_scoop/Controllers/body_metrics_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 import '../../../Controllers/workout_log_controller.dart';
@@ -199,7 +200,7 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
       },
     );
   }
-  void addWorkoutLogs(){
+  Future<void> addWorkoutLogs() async {
     UserSingleton userSingleton = UserSingleton.getInstance();
     User_model user = userSingleton.getUser();
     if(areAllSetsZero()) {
@@ -213,7 +214,9 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
 
       );
       controller.addWorkoutLog(workoutLog);
-      ++WorkoutPagee.currentDayIndex;
+      BodyMetricsController bodyController=new BodyMetricsController();
+      await bodyController.updateCurrentDay(user.bodyMetrics);
+
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) =>   WorkoutPage()), // Replace SecondPage() with the desired page widget

@@ -24,7 +24,6 @@ class WorkoutPagee extends StatefulWidget{
   static late List<Map<String, dynamic>> exercises = [];
   static List<Map<String, dynamic>> exerciseslog=[];
   static late String currentWorkoutId;
- static int currentDayIndex=0;
   static void copyExercisesToLog() {
     exerciseslog = [];
     for (var exercise in exercises) {
@@ -63,10 +62,14 @@ class _WorkoutPageState extends State<WorkoutPagee> {
       BodyMetrics? metrics = await controller.fetchBodyMetrics(bodyMetricId!);
       print(metrics?.workoutSchedule);
       if (metrics != null) {
-        currentWorkout = await Calculate(metrics.workoutSchedule);
+        int currentDayIndex=metrics.CurrentDay;
+        currentWorkout = await Calculate(metrics.workoutSchedule,currentDayIndex);
         setState(() {
           WorkoutPagee.exercises = currentWorkout!.exercises;
           WorkoutPagee.copyExercisesToLog();
+          print("cureennnnn");
+          print(metrics.CurrentDay);
+
           intensity = checkIntensity(currentWorkout!.intensity);
           name = currentWorkout!.name;
           duration = currentWorkout!.duration;
@@ -202,15 +205,15 @@ class _WorkoutPageState extends State<WorkoutPagee> {
 
 
 
-  Future<Workout?> Calculate(List<String> workoutSchedule) async {
+  Future<Workout?> Calculate(List<String> workoutSchedule,int currentDayIndex) async {
     int currentDayOfWeek = DateTime
         .now()
         .weekday;
     print("The day of the week");
     print(getDayOfWeek(currentDayOfWeek));
 
-    WorkoutPagee.currentWorkoutId = workoutSchedule[WorkoutPagee.currentDayIndex];
-    print(WorkoutPagee.currentWorkoutId);
+   WorkoutPagee.currentWorkoutId = workoutSchedule[currentDayIndex];
+  //  print(WorkoutPagee.currentWorkoutId);
     print("IDDDD");
     WorkoutController controller = new WorkoutController();
     return controller.getWorkout(WorkoutPagee.currentWorkoutId);

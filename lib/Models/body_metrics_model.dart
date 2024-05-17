@@ -6,6 +6,7 @@ import 'dart:core';
 import 'package:fit_scoop/Models/workout_model.dart';
 
 class BodyMetrics {
+
   final String userId; // User ID associated with these metrics
   final double height;
   final double weight;
@@ -14,6 +15,7 @@ class BodyMetrics {
   final double bodyFat;
   final List<String> fitnessGoal;
   final String gymType;
+  final int CurrentDay;
   final List<String> workoutSchedule; // List of workouts for each day
 
   BodyMetrics({
@@ -25,6 +27,7 @@ class BodyMetrics {
     required this.bodyFat,
     required this.fitnessGoal,
     required this.gymType,
+    required this.CurrentDay,
     List<String>? workoutSchedule,
   }) : this.workoutSchedule = workoutSchedule ?? List.filled(7, '');
 
@@ -39,7 +42,13 @@ class BodyMetrics {
       'bodyFat': bodyFat,
       'fitnessGoal': fitnessGoal,
       'gymType': gymType,
+      'CurrentDay;':CurrentDay,
       'workoutSchedule': workoutSchedule,
+    };
+  }
+  Map<String, dynamic> toUpdateMap() {
+    return {
+      'CurrentDay': CurrentDay,
     };
   }
 
@@ -53,8 +62,10 @@ class BodyMetrics {
       bodyFat: map['bodyFat'],
       fitnessGoal:map['fitnessGoal'].cast<String>(),
       gymType: map['gymType'],
+      CurrentDay:map['CurrentDay'],
       workoutSchedule: map['workoutSchedule'].cast<String>(),
     );
+
   }
 
 
