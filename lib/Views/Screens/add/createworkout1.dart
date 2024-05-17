@@ -77,7 +77,6 @@ class _createWorkout1 extends State<createWorkout1> {
                 ),
               ),
             ),
-
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(bottom:5),
