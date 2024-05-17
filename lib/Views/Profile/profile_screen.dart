@@ -1,3 +1,5 @@
+import 'package:fit_scoop/Models/review_model.dart';
+import 'package:fit_scoop/Views/Profile/review_screen.dart';
 import 'package:fit_scoop/Views/Profile/workout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -18,6 +20,7 @@ class _profileState extends State<ProfilePage> {
   String num = "";
   late TextEditingController _controller;
   List<Workout> workouts = [];
+  List<Review> reviews = [];
   late User_model user;
   @override
   void initState() {
@@ -41,8 +44,11 @@ class _profileState extends State<ProfilePage> {
         String userId = user.id;
         WorkoutController controller = WorkoutController();
         workouts = await controller.getWorkoutsByUserId(userId);
+
         print("hhh");
         print(workouts.length);
+
+
 
       setState(() {
         num = '${workouts.length} workouts|${user.followedUserIds.length} followers';
@@ -232,8 +238,29 @@ class _profileState extends State<ProfilePage> {
 
             InkWell(
               onTap: () {
-                // Add your onPressed logic here
-                print('Button pressed');
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                  ),
+                  builder: (BuildContext context) {
+                    return Container(
+                      height: MediaQuery
+                          .of(context)
+                          .size
+                          .height * 0.95,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(25)),
+                        border: Border.all(
+                          width: 2.0, // Border width
+                        ),
+                      ),
+                      child:reviewsProfile(user: user, reviews:reviews),
+                    );
+                  },
+                );
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -272,3 +299,5 @@ class _profileState extends State<ProfilePage> {
     );
   }
 }
+
+
