@@ -216,7 +216,7 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
       ++WorkoutPagee.currentDayIndex;
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()), // Replace SecondPage() with the desired page widget
+        MaterialPageRoute(builder: (context) =>   WorkoutPage()), // Replace SecondPage() with the desired page widget
       );
 
     }else{
