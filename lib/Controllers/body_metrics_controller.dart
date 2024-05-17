@@ -25,10 +25,10 @@ class BodyMetricsController {
       throw e;
     }
   }
-  Future<void> updateBodyMetrics(BodyMetrics bodyMetrics) async {
+  Future<void> updateBodyMetrics(String id,BodyMetrics bodyMetrics) async {
     try {
       // Update body metrics in the database using the BodyMetricsService
-      await _bodyMetricsService.updateBodyMetrics(bodyMetrics);
+      await _bodyMetricsService.updateBodyMetrics(id,bodyMetrics);
     } catch (e) {
       print('Error updating body metrics: $e');
       throw e;
@@ -44,13 +44,14 @@ class BodyMetricsController {
       throw e;
     }
   }
-  Future<BodyMetrics?> fetchBodyMetrics(String userId) async {
+  Future<BodyMetrics?> fetchBodyMetrics(String? bodyMetrics) async {
     try {
-      return await _bodyMetricsService.getBodyMetrics(userId);
+      print("gjgjgj");
+      print(bodyMetrics);
+      return await _bodyMetricsService.getBodyMetrics(bodyMetrics);
     } catch (e) {
       print('Error getting workout: $e');
       throw e;
     }
-
   }
 }

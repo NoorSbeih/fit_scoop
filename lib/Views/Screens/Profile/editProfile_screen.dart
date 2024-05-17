@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../Controllers/body_metrics_controller.dart';
+import '../../../Models/body_metrics_model.dart';
 import '../../../Models/user_model.dart';
 
 class EditProfile extends StatefulWidget {
@@ -24,6 +26,12 @@ class _EditProfile extends State<EditProfile> {
   TextEditingController bioController = TextEditingController();
   Uint8List? image;
   String? imageUrl;
+  String? gender;
+  BodyMetrics? bodyMetrics;
+  late String initialName;
+  late String initialBio;
+  late String? initialGender;
+  late String? initialImageUrl;
 
   void selectImage() async {
     Uint8List img = await pickImage(ImageSource.gallery);
@@ -38,6 +46,14 @@ class _EditProfile extends State<EditProfile> {
     controller.text = widget.user.name;
     bioController.text = widget.user.bio!;
     getImageUrl();
+
+    getGender();
+
+
+    initialName = widget.user.name;
+    initialBio = widget.user.bio!;
+    initialGender = gender;
+    initialImageUrl = widget.user.imageLink;
   }
 
   Future<void> getImageUrl() async {
@@ -47,9 +63,63 @@ class _EditProfile extends State<EditProfile> {
     });
   }
 
+
+  Future<void> getGender() async {
+    if (widget.user?.bodyMetrics != null) {
+      BodyMetricsController controller = BodyMetricsController();
+     bodyMetrics = await controller.fetchBodyMetrics(widget.user!.bodyMetrics);
+      setState(() {
+        this.gender = bodyMetrics?.gender;
+      });
+    } else {
+      print("User's bodyMetrics ID is null");
+    }
+  }
+
+
   void saveProfile() async {
     UserController controller = UserController();
-    controller.updateProfileImage(image!, widget.user.id);
+    BodyMetricsController controller2 = BodyMetricsController();
+
+    bool isNameChanged = initialName != this.controller.text;
+    bool isBioChanged = initialBio != this.bioController.text;
+    bool isGenderChanged = initialGender != this.gender;
+    bool isImageChanged = image != null;
+
+      if (isNameChanged) {
+        widget.user.name = this.controller.text;
+        await controller.updateProfile(widget.user);
+      }
+      if (isBioChanged) {
+        widget.user.bio = this.bioController.text;
+        await controller.updateProfile(widget.user);
+      }
+    if (isGenderChanged) {
+      if (widget.user.bodyMetrics != null) {
+        if (bodyMetrics != null) {
+          bodyMetrics?.gender = gender!;
+          String? x=widget.user.bodyMetrics;
+          await controller2.updateBodyMetrics(x!,bodyMetrics!);
+        } else {
+          // Handle the case where bodyMetrics is null
+          print("bodyMetrics is null, cannot update gender");
+        }
+      } else {
+        // Handle the case where user's bodyMetrics ID is null
+        print("User's bodyMetrics ID is null, cannot update gender");
+      }
+    }
+
+    if (isImageChanged) {
+      // Update profile image in the database
+      await controller.updateProfileImage(image!, widget.user.id);
+    }
+    initialName = widget.user.name;
+    initialBio = widget.user.bio!;
+    initialGender = this.gender;
+    initialImageUrl = widget.user.imageLink;
+
+
   }
 
   @override
@@ -63,7 +133,6 @@ class _EditProfile extends State<EditProfile> {
           'Edit Profile',
           style: TextStyle(
             fontSize: 25, // Adjust the font size as needed
-
             fontFamily: 'BebasNeue',
             color: Colors.white, // Adjust the color as needed
           ),
@@ -99,36 +168,37 @@ class _EditProfile extends State<EditProfile> {
                                 width:
                                     128, // Adjust the width and height as needed
                                 height: 128,
-                                color: Color(
+                                color: const Color(
                                     0xFF0dbab4), // Set the color if needed
                               ),
                             ),
                   Positioned(
                     bottom: -10,
-                    left: 80,
+                    left: 90,
                     child: IconButton(
                       onPressed: selectImage,
                       icon: SvgPicture.asset(
                         'images/write-svgrepo-com.svg',
                         width: 24,
                         height: 24,
-                        color: Colors.white,
+                        color: Color(0xFF0dbab4),
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            const Divider(
+            SizedBox(height: 10.0),
+             const Divider(
               color: Colors.grey,
               thickness: 1.0,
             ),
-            const SizedBox(height: 30.0),
+            const SizedBox(height: 10.0),
             const Text(
               'USERNAME',
               style: TextStyle(
                   color: Color(0xFF0dbab4),
-                  fontSize: 20,
+                  fontSize:30,
                   fontFamily: 'BebasNeue'),
             ),
             TextField(
@@ -136,20 +206,48 @@ class _EditProfile extends State<EditProfile> {
               style: const TextStyle(
                   color: Colors.white, fontSize: 20, fontFamily: 'BebasNeue'),
             ),
-            const SizedBox(height: 30.0),
+            const SizedBox(height: 10.0),
             const Text(
               'GENDER',
               style: TextStyle(
                   color: Color(0xFF0dbab4),
-                  fontSize: 20,
+                  fontSize: 30,
                   fontFamily: 'BebasNeue'),
             ),
-            TextField(
-              controller: controller,
-              style: const TextStyle(
-                  color: Colors.white, fontSize: 20, fontFamily: 'BebasNeue'),
+            Row(
+              children: [
+                Radio<String>(
+                  value: 'Male',
+                  groupValue: gender,
+                  activeColor: Color(0xFF0dbab4),
+                  onChanged: (value) {
+                    setState(() {
+                      gender = value;
+                    });
+                  },
+                ),
+                const Text(
+                  'Male',
+                  style: TextStyle(color: Colors.white,fontFamily: 'BebasNeue',fontSize: 20),
+                ),
+                Radio<String>(
+                  value: 'Female',
+                  groupValue: gender,
+                  activeColor: Color(0xFF0dbab4),
+                  onChanged: (value) {
+                    setState(() {
+                      gender = value;
+                    });
+                  },
+                ),
+                const Text(
+                  'Female',
+                  style: TextStyle(color: Colors.white,fontFamily: 'BebasNeue',fontSize: 20),
+                ),
+              ],
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 10.0),
+
             const Text(
               'BIO',
               style: TextStyle(
@@ -157,7 +255,8 @@ class _EditProfile extends State<EditProfile> {
                   color: Color(0xFF0dbab4),
                   fontFamily: 'BebasNeue'),
             ),
-            Container(
+
+          Container(
               padding: EdgeInsets.only(top: 10, left: 20.0, right: 20),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.white),
@@ -178,7 +277,7 @@ class _EditProfile extends State<EditProfile> {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: saveProfile,
               style: ButtonStyle(

@@ -18,9 +18,9 @@ class BodyMetricsService {
     }
   }
 
-  Future<void> updateBodyMetrics(BodyMetrics bodyMetrics) async {
+  Future<void> updateBodyMetrics(String id,BodyMetrics bodyMetrics) async {
     try {
-     // await _bodyMetricsRef.doc(bodyMetrics.id).update(bodyMetrics.toMap
+      await _bodyMetricsRef.doc(id).update(bodyMetrics.toMap());
     } catch (e) {
       print('Error updating body metrics: $e');
       throw e;
@@ -28,13 +28,21 @@ class BodyMetricsService {
   }
 
   // Retrieve body metrics document from Firestore based on user ID
-  Future<BodyMetrics?> getBodyMetrics(String id) async {
+  Future<BodyMetrics?> getBodyMetrics(String? id) async {
     try {
       var snapshot = await _bodyMetricsRef.doc(id).get();
-      if (snapshot.exists && snapshot.data() != null) {
-        return BodyMetrics.fromMap(snapshot.data() as Map<String, dynamic>);
+      if (snapshot.exists) {
+        print("Document exists: ${snapshot.data()}");
+        var data = snapshot.data();
+        if (data != null) {
+          return BodyMetrics.fromMap(data as Map<String, dynamic>);
+        } else {
+          print("Document data is null");
+        }
+      } else {
+        print("Document with ID $id does not exist");
       }
-      return null; // Body metrics not found
+      return null; // Body metrics not found or data is null
     } catch (e) {
       print('Error getting body metrics: $e');
       throw e;

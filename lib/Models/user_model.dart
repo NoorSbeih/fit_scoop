@@ -3,15 +3,15 @@ import 'body_metrics_model.dart';
 enum UnitMeasure { imperial, metric }
 
 class User_model {
-  final String id;
-  final String name;
-  final String email;
-  final String? profilePictureUrl;
-  final String? bodyMetrics;
-  final List<String> followedUserIds; // References to User IDs
-  final List<String> savedWorkoutIds; // References to Workout IDs
-  final String? bio;
-  final String? imageLink;
+   String id;
+   String name;
+   String email;
+   String? profilePictureUrl;
+   String? bodyMetrics;
+   List<String> followedUserIds; // References to User IDs
+   List<String> savedWorkoutIds; // References to Workout IDs
+    String? bio;
+   String? imageLink;
 
   User_model({
     required this.id,
