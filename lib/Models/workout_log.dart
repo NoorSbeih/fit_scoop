@@ -1,5 +1,5 @@
 class WorkoutLog {
-  final String id;
+  String? id;
   final String userId;
   final String workoutId;
   final DateTime time;
@@ -7,7 +7,6 @@ class WorkoutLog {
   final List<ExercisePerformed> exercisesPerformed;
 
   WorkoutLog({
-    required this.id,
     required this.userId,
     required this.workoutId,
     required this.time,
@@ -18,7 +17,6 @@ class WorkoutLog {
   // Convert WorkoutLog to a map
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'userId': userId,
       'workoutId': workoutId,
       'timeTaken': time.toIso8601String(),
@@ -27,10 +25,8 @@ class WorkoutLog {
     };
   }
 
-  // Convert Firestore data to WorkoutLog
   factory WorkoutLog.fromMap(String id, Map<String, dynamic> map) {
     return WorkoutLog(
-      id: id,
       userId: map['userId'],
       workoutId: map['workoutId'],
       time: DateTime.parse(map['timeTaken']),

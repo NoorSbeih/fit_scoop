@@ -9,6 +9,7 @@ import 'package:fit_scoop/Views/Widgets/workout_widget.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_model.dart';
 import '../main_page_screen.dart';
+import 'begin_workout_screen.dart';
 class WorkoutPage extends StatelessWidget {
 
   @override
@@ -20,8 +21,18 @@ class WorkoutPage extends StatelessWidget {
 }
 
 class WorkoutPagee extends StatefulWidget{
-
-
+  static late List<Map<String, dynamic>> exercises = [];
+  static List<Map<String, dynamic>> exerciseslog=[];
+  static late String currentWorkoutId;
+  static void copyExercisesToLog() {
+    exerciseslog = [];
+    for (var exercise in exercises) {
+      exerciseslog.add({
+        'name': exercise['name'],
+        'sets': exercise['sets'],
+      });
+    }
+  }
   const WorkoutPagee ({Key? key}) : super(key: key);
 
   @override
@@ -30,17 +41,14 @@ class WorkoutPagee extends StatefulWidget{
 
 class _WorkoutPageState extends State<WorkoutPagee> {
   Workout? currentWorkout;
-
-  late List<Map<String, dynamic>> exercises = [];
-
-   int intensity=0;
-   String name="";
-  int duration=0;
+  int intensity = 0;
+  String name = "";
+  int duration = 0;
 
   void initState() {
+
     super.initState();
     fetchData();
-
   }
 
   void fetchData() async {
@@ -54,14 +62,17 @@ class _WorkoutPageState extends State<WorkoutPagee> {
       BodyMetrics? metrics = await controller.fetchBodyMetrics(bodyMetricId!);
       print(metrics?.workoutSchedule);
       if (metrics != null) {
-        currentWorkout = await Calculate(metrics.workoutSchedule);
-        setState(()  {
+        int currentDayIndex=metrics.CurrentDay;
+        currentWorkout = await Calculate(metrics.workoutSchedule,currentDayIndex);
+        setState(() {
+          WorkoutPagee.exercises = currentWorkout!.exercises;
+          WorkoutPagee.copyExercisesToLog();
+          print("cureennnnn");
+          print(metrics.CurrentDay);
 
-          exercises = currentWorkout!.exercises;
-          intensity=checkIntensity( currentWorkout!.intensity);
-           name=currentWorkout!.name;
-           duration=currentWorkout!.duration;
-
+          intensity = checkIntensity(currentWorkout!.intensity);
+          name = currentWorkout!.name;
+          duration = currentWorkout!.duration;
         });
       } else {
         // Handle case where metrics is null
@@ -73,24 +84,23 @@ class _WorkoutPageState extends State<WorkoutPagee> {
   }
 
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xFF2C2A2A),
       appBar: AppBar(
-        backgroundColor: Color(0xFF2C2A2A), // Match with scaffold background color
+        backgroundColor: Color(0xFF2C2A2A),
+        // Match with scaffold background color
         leading: IconButton(
-          icon: const Icon(Icons.menu,  color: Color(0xFF0dbab4),),
+          icon: const Icon(Icons.menu, color: Color(0xFF0dbab4),),
           onPressed: () {
             // Handle settings icon pressed
           },
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.settings,color: Color(0xFF0dbab4),),
+            icon: const Icon(Icons.settings, color: Color(0xFF0dbab4),),
             onPressed: () {
               // Handle menu icon pressed
             },
@@ -106,9 +116,9 @@ class _WorkoutPageState extends State<WorkoutPagee> {
             child: currentWorkout != null
                 ? Align(
               alignment: Alignment.centerLeft,
-              child: workout_widget.customcardWidget(currentWorkout!, false, context,
-                    (Workout workout, bool liked) {
-                },
+              child: workout_widget.customcardWidget(
+                currentWorkout!, false, context,
+                    (Workout workout, bool liked) {},
 
               ),
             )
@@ -126,20 +136,28 @@ class _WorkoutPageState extends State<WorkoutPagee> {
             ),
           ), // Adjust the height as needed for spacing
           Expanded(
-            child: buildExerciseCards(exercises),
+            child: buildExerciseCards(WorkoutPagee.exercises),
           ),
           Container(
             alignment: Alignment.center,
             height: 80.0, // Set a fixed height for the button container
             child: ElevatedButton(
-              onPressed: () async {},
+              onPressed: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>
+                      BeginWorkoutPage()), // Replace SecondPage() with the desired page widget
+                );
+              },
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0dbab4)),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    const Color(0xFF0dbab4)),
                 fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
                 shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                       (Set<MaterialState> states) {
                     return RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0), // Border radius
+                      borderRadius: BorderRadius.circular(
+                          10.0), // Border radius
                     );
                   },
                 ),
@@ -164,12 +182,12 @@ class _WorkoutPageState extends State<WorkoutPagee> {
       itemCount: exercises.length,
       itemBuilder: (context, index) {
         Map<String, dynamic> exercise = exercises[index];
-        String id=exercise['id'];
+        String id = exercise['id'];
         final name = exercise['name'];
         final sets = exercise['sets'];
         final weight = exercise['weight'];
         if (name != null && sets != null && weight != null) {
-          return exercises_card.customExerciseCardWidget(
+          return exercises_card.CurrentWorkoutCardWidget(
             name.toString(),
             sets.toString(),
             weight.toString(),
@@ -178,24 +196,27 @@ class _WorkoutPageState extends State<WorkoutPagee> {
             duration,
           );
         } else {
-
           return SizedBox(); // Placeholder widget, replace it with your preferred widget
         }
       },
     );
+
   }
 
 
 
-  Future<Workout?> Calculate(List<String> workoutSchedule) async {
-    int currentDayOfWeek = DateTime.now().weekday;
+  Future<Workout?> Calculate(List<String> workoutSchedule,int currentDayIndex) async {
+    int currentDayOfWeek = DateTime
+        .now()
+        .weekday;
     print("The day of the week");
-    print(getDayOfWeek(currentDayOfWeek ));
-    String currentWorkoutId = workoutSchedule[0];
-    print(currentWorkoutId);
+    print(getDayOfWeek(currentDayOfWeek));
+
+   WorkoutPagee.currentWorkoutId = workoutSchedule[currentDayIndex];
+  //  print(WorkoutPagee.currentWorkoutId);
     print("IDDDD");
     WorkoutController controller = new WorkoutController();
-    return controller.getWorkout(currentWorkoutId);
+    return controller.getWorkout(WorkoutPagee.currentWorkoutId);
   }
 
   int getDayOfWeek(int day) {
@@ -217,14 +238,14 @@ class _WorkoutPageState extends State<WorkoutPagee> {
       default:
         return 7;
     }
+  }
 
-    }
-  int checkIntensity (String intensity){
-    if( intensity=="Low"){
-     return 1;
-    } else  if(intensity=="Medium"){
-    return 2;
-    }else  if(intensity=="High"){
+  int checkIntensity(String intensity) {
+    if (intensity == "Low") {
+      return 1;
+    } else if (intensity == "Medium") {
+      return 2;
+    } else if (intensity == "High") {
       return 3;
     }
     return 0;
