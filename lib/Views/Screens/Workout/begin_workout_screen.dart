@@ -6,6 +6,7 @@ import '../../../Controllers/workout_log_controller.dart';
 import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_log.dart';
+import '../main_page_screen.dart';
 import 'begin_workout_exersices_screen.dart';
 import 'current_workout_screen.dart';
 class BeginWorkoutPage extends StatefulWidget {
@@ -84,7 +85,10 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
-
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomePage()), // Replace SecondPage() with the desired page widget
+                        );
                       },
                       child: custom_widget.customTextWidget("YES", 18),
                     ),
