@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../Controllers/workout_controller.dart';
-import '../../Models/user_model.dart';
-import '../../Models/user_singleton.dart';
-import '../../Models/workout_model.dart';
+
 import 'package:fit_scoop/Views/Widgets/workout_widget.dart';
+
+import '../../../Controllers/workout_controller.dart';
+import '../../../Models/user_model.dart';
+import '../../../Models/user_singleton.dart';
+import '../../../Models/workout_model.dart';
 
 class WorkoutProfile extends StatefulWidget {
   final List<Workout> workouts;

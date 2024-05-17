@@ -1,15 +1,15 @@
 import 'package:fit_scoop/Models/review_model.dart';
-import 'package:fit_scoop/Views/Profile/review_screen.dart';
-import 'package:fit_scoop/Views/Profile/workout_screen.dart';
+import 'package:fit_scoop/Views/Screens/Profile/review_screen.dart';
+import 'package:fit_scoop/Views/Screens/Profile/workout_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../Controllers/review_controller.dart';
-import '../../Controllers/workout_controller.dart';
-import '../../Models/user_model.dart';
-import '../../Models/user_singleton.dart';
-import '../../Models/workout_model.dart';
-import '../Screens/Workout/current_workout_screen.dart';
+import '../../../Controllers/review_controller.dart';
+import '../../../Controllers/workout_controller.dart';
+import '../../../Models/user_model.dart';
+import '../../../Models/user_singleton.dart';
+import '../../../Models/workout_model.dart';
 
 class ProfilePage extends StatefulWidget {
   @override

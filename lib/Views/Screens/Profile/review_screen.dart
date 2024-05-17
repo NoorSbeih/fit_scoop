@@ -2,14 +2,12 @@ import 'package:fit_scoop/Controllers/user_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../Controllers/workout_controller.dart';
-import '../../Models/review_model.dart';
-import '../../Models/user_model.dart';
-import '../../Models/user_singleton.dart';
-import '../../Models/workout_model.dart';
-import 'package:fit_scoop/Views/Widgets/workout_widget.dart';
+import '../../../Controllers/workout_controller.dart';
+import '../../../Models/review_model.dart';
+import '../../../Models/user_model.dart';
+import '../../../Models/workout_model.dart';
+import '../../Widgets/reviews_widget.dart';
 
-import '../Widgets/reviews_widget.dart';
 
 class reviewsProfile extends StatefulWidget {
   final List<Review> reviews;
