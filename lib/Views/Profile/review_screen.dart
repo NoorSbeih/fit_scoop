@@ -1,3 +1,4 @@
+import 'package:fit_scoop/Controllers/user_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,8 @@ import '../../Models/user_model.dart';
 import '../../Models/user_singleton.dart';
 import '../../Models/workout_model.dart';
 import 'package:fit_scoop/Views/Widgets/workout_widget.dart';
+
+import '../Widgets/reviews_widget.dart';
 
 class reviewsProfile extends StatefulWidget {
   final List<Review> reviews;
@@ -19,9 +22,7 @@ class reviewsProfile extends StatefulWidget {
 }
 
 class _ReviewsScreen extends State<reviewsProfile> {
-  late TextEditingController _myWorkoutsSearchController;
-  late String _searchQuery = '';
-  bool _isSearching = false;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -43,15 +44,20 @@ class _ReviewsScreen extends State<reviewsProfile> {
                 Navigator.of(context).pop(); // Close the page
               },
             ),
-            SizedBox(width: 4),
-            Text(
-              '${widget.user.name} WORKOUTS',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 30,
-                fontFamily: 'BebasNeue',
+            Expanded(
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  Text("${widget.user?.name}'s Reviews").data ?? "",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontFamily: 'BebasNeue',
+                  ),
+                ),
               ),
             ),
+            SizedBox(width: 48), // To balance the space taken by IconButton
           ],
         ),
       ),
@@ -59,26 +65,79 @@ class _ReviewsScreen extends State<reviewsProfile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(left: 20.0),
+            padding: const EdgeInsets.only(left: 20.0, top: 30),
             // Adjust the padding as needed
             child: Text(
-              '${widget.reviews.length} WORKOUTS',
+              '${widget.reviews.length} REVIEWS',
               style: const TextStyle(
-                fontSize: 25,
+                fontSize: 30,
                 color: Color(0xFF0dbab4),
                 fontFamily: 'BebasNeue',
               ),
             ),
           ),
-          // Expanded(
-          //   child: ListView.builder(
-          //     itemCount: widget.reviews.length,
-          //     itemBuilder: (context, index) {
-          //       Review review = widget.reviews[index];
-          //       return reviewsWidget(review);
-          //     },
-          //   ),
-          // ),
+          SizedBox(height: 10.0),
+          const Padding(
+            padding: EdgeInsets.only(left: 20.0, right: 20),
+            child: Divider(
+              color: Colors.grey,
+              thickness: 1.0,
+            ),
+          ),
+          // Add this variable to track loading state
+
+          Expanded(
+            child: ListView.builder(
+              itemCount: widget.reviews.length,
+              itemBuilder: (context, index) {
+                Review review = widget.reviews[index];
+                WorkoutController workoutController = WorkoutController();
+                UserController userController = UserController();
+
+                return FutureBuilder<Workout?>(
+                  future: workoutController.getWorkout(review.workoutId),
+                  builder: (context, workoutSnapshot) {
+                    if (workoutSnapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      isLoading = true; // Set loading state to true
+                      return SizedBox(); // Return an empty widget
+                    } else if (workoutSnapshot.hasError) {
+                      return Text('Error: ${workoutSnapshot.error}');
+                    } else if (!workoutSnapshot.hasData ||
+                        workoutSnapshot.data == null) {
+                      return Text('Workout not found');
+                    } else {
+                      Workout workout = workoutSnapshot.data!;
+                      return FutureBuilder<User_model?>(
+                        future: userController.getUser(workout.creatorId),
+                        builder: (context, userSnapshot) {
+                          if (userSnapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            if (!isLoading) {
+                              isLoading = true; // Set loading state to true
+                              return Center(child: CircularProgressIndicator());
+                            } else {
+                              return SizedBox(); // Return an empty widget
+                            }
+                          } else if (userSnapshot.hasError) {
+                            return Text('Error: ${userSnapshot.error}');
+                          } else if (!userSnapshot.hasData ||
+                              userSnapshot.data == null) {
+                            return Text('Creator not found');
+                          } else {
+                            User_model creator = userSnapshot.data!;
+                            isLoading = false; // Reset loading state
+                            return ReviewsWidget.reviewsWidget(
+                                workout, review, creator);
+                          }
+                        },
+                      );
+                    }
+                  },
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

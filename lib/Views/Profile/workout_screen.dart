@@ -152,7 +152,7 @@ class _WorkoutScreen extends State<WorkoutProfile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(left: 20.0),
+            padding: const EdgeInsets.only(left: 20.0,top:30),
             // Adjust the padding as needed
             child: Text(
               '${filteredWorkouts.length} WORKOUTS',

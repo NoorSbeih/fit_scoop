@@ -4,6 +4,7 @@ import 'package:fit_scoop/Views/Profile/workout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../Controllers/review_controller.dart';
 import '../../Controllers/workout_controller.dart';
 import '../../Models/user_model.dart';
 import '../../Models/user_singleton.dart';
@@ -45,11 +46,8 @@ class _profileState extends State<ProfilePage> {
         WorkoutController controller = WorkoutController();
         workouts = await controller.getWorkoutsByUserId(userId);
 
-        print("hhh");
-        print(workouts.length);
-
-
-
+      ReviewController controller2=ReviewController();
+      reviews = await controller2.getReviewsByUserId(userId);
       setState(() {
         num = '${workouts.length} workouts|${user.followedUserIds.length} followers';
       });
@@ -270,7 +268,7 @@ class _profileState extends State<ProfilePage> {
                 padding: EdgeInsets.all(10.0),
                 child:  Row(
                   children: [
-                    const Text(
+                     const Text(
                       'REVIEWS',
                       style: TextStyle(
                         fontSize: 30.0,
@@ -279,9 +277,9 @@ class _profileState extends State<ProfilePage> {
                       ),
                     ),
                     Expanded(child: Container()),
-                    const Text(
-                      '5',
-                      style: TextStyle(
+                     Text(
+                      '${reviews.length}',
+                      style: const TextStyle(
                         fontSize: 30.0,
                         fontFamily: 'BebasNeue',
                         color: Colors.white,
