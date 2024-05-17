@@ -1,4 +1,5 @@
 import 'package:fit_scoop/Models/review_model.dart';
+import 'package:fit_scoop/Views/Screens/Profile/editProfile_screen.dart';
 import 'package:fit_scoop/Views/Screens/Profile/review_screen.dart';
 import 'package:fit_scoop/Views/Screens/Profile/workout_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,12 +24,15 @@ class _profileState extends State<ProfilePage> {
   List<Workout> workouts = [];
   List<Review> reviews = [];
   late User_model user;
+  String? imageUrl;
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
     fetchData();
+
   }
+
 
   void fetchData() async {
     try {
@@ -41,6 +45,11 @@ class _profileState extends State<ProfilePage> {
       setState(() {
         _controller.text = user.bio ?? '';
         print(user.bio);
+      });
+
+      String? imageUrl = user.imageLink;
+      setState(() {
+        this.imageUrl = imageUrl;
       });
         String userId = user.id;
         WorkoutController controller = WorkoutController();
@@ -66,77 +75,89 @@ class _profileState extends State<ProfilePage> {
       appBar: AppBar(
         backgroundColor: Color(0xFF2C2A2A),
         leading: IconButton(
-          icon: const Icon(
-            Icons.menu,
-            color: Color(0xFF0dbab4),
-          ),
-          onPressed: () {
-            // Handle settings icon pressed
-          },
+          icon: const Icon(Icons.menu, color: Color(0xFF0dbab4)),
+          onPressed: () {},
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 4.0, left: 20, right: 20),
+        padding: const EdgeInsets.only(top: 4.0, left: 20,right:20),
         child: Column(
           children: <Widget>[
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
+                Stack(
                   children: [
-                    Container(
-                      height: 65,
-                      width: 65,
+                    imageUrl != null
+                        ? CircleAvatar(
+                      radius: 64,
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: NetworkImage(imageUrl!),
+                    )
+                        : CircleAvatar(
+                      radius: 64,
+                      backgroundColor: Colors.transparent,
                       child: SvgPicture.asset(
                         'images/profile-circle-svgrepo-com.svg',
-                        width: 24, // Adjust the width as needed
-                        height: 24, // Adjust the height as needed
+                        width: 128,
+                        height: 128,
                         color: Color(0xFF0dbab4),
                       ),
                     ),
-                    SizedBox(width: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            const Text(
-                              'Profile',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontFamily: 'BebasNeue'),
-                            ),
-                            SizedBox(width: 190.0),
-                            SizedBox(
-                              height: 25,
-                              width: 25,
+                  ],
+                ),
+                SizedBox(width: 15),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Profile',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontFamily: 'BebasNeue'),
+                          ),
+                          SizedBox(
+                            height: 25,
+                            width: 25,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditProfile(user: user),
+                                  ),
+                                );
+                              },
                               child: SvgPicture.asset(
                                 'images/write-svgrepo-com.svg',
-                                width: 24, // Adjust the width as needed
-                                height: 24, // Adjust the height as needed
+                                width: 24,
+                                height: 24,
                                 color: Color(0xFF0dbab4),
                               ),
                             ),
-                          ],
-                        ),
-                        Text(
-                          label,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontFamily: 'BebasNeue'),
-                        ),
-                        Text(
-                          num,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontFamily: 'BebasNeue'),
-                        ),
-                      ],
-                    ),
-                  ],
+                          ),
+                        ],
+                      ),
+                      Text(
+                        label,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 25,
+                            fontFamily: 'BebasNeue'),
+                      ),
+                      Text(
+                        num,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontFamily: 'BebasNeue'),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -175,65 +196,6 @@ class _profileState extends State<ProfilePage> {
               ),
             ),
             SizedBox(height: 20.0),
-
-            InkWell(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-                      ),
-                      builder: (BuildContext context) {
-                        return Container(
-                          height: MediaQuery
-                              .of(context)
-                              .size
-                              .height * 0.95,
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.vertical(
-                                top: Radius.circular(25)),
-                            border: Border.all(
-                              width: 2.0, // Border width
-                            ),
-                          ),
-                          child: WorkoutProfile(workouts: workouts, user: user),
-                        );
-                      },
-                    );
-                  },
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                padding: EdgeInsets.all(10.0),
-                child:  Row(
-                  children: [
-                    const Text(
-                      'WORKOUT',
-                      style: TextStyle(
-                        fontSize: 30.0,
-                          fontFamily: 'BebasNeue',
-                        color: Color(0xFF0dbab4),
-                      ),
-                    ),
-                    Expanded(child: Container()),
-                     Text(
-                       '${workouts.length}',
-                      style: const TextStyle(
-                        fontSize: 30.0,
-                        fontFamily: 'BebasNeue',
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            SizedBox(height: 20.0),
-
             InkWell(
               onTap: () {
                 showModalBottomSheet(
@@ -244,18 +206,14 @@ class _profileState extends State<ProfilePage> {
                   ),
                   builder: (BuildContext context) {
                     return Container(
-                      height: MediaQuery
-                          .of(context)
-                          .size
-                          .height * 0.95,
+                      height: MediaQuery.of(context).size.height * 0.95,
                       decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(25)),
+                        borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
                         border: Border.all(
-                          width: 2.0, // Border width
+                          width: 2.0,
                         ),
                       ),
-                      child:reviewsProfile(user: user, reviews:reviews),
+                      child: WorkoutProfile(workouts: workouts, user: user),
                     );
                   },
                 );
@@ -266,9 +224,61 @@ class _profileState extends State<ProfilePage> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 padding: EdgeInsets.all(10.0),
-                child:  Row(
+                child: Row(
                   children: [
-                     const Text(
+                    const Text(
+                      'WORKOUT',
+                      style: TextStyle(
+                        fontSize: 30.0,
+                        fontFamily: 'BebasNeue',
+                        color: Color(0xFF0dbab4),
+                      ),
+                    ),
+                    Expanded(child: Container()),
+                    Text(
+                      '${workouts.length}',
+                      style: const TextStyle(
+                        fontSize: 30.0,
+                        fontFamily: 'BebasNeue',
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 20.0),
+            InkWell(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                  ),
+                  builder: (BuildContext context) {
+                    return Container(
+                      height: MediaQuery.of(context).size.height * 0.95,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
+                        border: Border.all(
+                          width: 2.0,
+                        ),
+                      ),
+                      child: reviewsProfile(user: user, reviews: reviews),
+                    );
+                  },
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                padding: EdgeInsets.all(10.0),
+                child: Row(
+                  children: [
+                    const Text(
                       'REVIEWS',
                       style: TextStyle(
                         fontSize: 30.0,
@@ -277,7 +287,7 @@ class _profileState extends State<ProfilePage> {
                       ),
                     ),
                     Expanded(child: Container()),
-                     Text(
+                    Text(
                       '${reviews.length}',
                       style: const TextStyle(
                         fontSize: 30.0,
@@ -289,13 +299,9 @@ class _profileState extends State<ProfilePage> {
                 ),
               ),
             ),
-
-
           ],
         ),
       ),
     );
   }
 }
-
-

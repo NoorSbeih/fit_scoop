@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +19,7 @@ class UserController {
       throw e;
     }
   }
+
   Future<void> updateProfile(User_model user) async {
     try {
       // Update user profile in Firestore
@@ -64,6 +67,21 @@ class UserController {
     } catch (e) {
       print('Error unsaving workout: $e');
       throw e;
+    }
+  }
+
+  Future<void> updateProfileImage(Uint8List image, String userId) async {
+    try {
+      String? imageUrl = await _userService.saveData(image, userId);
+      if (imageUrl != null) {
+        // Update user document with the image URL
+        // Here you would typically call a method in your user repository or service to update the user document
+        print('Image uploaded successfully. Image URL: $imageUrl');
+      } else {
+        print('Error uploading image');
+      }
+    } catch (e) {
+      print('Error updating profile image: $e');
     }
   }
 }

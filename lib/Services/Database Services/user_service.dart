@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import '../../Models/user_model.dart' as model;
+import 'dart:typed_data';
 
 
 class UserService {
@@ -89,5 +91,35 @@ class UserService {
       throw e;
     }
   }
+
+  Future<String?> uploadImageToStorage(String childName, Uint8List file) async {
+    try {
+      Reference ref = FirebaseStorage.instance.ref().child('profile_images').child(childName); // Use childName instead of file for the child name
+      UploadTask uploadTask = ref.putData(file); // Use putData instead of putFile for uploading byte data
+      TaskSnapshot taskSnapshot = await uploadTask;
+      String imageUrl = await taskSnapshot.ref.getDownloadURL();
+      return imageUrl; // Return the image URL
+    } catch (e) {
+      print('Error uploading image: $e');
+      return null; // Return null if there's an error
+    }
+  }
+
+
+  Future<String?> saveData(Uint8List file, String userId) async {
+    try {
+      String? imageUrl = await uploadImageToStorage('profile_$userId', file); // Use a unique child name for each user, such as 'profile_$userId'
+      await FirebaseFirestore.instance.collection('users').doc(userId).update({
+        'imageLink': imageUrl, // Update the 'imageLink' field with the image URL
+      });
+      return imageUrl; // Return the image URL
+    } catch (e) {
+      print('Error saving image: $e');
+      return null;
+    }
+  }
+
+
+
 }
 

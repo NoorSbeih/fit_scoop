@@ -54,6 +54,9 @@ dependencies:
   flutter_svg: ^1.1.6
   flutter_rating_bar: ^4.0.0
   rating_summary: ^1.0.2+1
+  image_picker: ^0.8.7+1
+  firebase_storage: ^11.7.5
+
 
 
 
