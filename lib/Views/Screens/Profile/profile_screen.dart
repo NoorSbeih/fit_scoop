@@ -1,14 +1,15 @@
 import 'package:fit_scoop/Models/review_model.dart';
-import 'package:fit_scoop/Views/Profile/review_screen.dart';
-import 'package:fit_scoop/Views/Profile/workout_screen.dart';
+import 'package:fit_scoop/Views/Screens/Profile/review_screen.dart';
+import 'package:fit_scoop/Views/Screens/Profile/workout_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../Controllers/workout_controller.dart';
-import '../../Models/user_model.dart';
-import '../../Models/user_singleton.dart';
-import '../../Models/workout_model.dart';
-import '../Screens/Workout/current_workout_screen.dart';
+import '../../../Controllers/review_controller.dart';
+import '../../../Controllers/workout_controller.dart';
+import '../../../Models/user_model.dart';
+import '../../../Models/user_singleton.dart';
+import '../../../Models/workout_model.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -45,11 +46,8 @@ class _profileState extends State<ProfilePage> {
         WorkoutController controller = WorkoutController();
         workouts = await controller.getWorkoutsByUserId(userId);
 
-        print("hhh");
-        print(workouts.length);
-
-
-
+      ReviewController controller2=ReviewController();
+      reviews = await controller2.getReviewsByUserId(userId);
       setState(() {
         num = '${workouts.length} workouts|${user.followedUserIds.length} followers';
       });
@@ -270,7 +268,7 @@ class _profileState extends State<ProfilePage> {
                 padding: EdgeInsets.all(10.0),
                 child:  Row(
                   children: [
-                    const Text(
+                     const Text(
                       'REVIEWS',
                       style: TextStyle(
                         fontSize: 30.0,
@@ -279,9 +277,9 @@ class _profileState extends State<ProfilePage> {
                       ),
                     ),
                     Expanded(child: Container()),
-                    const Text(
-                      '5',
-                      style: TextStyle(
+                     Text(
+                      '${reviews.length}',
+                      style: const TextStyle(
                         fontSize: 30.0,
                         fontFamily: 'BebasNeue',
                         color: Colors.white,

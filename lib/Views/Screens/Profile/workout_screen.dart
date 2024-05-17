@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../Controllers/workout_controller.dart';
-import '../../Models/user_model.dart';
-import '../../Models/user_singleton.dart';
-import '../../Models/workout_model.dart';
+
 import 'package:fit_scoop/Views/Widgets/workout_widget.dart';
+
+import '../../../Controllers/workout_controller.dart';
+import '../../../Models/user_model.dart';
+import '../../../Models/user_singleton.dart';
+import '../../../Models/workout_model.dart';
 
 class WorkoutProfile extends StatefulWidget {
   final List<Workout> workouts;
@@ -152,7 +154,7 @@ class _WorkoutScreen extends State<WorkoutProfile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(left: 20.0),
+            padding: const EdgeInsets.only(left: 20.0,top:30),
             // Adjust the padding as needed
             child: Text(
               '${filteredWorkouts.length} WORKOUTS',

@@ -1,3 +1,4 @@
+import 'package:fit_scoop/Models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -5,9 +6,9 @@ import '../../Models/review_model.dart';
 import '../../Models/workout_model.dart';
 import '../Screens/library/workout_detail_screen.dart';
 
-class reviews_widget {
-  static Widget reviewsWidget(Workout workout,Review review) {
-
+class ReviewsWidget {
+  static Widget reviewsWidget(
+      Workout workout, Review review, User_model creator) {
     int intensity = 0;
     if (workout.intensity == "Low") {
       intensity = 1;
@@ -16,79 +17,88 @@ class reviews_widget {
     } else if (workout.intensity == "High") {
       intensity = 3;
     }
-    return SizedBox(
-      height: 110,
-
-      child: Card(
-        margin: const EdgeInsets.only(left:20,right:20,top:15),
-        color: const Color(0xFF2C2A2A),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.zero,
-
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Padding(
+        padding: const EdgeInsets.only(left: 20.0,right:20),
+    child:SizedBox(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  RatingBar.builder(
-                    initialRating: intensity.toDouble(),
-                    direction: Axis.horizontal,
-                    itemCount: 3,
-                    tapOnlyMode: true,
-                    itemPadding: EdgeInsets.all(0),
-                    itemSize: 26.0,
-                    itemBuilder: (context, _) => Transform.scale(
-                      scale: 0.7,
-                      child: const Icon(
-                        Icons.star,
-                        color: Color(0xFF0dbab4),
-                      ),
-                    ),
-                    onRatingUpdate: (rating) {
-                      print(rating);
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           workout.name,
                           style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
+                            color: Color(0xFF0dbab4),
+                            fontSize: 25,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Montserrat',
                           ),
                         ),
-                        SizedBox(height: 2),
-                        Text(
-                          '${workout.duration} MINS | ${workout.exercises.length} EXERCISES',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat',
+                        // Add space between name and rating bar
+                       SizedBox(width:120),
+                        RatingBar.builder(
+                          initialRating: intensity.toDouble(),
+                          direction: Axis.horizontal,
+                          itemCount: 3,
+                          tapOnlyMode: true,
+                          itemPadding: EdgeInsets.all(0),
+                          itemSize: 30.0,
+                          itemBuilder: (context, _) => Transform.scale(
+                            scale: 0.7,
+                            child: const Icon(
+                              Icons.star,
+                              color: Color(0xFF0dbab4),
+                            ),
                           ),
+                          onRatingUpdate: (rating) {
+                            print(rating);
+                          },
                         ),
                       ],
                     ),
-                  ),
-
-                ],
+                    Text(
+                      'Created by: ${creator.name}',
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'BebasNeue',
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              const Spacer(),
-
             ],
           ),
-        ),
+
+          SizedBox(height: 8),
+
+          Text(
+              '${review.comment} ',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Montserrat',
+              )
+          ),
+          SizedBox(height: 10.0),
+          const Divider(
+            color: Colors.grey,
+            thickness: 1.0,
+          ),
+        ],
       ),
+    ),
     );
   }
 }
-

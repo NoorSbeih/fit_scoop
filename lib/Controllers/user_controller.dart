@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../Models/user_model.dart';
@@ -7,6 +8,15 @@ import '../Services/Database Services/user_service.dart';
 class UserController {
   final _userService = UserService();
 
+
+  Future<User_model?> getUser(String id) async {
+    try {
+      return await _userService.getUser(id);
+    } catch (e) {
+      print('Error getting workout: $e');
+      throw e;
+    }
+  }
   Future<void> updateProfile(User_model user) async {
     try {
       // Update user profile in Firestore

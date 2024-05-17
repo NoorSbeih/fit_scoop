@@ -65,7 +65,7 @@ class ReviewService {
 
   Future<List<Review>> getReviewsByUserId(String userId) async {
     try {
-      QuerySnapshot snapshot = await _reviewsRef.where('userId', isEqualTo: userId).get();
+      QuerySnapshot snapshot = await _reviewsRef.where('reviewingUserId', isEqualTo: userId).get();
       List<Review> reviews = snapshot.docs.map((doc) => Review.fromMap(doc.id, doc.data() as Map<String, dynamic>)).toList();
       return reviews;
     } catch (e) {
