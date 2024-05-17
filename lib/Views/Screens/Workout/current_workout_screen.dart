@@ -24,7 +24,7 @@ class WorkoutPagee extends StatefulWidget{
   static late List<Map<String, dynamic>> exercises = [];
   static List<Map<String, dynamic>> exerciseslog=[];
   static late String currentWorkoutId;
-
+ static int currentDayIndex=0;
   static void copyExercisesToLog() {
     exerciseslog = [];
     for (var exercise in exercises) {
@@ -208,7 +208,8 @@ class _WorkoutPageState extends State<WorkoutPagee> {
         .weekday;
     print("The day of the week");
     print(getDayOfWeek(currentDayOfWeek));
-    WorkoutPagee.currentWorkoutId = workoutSchedule[0];
+
+    WorkoutPagee.currentWorkoutId = workoutSchedule[WorkoutPagee.currentDayIndex];
     print(WorkoutPagee.currentWorkoutId);
     print("IDDDD");
     WorkoutController controller = new WorkoutController();

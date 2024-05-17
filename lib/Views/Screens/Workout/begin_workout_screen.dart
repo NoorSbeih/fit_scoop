@@ -213,6 +213,12 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
 
       );
       controller.addWorkoutLog(workoutLog);
+      ++WorkoutPagee.currentDayIndex;
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()), // Replace SecondPage() with the desired page widget
+      );
+
     }else{
       print("Please finishhhh");
     }
