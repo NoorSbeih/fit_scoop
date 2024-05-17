@@ -43,4 +43,13 @@ class ReviewController {
       throw e;
     }
   }
+  Future<List<Review>> getReviewsByUserId(String userId) async {
+    try {
+      // Get reviews for the specific user ID from the database using the ReviewService
+      return await _reviewService.getReviewsByUserId(userId);
+    } catch (e) {
+      print('Error getting reviews for user ID $userId: $e');
+      rethrow;
+    }
+  }
 }
