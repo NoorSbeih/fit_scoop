@@ -30,16 +30,11 @@ class _createWorkout2  extends State<createWorkout2> {
       backgroundColor: Color(0xFF2C2A2A),
       appBar: AppBar(
         backgroundColor: Color(0xFF2C2A2A),
-        leading: IconButton(
-          icon: const Icon(Icons.menu, color: Color(0xFF0dbab4)),
-          onPressed: () {
-            // Handle menu icon pressed
-          },
-        ),
         title: const Text(
           'CREATE WORKOUT',
           style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'BebasNeue'),
         ),
+        iconTheme: IconThemeData(color: Color(0xFF0dbab4)),
       ),
       body: Padding(
         padding: const EdgeInsets.only(top:16.0,left:20,right:20),
