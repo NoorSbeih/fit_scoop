@@ -30,7 +30,6 @@ class _profileState extends State<ProfilePage> {
     super.initState();
     _controller = TextEditingController();
     fetchData();
-
   }
 
 
@@ -79,7 +78,8 @@ class _profileState extends State<ProfilePage> {
           onPressed: () {},
         ),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
+    child:Padding(
         padding: const EdgeInsets.only(top: 4.0, left: 20,right:20),
         child: Column(
           children: <Widget>[
@@ -170,7 +170,7 @@ class _profileState extends State<ProfilePage> {
             Container(
               padding: EdgeInsets.only(top: 10, left: 20.0, right: 20),
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.white),
+                border: Border.all(color: Colors.grey),
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Column(
@@ -220,7 +220,7 @@ class _profileState extends State<ProfilePage> {
               },
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white),
+                  border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 padding: EdgeInsets.all(10.0),
@@ -272,7 +272,7 @@ class _profileState extends State<ProfilePage> {
               },
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white),
+                  border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 padding: EdgeInsets.all(10.0),
@@ -301,6 +301,7 @@ class _profileState extends State<ProfilePage> {
             ),
           ],
         ),
+      ),
       ),
     );
   }

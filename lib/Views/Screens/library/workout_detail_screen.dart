@@ -1,3 +1,4 @@
+import 'package:fit_scoop/Views/Screens/library/writeReview_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -149,7 +150,16 @@ class _DetailPageState extends State<DetailPage> {
                     IconButton(
                       icon: Icon(Icons.rate_review_sharp),
                       color: Colors.white,
-                      onPressed: () async {},
+                      onPressed: () async {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RateWorkoutPage(workout: widget.workout),
+                          ),
+                        );
+
+
+                      },
                     ),
                     IconButton(
                       icon: SvgPicture.asset(
@@ -239,7 +249,7 @@ class _DetailPageState extends State<DetailPage> {
                   fontFamily: 'BebasNeue'),
 
             ),
-            SizedBox(height: 2),
+            SizedBox(height: 0),
             Text(
               widget.workout.description,
               style: TextStyle(fontSize: 20, color: Colors.white),
@@ -272,10 +282,7 @@ class _DetailPageState extends State<DetailPage> {
               averageStyle: const TextStyle(
                   color: Colors.white, fontSize: 75, fontFamily: 'BebasNeue'),
             ),
-            const Divider(
-              color: Colors.grey,
-              thickness: 1.0,
-            ),
+
             ElevatedButton(
               onPressed: () {
                 // Add your button functionality here
@@ -284,7 +291,7 @@ class _DetailPageState extends State<DetailPage> {
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
                     const Color(0xFF0dbab4)), // Change color to blue
-                fixedSize: MaterialStateProperty.all<Size>(const Size(350, 30)),
+                fixedSize: MaterialStateProperty.all<Size>(const Size(10, 30)),
                 shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                       (Set<MaterialState> states) {
                     return RoundedRectangleBorder(

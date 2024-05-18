@@ -7,7 +7,7 @@ class ReviewController {
 
   Future<void> addReview(Review review) async {
     try {
-      // Add review to the database using the ReviewService
+
       await _reviewService.addReview(review);
     } catch (e) {
       print('Error adding review: $e');

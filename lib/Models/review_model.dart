@@ -1,14 +1,14 @@
 
 
 class Review {
-  final String id;
+ String? id;
   final String workoutId;
   final String reviewingUserId;
   final int rating;
   final String comment;
 
   Review({
-    required this.id,
+     this.id,
     required this.workoutId,
     required this.reviewingUserId,
     required this.rating,
