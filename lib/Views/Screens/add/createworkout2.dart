@@ -137,7 +137,7 @@ class _createWorkout2  extends State<createWorkout2> {
             ),
 
             Padding(
-              padding: const EdgeInsets.only(top: 50),
+              padding: const EdgeInsets.only(top: 50,left:15,right:15),
               child: SingleChildScrollView( // Wrap the Row with SingleChildScrollView
                 scrollDirection: Axis.horizontal, // Allow horizontal scrolling
                 child: Row(
