@@ -4,9 +4,13 @@ import 'package:firebase_storage/firebase_storage.dart';
 import '../../Models/user_model.dart' as model;
 import 'dart:typed_data';
 
+import '../../Models/workout_model.dart';
+
+
 
 class UserService {
   final CollectionReference _usersRef = FirebaseFirestore.instance.collection('users');
+  final CollectionReference _workoutsRef = FirebaseFirestore.instance.collection('workouts');
 
   Future<void> addUser(model.User_model user) async {
     try {
@@ -116,6 +120,33 @@ class UserService {
     } catch (e) {
       print('Error saving image: $e');
       return null;
+    }
+  }
+
+  Future<List<Workout>> getSavedWorkouts(String userId) async {
+    try {
+      // Retrieve the user's document
+      DocumentSnapshot userDoc = await _usersRef.doc(userId).get();
+
+      if (userDoc.exists) {
+        // Extract saved workout IDs
+        List<String> savedWorkoutIds = List<String>.from(userDoc['savedWorkoutIds']);
+
+        // Fetch workouts using the saved workout IDs
+        List<Workout> workouts = [];
+        for (String workoutId in savedWorkoutIds) {
+          DocumentSnapshot workoutDoc = await _workoutsRef.doc(workoutId).get();
+          if (workoutDoc.exists) {
+            workouts.add(Workout.fromMap(workoutDoc.id, workoutDoc.data() as Map<String, dynamic>));
+          }
+        }
+
+        return workouts;
+      } else {
+        throw Exception("User not found");
+      }
+    } catch (e) {
+      throw Exception('Error fetching saved workouts: $e');
     }
   }
 
