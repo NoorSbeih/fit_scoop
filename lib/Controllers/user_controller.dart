@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_scoop/Models/workout_model.dart';
 import 'package:flutter/material.dart';
 
 import '../Models/user_model.dart';
@@ -83,5 +84,18 @@ class UserController {
     } catch (e) {
       print('Error updating profile image: $e');
     }
+  }
+  Future<List<Workout>> getSavedWorkouts(String userId) async { //from userservices
+    try {
+      // Get saved workout IDs from user document
+      List<Workout> savedWorkouts = await _userService.getSavedWorkouts(userId);
+      return savedWorkouts;
+    } catch (e) {
+      print('Error getting saved workouts: $e');
+      throw e;
+    }
+
+
+
   }
 }
