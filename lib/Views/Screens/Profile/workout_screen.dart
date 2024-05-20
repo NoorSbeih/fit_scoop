@@ -65,7 +65,6 @@ class _WorkoutScreen extends State<WorkoutProfile> {
             newSavedWorkouts.add(workout!);
           }
         }
-        // Add the new workouts to savedWorkouts
         savedWorkouts.addAll(newSavedWorkouts);
 
         return savedWorkouts;
@@ -78,6 +77,13 @@ class _WorkoutScreen extends State<WorkoutProfile> {
       throw e;
     }
   }
+
+  bool isSaved(String id) {
+
+    // Check if any workout in the list has the given id
+    return savedWorkouts.any((workout) => workout.id == id);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +178,7 @@ class _WorkoutScreen extends State<WorkoutProfile> {
                 Workout workout = filteredWorkouts[index];
                 return workout_widget.customcardWidget(
                   workout,
-                  false,
+                  isSaved(workout.id),
                   context,
                       (Workout workout, bool liked) {
                     setState(() {
@@ -192,3 +198,5 @@ class _WorkoutScreen extends State<WorkoutProfile> {
     );
   }
 }
+
+

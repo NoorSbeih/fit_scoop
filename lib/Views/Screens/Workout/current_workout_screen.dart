@@ -45,6 +45,11 @@ class _WorkoutPageState extends State<WorkoutPagee> {
   String name = "";
   int duration = 0;
 
+  late User_model user;
+
+
+
+
   void initState() {
 
     super.initState();
@@ -54,7 +59,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
   void fetchData() async {
     try {
       UserSingleton userSingleton = UserSingleton.getInstance();
-      User_model user = userSingleton.getUser();
+       user = userSingleton.getUser();
 
       String? bodyMetricId = user.bodyMetrics;
       print(bodyMetricId); // Assuming you want the user's UID
@@ -82,6 +87,13 @@ class _WorkoutPageState extends State<WorkoutPagee> {
       // Handle error if needed
     }
   }
+
+  bool isSaved(String id) {
+
+    // Check if any workout in the list has the given id
+    return user.savedWorkoutIds.any((workout) => id == id);
+  }
+
 
 
   @override
@@ -117,7 +129,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
                 ? Align(
               alignment: Alignment.centerLeft,
               child: workout_widget.customcardWidget(
-                currentWorkout!, false, context,
+                currentWorkout!, isSaved(currentWorkout!.id), context,
                     (Workout workout, bool liked) {},
 
               ),

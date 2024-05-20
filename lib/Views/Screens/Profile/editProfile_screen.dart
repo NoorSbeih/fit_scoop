@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:fit_scoop/Controllers/user_controller.dart';
+import 'package:fit_scoop/Views/Screens/Profile/profile_screen.dart';
 
 import 'package:fit_scoop/Views/Screens/Profile/utils.dart';
 
@@ -184,7 +185,14 @@ class _EditProfile extends State<EditProfile> {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                Navigator.of(context).pop();
+                // onTap: () {
+                //   Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) => ProfilePage(),
+                //     ),
+                //   );
+                // }
               },
             ),
           ],

@@ -1,3 +1,4 @@
+import 'package:fit_scoop/Controllers/user_controller.dart';
 import 'package:fit_scoop/Models/user_model.dart';
 import 'package:fit_scoop/Models/user_singleton.dart';
 import 'package:fit_scoop/Views/Widgets/workout_widget.dart';
@@ -116,7 +117,7 @@ class _LibraryScreen extends State<LibraryScreen>
         }
         // Add the new workouts to savedWorkouts
         savedWorkouts.addAll(newSavedWorkouts);
-          filteredsavedWorkouts = savedWorkouts;
+        filteredsavedWorkouts = savedWorkouts;
 
 
         return savedWorkouts;
@@ -132,6 +133,9 @@ class _LibraryScreen extends State<LibraryScreen>
 
 
   void updateSavedWorkouts(Workout workout, bool liked) {
+
+    UserController controller=UserController();
+
     setState(() {
       if (liked) {
         savedWorkouts.add(workout);
