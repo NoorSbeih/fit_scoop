@@ -166,7 +166,7 @@ class _addExercise  extends State<addExercise> with SingleTickerProviderStateMix
                     itemBuilder: (context, index) {
                       Exercise exercise = snapshot.data![index];
                      return exercises_card.addingExersiceWidget(
-                     exercise.name,
+                        exercise.name,
                        exercise.id,
                        context,
                       );

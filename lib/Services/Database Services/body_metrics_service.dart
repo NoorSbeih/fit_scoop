@@ -26,8 +26,6 @@ class BodyMetricsService {
       throw e;
     }
   }
-
-  // Retrieve body metrics document from Firestore based on user ID
   Future<BodyMetrics?> getBodyMetrics(String? id) async {
     try {
       var snapshot = await _bodyMetricsRef.doc(id).get();

@@ -7,13 +7,14 @@ import 'addExercise.dart';
 import 'createworkout2.dart';
 typedef void OnExerciseAddedCallback();
 class createWorkout1 extends StatefulWidget {
+  static String name="";
   @override
   _createWorkout1 createState() => _createWorkout1();
 }
 
 class _createWorkout1 extends State<createWorkout1> {
   TextEditingController nameController =new TextEditingController();
-  static String name="";
+
   @override
   void initState() {
 
@@ -125,14 +126,17 @@ class _createWorkout1 extends State<createWorkout1> {
       padding: const EdgeInsets.only(left: 16, right: 16),
       child: GestureDetector(
         onTap: () async {
-          name=nameController.text;
-          print(name);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AddExercisePage(onExerciseAdded: handleExerciseAdded),
-            ),
-          );
+          setState(() {
+            createWorkout1.name=nameController.text;
+            print( createWorkout1.name);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddExercisePage(onExerciseAdded: handleExerciseAdded),
+              ),
+            );
+          });
+
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,

@@ -2,7 +2,7 @@
 
 class Review {
  String? id;
-  final String workoutId;
+  final String? workoutId;
   final String reviewingUserId;
   final int rating;
   final String comment;

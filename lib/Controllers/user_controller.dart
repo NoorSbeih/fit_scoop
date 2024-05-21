@@ -51,7 +51,7 @@ class UserController {
     }
   }
 
-  Future<void> saveWorkout(String userId, String workoutId) async {
+  Future<void> saveWorkout(String userId, String? workoutId) async {
     try {
       // Save workout to user's savedWorkoutIds
       await _userService.saveWorkout(userId, workoutId);
@@ -61,7 +61,7 @@ class UserController {
     }
   }
 
-  Future<void> unsaveWorkout(String userId, String workoutId) async {
+  Future<void> unsaveWorkout(String userId, String? workoutId) async {
     try {
       // Unsave workout from user's savedWorkoutIds
       await _userService.unsaveWorkout(userId, workoutId);

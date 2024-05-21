@@ -203,7 +203,7 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
   Future<void> addWorkoutLogs() async {
     UserSingleton userSingleton = UserSingleton.getInstance();
     User_model user = userSingleton.getUser();
-    if(areAllSetsZero()) {
+
       WorkoutLogController controller = new WorkoutLogController();
       WorkoutLog workoutLog = WorkoutLog(
           userId: user.id,
@@ -222,9 +222,7 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
         MaterialPageRoute(builder: (context) =>   WorkoutPage()), // Replace SecondPage() with the desired page widget
       );
 
-    }else{
-      print("Please finishhhh");
-    }
+
   }
   static List<ExercisePerformed> getPerformedExercises() {
     return WorkoutPagee.exerciseslog.map((exercise) {
@@ -234,8 +232,6 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
       );
     }).toList();
   }
-  static bool areAllSetsZero() {
-    return WorkoutPagee.exercises.every((exercise) => exercise['sets'] == 0);
-  }
+
 
 }

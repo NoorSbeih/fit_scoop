@@ -78,7 +78,7 @@ class _WorkoutScreen extends State<WorkoutProfile> {
     }
   }
 
-  bool isSaved(String id) {
+  bool isSaved(String? id) {
 
     // Check if any workout in the list has the given id
     return savedWorkouts.any((workout) => workout.id == id);

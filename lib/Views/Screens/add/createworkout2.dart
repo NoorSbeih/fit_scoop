@@ -1,8 +1,15 @@
 
+import 'package:fit_scoop/Controllers/workout_controller.dart';
+import 'package:fit_scoop/Views/Screens/add/createworkout1.dart';
+import 'package:fit_scoop/Views/Screens/add/addExercise.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import '../../../Models/user_model.dart';
+import '../../../Models/user_singleton.dart';
+import '../../../Models/workout_model.dart';
 import '../main_page_screen.dart';
 
 class createWorkout2 extends StatefulWidget {
@@ -13,7 +20,7 @@ class createWorkout2 extends StatefulWidget {
 
 class _createWorkout2  extends State<createWorkout2> {
 
-
+ TextEditingController descriptionController =new TextEditingController();
   bool isPrivate = true;
   double rating = 0;
   String label="Beginner";
@@ -94,6 +101,7 @@ class _createWorkout2  extends State<createWorkout2> {
             ),
         ),
             SizedBox(height: 16.0),
+
             const Text(
               'Add a Description:',
               style: TextStyle(fontSize: 20, color: Colors.white, fontFamily: 'BebasNeue'),
@@ -105,12 +113,13 @@ class _createWorkout2  extends State<createWorkout2> {
                   border: Border.all(color: Colors.white),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0), // Adjust horizontal padding
+                child:  Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0), // Adjust horizontal padding
                   child: TextField(
+                    controller: descriptionController,
                     keyboardType: TextInputType.multiline,
                     maxLines: 10,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.all(15.0),
                     ),
@@ -145,8 +154,11 @@ class _createWorkout2  extends State<createWorkout2> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        print(label);
-                        print(isPrivate);
+                        UserSingleton userSingleton = UserSingleton.getInstance();
+                        User_model user = userSingleton.getUser();
+   Workout workout =new Workout(name: createWorkout1.name, description: descriptionController.text, exercises: addExercise.exercises, duration: 12, intensity: label, creatorId: user.id, numberOfSaves: 0, reviews: [], isPrivate: isPrivate, timestamp: DateTime.now(),);
+   WorkoutController controller =new WorkoutController();
+   controller.createWorkout(workout);
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0dbab4)),
