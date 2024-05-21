@@ -1,12 +1,14 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../Controllers/workout_controller.dart';
 import 'exercise_model.dart';
 
 // models/workout_model.dart
 
 class Workout {
-  final String id;
+  String? id;
   final String name;
   final String description;
   final List<Map<String,dynamic>> exercises;
@@ -16,11 +18,12 @@ class Workout {
    int numberOfSaves;
   final List<String> reviews;
   final bool isPrivate;
+  final DateTime timestamp;
 
 
 
   Workout({
-    required this.id,
+    this.id,
     required this.name,
     required this.description,
     required this.exercises,
@@ -30,9 +33,37 @@ class Workout {
     required this.numberOfSaves,
     required this.reviews,
     required this.isPrivate,
-
+    required this.timestamp
   });
 
+
+  Future<void> updateNumberOfSaves(int newNumberOfSaves) async {
+    try {
+      WorkoutController workoutController = WorkoutController();
+
+      // Create a new instance of Workout with the updated numberOfSaves
+      Workout updatedWorkout = Workout(
+        id: id,
+        name: name,
+        description: description,
+        exercises: exercises,
+        duration: duration,
+        intensity: intensity,
+        creatorId: creatorId,
+        numberOfSaves: newNumberOfSaves,
+        reviews: reviews,
+        isPrivate: isPrivate,
+        timestamp: DateTime.timestamp(),
+      );
+
+      await workoutController.updateWorkout(updatedWorkout);
+
+      print(updatedWorkout.numberOfSaves);
+    } catch (e) {
+      print('Error updating numberOfSaves: $e');
+      throw e;
+    }
+  }
 
   // Convert WorkoutModel to a map (for Firestore)
   Map<String, dynamic> toMap() {
@@ -42,6 +73,7 @@ class Workout {
       'description': description,
       'exercises': exercises.map((exercise) => {
         'id': exercise['id'],
+        'name':exercise['name'],
         'sets': exercise['sets'],
         'weight': exercise['weight'],
       }).toList(),
@@ -50,6 +82,8 @@ class Workout {
       'creatorId': creatorId,
       'numberOfSaves': numberOfSaves,
       'isPrivate': isPrivate,
+      'timestamp': timestamp,
+
     };
   }
 
@@ -66,6 +100,9 @@ class Workout {
       numberOfSaves: map['numberOfSaves'],
       reviews: List<String>.from(map['reviews'] ?? []),
       isPrivate: map['isPrivate'],
+      timestamp:  map['timestamp'] is String
+          ? DateTime.parse(map['timestamp'])
+          : (map['timestamp'] as Timestamp).toDate(),
     );
   }
 
@@ -97,5 +134,3 @@ List<Map<String, dynamic>> parseExercises(dynamic exercises) {
 
   return parsedExercises;
 }
-
-

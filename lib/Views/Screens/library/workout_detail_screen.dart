@@ -52,7 +52,7 @@ class _DetailPageState extends State<DetailPage> {
           savedWorkouts=newSavedWorkouts;
           print(newSavedWorkouts.first.id);
           setState(() {
-            isLiked = liked(widget.workout.id);
+            isLiked = liked(widget.workout.id!);
           });
 
           print(isLiked);
@@ -225,7 +225,7 @@ class _DetailPageState extends State<DetailPage> {
                           if (isLiked) {
                             await controller.saveWorkout(
                                 userId, widget.workout.id);
-                            liked(widget.workout.id);
+                            liked(widget.workout.id!);
 
 
 

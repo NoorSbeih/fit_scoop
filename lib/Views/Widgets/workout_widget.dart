@@ -8,11 +8,11 @@ class workout_widget {
   static Widget customcardWidget(Workout workout,isSelected, BuildContext context,Function(Workout, bool) updateSavedWorkouts) {
 
     int intensity = 0;
-    if (workout.intensity == "Low") {
+    if (workout.intensity == "Beginner") {
       intensity = 1;
-    } else if (workout.intensity == "Medium") {
+    } else if (workout.intensity == "Intermediate") {
       intensity = 2;
-    } else if (workout.intensity == "High") {
+    } else if (workout.intensity == "Advanced") {
       intensity = 3;
     }
     return SizedBox(

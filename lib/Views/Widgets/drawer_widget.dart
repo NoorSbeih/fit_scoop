@@ -1,7 +1,5 @@
 import 'package:fit_scoop/Models/bodyMetricsSingleton.dart';
 import 'package:fit_scoop/Models/body_metrics_model.dart';
-import 'package:fit_scoop/Models/user_model.dart';
-import 'package:fit_scoop/Models/user_singleton.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -70,7 +68,7 @@ class CustomDrawer extends StatelessWidget {
 
                     SizedBox(height: 10),
                     CustomUnderlineText(
-                      text: 'UNIT OF MEASURE:${unitOfMeasure}',
+                      text: 'UNIT OF MEASURE: ${unitOfMeasure}',
                       fontSize: 20,
                       textColor: Colors.white,
                       underlineColor: Colors.grey,
