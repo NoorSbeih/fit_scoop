@@ -171,6 +171,14 @@ class _WorkoutScreen extends State<WorkoutProfile> {
               ),
             ),
           ),
+          SizedBox(height: 10.0),
+          const Padding(
+            padding: EdgeInsets.only(left: 20.0, right: 20),
+            child: Divider(
+              color: Colors.grey,
+              thickness: 1.0,
+            ),
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: filteredWorkouts.length,

@@ -29,8 +29,7 @@ class _LibraryScreen extends State<LibraryScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   List<Workout> workouts = [];
-  List<Workout> savedWorkouts = [];
-  late Future<List<Workout>> savedWorkoutsFuture;
+   List<Workout> savedWorkouts = [];
   late TextEditingController _myWorkoutsSearchController;
   late TextEditingController _savedWorkoutsSearchController;
   late String _searchQuery = '';
@@ -39,8 +38,9 @@ class _LibraryScreen extends State<LibraryScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    SavedWorkout();
     fetchData();
-    savedWorkoutsFuture = SavedWorkout();
+
     _myWorkoutsSearchController = TextEditingController();
     _savedWorkoutsSearchController = TextEditingController(); // Add this line
   }
@@ -99,25 +99,18 @@ class _LibraryScreen extends State<LibraryScreen>
 
   Future<List<Workout>> SavedWorkout() async {
     try {
+      print("Fffff");
       UserSingleton userSingleton = UserSingleton.getInstance();
       User_model user = userSingleton.getUser();
 
-      List<String> ids = user.savedWorkoutIds;
       if (user != null && user.id != null) {
-        WorkoutController controller = WorkoutController();
-        List<Workout> newSavedWorkouts = []; // Create a new list to store the workouts
-        for (int i = 0; i < ids.length; i++) {
-          Workout? workout = await controller.getWorkout(ids[i]);
-          print("ffff");
-          print(workout?.id);
-          // Check if the workout already exists in savedWorkouts
-          if (!savedWorkouts.contains(workout)) {
-            newSavedWorkouts.add(workout!);
-          }
-        }
-        // Add the new workouts to savedWorkouts
+        UserController controller = UserController();
+        List<Workout> newSavedWorkouts = await controller.getSavedWorkouts(user.id) ;
         savedWorkouts.addAll(newSavedWorkouts);
-        filteredsavedWorkouts = savedWorkouts;
+
+        setState(() {
+          filteredsavedWorkouts = savedWorkouts;
+        });
 
 
         return savedWorkouts;
@@ -133,9 +126,6 @@ class _LibraryScreen extends State<LibraryScreen>
 
 
   void updateSavedWorkouts(Workout workout, bool liked) {
-
-    UserController controller=UserController();
-
     setState(() {
       if (liked) {
         savedWorkouts.add(workout);

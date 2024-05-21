@@ -5,7 +5,7 @@ import '../../Models/workout_model.dart';
 import '../Screens/library/workout_detail_screen.dart';
 
 class workout_widget {
-  static Widget customcardWidget(Workout workout,isSelected, BuildContext context, Function(Workout, bool) updateSavedWorkouts) {
+  static Widget customcardWidget(Workout workout,isSelected, BuildContext context,Function(Workout, bool) updateSavedWorkouts) {
 
     int intensity = 0;
     if (workout.intensity == "Low") {
@@ -87,12 +87,12 @@ class workout_widget {
               const Spacer(),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => DetailPage(
-                      workout: workout,
-                      updateSavedWorkouts: updateSavedWorkouts, // Pass the callback function
-                    ),
-                  ));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailPage(workout: workout, updateSavedWorkouts: updateSavedWorkouts,),
+                      ),
+                    );
                 },
                 child: Container(
                   margin: const EdgeInsets.only(left: 10),

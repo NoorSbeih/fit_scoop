@@ -113,7 +113,7 @@ class _CustomPageViewState extends State<CustomPageView> {
                     showError(context);
 
                 }
-                else if (currentPageIndex == 3 && RegisterPage4.selectedGoals.isEmpty) {
+                else if (currentPageIndex == 3 && RegisterPage4.selectedGoal.isEmpty) {
                     showError(context);
                 }
                 else if (currentPageIndex == 4 && RegisterPage5.typeOfPlace.isEmpty) {
@@ -171,7 +171,7 @@ class _CustomPageViewState extends State<CustomPageView> {
    // String formattedDate = '${parts[2]}-${parts[0]}-${parts[1]}T00:00:00';
    // DateTime dateTime = DateTime.parse(formattedDate);
     model.BodyMetrics bodyMetrics= model.BodyMetrics(userId:id,height: RegisterPage2.heightresult,weight: RegisterPage2.weightresult,birthDate: dateString ,
-    bodyFat: RegisterPage3.currentValue,gender: RegisterPage1.selectedgender,fitnessGoal:RegisterPage4.selectedGoals,gymType: RegisterPage5.typeOfPlace, CurrentDay:0,workoutSchedule: workoutSchedule);
+    bodyFat: RegisterPage3.currentValue,gender: RegisterPage1.selectedgender,fitnessGoal:RegisterPage4.selectedGoal,gymType: RegisterPage5.typeOfPlace, CurrentDay:0,workoutSchedule: workoutSchedule);
     _bodyMetricController.addBodyMetrics(bodyMetrics);
     Navigator.push(
       context,

@@ -104,12 +104,12 @@ class _WorkoutPageState extends State<WorkoutPagee> {
       appBar: AppBar(
         backgroundColor: Color(0xFF2C2A2A),
         // Match with scaffold background color
-        leading: IconButton(
-          icon: const Icon(Icons.menu, color: Color(0xFF0dbab4),),
-          onPressed: () {
-            // Handle settings icon pressed
-          },
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.menu, color: Color(0xFF0dbab4),),
+        //   onPressed: () {
+        //     // Handle settings icon pressed
+        //   },
+        // ),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings, color: Color(0xFF0dbab4),),
@@ -130,8 +130,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
               alignment: Alignment.centerLeft,
               child: workout_widget.customcardWidget(
                 currentWorkout!, isSaved(currentWorkout!.id), context,
-                    (Workout workout, bool liked) {},
-
+                      (Workout workout, bool liked) {}
               ),
             )
                 : const Align(

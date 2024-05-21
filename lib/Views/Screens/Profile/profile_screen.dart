@@ -11,6 +11,7 @@ import '../../../Controllers/workout_controller.dart';
 import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_model.dart';
+import '../../Widgets/drawer_widget.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -73,11 +74,16 @@ class _profileState extends State<ProfilePage> {
       backgroundColor: Color(0xFF2C2A2A),
       appBar: AppBar(
         backgroundColor: Color(0xFF2C2A2A),
-        leading: IconButton(
-          icon: const Icon(Icons.menu, color: Color(0xFF0dbab4)),
-          onPressed: () {},
+        iconTheme: const IconThemeData(
+          color: Color(0xFF0dbab4), // Change the drawer icon color here
         ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.menu, color: c),
+        //   onPressed: () {},
+        // ),
+
       ),
+      drawer: CustomDrawer(),
       body: SingleChildScrollView(
     child:Padding(
         padding: const EdgeInsets.only(top: 4.0, left: 20,right:20),
@@ -173,27 +179,30 @@ class _profileState extends State<ProfilePage> {
                 border: Border.all(color: Colors.grey),
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'BIO',
-                    style: TextStyle(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'BIO',
+                      style: TextStyle(
                         fontSize: 30,
                         color: Color(0xFF0dbab4),
-                        fontFamily: 'BebasNeue'),
-                  ),
-                  TextField(
-                    controller: _controller,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: 5,
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
+                        fontFamily: 'BebasNeue',
+                      ),
                     ),
-                    style: TextStyle(fontSize: 15, color: Colors.white),
-                  ),
-                ],
-              ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: SelectableText(
+                        _controller.text,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          color: Colors.white,
+                        ),
+                        maxLines: 5,
+                      ),
+                    ),
+                  ],
+                ),
             ),
             SizedBox(height: 20.0),
             InkWell(

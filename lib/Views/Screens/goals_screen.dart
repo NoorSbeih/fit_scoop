@@ -14,7 +14,7 @@ class Page4 extends StatelessWidget {
 
 
 class RegisterPage4 extends StatefulWidget {
-  static List<String> selectedGoals = [];
+  static String selectedGoal = '';
   const RegisterPage4({Key? key}) : super(key: key);
   @override
   State<RegisterPage4> createState() => _RegisterPageState();
@@ -82,26 +82,22 @@ class _RegisterPageState extends State<RegisterPage4> {
         )
     );
   }
- Widget cardWidget(String title, String description) {
-   bool isSelected = RegisterPage4.selectedGoals.contains(title);
+  Widget cardWidget(String title, String description) {
+    String selectedGoal = RegisterPage4.selectedGoal;
 
-   return GestureDetector(
-     onTap: () {
-       setState(() {
-         if (isSelected) {
-           RegisterPage4.selectedGoals.remove(title);
-         } else {
-           RegisterPage4.selectedGoals.add(title);
-         }
-       });
-     },
-     child: card_widget.customcardWidget(
-       title,
-       description,
-       isSelected,
-     ),
-   );
- }
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          RegisterPage4.selectedGoal = title;
+        });
+      },
+      child: card_widget.customcardWidget(
+        title,
+        description,
+        title == selectedGoal,
+      ),
+    );
+  }
 
 
 }
