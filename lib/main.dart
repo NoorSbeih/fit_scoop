@@ -8,7 +8,6 @@ void main() async {
   print("Ba70000");
   WidgetsFlutterBinding.ensureInitialized();
   await  Firebase.initializeApp(
-
     options: const FirebaseOptions(
       apiKey: 'AIzaSyBXWcnXjHZZh_mOf-ecwAne3lMwFqihMS8',
       appId: '1:737437055403:android:dac3a4f9d5a141cf26baee',

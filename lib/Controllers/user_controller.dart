@@ -95,7 +95,5 @@ class UserController {
       throw e;
     }
 
-
-
   }
 }

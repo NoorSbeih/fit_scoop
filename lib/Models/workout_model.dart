@@ -13,7 +13,7 @@ class Workout {
   final int duration;
   final String intensity;
   final String creatorId;
-  final int numberOfSaves;
+   int numberOfSaves;
   final List<String> reviews;
   final bool isPrivate;
 
@@ -33,33 +33,6 @@ class Workout {
 
   });
 
-
-  Future<void> updateNumberOfSaves(int newNumberOfSaves) async {
-    try {
-      WorkoutController workoutController = WorkoutController();
-
-      // Create a new instance of Workout with the updated numberOfSaves
-      Workout updatedWorkout = Workout(
-        id: id,
-        name: name,
-        description: description,
-        exercises: exercises,
-        duration: duration,
-        intensity: intensity,
-        creatorId: creatorId,
-        numberOfSaves: newNumberOfSaves,
-        reviews: reviews,
-        isPrivate: isPrivate,
-      );
-
-      await workoutController.updateWorkout(updatedWorkout);
-
-      print(updatedWorkout.numberOfSaves);
-    } catch (e) {
-      print('Error updating numberOfSaves: $e');
-      throw e;
-    }
-  }
 
   // Convert WorkoutModel to a map (for Firestore)
   Map<String, dynamic> toMap() {

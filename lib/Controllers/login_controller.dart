@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_scoop/Models/bodyMetricsSingleton.dart';
+import 'package:fit_scoop/Models/body_metrics_model.dart';
 
 import '../Models/user_model.dart';
 import '../Models/user_singleton.dart';
+import 'body_metrics_controller.dart';
 
 class LoginController {
   static String user_id="";
@@ -32,18 +35,23 @@ class LoginController {
     return null;
   }
 
-
   Future<String?> getUserBodyMetric() async {
     try {
   //  User _user;
       CollectionReference users = FirebaseFirestore.instance.collection('users');
       DocumentSnapshot snapshot = await users.doc(user_id).get();
       if (snapshot.exists) {
-
+        print("fnff");
         Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
         User_model user = User_model.fromMap(data!);
         UserSingleton.getInstance().setUser(user);
+
         final String? bodyMetrics = data?['bodyMetrics'];
+
+        BodyMetricsController controller = BodyMetricsController();
+        print(UserSingleton.getInstance().getUser().id);
+        BodyMetrics? bodyMetricss = await controller.fetchBodyMetrics(UserSingleton.getInstance().getUser().bodyMetrics);
+        BodyMetricsSingleton.getInstance().setBodyMetrics(bodyMetricss!);
         return bodyMetrics;
 
       } else {

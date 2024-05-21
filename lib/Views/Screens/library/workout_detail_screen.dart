@@ -15,19 +15,19 @@ import '../../../Models/workout_model.dart';
 
 class DetailPage extends StatefulWidget {
   final Workout workout;
+
   final Function(Workout, bool) updateSavedWorkouts;
 
   const DetailPage({Key? key, required this.workout, required this.updateSavedWorkouts}) : super(key: key);
 
- // const DetailPage({Key? key, required this.workout}) : super(key: key);
 
   @override
   _DetailPageState createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
-  late bool isLiked;
-
+  late bool isLiked = false;
+  late List<Workout> savedWorkouts=[];
   List<Review>? _reviews = [];
   int numberOfSaves = 0;
   int no = 0;
@@ -35,12 +35,46 @@ class _DetailPageState extends State<DetailPage> {
   @override
   void initState() {
     super.initState();
+    SavedWorkout();
     fetchReviews();
     numberOfSaves = widget.workout.numberOfSaves;
     no = numberOfSaves;
-    isLiked = liked(widget.workout.id);
+  }
 
-    print(isLiked);
+    Future<List<Workout>> SavedWorkout() async {
+      try {
+        UserSingleton userSingleton = UserSingleton.getInstance();
+        User_model user = userSingleton.getUser();
+
+        if (user != null && user.id != null) {
+          UserController controller = UserController();
+          List<Workout> newSavedWorkouts = await controller.getSavedWorkouts(user.id) ;
+          savedWorkouts=newSavedWorkouts;
+          print(newSavedWorkouts.first.id);
+          setState(() {
+            isLiked = liked(widget.workout.id);
+          });
+
+          print(isLiked);
+          return savedWorkouts;
+        } else {
+          print('User or user ID is null.');
+          return [];
+        }
+      } catch (e) {
+        print('Error getting workouts by user ID: $e');
+        throw e;
+      }
+    }
+
+
+    bool liked(String id) {
+    for(int i=0;i<savedWorkouts.length;i++) {
+      if ((savedWorkouts[i].id) == id) {
+        return true;
+      }
+    }
+    return false;
   }
 
   void fetchReviews() async {
@@ -192,12 +226,20 @@ class _DetailPageState extends State<DetailPage> {
                             await controller.saveWorkout(
                                 userId, widget.workout.id);
                             liked(widget.workout.id);
+
+
+
                           } else {
                             await controller.unsaveWorkout(
                                 userId, widget.workout.id);
+
                           }
-                          widget.workout.updateNumberOfSaves(no);
+
                           widget.updateSavedWorkouts(widget.workout, isLiked);
+                          widget.workout.numberOfSaves=numberOfSaves;
+                          WorkoutController controller2=WorkoutController();
+
+                          controller2.updateWorkout(widget.workout);
                         }
                       },
                     ),
@@ -315,15 +357,6 @@ class _DetailPageState extends State<DetailPage> {
   }
 
 
-  bool liked(String id) {
-    UserSingleton userSingleton = UserSingleton.getInstance();
-    User_model user = userSingleton.getUser();
-    List<String> ids = user.savedWorkoutIds;
-    print("dhdhdhd");
-    print(user.id);
-    for (int i = 0; i < ids.length; i++) {
-      print(ids[i]);
-    }
-    return ids.contains(id);
-  }
+
+
 }
