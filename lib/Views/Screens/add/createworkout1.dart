@@ -126,14 +126,17 @@ class _createWorkout1 extends State<createWorkout1> {
       padding: const EdgeInsets.only(left: 16, right: 16),
       child: GestureDetector(
         onTap: () async {
-          createWorkout1.name=nameController.text;
-          print( createWorkout1.name);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AddExercisePage(onExerciseAdded: handleExerciseAdded),
-            ),
-          );
+          setState(() {
+            createWorkout1.name=nameController.text;
+            print( createWorkout1.name);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddExercisePage(onExerciseAdded: handleExerciseAdded),
+              ),
+            );
+          });
+
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,

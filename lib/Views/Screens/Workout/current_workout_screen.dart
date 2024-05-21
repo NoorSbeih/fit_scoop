@@ -88,7 +88,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
     }
   }
 
-  bool isSaved(String id) {
+  bool isSaved(String? id) {
 
     // Check if any workout in the list has the given id
     return user.savedWorkoutIds.any((workout) => id == id);
