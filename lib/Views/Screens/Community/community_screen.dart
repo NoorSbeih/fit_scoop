@@ -4,19 +4,32 @@ import 'package:flutter/material.dart';
 import '../main_page_screen.dart';
 
 
+class  CommunityPage extends StatefulWidget {
 
-class CommunityPage extends StatelessWidget {
-  const CommunityPage({super.key});
+  @override
+  _communityPage createState() => _communityPage();
+}
+
+class _communityPage  extends State< CommunityPage> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Community'),
-      ),
-      body: Container(
-        // You can add widgets or layout here
-      ),
+
+        backgroundColor: Color(0xFF2C2A2A),
+     appBar: AppBar(
+   backgroundColor: Color(0xFF2C2A2A),
+    leading: IconButton(
+    icon: const Icon(Icons.menu, color: Color(0xFF0dbab4)),
+    onPressed: () {
+    },
+    )
+     )
     );
   }
 }

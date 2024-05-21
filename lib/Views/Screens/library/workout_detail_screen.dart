@@ -68,7 +68,7 @@ class _DetailPageState extends State<DetailPage> {
     }
 
 
-    bool liked(String id) {
+    bool liked(String? id) {
     for(int i=0;i<savedWorkouts.length;i++) {
       if ((savedWorkouts[i].id) == id) {
         return true;
@@ -226,8 +226,6 @@ class _DetailPageState extends State<DetailPage> {
                             await controller.saveWorkout(
                                 userId, widget.workout.id);
                             liked(widget.workout.id!);
-
-
 
                           } else {
                             await controller.unsaveWorkout(
