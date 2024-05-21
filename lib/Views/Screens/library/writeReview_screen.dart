@@ -181,16 +181,13 @@ class _RateWorkoutPageState extends State<RateWorkoutPage> {
                             Colors.red);
                       } else {
                         ReviewController controller = ReviewController();
-                        // Create a new Review object
+
                         Review review = Review(
                           workoutId: widget.workout.id,
-                          // Assuming widget.workout.id is the workout ID
                           reviewingUserId: user.id,
-                          // Replace 'user_id_here' with the actual user ID
                           rating: _rating.toInt(),
-                          // Convert double rating to int
-                          comment: _reviewController
-                              .text, // Get comment from the text field
+                          comment: _reviewController.text,
+                          timestamp: DateTime.now(),
                         );
 
                         controller.addReview(review);
