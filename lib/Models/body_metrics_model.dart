@@ -13,7 +13,7 @@ class BodyMetrics {
    String birthDate;
    String gender;
    double bodyFat;
-   List<String> fitnessGoal;
+   String fitnessGoal;
    String gymType;
    int CurrentDay;
    List<String> workoutSchedule; // List of workouts for each day
@@ -62,7 +62,7 @@ class BodyMetrics {
       birthDate: map['birthDate'],
       gender: map['gender'],
       bodyFat: map['bodyFat'],
-      fitnessGoal:map['fitnessGoal'].cast<String>(),
+      fitnessGoal:map['fitnessGoal'],
       gymType: map['gymType'],
       CurrentDay:map['CurrentDay'],
       workoutSchedule: map['workoutSchedule'].cast<String>(),
