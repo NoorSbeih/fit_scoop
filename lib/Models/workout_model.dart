@@ -15,12 +15,10 @@ class Workout {
   final int duration;
   final String intensity;
   final String creatorId;
-  final int numberOfSaves;
+   int numberOfSaves;
   final List<String> reviews;
   final bool isPrivate;
   final DateTime timestamp;
-
-
 
   Workout({
      this.id,
