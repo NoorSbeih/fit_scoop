@@ -8,6 +8,7 @@ import 'package:fit_scoop/Views/Widgets/exercises_card_widget.dart';
 import 'package:fit_scoop/Views/Widgets/workout_widget.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_model.dart';
+import '../../Widgets/drawer_widget.dart';
 import '../main_page_screen.dart';
 import 'begin_workout_screen.dart';
 class WorkoutPage extends StatelessWidget {
@@ -103,13 +104,9 @@ class _WorkoutPageState extends State<WorkoutPagee> {
       backgroundColor: Color(0xFF2C2A2A),
       appBar: AppBar(
         backgroundColor: Color(0xFF2C2A2A),
-        // Match with scaffold background color
-        // leading: IconButton(
-        //   icon: const Icon(Icons.menu, color: Color(0xFF0dbab4),),
-        //   onPressed: () {
-        //     // Handle settings icon pressed
-        //   },
-        // ),
+          iconTheme: const IconThemeData(
+            color: Color(0xFF0dbab4), // Change the drawer icon color here
+          ),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings, color: Color(0xFF0dbab4),),
@@ -119,6 +116,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
           ),
         ],
       ),
+      drawer: CustomDrawer(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,

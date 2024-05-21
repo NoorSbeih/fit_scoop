@@ -16,7 +16,8 @@ class BodyMetrics {
    String fitnessGoal;
    String gymType;
    int CurrentDay;
-   List<String> workoutSchedule; // List of workouts for each day
+   List<String> workoutSchedule;
+   String unitOfMeasure;
 
   BodyMetrics({
     required this.userId,
@@ -29,6 +30,7 @@ class BodyMetrics {
     required this.gymType,
     required this.CurrentDay,
     List<String>? workoutSchedule,
+    required this.unitOfMeasure,
   }) : this.workoutSchedule = workoutSchedule ?? List.filled(7, '');
 
 
@@ -66,12 +68,9 @@ class BodyMetrics {
       gymType: map['gymType'],
       CurrentDay:map['CurrentDay'],
       workoutSchedule: map['workoutSchedule'].cast<String>(),
+      unitOfMeasure:map['unitOfMeasure'],
     );
-
   }
-
-
-
 }
 
 /*List<String> convert(List<dynamic> x){

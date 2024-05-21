@@ -77,10 +77,6 @@ class _profileState extends State<ProfilePage> {
         iconTheme: const IconThemeData(
           color: Color(0xFF0dbab4), // Change the drawer icon color here
         ),
-        // leading: IconButton(
-        //   icon: const Icon(Icons.menu, color: c),
-        //   onPressed: () {},
-        // ),
 
       ),
       drawer: CustomDrawer(),

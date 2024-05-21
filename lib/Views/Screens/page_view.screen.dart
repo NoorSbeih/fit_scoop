@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 
  import 'package:flutter/cupertino.dart';
  import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../Controllers/body_metrics_controller.dart';
@@ -29,7 +30,7 @@ import '/Models/body_metrics_model.dart' as model;
 class _CustomPageViewState extends State<CustomPageView> {
   final controller = PageController();
   int currentPageIndex = 0;
-
+  late String unit="";
 
    @override
    void initState() {
@@ -39,7 +40,15 @@ class _CustomPageViewState extends State<CustomPageView> {
          currentPageIndex = controller.page!.round();
        });
      });
+     _loadPreferences();
    }
+  void _loadPreferences() async{
+    SharedPreferences sharedPreferences =await SharedPreferences.getInstance();
+    String? unitOfMeasure=sharedPreferences.getString('unitOfMeasure');
+    setState(() {
+      unit=unitOfMeasure!;
+    });
+  }
   bool isDataFilled_Page1() {
     return RegisterPage1.selectedgender.isNotEmpty && RegisterPage1.formateddate.isNotEmpty;
   }
@@ -171,7 +180,7 @@ class _CustomPageViewState extends State<CustomPageView> {
    // String formattedDate = '${parts[2]}-${parts[0]}-${parts[1]}T00:00:00';
    // DateTime dateTime = DateTime.parse(formattedDate);
     model.BodyMetrics bodyMetrics= model.BodyMetrics(userId:id,height: RegisterPage2.heightresult,weight: RegisterPage2.weightresult,birthDate: dateString ,
-    bodyFat: RegisterPage3.currentValue,gender: RegisterPage1.selectedgender,fitnessGoal:RegisterPage4.selectedGoal,gymType: RegisterPage5.typeOfPlace, CurrentDay:0,workoutSchedule: workoutSchedule);
+    bodyFat: RegisterPage3.currentValue,gender: RegisterPage1.selectedgender,fitnessGoal:RegisterPage4.selectedGoal,gymType: RegisterPage5.typeOfPlace, CurrentDay:0,workoutSchedule: workoutSchedule,unitOfMeasure: unit);
     _bodyMetricController.addBodyMetrics(bodyMetrics);
     Navigator.push(
       context,

@@ -6,15 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: SharedPreferences.getInstance(),
-      builder: (context, AsyncSnapshot<SharedPreferences> snapshot) {
-        if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
-        }
-
-        SharedPreferences sharedPreferences = snapshot.data!;
-        String? unitOfMeasure = sharedPreferences.getString('unitOfMeasure');
         BodyMetricsSingleton singleton = BodyMetricsSingleton.getInstance();
         BodyMetrics metrics = singleton.getMetrices();
 
@@ -59,16 +50,6 @@ class CustomDrawer extends StatelessWidget {
                     SizedBox(height: 10),
                     CustomUnderlineText(
                       text: 'GYM TYPE: ${metrics.gymType}',
-                      fontSize: 20,
-                      textColor: Colors.white,
-                      underlineColor: Colors.grey,
-                      underlinePadding: 2.0,
-                      underlineThickness: 2.0,
-                    ),
-
-                    SizedBox(height: 10),
-                    CustomUnderlineText(
-                      text: 'UNIT OF MEASURE: ${unitOfMeasure}',
                       fontSize: 20,
                       textColor: Colors.white,
                       underlineColor: Colors.grey,
@@ -138,7 +119,7 @@ class CustomDrawer extends StatelessWidget {
                   children: [
                     SizedBox(height: 10),
                     CustomUnderlineText(
-                      text: 'Goal: ${metrics.gymType}',
+                      text: 'Goal: ${metrics.fitnessGoal}',
                       fontSize: 20,
                       textColor: Colors.white,
                       underlineColor: Colors.grey,
@@ -160,7 +141,7 @@ class CustomDrawer extends StatelessWidget {
 
                     SizedBox(height: 10),
                     CustomUnderlineText(
-                      text: 'UNIT OF MEASURE:${unitOfMeasure}',
+                      text: 'UNIT OF MEASURE:${metrics.unitOfMeasure}',
                       fontSize: 20,
                       textColor: Colors.white,
                       underlineColor: Colors.grey,
@@ -170,18 +151,41 @@ class CustomDrawer extends StatelessWidget {
                   ],
                 ),
               ),
-              ListTile(
-                leading: Icon(Icons.contact_page),
-                title: Text('Contact'),
-                onTap: () {
-                  Navigator.pop(context); // Close the drawer
-                },
+              Center(
+              child:Container(
+                margin: EdgeInsets.symmetric(vertical: 20),
+                width: 200, // Set the width of the Container
+                height: 50, // Set the height of the Container
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.red, width: 0),
+                ),
+                child:Center(
+         child:ListTile(
+                  leading: Icon(Icons.logout, color: Colors.black),
+                  title: const Text(
+                    'Log Out',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 25,
+                      fontFamily: 'BebasNeue',
+                    ),
+                  ),
+                  onTap: () async {
+                    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                    await sharedPreferences.clear(); // Clear all shared preferences
+                    Navigator.pop(context); // Close the drawer
+                    Navigator.pushReplacementNamed(context, '/login'); // Navigate to the login screen
+                  },
+                ),
+                ),
               ),
+              ),
+
             ],
           ),
         );
-      },
-    );
   }
 }
 

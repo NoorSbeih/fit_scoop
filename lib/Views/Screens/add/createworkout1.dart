@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 import 'package:fit_scoop/Views/Widgets/exercises_card_widget.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../Widgets/drawer_widget.dart';
 import 'addExercise.dart';
 import 'createworkout2.dart';
 typedef void OnExerciseAddedCallback();
@@ -40,11 +41,8 @@ class _createWorkout1 extends State<createWorkout1> {
       backgroundColor: Color(0xFF2C2A2A),
       appBar: AppBar(
         backgroundColor: Color(0xFF2C2A2A),
-        leading: IconButton(
-          icon: const Icon(Icons.menu, color: Color(0xFF0dbab4)),
-          onPressed: () {
-            // Handle settings icon pressed
-          },
+        iconTheme: const IconThemeData(
+          color: Color(0xFF0dbab4), // Change the drawer icon color here
         ),
         actions: [
           IconButton(
@@ -55,6 +53,7 @@ class _createWorkout1 extends State<createWorkout1> {
           ),
         ],
       ),
+      drawer: CustomDrawer(),
       body: RefreshIndicator(
         onRefresh: _handleRefresh,
         child: Column(
