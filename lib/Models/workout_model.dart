@@ -82,7 +82,7 @@ class Workout {
       'creatorId': creatorId,
       'numberOfSaves': numberOfSaves,
       'isPrivate': isPrivate,
-      'timestamp': timestamp.toIso8601String(),
+      'timestamp': timestamp,
 
     };
   }
