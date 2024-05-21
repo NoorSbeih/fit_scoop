@@ -6,7 +6,7 @@ import 'exercise_model.dart';
 // models/workout_model.dart
 
 class Workout {
-  final String id;
+  String? id;
   final String name;
   final String description;
   final List<Map<String,dynamic>> exercises;
@@ -20,7 +20,7 @@ class Workout {
 
 
   Workout({
-    required this.id,
+     this.id,
     required this.name,
     required this.description,
     required this.exercises,
@@ -69,6 +69,7 @@ class Workout {
       'description': description,
       'exercises': exercises.map((exercise) => {
         'id': exercise['id'],
+        'name':exercise['name'],
         'sets': exercise['sets'],
         'weight': exercise['weight'],
       }).toList(),

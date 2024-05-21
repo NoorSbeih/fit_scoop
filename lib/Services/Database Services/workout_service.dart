@@ -1,5 +1,6 @@
 // services/database_services/workout_service.dart
 
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../Models/workout_model.dart';
 
@@ -7,11 +8,19 @@ import '../../Models/workout_model.dart';
 class WorkoutService {
   final CollectionReference _workoutsRef = FirebaseFirestore.instance.collection('workouts');
 
-  Future<void> addWorkout(Workout workout) async {
+  Future<void> createWorkout(Workout workout) async {
     try {
-      await _workoutsRef.doc(workout.id).set(workout.toMap());
+      // Step 1: Create a new document reference with an auto-generated ID
+      DocumentReference docRef = _workoutsRef.doc();
+      String newId = docRef.id;
+      workout.id = newId;
+
+      // Step 4: Set the workout data to the document with the correct ID
+      await docRef.set(workout.toMap());
+
+      print('Workout added with ID: $newId');
     } catch (e) {
-      print('Error adding workout: $e');
+      print('Error creating workout: $e');
       throw e;
     }
   }
@@ -47,12 +56,12 @@ class WorkoutService {
     }
   }
 
-  Future<Workout?> getWorkout(String id) async {
+  Future<Workout?> getWorkout(String? id) async {
     try {
 
       var snapshot = await _workoutsRef.doc(id).get();
       if (snapshot.exists && snapshot.data() != null) {
-        return Workout.fromMap(id, snapshot.data() as Map<String, dynamic>);
+        return Workout.fromMap(id!, snapshot.data() as Map<String, dynamic>);
       } else {
         print('Workout with ID $id does not exist or snapshot data is null.');
 

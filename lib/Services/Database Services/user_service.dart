@@ -74,7 +74,7 @@ class UserService {
     }
   }
 
-  Future<void> saveWorkout(String userId, String workoutId) async {
+  Future<void> saveWorkout(String userId, String? workoutId) async {
     try {
       await _usersRef.doc(userId).update({
         'savedWorkoutIds': FieldValue.arrayUnion([workoutId]),
@@ -85,7 +85,7 @@ class UserService {
     }
   }
 
-  Future<void> unsaveWorkout(String userId, String workoutId) async {
+  Future<void> unsaveWorkout(String userId, String? workoutId) async {
     try {
       await _usersRef.doc(userId).update({
         'savedWorkoutIds': FieldValue.arrayRemove([workoutId]),

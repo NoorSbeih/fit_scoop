@@ -315,7 +315,7 @@ class _DetailPageState extends State<DetailPage> {
   }
 
 
-  bool liked(String id) {
+  bool liked(String? id) {
     UserSingleton userSingleton = UserSingleton.getInstance();
     User_model user = userSingleton.getUser();
     List<String> ids = user.savedWorkoutIds;

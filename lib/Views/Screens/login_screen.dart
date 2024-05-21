@@ -1,6 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fit_scoop/Controllers/register_controller.dart';
-import 'package:fit_scoop/Views/Screens/page_view.screen.dart';
+
 import 'package:fit_scoop/Views/Screens/register_screen.dart';
 import 'package:fit_scoop/Views/Screens/reset_password.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../Controllers/login_controller.dart';
-import '../../Models/user_model.dart';
 
 import '../../Models/user_singleton.dart';
 import '../../Services/authentication_service.dart';

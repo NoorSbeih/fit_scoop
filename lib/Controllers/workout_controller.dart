@@ -10,7 +10,7 @@ class WorkoutController {
   Future<void> createWorkout(Workout workout) async {
     try {
       // Add the workout to Firestore
-      await _workoutService.addWorkout(workout);
+      await _workoutService.createWorkout(workout);
     } catch (e) {
       print('Error creating workout: $e');
       throw e;
@@ -37,7 +37,7 @@ class WorkoutController {
     }
   }
 
-  Future<Workout?> getWorkout(String id) async {
+  Future<Workout?> getWorkout(String? id) async {
     try {
       return await _workoutService.getWorkout(id);
     } catch (e) {

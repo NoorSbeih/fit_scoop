@@ -34,7 +34,7 @@ class ReviewController {
       throw e;
     }
   }
-  Future<List<Review>> getReviewsByWorkoutId(String workoutId) async {
+  Future<List<Review>> getReviewsByWorkoutId(String? workoutId) async {
     try {
       // Get reviews for the specific workout ID from the database using the ReviewService
       return await _reviewService.getReviewsByWorkoutId(workoutId);
