@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../Controllers/workout_controller.dart';
 import 'exercise_model.dart';
 
@@ -16,6 +18,7 @@ class Workout {
   final int numberOfSaves;
   final List<String> reviews;
   final bool isPrivate;
+  final DateTime timestamp;
 
 
 
@@ -30,7 +33,7 @@ class Workout {
     required this.numberOfSaves,
     required this.reviews,
     required this.isPrivate,
-
+    required this.timestamp
   });
 
 
@@ -50,6 +53,7 @@ class Workout {
         numberOfSaves: newNumberOfSaves,
         reviews: reviews,
         isPrivate: isPrivate,
+        timestamp: DateTime.timestamp(),
       );
 
       await workoutController.updateWorkout(updatedWorkout);
@@ -78,6 +82,8 @@ class Workout {
       'creatorId': creatorId,
       'numberOfSaves': numberOfSaves,
       'isPrivate': isPrivate,
+      'timestamp': timestamp.toIso8601String(),
+
     };
   }
 
@@ -94,6 +100,9 @@ class Workout {
       numberOfSaves: map['numberOfSaves'],
       reviews: List<String>.from(map['reviews'] ?? []),
       isPrivate: map['isPrivate'],
+      timestamp:  map['timestamp'] is String
+    ? DateTime.parse(map['timestamp'])
+        : (map['timestamp'] as Timestamp).toDate(),
     );
   }
 
