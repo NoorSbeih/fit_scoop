@@ -3,6 +3,8 @@ import 'package:fit_scoop/Models/body_metrics_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Screens/login_screen.dart';
+
 class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -172,13 +174,22 @@ class CustomDrawer extends StatelessWidget {
                       fontFamily: 'BebasNeue',
                     ),
                   ),
-                  onTap: () async {
-                    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-                    await sharedPreferences.clear(); // Clear all shared preferences
-                    Navigator.pop(context); // Close the drawer
-                    Navigator.pushReplacementNamed(context, '/login'); // Navigate to the login screen
-                  },
-                ),
+             onTap: () async {
+               try {
+                 SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                 await sharedPreferences.clear(); // Clear all shared preferences
+                 print("Shared preferences cleared");
+               } catch (e) {
+                 // Handle error if needed
+                 print("Error clearing shared preferences: $e");
+               }
+               Navigator.of(context).pop(); // Close the drawer
+               Navigator.of(context).pushReplacement(
+                 MaterialPageRoute(builder: (context) => Login()), // Navigate to the login screen
+               );
+             }
+
+         ),
                 ),
               ),
               ),
