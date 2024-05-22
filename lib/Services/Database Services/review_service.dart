@@ -10,6 +10,9 @@ class ReviewService {
   // Add new review document to Firestore
   Future<void> addReview(Review review) async {
     try {
+      DocumentReference docRef = _reviewsRef.doc();
+      String newId = docRef.id;
+      review.id = newId;
       await _reviewsRef.doc(review.id).set(review.toMap());
     } catch (e) {
       print('Error adding review: $e');

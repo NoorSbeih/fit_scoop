@@ -7,7 +7,7 @@ class CommunityService {
 
   Future<List<String>> getFollowingUserIds(String userId) async {
     DocumentSnapshot userDoc = await _firestore.collection('users').doc(userId).get();
-    List<dynamic> following = userDoc.get('following');
+    List<dynamic> following = userDoc.get('followedUserIds');
     return List<String>.from(following);
   }
 
