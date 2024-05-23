@@ -19,7 +19,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int selectedPage = 0;
 
-  final List <Widget> _pageOptions = [
+  final List<Widget> _pageOptions = [
     WorkoutPage(),
     CommunityPage(),
     createWorkout1(),
@@ -27,123 +27,122 @@ class _HomePageState extends State<HomePage> {
     ProfilePage(),
   ];
 
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: _pageOptions[selectedPage],
-
-      bottomNavigationBar: SizedBox(
-        height: 83,
-        child: BottomNavigationBar(
-        onTap: (int index) {
-          setState(() {
-            print("Selected page: $index");
-            selectedPage = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            label: "Home",
-            icon: SvgPicture.asset(
-              'images/home_unclicked.svg',
-              width: 24, // Adjust the width as needed
-              height: 24, // Adjust the height as needed
-              color: Colors.white,
-            ),
-
-            activeIcon: SvgPicture.asset(
-              'images/home_clicked.svg',
-              width: 24, // Adjust the width as needed
-              height: 24, // Adjust the height as needed
-                color: const Color(0xFF0dbab4)
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: "Community",
-            icon: SvgPicture.asset(
-              'images/community_unclicked.svg',
-              width: 24,
-              height: 24,
-                color: Colors.white
-            ),
-            activeIcon: SvgPicture.asset(
-              'images/community_clicked.svg',
-              width: 24, // Adjust the width as needed
-              height: 24, // Adjust the height as needed
-               color: Color(0xFF0dbab4)
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: "",
-
-            icon: Padding(
-              padding: EdgeInsets.only(top: 8.0), // Adjust the top padding as needed
-              child: Center(
-                child: SvgPicture.asset(
-                  'images/plus_unclicked.svg',
-                  width: 40,
-                  height: 40,
+      bottomNavigationBar: ClipRect(
+        child: PreferredSize(
+          preferredSize: const Size.fromHeight(60), // Adjust the height as needed
+          child: BottomNavigationBar(
+            currentIndex: selectedPage,
+            onTap: (int index) {
+              setState(() {
+                print("Selected page: $index");
+                selectedPage = index;
+              });
+            },
+            items: [
+              BottomNavigationBarItem(
+                label: "Home",
+                icon: SvgPicture.asset(
+                  'images/home_unclicked.svg',
+                  width: 24, // Adjust the width as needed
+                  height: 24, // Adjust the height as needed
                   color: Colors.white,
                 ),
-              ),
-            ),
-            activeIcon: Padding(
-              padding: EdgeInsets.only(top: 8.0), // Adjust the top padding as needed
-              child: Center(
-                child: SvgPicture.asset(
-                  'images/plus_clicked.svg',
-                  width: 40,
-                  height: 40,
-                  color: Colors.white,
+                activeIcon: SvgPicture.asset(
+                  'images/home_clicked.svg',
+                  width: 24, // Adjust the width as needed
+                  height: 24, // Adjust the height as needed
+                  color: const Color(0xFF0dbab4),
                 ),
               ),
-            ),
+              BottomNavigationBarItem(
+                label: "Community",
+                icon: SvgPicture.asset(
+                  'images/community_unclicked.svg',
+                  width: 24,
+                  height: 24,
+                  color: Colors.white,
+                ),
+                activeIcon: SvgPicture.asset(
+                  'images/community_clicked.svg',
+                  width: 24, // Adjust the width as needed
+                  height: 24, // Adjust the height as needed
+                  color: const Color(0xFF0dbab4),
+                ),
+              ),
+              BottomNavigationBarItem(
+                label: " ", // Space instead of an empty string
+                icon: Padding(
+                  padding: const EdgeInsets.only(top: 8.0), // Adjust the top padding as needed
+                  child: Center(
+                    child: SvgPicture.asset(
+                      'images/plus_unclicked.svg',
+                      width: 35,
+                      height: 35,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                activeIcon: Padding(
+                  padding: const EdgeInsets.only(top: 8.0), // Adjust the top padding as needed
+                  child: Center(
+                    child: SvgPicture.asset(
+                      'images/plus_clicked.svg',
+                      width: 40,
+                      height: 40,
+                      color: const Color(0xFF0dbab4),
+                    ),
+                  ),
+                ),
+              ),
+              BottomNavigationBarItem(
+                label: "Library",
+                icon: SvgPicture.asset(
+                  'images/heart_unclicked.svg',
+                  width: 24,
+                  height: 24,
+                  color: Colors.white,
+                ),
+                activeIcon: SvgPicture.asset(
+                  'images/heart_clicked.svg',
+                  width: 24, // Adjust the width as needed
+                  height: 24, // Adjust the height as needed
+                  color: const Color(0xFF0dbab4),
+                ),
+              ),
+              BottomNavigationBarItem(
+                label: "Profile",
+                icon: SvgPicture.asset(
+                  'images/profile_unclicked.svg',
+                  width: 24, // Adjust the width as needed
+                  height: 24, // Adjust the height as needed
+                  color: Colors.white,
+                ),
+                activeIcon: SvgPicture.asset(
+                  'images/profile_clicked.svg',
+                  width: 24, // Adjust the width as needed
+                  height: 24,
+                  color: const Color(0xFF0dbab4),
+                ),
+              ),
+            ],
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: const Color(0xFF605D5D),
+            unselectedItemColor: Colors.white,
+            selectedItemColor: const Color(0xFF0dbab4),
+            selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+            unselectedLabelStyle: const TextStyle(fontSize: 10),
+            iconSize: 24, // Adjust the icon size as needed
           ),
-
-          BottomNavigationBarItem(
-            label: "Library",
-            icon: SvgPicture.asset(
-              'images/heart_unclicked.svg',
-              width: 24,
-              height: 24,
-                color: Colors.white
-            ),
-            activeIcon: SvgPicture.asset(
-              'images/heart_clicked.svg',
-              width: 24, // Adjust the width as needed
-              height: 24, // Adjust the height as needed
-                color: Color(0xFF0dbab4),
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: "Profile",
-            icon: SvgPicture.asset(
-              'images/profile_unclicked.svg',
-              width: 24, // Adjust the width as needed
-              height: 24, // Adjust the height as needed
-                color: Colors.white
-            ),
-            activeIcon: SvgPicture.asset(
-              'images/profile_clicked.svg',
-              width: 24, // Adjust the width as needed
-              height: 24,
-              color: Color(0xFF0dbab4)
-
-            ),
-          ),
-        ],
-
-
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Color(0xFF605D5D),
-        unselectedItemColor: Colors.white,
-        selectedItemColor: Color(0xFF0dbab4),
-        selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-      )
-      )
+        ),
+      ),
     );
   }
 }
+
+
+
