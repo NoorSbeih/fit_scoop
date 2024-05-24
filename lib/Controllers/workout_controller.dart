@@ -39,6 +39,7 @@ class WorkoutController {
 
   Future<Workout?> getWorkout(String? id) async {
     try {
+
       return await _workoutService.getWorkout(id);
     } catch (e) {
       print('Error getting workout: $e');

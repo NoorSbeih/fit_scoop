@@ -47,6 +47,7 @@ class card_widget {
           )
         ],
       ),
+
         ),
     );
   }
