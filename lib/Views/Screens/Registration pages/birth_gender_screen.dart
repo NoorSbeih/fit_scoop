@@ -8,7 +8,7 @@ import 'package:flutter_holo_date_picker/date_picker_theme.dart';
 import 'package:flutter_holo_date_picker/i18n/date_picker_i18n.dart';
 import 'package:intl/intl.dart';
 
-import '../../Models/user_model.dart';
+import '../../../Models/user_model.dart';
 
 class Page1 extends StatelessWidget {
 

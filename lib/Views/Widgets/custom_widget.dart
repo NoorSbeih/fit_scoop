@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../Screens/height_weight_screen.dart';
+import '../Screens/Registration pages/height_weight_screen.dart';
 
 
 class custom_widget {
