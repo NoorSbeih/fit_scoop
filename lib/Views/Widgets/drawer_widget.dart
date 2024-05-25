@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Screens/Update/gymType.dart';
 import '../Screens/login_screen.dart';
-import '../Screens/type_of_place_screen.dart';
 
 class CustomDrawer extends StatefulWidget {
   @override

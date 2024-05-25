@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 import 'package:input_slider/input_slider.dart';
 
-import 'goals_screen.dart';
-
 class Page3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

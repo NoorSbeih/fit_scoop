@@ -4,7 +4,7 @@ import 'package:fit_scoop/Views/Screens/main_page_screen.dart';
 import 'package:fit_scoop/Views/Screens/register_screen.dart';
 import 'package:fit_scoop/Views/Screens/Registration%20pages/select_day_screen.dart';
 import 'package:fit_scoop/Views/Screens/Registration%20pages/type_of_place_screen.dart';
-import 'package:fit_scoop/Views/Screens/Registration%20pages/goals_screen.dart';
+
 import 'package:fit_scoop/Views/Screens/Workout/current_workout_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,10 +18,10 @@ import '../../Controllers/body_metrics_controller.dart';
 import '../../Services/Database Services/body_metrics_service.dart';
 import 'Registration pages/birth_gender_screen.dart';
 import 'Registration pages/body_fat_screen.dart';
-import 'Registration pages/goals_screen.dart';
 import 'Registration pages/height_weight_screen.dart';
 import 'package:fit_scoop/Controllers/register_controller.dart';
 import '/Models/body_metrics_model.dart' as model;
+import 'goals_screen.dart';
  class CustomPageView extends StatefulWidget {
    @override
    _CustomPageViewState createState() => _CustomPageViewState();
