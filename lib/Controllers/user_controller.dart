@@ -94,6 +94,19 @@ class UserController {
       print('Error getting saved workouts: $e');
       throw e;
     }
-
   }
+
+  Future<List<User_model>> getAllUsers() async { //from userservices
+    try {
+      // Get saved workout IDs from user document
+      List<User_model> savedWorkouts = await _userService.getAllUsers();
+      return savedWorkouts;
+    } catch (e) {
+      print('Error getting saved workouts: $e');
+      throw e;
+    }
+  }
+
+
+
 }

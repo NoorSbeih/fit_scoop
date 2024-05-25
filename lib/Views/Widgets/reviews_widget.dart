@@ -25,7 +25,7 @@ class ReviewsWidget {
                         workout.name,
                         style: const TextStyle(
                           color: Color(0xFF0dbab4),
-                          fontSize: 20,
+                          fontSize: 15,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Montserrat',
                         ),

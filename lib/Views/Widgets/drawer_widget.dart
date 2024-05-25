@@ -3,14 +3,28 @@ import 'package:fit_scoop/Models/body_metrics_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Screens/Update/gymType.dart';
 import '../Screens/login_screen.dart';
+import '../Screens/type_of_place_screen.dart';
 
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends StatefulWidget {
+  @override
+  _CustomDrawerState createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
+  String typeOfPlace = ""; // Define typeOfPlace here
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
         BodyMetricsSingleton singleton = BodyMetricsSingleton.getInstance();
         BodyMetrics metrics = singleton.getMetrices();
-
+        typeOfPlace=metrics.gymType;
 
         return Drawer(
           backgroundColor: Color(0xFF2C2A2A),
@@ -25,6 +39,7 @@ class CustomDrawer extends StatelessWidget {
                     fontSize: 24,
                       fontFamily: 'BebasNeue')
                   ),
+
                 ),
               ListTile(
                 title: const Text(
@@ -50,14 +65,32 @@ class CustomDrawer extends StatelessWidget {
 
 
                     SizedBox(height: 10),
-                    CustomUnderlineText(
-                      text: 'GYM TYPE: ${metrics.gymType}',
+                   GestureDetector(
+                  onTap: () {
+                    // Navigate to a new page when the text is tapped
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => GymType(
+                          onUpdateGymType: (newType) {
+                          setState(() {
+                            metrics.gymType = newType;
+                            typeOfPlace=metrics.gymType;
+                          });
+                        },
+                        ),
+                      ),
+                    );
+                  },
+                    child:CustomUnderlineText(
+                      text: 'GYM TYPE: ${typeOfPlace}',
                       fontSize: 20,
                       textColor: Colors.white,
                       underlineColor: Colors.grey,
                       underlinePadding: 2.0,
                       underlineThickness: 2.0,
                     ),
+                   ),
                   ],
                 ),
               ),

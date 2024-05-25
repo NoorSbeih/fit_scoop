@@ -1,7 +1,8 @@
 import 'package:fit_scoop/Views/Screens/Workout/current_workout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'Community/community_screen.dart';
+
+import 'Community/search_screen.dart';
 import 'Profile/profile_screen.dart';
 import 'add/createworkout1.dart';
 import 'library/library_screen.dart';
@@ -21,7 +22,6 @@ class _HomePageState extends State<HomePage> {
 
   final List <Widget> _pageOptions = [
     WorkoutPage(),
-    CommunityPage(),
     createWorkout1(),
     LibraryPage(),
     ProfilePage(),

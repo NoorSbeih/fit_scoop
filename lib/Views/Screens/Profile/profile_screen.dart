@@ -170,6 +170,8 @@ class _profileState extends State<ProfilePage> {
             ),
             SizedBox(height: 20.0),
             Container(
+              height: 200,
+              width:380,
               padding: EdgeInsets.only(top: 10, left: 20.0, right: 20),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),

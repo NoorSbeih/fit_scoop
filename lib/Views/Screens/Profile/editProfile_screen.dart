@@ -47,14 +47,14 @@ class _EditProfile extends State<EditProfile> {
   void initState() {
     super.initState();
     controller.text = widget.user.name;
-    bioController.text = widget.user.bio!;
+    bioController.text = widget.user.bio ?? '';
     getImageUrl();
 
     getGender().then((_) {
       initialGender = gender;
     });
     initialName = widget.user.name;
-    initialBio = widget.user.bio!;
+    initialBio = widget.user.bio ?? '';
     initialImageUrl = widget.user.imageLink;
   }
 
@@ -137,38 +137,41 @@ class _EditProfile extends State<EditProfile> {
   }
 
   Future<bool> showDiscardChangesDialog(BuildContext context) async {
-    return await showDialog(
+    return await showDialog<bool>(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Discard Changes?'),
-          content: const Text('Are you sure you want to discard your changes?'),
+          title: Text('Discard changes?'),
+          content: Text('You have unsaved changes. Do you really want to discard them?'),
           actions: <Widget>[
             TextButton(
+              child: Text('Cancel'),
               onPressed: () {
-                Navigator.of(context).pop(
-                    false); // Return false to indicate discard
+                Navigator.of(context).pop(false);
               },
-              child: const Text('Discard'),
             ),
             TextButton(
+              child: Text('Discard'),
               onPressed: () {
-                Navigator.of(context).pop(
-                    true); // Return true to indicate keep editing
+                Navigator.of(context).pop(true);
               },
-              child: Text('Keep Editing'),
             ),
           ],
         );
       },
-    );
+    ) ?? false; // In case the dialog is dismissed by other means (e.g., back button)
   }
 
   void showAlertDialog(String message, Color color) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
+        return WillPopScope(
+          onWillPop: () async {
+            return true;
+          },
+        child: AlertDialog(
           backgroundColor: color,
           title: const Text(
             'Profile Update',
@@ -185,35 +188,38 @@ class _EditProfile extends State<EditProfile> {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                // onTap: () {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => ProfilePage(),
-                //     ),
-                //   );
-                // }
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProfilePage()),
+                  );
               },
             ),
           ],
+        ),
         );
       },
     );
   }
 
+  Future<bool> _onWillPop() async {
+    bool isNameChanged = initialName != this.controller.text;
+    bool isBioChanged = initialBio != bioController.text;
+    bool isGenderChanged = initialGender != gender;
+    bool isImageChanged = image != null;
+    bool hasChanges = isNameChanged || isBioChanged || isGenderChanged || isImageChanged;
+    if (hasChanges) {
+      bool discard = await showDiscardChangesDialog(context);
+      return discard;
+    } else {
+      return true;
+    }
+  }
 
   @override
-  Widget build(BuildContext context) =>
-      PopScope(
-        canPop: true,
-        onPopInvoked: (bool didPop) async {
+  Widget build(BuildContext context) {
 
-          if (hasChanges) {
-            await showDiscardChangesDialog(context);
-          }
-
-        },
-
+    return WillPopScope(
+        onWillPop: _onWillPop,
         child: Scaffold(
           resizeToAvoidBottomInset: true,
           backgroundColor: Color(0xFF2C2A2A),
@@ -344,7 +350,6 @@ class _EditProfile extends State<EditProfile> {
                     ],
                   ),
                   SizedBox(height: 10.0),
-
                   const Text(
                     'BIO',
                     style: TextStyle(
@@ -403,6 +408,7 @@ class _EditProfile extends State<EditProfile> {
             ),
           ),
         ),
-      );
+        );
 
+}
 }

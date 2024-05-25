@@ -47,7 +47,6 @@ class BodyMetricsController {
   Future<BodyMetrics?> fetchBodyMetrics(String? bodyMetrics) async {
     try {
       print("gjgjgj");
-      print(bodyMetrics);
       return await _bodyMetricsService.getBodyMetrics(bodyMetrics);
     } catch (e) {
       print('Error getting workout: $e');

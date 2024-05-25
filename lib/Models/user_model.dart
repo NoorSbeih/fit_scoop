@@ -12,6 +12,7 @@ class User_model {
    List<String> savedWorkoutIds; // References to Workout IDs
     String? bio;
    String? imageLink;
+   String? unitOfMeasure;
 
   User_model({
     required this.id,
@@ -22,7 +23,8 @@ class User_model {
     this.followedUserIds = const [],
     this.savedWorkoutIds = const [],
     this.bio,
-    this.imageLink
+    this.imageLink,
+    this.unitOfMeasure,
   });
 
   Map<String, dynamic> toMap() {
@@ -36,6 +38,7 @@ class User_model {
       'savedWorkoutIds': savedWorkoutIds,
       'bio': bio,
       'imageLink':imageLink,
+      'unitOfMeasure':unitOfMeasure,
     };
   }
   factory User_model.fromMap(Map<String, dynamic> map) {
@@ -48,7 +51,8 @@ class User_model {
       followedUserIds: List<String>.from(map['followedUserIds']),
       savedWorkoutIds: List<String>.from(map['savedWorkoutIds']),
       bio: map['bio'],
-      imageLink:map['imageLink']
+      imageLink:map['imageLink'],
+        unitOfMeasure:map['unitOfMeasure']
     );
   }
 

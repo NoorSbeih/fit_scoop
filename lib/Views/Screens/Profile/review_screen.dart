@@ -49,7 +49,7 @@ class _ReviewsScreen extends State<reviewsProfile> {
                   Text("${widget.user?.name}'s Reviews").data ?? "",
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 30,
+                    fontSize: 20,
                     fontFamily: 'BebasNeue',
                   ),
                 ),
@@ -68,7 +68,7 @@ class _ReviewsScreen extends State<reviewsProfile> {
             child: Text(
               '${widget.reviews.length} REVIEWS',
               style: const TextStyle(
-                fontSize: 30,
+                fontSize: 20,
                 color: Color(0xFF0dbab4),
                 fontFamily: 'BebasNeue',
               ),

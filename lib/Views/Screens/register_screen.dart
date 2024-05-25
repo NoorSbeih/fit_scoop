@@ -264,7 +264,7 @@ class _RegisterPageState extends State<RegisterPage> {
                    if(eV.validateEmail(email)=="" && !password.isEmpty && !fullName.isEmpty) {
                     try {
                       SharedPreferences prefs =await SharedPreferences.getInstance() ;
-                     prefs.setString('unitOfMeasure', _selectedUnitMeasure!);
+                       prefs.setString('unitOfMeasure', _selectedUnitMeasure!);
                        RegisterController register=RegisterController();
                        register.storeRegisterData(fullName, email, password);
 

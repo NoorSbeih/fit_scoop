@@ -153,6 +153,9 @@ class _DetailPageState extends State<DetailPage> {
       backgroundColor: Color(0xFF2C2A2A),
       appBar: AppBar(
         backgroundColor: Color(0xFF2C2A2A),
+        iconTheme: const IconThemeData(
+          color: Color(0xFF0dbab4), // Change the drawer icon color here
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 15.0, right: 10),
@@ -232,11 +235,9 @@ class _DetailPageState extends State<DetailPage> {
                                 userId, widget.workout.id);
 
                           }
-
                           widget.updateSavedWorkouts(widget.workout, isLiked);
                           widget.workout.numberOfSaves=numberOfSaves;
                           WorkoutController controller2=WorkoutController();
-
                           controller2.updateWorkout(widget.workout);
                         }
                       },

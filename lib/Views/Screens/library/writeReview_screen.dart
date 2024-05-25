@@ -181,7 +181,6 @@ class _RateWorkoutPageState extends State<RateWorkoutPage> {
                             Colors.red);
                       } else {
                         ReviewController controller = ReviewController();
-
                         Review review = Review(
                           workoutId: widget.workout.id,
                           reviewingUserId: user.id,
@@ -193,15 +192,13 @@ class _RateWorkoutPageState extends State<RateWorkoutPage> {
                         controller.addReview(review);
                         showAlertDialog(
                             'Your review was sent successfully', Colors.green);
-
-
                       }
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
                           const Color(0xFF0dbab4)),
                       fixedSize:
-                          MaterialStateProperty.all<Size>(const Size(370, 50)),
+                          MaterialStateProperty.all<Size>(const Size(340, 50)),
                       shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                         (Set<MaterialState> states) {
                           return RoundedRectangleBorder(

@@ -24,4 +24,11 @@ class CommunityPageController {
 
     return activities;
   }
+
+
+
+
+
+
+
 }

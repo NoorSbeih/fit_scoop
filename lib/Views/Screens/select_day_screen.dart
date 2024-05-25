@@ -20,7 +20,6 @@ class RegisterPage6 extends StatefulWidget {
   static List<bool> isSelected = [false, false, false, false, false, false, false];
   const RegisterPage6({Key? key}) : super(key: key);
 
-
   @override
   State<RegisterPage6> createState() => _RegisterPageState();
 }

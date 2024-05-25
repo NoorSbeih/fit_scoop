@@ -150,6 +150,19 @@ class UserService {
     }
   }
 
+  Future<List<model.User_model>> getAllUsers() async {
+    try {
+      QuerySnapshot querySnapshot = await _usersRef.get();
+      List<model.User_model> users = querySnapshot.docs.map((doc) {
+        return model.User_model.fromMap(doc.data() as Map<String, dynamic>);
+      }).toList();
+      print(users);
+      return users;
+    } catch (e) {
+      print('Error getting all users: $e');
+      throw e;
+    }
+  }
 
 
 }

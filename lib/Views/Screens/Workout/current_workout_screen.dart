@@ -47,10 +47,6 @@ class _WorkoutPageState extends State<WorkoutPagee> {
   int duration = 0;
 
   late User_model user;
-
-
-
-
   void initState() {
 
     super.initState();
@@ -63,30 +59,39 @@ class _WorkoutPageState extends State<WorkoutPagee> {
        user = userSingleton.getUser();
 
       String? bodyMetricId = user.bodyMetrics;
+      print("djdjdj");
       print(bodyMetricId); // Assuming you want the user's UID
-      BodyMetricsController controller = new BodyMetricsController();
-      BodyMetrics? metrics = await controller.fetchBodyMetrics(bodyMetricId!);
-      print(metrics?.workoutSchedule);
-      if (metrics != null) {
-        int currentDayIndex=metrics.CurrentDay;
-        currentWorkout = await Calculate(metrics.workoutSchedule,currentDayIndex);
-        setState(() {
-          WorkoutPagee.exercises = currentWorkout!.exercises;
-          WorkoutPagee.copyExercisesToLog();
-          print("cureennnnn");
-          print(metrics.CurrentDay);
+      if (bodyMetricId != null) {
+        BodyMetricsController controller = BodyMetricsController();
+        BodyMetrics? metrics = await controller.fetchBodyMetrics(bodyMetricId!);
 
-          intensity = checkIntensity(currentWorkout!.intensity);
-          name = currentWorkout!.name;
-          duration = currentWorkout!.duration;
-        });
-      } else {
-        // Handle case where metrics is null
+        if (metrics != null) {
+          int currentDayIndex = metrics.CurrentDay;
+          currentWorkout =
+          await Calculate(metrics.workoutSchedule, currentDayIndex);
+          setState(() {
+            WorkoutPagee.exercises = currentWorkout!.exercises;
+            WorkoutPagee.copyExercisesToLog();
+            print("cureennnnn");
+            print(metrics.CurrentDay);
+
+            intensity = checkIntensity(currentWorkout!.intensity);
+            name = currentWorkout!.name;
+            duration = currentWorkout!.duration;
+          });
+        } else {
+          print("Empty body metrics");
+        }
       }
+      else {
+        print("fffffffff");
+      }
+
     } catch (e) {
       print('Error fetching data: $e');
       // Handle error if needed
     }
+
   }
 
   bool isSaved(String? id) {

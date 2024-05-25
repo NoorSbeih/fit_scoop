@@ -131,7 +131,7 @@ class _WorkoutScreen extends State<WorkoutProfile> {
               '${widget.user.name} WORKOUTS',
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 30,
+                fontSize: 20,
                 fontFamily: 'BebasNeue',
               ),
             ),
