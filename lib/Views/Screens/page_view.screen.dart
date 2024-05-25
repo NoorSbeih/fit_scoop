@@ -2,9 +2,9 @@
 
 import 'package:fit_scoop/Views/Screens/main_page_screen.dart';
 import 'package:fit_scoop/Views/Screens/register_screen.dart';
-import 'package:fit_scoop/Views/Screens/select_day_screen.dart';
-import 'package:fit_scoop/Views/Screens/type_of_place_screen.dart';
-import 'package:fit_scoop/Views/Screens/goals_screen.dart';
+import 'package:fit_scoop/Views/Screens/Registration%20pages/select_day_screen.dart';
+import 'package:fit_scoop/Views/Screens/Registration%20pages/type_of_place_screen.dart';
+import 'package:fit_scoop/Views/Screens/Registration%20pages/goals_screen.dart';
 import 'package:fit_scoop/Views/Screens/Workout/current_workout_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +16,10 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../Controllers/body_metrics_controller.dart';
 import '../../Services/Database Services/body_metrics_service.dart';
-import 'birth_gender_screen.dart';
-import 'body_fat_screen.dart';
-import 'goals_screen.dart';
-import 'height_weight_screen.dart';
+import 'Registration pages/birth_gender_screen.dart';
+import 'Registration pages/body_fat_screen.dart';
+import 'Registration pages/goals_screen.dart';
+import 'Registration pages/height_weight_screen.dart';
 import 'package:fit_scoop/Controllers/register_controller.dart';
 import '/Models/body_metrics_model.dart' as model;
  class CustomPageView extends StatefulWidget {
