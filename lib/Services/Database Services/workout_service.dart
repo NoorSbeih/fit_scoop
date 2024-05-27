@@ -35,10 +35,22 @@ class WorkoutService {
     }
   }
 
-  Future<List<Map<String, dynamic>>> getAllWorkouts() async {
+  // Future<List<Map<String, dynamic>>> getAllWorkouts() async {
+  //   try {
+  //     var querySnapshot = await _workoutsRef.get();
+  //     return querySnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+  //   } catch (e) {
+  //     print('Error getting all workouts: $e');
+  //     throw e;
+  //   }
+  // }
+
+  Future<List<Workout>> getAllWorkouts() async {
     try {
       var querySnapshot = await _workoutsRef.get();
-      return querySnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+      return querySnapshot.docs
+          .map((doc) => Workout.fromMap(doc.id, doc.data() as Map<String, dynamic>))
+          .toList();
     } catch (e) {
       print('Error getting all workouts: $e');
       throw e;

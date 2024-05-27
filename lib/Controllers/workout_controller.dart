@@ -46,7 +46,17 @@ class WorkoutController {
       throw e;
     }
   }
-  Future<List<Map<String, dynamic>>> getAllWorkouts() async {
+  // Future<List<Map<String, dynamic>>> getAllWorkouts() async {
+  //   try {
+  //     // Get all workouts from Firestore
+  //     return await _workoutService.getAllWorkouts();
+  //   } catch (e) {
+  //     print('Error getting all workouts: $e');
+  //     throw e;
+  //   }
+  // }
+
+  Future<List<Workout>> getAllWorkouts() async {
     try {
       // Get all workouts from Firestore
       return await _workoutService.getAllWorkouts();

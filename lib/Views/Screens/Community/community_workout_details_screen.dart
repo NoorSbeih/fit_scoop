@@ -18,7 +18,6 @@ class CommunityWorkoutDetailPage
     extends StatefulWidget {
   final Workout workout;
 
-
   const CommunityWorkoutDetailPage
       ({Key? key, required this.workout}) : super(key: key);
 
