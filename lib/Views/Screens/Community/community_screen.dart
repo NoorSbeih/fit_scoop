@@ -220,7 +220,7 @@ class _communityPage  extends State< CommunityPage> {
             CommunityPage.likedWorkoutIds.add(activity.id!);
             saveWorkout(activity);
             ++activity.numberOfSaves;
-            workoutController.updateWorkout(activity);;
+            workoutController.updateWorkout(activity);
           } else {
             CommunityPage.likedWorkoutIds.remove(activity.id);
             unsaveWorkout(activity);

@@ -269,8 +269,14 @@ class _searchPage extends State<SearchPage>
                                     setState(() {
                                       if (isLiked) {
                                         saveWorkout(workout);
+                                        ++workout.numberOfSaves;
+                                        WorkoutController workoutController = WorkoutController();
+                                        workoutController.updateWorkout(workout);
                                       } else {
                                         unsaveWorkout(workout);
+                                        --workout.numberOfSaves;
+                                        WorkoutController workoutController = WorkoutController();
+                                        workoutController.updateWorkout(workout);
                                       }
                                     });
                                   },
