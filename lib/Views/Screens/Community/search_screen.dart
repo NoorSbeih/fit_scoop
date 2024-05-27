@@ -43,6 +43,7 @@ class _searchPage extends State<SearchPage>
     super.dispose();
   }
 
+
   void fetchData() async {
     UserSingleton userSingleton = UserSingleton.getInstance();
     User_model currentUser = userSingleton.getUser();
@@ -266,8 +267,14 @@ class _searchPage extends State<SearchPage>
                                     setState(() {
                                       if (isLiked) {
                                         saveWorkout(workout);
+                                        ++workout.numberOfSaves;
+                                        WorkoutController workoutController = WorkoutController();
+                                        workoutController.updateWorkout(workout);
                                       } else {
                                         unsaveWorkout(workout);
+                                        --workout.numberOfSaves;
+                                        WorkoutController workoutController = WorkoutController();
+                                        workoutController.updateWorkout(workout);
                                       }
                                     });
                                   },

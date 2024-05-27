@@ -19,7 +19,7 @@ import 'community_review_widget.dart';
 
 class  CommunityPage extends StatefulWidget {
 
-  static Set<String?> likedWorkoutIds = Set();
+  static List<String> likedWorkoutIds = [];
   @override
   _communityPage createState() => _communityPage();
 }
@@ -45,8 +45,9 @@ class _communityPage  extends State< CommunityPage> {
      CommunityPageController controller = CommunityPageController();
      UserSingleton userSingleton = UserSingleton.getInstance();
      User_model user = userSingleton.getUser();
-     List<dynamic> allActivities = await controller.getRecentActivities(user.id); // Get all activities
-     if (_searchQuery.isNotEmpty) {
+     List<dynamic> allActivities = await controller.getRecentActivities(user.id);
+     CommunityPage.likedWorkoutIds=user.savedWorkoutIds;// Get all activities
+  /*   if (_searchQuery.isNotEmpty) {
        allActivities = allActivities.where((activity) {
          if (activity is Workout) {
            return activity.name.toLowerCase().contains(_searchQuery.toLowerCase());
@@ -55,7 +56,7 @@ class _communityPage  extends State< CommunityPage> {
          }
          return false;
        }).toList();
-     }
+     }*/
      return allActivities;
    }
 
@@ -216,10 +217,10 @@ class _communityPage  extends State< CommunityPage> {
           (isLiked) {
            setState(() {
           if (isLiked) {
-            CommunityPage.likedWorkoutIds.add(activity.id);
+            CommunityPage.likedWorkoutIds.add(activity.id!);
             saveWorkout(activity);
             ++activity.numberOfSaves;
-            workoutController.updateWorkout(activity);;
+            workoutController.updateWorkout(activity);
           } else {
             CommunityPage.likedWorkoutIds.remove(activity.id);
             unsaveWorkout(activity);
