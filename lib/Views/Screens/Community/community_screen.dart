@@ -11,6 +11,7 @@ import '../../../Controllers/user_controller.dart';
 import '../../../Models/review_model.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_model.dart';
+import '../../Widgets/drawer_widget.dart';
 import '../../Widgets/reviews_widget.dart';
 import 'community_workout_widget.dart';
 import 'community_review_widget.dart';
@@ -66,14 +67,14 @@ class _communityPage  extends State< CommunityPage> {
   Widget build(BuildContext context) {
     return Scaffold(
      backgroundColor: Color(0xFF2C2A2A),
-     appBar: AppBar(
-   backgroundColor: Color(0xFF2C2A2A),
-    leading: IconButton(
-    icon: const Icon(Icons.menu, color: Color(0xFF0dbab4)),
-    onPressed: () {
-    },
-    )
-     ),
+      appBar: AppBar(
+        backgroundColor: Color(0xFF2C2A2A),
+        iconTheme: const IconThemeData(
+          color: Color(0xFF0dbab4), // Change the drawer icon color here
+        ),
+
+      ),
+      drawer: CustomDrawer(),
       body: Column(
     children: [
     Padding(
