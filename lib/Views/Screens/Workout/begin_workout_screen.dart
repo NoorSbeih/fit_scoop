@@ -219,7 +219,7 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
 
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) =>   WorkoutPage()), // Replace SecondPage() with the desired page widget
+        MaterialPageRoute(builder: (context) =>  WorkoutPage()), // Replace SecondPage() with the desired page widget
       );
 
 
