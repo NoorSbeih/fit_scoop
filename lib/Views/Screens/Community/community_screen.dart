@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fit_scoop/Controllers/workout_controller.dart';
 import 'package:fit_scoop/Models/user_model.dart';
+import 'package:fit_scoop/Views/Screens/Community/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../Controllers/community_controller.dart';
@@ -76,7 +77,17 @@ class _communityPage  extends State< CommunityPage> {
     children: [
     Padding(
     padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 20.0),
-    child: TextField(
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SearchPage(),
+            ),
+          );
+        },
+        child: AbsorbPointer(
+          child: TextField(
     //controller: _savedWorkoutsSearchController,
     style: TextStyle(color: Colors.white),
     decoration: InputDecoration(
@@ -106,16 +117,19 @@ class _communityPage  extends State< CommunityPage> {
     ),
     onChanged: (query) {
     setState(() {
-      _searchQuery = query;
-      fetchAndSetActivities();
+
+      //_searchQuery = query;
+      //fetchAndSetActivities();
     });
     },
     ),
     ),
-    Expanded(
-    child:displayLatestActivities()
-    ),
+      ),
 
+    ),
+      Expanded(
+          child:displayLatestActivities()
+      ),
     ],
     ),
     );
@@ -186,7 +200,8 @@ class _communityPage  extends State< CommunityPage> {
 
 
   Future<Widget> fetchWorkout(Workout activity) async {
-    User_model? user = await  userController.getUser(activity.creatorId) ;
+    User_model? user = await  userController.getUser(activity.creatorId);
+
     return communityWorkoutWidget.communityCardWidget(
       activity,
       context,
@@ -197,9 +212,13 @@ class _communityPage  extends State< CommunityPage> {
           if (isLiked) {
             CommunityPage.likedWorkoutIds.add(activity.id);
             saveWorkout(activity);
+            ++activity.numberOfSaves;
+            workoutController.updateWorkout(activity);;
           } else {
             CommunityPage.likedWorkoutIds.remove(activity.id);
             unsaveWorkout(activity);
+            --activity.numberOfSaves;
+            workoutController.updateWorkout(activity);
           }
         });
       },
