@@ -12,6 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../Controllers/body_metrics_controller.dart';
 import '../../../Models/body_metrics_model.dart';
 import '../../../Models/user_model.dart';
+import '../main_page_screen.dart';
 
 class EditProfile extends StatefulWidget {
   final User_model user;
@@ -188,10 +189,7 @@ class _EditProfile extends State<EditProfile> {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => ProfilePage()),
-                  );
+                Navigator.pop(context);
               },
             ),
           ],

@@ -156,9 +156,14 @@ class _createWorkout2  extends State<createWorkout2> {
                       onPressed: () {
                         UserSingleton userSingleton = UserSingleton.getInstance();
                         User_model user = userSingleton.getUser();
-   Workout workout =new Workout(name: createWorkout1.name, description: descriptionController.text, exercises: addExercise.exercises, duration: 12, intensity: label, creatorId: user.id, numberOfSaves: 0, reviews: [], isPrivate: isPrivate, timestamp: DateTime.now(),);
-   WorkoutController controller =new WorkoutController();
-   controller.createWorkout(workout);
+                        Workout workout =new Workout(name: createWorkout1.name, description: descriptionController.text, exercises: addExercise.exercises, duration: 12, intensity: label, creatorId: user.id, numberOfSaves: 0, reviews: [], isPrivate: isPrivate, timestamp: DateTime.now(),);
+                        WorkoutController controller =new WorkoutController();
+                       controller.createWorkout(workout);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>
+                              HomePage()), // Replace SecondPage() with the desired page widget
+                        );
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0dbab4)),
