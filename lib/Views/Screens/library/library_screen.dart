@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../../Controllers/workout_controller.dart';
 import '../../../Models/workout_model.dart';
+import '../../Widgets/drawer_widget.dart';
 
 class LibraryPage extends StatelessWidget {
   const LibraryPage({Key? key}) : super(key: key);
@@ -158,6 +159,9 @@ class _LibraryScreen extends State<LibraryScreen>
         backgroundColor: const Color(0xFF2C2A2A),
         appBar: AppBar(
           backgroundColor: const Color(0xFF2C2A2A),
+          iconTheme: const IconThemeData(
+            color: Color(0xFF0dbab4), // Change the drawer icon color here
+          ),
           bottom: TabBar(
             controller: _tabController,
             labelColor: Colors.white,
@@ -170,6 +174,7 @@ class _LibraryScreen extends State<LibraryScreen>
             ],
           ),
         ),
+        drawer: CustomDrawer(),
         body: RefreshIndicator(
         onRefresh: _handleRefresh,
          child:TabBarView(
