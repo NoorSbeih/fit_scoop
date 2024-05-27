@@ -153,6 +153,9 @@ class _communityPage  extends State< CommunityPage> {
              itemBuilder: (context, index) {
                var activity = activityList[index];
                if (activity is Review) {
+                 if (DateTime.now().difference(activity.timestamp).inDays >= 7) {
+                   return SizedBox.shrink(); // Return an empty widget if older than 7 days
+                 }
                  return FutureBuilder<Widget>(
                    future: fetchReview(activity),
                    builder: (context, snapshot) {
@@ -164,6 +167,9 @@ class _communityPage  extends State< CommunityPage> {
                    },
                  );
                } if (activity is Workout) {
+                 if (DateTime.now().difference(activity.timestamp).inDays >= 7) {
+                   return SizedBox.shrink(); // Return an empty widget if older than 7 days
+                 }
                  return FutureBuilder<Widget>(
                    future: fetchWorkout(activity),
                    builder: (context, snapshot) {
