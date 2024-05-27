@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../Models/review_model.dart';
 import '../../../Models/user_model.dart';
@@ -21,9 +22,25 @@ class communityReviewsWidget {
 
               Row(
                 children: [
-                  const Icon(
-                    Icons.account_circle_outlined,
-                    color: Color(0xFF0dbab4),
+                  Stack(
+                    children: [
+                      creator.imageLink != null
+                          ? CircleAvatar(
+                        radius: 30,
+                        backgroundColor: Colors.transparent,
+                        backgroundImage: NetworkImage(creator.imageLink!),
+                      )
+                          : CircleAvatar(
+                        radius: 30,
+                        backgroundColor: Colors.transparent,
+                        child: SvgPicture.asset(
+                          'images/profile-circle-svgrepo-com.svg',
+                          width: 128,
+                          height: 128,
+                          color: Color(0xFF0dbab4),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(width: 5), // Add spacing between icon and text
                   Text(
@@ -41,7 +58,7 @@ class communityReviewsWidget {
                 time,
                 style: const TextStyle(
                   color: Color(0xFF0dbab4),
-                  fontSize: 13,
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Montserrat',
                 ),

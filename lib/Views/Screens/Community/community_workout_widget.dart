@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../Models/user_model.dart';
 import '../../../Models/workout_model.dart';
 import '../library/writeReview_screen.dart';
 import 'community_workout_details_screen.dart';
@@ -11,7 +12,7 @@ import '../library/workout_detail_screen.dart';
 import '../../Widgets/custom_widget.dart';
 
 class communityWorkoutWidget {
-  static Widget communityCardWidget(Workout workout, BuildContext context,String name,bool isLike,  final ValueChanged<bool> onLikedChanged,String time) {
+  static Widget communityCardWidget(Workout workout, BuildContext context,User_model user,bool isLike,  final ValueChanged<bool> onLikedChanged,String time) {
 
     int intensity = 0;
     if (workout.intensity == "Beginner") {
@@ -33,13 +34,29 @@ class communityWorkoutWidget {
 
           Row(
             children: [
-              const Icon(
-                Icons.account_circle_outlined,
-                color: Color(0xFF0dbab4),
-              ),
+                Stack(
+                  children: [
+                    user.imageLink != null
+                        ? CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: NetworkImage(user.imageLink!),
+                    )
+                        : CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.transparent,
+                      child: SvgPicture.asset(
+                        'images/profile-circle-svgrepo-com.svg',
+                        width: 128,
+                        height: 128,
+                        color: Color(0xFF0dbab4),
+                      ),
+                    ),
+                  ],
+                ),
               SizedBox(width: 5), // Add spacing between icon and text
               Text(
-                '${name} has posted new a workout',
+                '${user.name} has posted new a workout',
                 style: const TextStyle(
                   color: Color(0xFF0dbab4),
                   fontSize: 14,
@@ -53,7 +70,7 @@ class communityWorkoutWidget {
             time,
             style: const TextStyle(
               color: Color(0xFF0dbab4),
-              fontSize: 13,
+              fontSize: 15,
               fontWeight: FontWeight.bold,
               fontFamily: 'Montserrat',
             ),

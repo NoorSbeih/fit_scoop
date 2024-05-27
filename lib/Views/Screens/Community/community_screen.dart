@@ -212,7 +212,7 @@ class _communityPage  extends State< CommunityPage> {
     return communityWorkoutWidget.communityCardWidget(
       activity,
       context,
-      user!.name,
+      user!,
       CommunityPage.likedWorkoutIds.contains(activity.id),
           (isLiked) {
            setState(() {

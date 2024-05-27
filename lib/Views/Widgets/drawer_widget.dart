@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Screens/Update/gymType.dart';
+import '../Screens/Update/weight_HeightUpdate.dart';
 import '../Screens/login_screen.dart';
 
 class CustomDrawer extends StatefulWidget {
@@ -106,7 +107,25 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 10),
-                    CustomUnderlineText(
+
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to a new page when the text is tapped
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Weight_HeightUpdate(
+                          onUpdateWeightHeight: (weight,height) {
+                            setState(() {
+                              metrics.weight = weight;
+                              typeOfPlace=metrics.gymType;
+                            });
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                   child: CustomUnderlineText(
                       text: 'Weight: ${metrics.weight}',
                       fontSize: 20,
                       textColor: Colors.white,
@@ -114,7 +133,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       underlinePadding: 2.0,
                       underlineThickness: 2.0,
                     ),
-
+                ),
 
                     SizedBox(height: 10),
                     CustomUnderlineText(
