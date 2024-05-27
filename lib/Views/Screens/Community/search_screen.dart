@@ -43,6 +43,7 @@ class _searchPage extends State<SearchPage>
     super.dispose();
   }
 
+
   void fetchData() async {
     UserSingleton userSingleton = UserSingleton.getInstance();
     User_model currentUser = userSingleton.getUser();

@@ -35,7 +35,8 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage
   void initState() {
     super.initState();
     fetchReviews();
-
+    print("elianaaaaaaa");
+ print(widget.workout.intensity);
   }
 
   void fetchReviews() async {
@@ -154,12 +155,13 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage
                       color: Color(0xFF0dbab4),
                       fontFamily: 'BebasNeue'),
                 ),
+
                 RatingBar.builder(
-                  initialRating: widget.workout.intensity == 'Low'
+                  initialRating: widget.workout.intensity == 'Beginner'
                       ? 1
-                      : widget.workout.intensity == 'Medium'
+                      : widget.workout.intensity == 'Intermediate'
                       ? 2
-                      : widget.workout.intensity == 'High'
+                      : widget.workout.intensity == 'Advanced'
                       ? 3
                       : 0,
                   direction: Axis.horizontal,
