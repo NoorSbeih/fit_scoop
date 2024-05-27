@@ -5,6 +5,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../Models/workout_model.dart';
+import '../library/writeReview_screen.dart';
 import 'community_workout_details_screen.dart';
 import '../library/workout_detail_screen.dart';
 import '../../Widgets/custom_widget.dart';
@@ -161,6 +162,12 @@ class communityWorkoutWidget {
         icon: Icon(Icons.rate_review_outlined),
         color: Colors.white,
         onPressed: () async {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) =>
+          RateWorkoutPage(workout: workout,) // Replace SecondPage() with the desired page widget
+          )
+          );
         },
       ),
         ],
