@@ -75,8 +75,6 @@ class _searchPage extends State<SearchPage>
         }
       }
 
-
-
     } catch (e) {
       print('Error fetching data: $e');
       // Handle error if needed

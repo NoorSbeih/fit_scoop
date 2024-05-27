@@ -214,14 +214,17 @@
 //     );
 //   }
 // }
+import 'package:fit_scoop/Controllers/review_controller.dart';
 import 'package:fit_scoop/Models/user_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../Models/workout_model.dart';
+import '../../Models/review_model.dart';
 import '../Screens/Community/community_workout_details_screen.dart';
-import '../../../Controllers/workout_controller.dart'; // Import the controller
+import '../../../Controllers/workout_controller.dart';
+import '../Screens/Community/reviewsScreen.dart'; // Import the controller
 
 class CommunitySearchWorkoutWidget extends StatefulWidget {
   final Workout workout;
@@ -243,11 +246,26 @@ class CommunitySearchWorkoutWidget extends StatefulWidget {
 class _CommunitySearchWorkoutWidgetState extends State<CommunitySearchWorkoutWidget> {
   late bool isLiked;
 
+  List<Review> reviews=[];
+
   @override
   void initState() {
     super.initState();
     isLiked = widget.isLiked;
+    fetchReviews();
   }
+
+
+  void fetchReviews() async {
+    try {
+      ReviewController controller = ReviewController();
+      reviews = await controller.getReviewsByWorkoutId(widget.workout.id);
+    } catch (e) {
+      print('Error fetching data: $e');
+      // Handle error if needed
+    }
+  }
+
 
   void handleLikeButtonPressed() {
     WorkoutController controller = WorkoutController();
@@ -445,7 +463,40 @@ class _CommunitySearchWorkoutWidgetState extends State<CommunitySearchWorkoutWid
                   IconButton(
                     icon: Icon(Icons.rate_review_outlined),
                     color: Colors.white,
-                    onPressed: () async {},
+                    onPressed: () async {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                        ),
+                        builder: (BuildContext context) {
+                          return Container(
+                            height: MediaQuery.of(context).size.height * 0.95,
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
+                              border: Border.all(
+                                width: 2.0,
+                              ),
+                            ),
+                            child: reviewsScreen(workout: widget.workout, reviews: reviews),
+                          );
+                        },
+                      );
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    },
                   ),
                 ],
               ),

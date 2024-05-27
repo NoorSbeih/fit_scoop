@@ -91,7 +91,7 @@ class _communityPage  extends State< CommunityPage> {
     //controller: _savedWorkoutsSearchController,
     style: TextStyle(color: Colors.white),
     decoration: InputDecoration(
-    hintText: 'Search...',
+    hintText: 'Search for users,workouts...',
     hintStyle: TextStyle(color: Colors.white),
     border: OutlineInputBorder(
     borderRadius: BorderRadius.circular(10.0),
