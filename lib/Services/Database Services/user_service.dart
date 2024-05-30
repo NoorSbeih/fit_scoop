@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import '../../Models/equipment.dart';
 import '../../Models/user_model.dart' as model;
 import 'dart:typed_data';
 
@@ -11,7 +12,7 @@ import '../../Models/workout_model.dart';
 class UserService {
   final CollectionReference _usersRef = FirebaseFirestore.instance.collection('users');
   final CollectionReference _workoutsRef = FirebaseFirestore.instance.collection('workouts');
-
+  final CollectionReference _equipmentsRef = FirebaseFirestore.instance.collection('equipment');
   Future<void> addUser(model.User_model user) async {
     try {
       await _usersRef.doc(user.id).set(user.toMap());
@@ -164,6 +165,31 @@ class UserService {
     }
   }
 
+
+  Future<List<Equipment>> getSavedEquipmnets(String userId) async {
+    try {
+
+      DocumentSnapshot userDoc = await _usersRef.doc(userId).get();
+
+      if (userDoc.exists) {
+
+        List<String> savedEquipmentsIds = List<String>.from(userDoc['savedEquipmentIds']);
+        List<Equipment> equipments = [];
+        for (String equipmentID in savedEquipmentsIds) {
+          DocumentSnapshot workoutDoc = await _equipmentsRef.doc(equipmentID).get();
+          if (workoutDoc.exists) {
+            equipments.add(Equipment.fromMap(workoutDoc.id, workoutDoc.data() as Map<String, dynamic>));
+          }
+        }
+
+        return equipments;
+      } else {
+        throw Exception("User not found");
+      }
+    } catch (e) {
+      throw Exception('Error fetching saved workouts: $e');
+    }
+  }
 
 }
 
