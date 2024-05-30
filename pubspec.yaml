@@ -98,6 +98,10 @@ flutter:
         - images/dumbbells.png
         - images/decline_bench.png
         - images/back_extension.png
+        - images/incline_bench.png
+        - images/flat_bench.png
+        - images/vertical_bench.png
+        - images/glutes.png
         - images/kettlebells.png
         - images/normal.JPG
         - images/underweight.JPG
