@@ -178,7 +178,7 @@ class UserService {
         for (String equipmentID in savedEquipmentsIds) {
           DocumentSnapshot workoutDoc = await _equipmentsRef.doc(equipmentID).get();
           if (workoutDoc.exists) {
-            equipments.add(Equipment.fromMap(workoutDoc.id, workoutDoc.data() as Map<String, dynamic>));
+            equipments.add(Equipment.fromMap( workoutDoc.data() as Map<String, dynamic>));
           }
         }
 
@@ -187,7 +187,7 @@ class UserService {
         throw Exception("User not found");
       }
     } catch (e) {
-      throw Exception('Error fetching saved workouts: $e');
+      throw Exception('Error fetching saved equipments: $e');
     }
   }
 
