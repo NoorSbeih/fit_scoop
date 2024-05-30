@@ -166,7 +166,7 @@ class UserService {
   }
 
 
-  Future<List<Equipment>> getSavedEquipmnets(String userId) async {
+  Future<List<Equipment>> getSavedEquipments(String userId) async {
     try {
 
       DocumentSnapshot userDoc = await _usersRef.doc(userId).get();
