@@ -90,6 +90,15 @@ flutter:
     # To add assets to your application, add an assets section, like this:
   assets:
         - images/google.jpg
+        - images/trapBar.png
+        - images/ez-bar.png
+        - images/preacher_curl_bench.png
+        - images/medicine_ball
+        - images/barbells.png
+        - images/dumbbells.png
+        - images/decline_bench.png
+        - images/back_extension.png
+        - images/kettlebells.png
         - images/normal.JPG
         - images/underweight.JPG
         - images/overweight.JPG
