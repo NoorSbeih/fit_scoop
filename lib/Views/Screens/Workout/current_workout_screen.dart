@@ -1,5 +1,6 @@
 import 'package:fit_scoop/Controllers/body_metrics_controller.dart';
 import 'package:fit_scoop/Models/body_metrics_model.dart';
+import 'package:fit_scoop/Views/Screens/Equipments/equipment_sceen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_scoop/Models/user_model.dart';
@@ -116,7 +117,11 @@ class _WorkoutPageState extends State<WorkoutPagee> {
           IconButton(
             icon: const Icon(Icons.settings, color: Color(0xFF0dbab4),),
             onPressed: () {
-              // Handle menu icon pressed
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>
+                    EquipmentPage()), // Replace SecondPage() with the desired page widget
+              );
             },
           ),
         ],
