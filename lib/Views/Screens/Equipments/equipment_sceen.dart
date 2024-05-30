@@ -31,8 +31,8 @@ class _EquipmentScreen extends State<EquipmentPage>
 
   final List<String> equipmentTypes = ['Free Weights', 'Benches, Bars, and Racks', 'Machines','Bands and more'];
   final List<Equipment> allEquipment = [
-    Equipment(name: 'Common Mini ', type: 'Free Weights', imageUrl: 'images/google.jpg', id: '1'),
-    Equipment(name: 'Equipment2', type: 'Benches, Bars, and Racks', imageUrl: 'images/google.jpg', id: '2'),
+    Equipment(name: 'Common Mini ', type1: 'Free Weights',type2:'fjjf', imageUrl: 'images/barbells.png', id: '1'),
+    Equipment(name: 'Equipment2', type1: 'Benches, Bars, and Racks',type2:'fjfj', imageUrl: 'images/google.jpg', id: '2'),
     // Add more equipment here
   ];
 
@@ -92,7 +92,7 @@ class _EquipmentScreen extends State<EquipmentPage>
         body: TabBarView(
           children: equipmentTypes.map((type) {
             return EquipmentList(
-              equipment: allEquipment.where((e) => e.type == type).toList(),
+              equipment: allEquipment.where((e) => e.type1 == type).toList(),
               onSelectionChanged: (selectedIds) {
                 setState(() {
                   selectedEquipmentIdsByTab[equipmentTypes.indexOf(type)] = selectedIds;
