@@ -25,7 +25,7 @@ class _EquipmentScreenState extends State<EquipmentPage>
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
-    //fetchEquipments();
+   fetchEquipments();
     isSelectedByTab =
         List.generate(4, (index) => List.filled(allEquipment.length, false));
     selectedEquipmentIdsByTab = {

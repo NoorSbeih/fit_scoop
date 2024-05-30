@@ -15,7 +15,7 @@ class EquipmentService {
     try {
       QuerySnapshot querySnapshot = await _equipmentsRef.get();
       List<Equipment> equipments = querySnapshot.docs.map((doc) {
-        return Equipment.fromMap(doc.id,doc.data() as Map<String, dynamic>);
+        return Equipment.fromMap(doc.data() as Map<String, dynamic>);
       }).toList();
       return equipments;
     } catch (e) {
