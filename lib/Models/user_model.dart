@@ -10,6 +10,7 @@ class User_model {
    String? bodyMetrics;
    List<String> followedUserIds; // References to User IDs
    List<String> savedWorkoutIds; // References to Workout IDs
+   List<String> savedEquipmentIds;
     String? bio;
    String? imageLink;
    String? unitOfMeasure;
@@ -22,6 +23,7 @@ class User_model {
     this.bodyMetrics,
     this.followedUserIds = const [],
     this.savedWorkoutIds = const [],
+    this.savedEquipmentIds=const[],
     this.bio,
     this.imageLink,
     this.unitOfMeasure,
@@ -36,6 +38,7 @@ class User_model {
       'bodyMetrics': bodyMetrics, // Assuming BodyMetrics has a toMap() method
       'followedUserIds': followedUserIds,
       'savedWorkoutIds': savedWorkoutIds,
+      'savedEquipmentIds':savedEquipmentIds,
       'bio': bio,
       'imageLink':imageLink,
       'unitOfMeasure':unitOfMeasure,
@@ -50,6 +53,7 @@ class User_model {
       bodyMetrics: map['bodyMetrics'],
       followedUserIds: List<String>.from(map['followedUserIds']),
       savedWorkoutIds: List<String>.from(map['savedWorkoutIds']),
+      savedEquipmentIds: List<String>.from(map['savedEquipmentIds']),
       bio: map['bio'],
       imageLink:map['imageLink'],
         unitOfMeasure:map['unitOfMeasure']

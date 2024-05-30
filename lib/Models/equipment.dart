@@ -25,9 +25,9 @@ class Equipment {
       'imageUrl':imageUrl
     };
   }
-  factory Equipment.fromMap(Map<String, dynamic> map) {
+  factory Equipment.fromMap(String id, Map<String, dynamic> map) {
     return Equipment(
-        id: map['id'],
+        id: id,
         name: map['name'],
         type1: map['type1'],
         type2: map['type2'],
