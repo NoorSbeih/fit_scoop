@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../Models/equipment.dart';
-import '../../../Models/user_singleton.dart';
 
 class EquipmentList extends StatefulWidget {
   final List<Equipment> equipment;
@@ -14,23 +13,32 @@ class EquipmentList extends StatefulWidget {
 }
 
 class _EquipmentListState extends State<EquipmentList> {
-  late List<int> selectedIdxs;
   late List<bool> isSelected;
 
   @override
   void initState() {
     super.initState();
-    selectedIdxs = List.filled(widget.equipment.length, -1);
     isSelected = List.generate(
       widget.equipment.length,
           (index) => widget.selectedEquipmentIdsByTab.contains(widget.equipment[index].id),
     );
   }
 
+  @override
+  void didUpdateWidget(EquipmentList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.selectedEquipmentIdsByTab != widget.selectedEquipmentIdsByTab) {
+      setState(() {
+        isSelected = List.generate(
+          widget.equipment.length,
+              (index) => widget.selectedEquipmentIdsByTab.contains(widget.equipment[index].id),
+        );
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Group equipment by their type2 attribute
     Map<String, List<Equipment>> equipmentByType2 = {};
     for (var equipment in widget.equipment) {
       if (!equipmentByType2.containsKey(equipment.type2)) {
@@ -66,18 +74,18 @@ class _EquipmentListState extends State<EquipmentList> {
               itemCount: equipmentByType2[type2]!.length,
               itemBuilder: (context, index) {
                 final item = equipmentByType2[type2]![index];
+                final equipmentIndex = widget.equipment.indexOf(item);
                 return GestureDetector(
                   onTap: () {
                     setState(() {
-                      selectedIdxs[index] = selectedIdxs[index] == -1 ? index : -1;
+                      isSelected[equipmentIndex] = !isSelected[equipmentIndex];
                       widget.onSelectionChanged(getSelectedIds());
-                      isSelected[widget.equipment.indexOf(item)] = !isSelected[widget.equipment.indexOf(item)]; // Toggle isSelected
                     });
                   },
                   child: Container(
                     margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                     decoration: BoxDecoration(
-                      color: isSelected[widget.equipment.indexOf(item)] ? Colors.white : Colors.blueGrey,
+                      color: isSelected[equipmentIndex] ? Colors.white : Colors.blueGrey,
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: const [
                         BoxShadow(
@@ -91,24 +99,23 @@ class _EquipmentListState extends State<EquipmentList> {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0), // Adjust padding if needed
+                            padding: EdgeInsets.only(left: 8.0, right: 8), // Adjust padding if needed
                             child: Text(
                               item.name,
                               style: TextStyle(
                                 fontSize: 15,
-                                color: isSelected[widget.equipment.indexOf(item)] ? Colors.blueGrey : Colors.white,
+                                color: isSelected[equipmentIndex] ? Colors.blueGrey : Colors.white,
                               ),
                             ),
                           ),
                         ),
-                        SizedBox(width: 10), // Add some spacing between text and image
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10), // Adjust border radius if needed
+                        // Add some spacing between text and image
+                        ClipRRect(// Adjust border radius if needed
                           child: Image.asset(
                             item.imageUrl,
-                            width: 70, // Set a fixed width for the image
-                            height: 90, // Set a fixed height for the image
-                            fit: BoxFit.cover, // Make sure the image fits within the dimensions
+                            width: 80, // Set a fixed width for the image
+                            height: 80, // Set a fixed height for the image
+                            fit: BoxFit.fill, // Make sure the image fits within the dimensions
                           ),
                         ),
                       ],
@@ -125,8 +132,8 @@ class _EquipmentListState extends State<EquipmentList> {
 
   List<String> getSelectedIds() {
     List<String> selectedIds = [];
-    for (int i = 0; i < selectedIdxs.length; i++) {
-      if (selectedIdxs[i] == i) {
+    for (int i = 0; i < isSelected.length; i++) {
+      if (isSelected[i]) {
         selectedIds.add(widget.equipment[i].id);
       }
     }
