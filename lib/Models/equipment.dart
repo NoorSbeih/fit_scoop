@@ -31,13 +31,6 @@ class Equipment {
     final type1 = map['type1'];
     final type2 = map['type2'];
     final imageUrl = map['imageUrl'];
-
-    if (id == null) print('Error: id is null');
-    if (name == null) print('Error: name is null');
-    if (type1 == null) print('Error: type1 is null');
-    if (type2 == null) print('Error: type2 is null');
-    if (imageUrl == null) print('Error: imageUrl is null');
-
     return Equipment(
       id: id ?? '',
       name: name ?? '',
