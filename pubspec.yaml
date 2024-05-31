@@ -95,9 +95,18 @@ flutter:
         - images/preacher_curl_bench.png
         - images/medicine_ball.png
         - images/barbells.png
+        - images/fly_machine.png
+        - images/smith_machine.png
+        - images/crunch_machine.png
         - images/squat_rack.png
         - images/pull_up.png
         - images/parallel.png
+        - images/dip_Bar.png
+        - images/row_cable.png
+        - images/lat_pulldown.png
+        - images/crossover_cable.png
+        - images/rope_cable.png
+        - images/freemotion_machine.png
         - images/dumbbells.png
         - images/decline_bench.png
         - images/back_extension.png
