@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_scoop/Models/equipment.dart';
 import 'package:fit_scoop/Models/workout_model.dart';
 import 'package:flutter/material.dart';
 
@@ -107,6 +108,41 @@ class UserController {
     }
   }
 
+
+  Future<List<String>> getSavedEquipments(String userId) async { //from userservices
+    try {
+      // Get saved workout IDs from user document
+      List<String> savedEquipments = await _userService.getSavedEquipments(userId);
+      return savedEquipments;
+    } catch (e) {
+      print('Error getting saved workouts: $e');
+      throw e;
+    }
+  }
+
+
+  Future<void> saveEquipments(String userId, List<String> equipmentsID) async {
+    try {
+      // Save workout to user's savedWorkoutIds
+      await _userService.saveEquipments(userId, equipmentsID);
+    } catch (e) {
+      print('Error saving workout: $e');
+      throw e;
+    }
+  }
+
+
+
+
+  Future<void> unsaveEquipments(String userId, List<String> equipmentsID) async {
+    try {
+      // Save workout to user's savedWorkoutIds
+      await _userService.removeEquipments(userId, equipmentsID);
+    } catch (e) {
+      print('Error saving workout: $e');
+      throw e;
+    }
+  }
 
 
 }

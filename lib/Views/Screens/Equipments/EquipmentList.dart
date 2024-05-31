@@ -85,7 +85,7 @@ class _EquipmentListState extends State<EquipmentList> {
                   child: Container(
                     margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                     decoration: BoxDecoration(
-                      color: isSelected[equipmentIndex] ? Colors.white : Colors.blueGrey,
+                      color: isSelected[equipmentIndex] ? Colors.white : Color(0xFF0dbab4),
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: const [
                         BoxShadow(

@@ -166,23 +166,13 @@ class UserService {
   }
 
 
-  Future<List<Equipment>> getSavedEquipments(String userId) async {
+  Future<List<String>> getSavedEquipments(String userId) async {
     try {
-
       DocumentSnapshot userDoc = await _usersRef.doc(userId).get();
-
       if (userDoc.exists) {
-
         List<String> savedEquipmentsIds = List<String>.from(userDoc['savedEquipmentIds']);
-        List<Equipment> equipments = [];
-        for (String equipmentID in savedEquipmentsIds) {
-          DocumentSnapshot workoutDoc = await _equipmentsRef.doc(equipmentID).get();
-          if (workoutDoc.exists) {
-            equipments.add(Equipment.fromMap( workoutDoc.data() as Map<String, dynamic>));
-          }
-        }
 
-        return equipments;
+        return savedEquipmentsIds;
       } else {
         throw Exception("User not found");
       }
@@ -190,6 +180,28 @@ class UserService {
       throw Exception('Error fetching saved equipments: $e');
     }
   }
+  Future<void> saveEquipments(String userId, List<String> equipmentIds) async {
+    try {
+      await _usersRef.doc(userId).update({
+        'savedEquipmentIds': FieldValue.arrayUnion(equipmentIds),
+      });
+    } catch (e) {
+      print('Error saving exercises: $e');
+      throw e;
+    }
+  }
+  Future<void> removeEquipments(String userId, List<String> equipmentIdsToRemove) async {
+    try {
+      await _usersRef.doc(userId).update({
+        'savedEquipmentIds': FieldValue.arrayRemove(equipmentIdsToRemove),
+      });
+      print('Removing equipment IDs: $equipmentIdsToRemove');
+    } catch (e) {
+      print('Error removing equipment: $e');
+      throw e;
+    }
+  }
+
 
 }
 

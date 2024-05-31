@@ -1,3 +1,4 @@
+import 'package:fit_scoop/Controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import '../../../Controllers/equipment_controller.dart';
 import '../../../Models/equipment.dart';
@@ -20,6 +21,11 @@ class _EquipmentPageState extends State<EquipmentPage>
   late User_model user;
   late List<Equipment> allEquipment = [];
   bool isLoading = true;
+  UserController userController = UserController();
+  UserSingleton userSingleton = UserSingleton.getInstance();
+
+
+  late List<String> selectedEquipmentsForUser;
 
   @override
   void initState() {
@@ -29,7 +35,39 @@ class _EquipmentPageState extends State<EquipmentPage>
     selectedEquipmentIdsByTab = {
       for (var index in List.generate(equipmentTypes.length, (index) => index)) index: []
     };
+
     fetchEquipments();
+  }
+
+
+  // Future<void> fetchEquipmentsForUser() async {
+  //     UserSingleton userSingleton = UserSingleton.getInstance();
+  //     User_model user = userSingleton.getUser();
+  //     try {
+  //       selectedEquipmentsForUser= await userController.getSavedEquipments(user.id);
+  //       print(selectedEquipmentsForUser);
+  //     } catch (e) {
+  //       print('Error getting equipments: $e');
+  //     }
+  //
+  //   }
+
+
+  Future<void> fetchEquipmentsForUser() async {
+    UserSingleton userSingleton = UserSingleton.getInstance();
+    User_model user = userSingleton.getUser();
+    try {
+      selectedEquipmentsForUser = await userController.getSavedEquipments(user.id);
+      print(selectedEquipmentsForUser);
+
+       setState(() {
+         for (int i = 0; i < equipmentTypes.length; i++) {
+           selectedEquipmentIdsByTab[i] = selectedEquipmentsForUser.where((id) => allEquipment.firstWhere((equipment) => equipment.id == id).type1 == equipmentTypes[i]).toList();
+         }
+       });
+    } catch (e) {
+      print('Error getting equipments: $e');
+    }
   }
 
   Future<void> fetchEquipments() async {
@@ -45,6 +83,7 @@ class _EquipmentPageState extends State<EquipmentPage>
           currentTabType = equipmentTypes[_tabController.index];
         });
       });
+      fetchEquipmentsForUser();
     } catch (e) {
       print('Error fetching data: $e');
       setState(() {
@@ -65,6 +104,25 @@ class _EquipmentPageState extends State<EquipmentPage>
     _tabController.dispose();
     super.dispose();
   }
+  void saveSelectedEquipment() {
+    UserSingleton userSingleton = UserSingleton.getInstance();
+    User_model user = userSingleton.getUser();
+    List<String> allSelectedEquipmentIds = selectedEquipmentIdsByTab.values.expand((ids) => ids).toList();
+    print('Selected Equipment IDs: $allSelectedEquipmentIds');
+    try {
+      // Remove deselected equipment from the database
+      List<String> previouslySelectedEquipmentIds = selectedEquipmentsForUser;
+      List<String> deselectedEquipmentIds = previouslySelectedEquipmentIds.where((id) => !allSelectedEquipmentIds.contains(id)).toList();
+      userController.unsaveEquipments(user.id, deselectedEquipmentIds);
+
+      // Save selected equipment to the database
+      userController.saveEquipments(user.id, allSelectedEquipmentIds);
+      print('Equipments saved successfully');
+    } catch (e) {
+      print('Error saving equipments: $e');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +140,20 @@ class _EquipmentPageState extends State<EquipmentPage>
         iconTheme: const IconThemeData(
           color: Color(0xFF0dbab4),
         ),
+
+        actions: [
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+            child: ElevatedButton(
+              onPressed: saveSelectedEquipment,
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white, backgroundColor: Color(0xFF0dbab4),
+              ),
+              child: Text('Save'),
+            ),
+          ),
+        ],
+
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight),
           child: Container(
