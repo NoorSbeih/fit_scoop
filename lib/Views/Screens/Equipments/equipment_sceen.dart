@@ -7,7 +7,9 @@ import '../../../Models/user_singleton.dart';
 import 'EquipmentList.dart';
 
 class EquipmentPage extends StatefulWidget {
-  const EquipmentPage({Key? key}) : super(key: key);
+  final Function(String) onUpdateEquipments;
+  EquipmentPage({Key? key, required this.onUpdateEquipments}) : super(key: key);
+ // const EquipmentPage({Key? key}) : super(key: key);
 
   @override
   State<EquipmentPage> createState() => _EquipmentPageState();
@@ -108,15 +110,16 @@ class _EquipmentPageState extends State<EquipmentPage>
     UserSingleton userSingleton = UserSingleton.getInstance();
     User_model user = userSingleton.getUser();
     List<String> allSelectedEquipmentIds = selectedEquipmentIdsByTab.values.expand((ids) => ids).toList();
+    user.savedEquipmentIds=allSelectedEquipmentIds;
     print('Selected Equipment IDs: $allSelectedEquipmentIds');
     try {
       // Remove deselected equipment from the database
       List<String> previouslySelectedEquipmentIds = selectedEquipmentsForUser;
       List<String> deselectedEquipmentIds = previouslySelectedEquipmentIds.where((id) => !allSelectedEquipmentIds.contains(id)).toList();
       userController.unsaveEquipments(user.id, deselectedEquipmentIds);
-
-      // Save selected equipment to the database
       userController.saveEquipments(user.id, allSelectedEquipmentIds);
+
+      widget.onUpdateEquipments(allSelectedEquipmentIds.length.toString());
       print('Equipments saved successfully');
     } catch (e) {
       print('Error saving equipments: $e');

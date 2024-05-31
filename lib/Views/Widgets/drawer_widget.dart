@@ -1,5 +1,8 @@
 import 'package:fit_scoop/Models/bodyMetricsSingleton.dart';
 import 'package:fit_scoop/Models/body_metrics_model.dart';
+import 'package:fit_scoop/Models/user_model.dart';
+import 'package:fit_scoop/Models/user_singleton.dart';
+import 'package:fit_scoop/Views/Screens/Equipments/equipment_sceen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,7 +16,8 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
-  String typeOfPlace = ""; // Define typeOfPlace here
+  String typeOfPlace = "";
+  String equipments="";
 
   @override
   void initState() {
@@ -25,6 +29,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
         BodyMetricsSingleton singleton = BodyMetricsSingleton.getInstance();
         BodyMetrics metrics = singleton.getMetrices();
         typeOfPlace=metrics.gymType;
+
+        UserSingleton usersingleton = UserSingleton.getInstance();
+        User_model user = usersingleton.getUser();
+
+        equipments=user.savedEquipmentIds.length.toString();
 
         return Drawer(
           backgroundColor: Color(0xFF2C2A2A),
@@ -53,14 +62,32 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 10),
-                    const CustomUnderlineText(
-                      text: 'AVAILABLE EQUIPMENT: 5 SELECTED',
+
+                    GestureDetector(
+                      onTap: () {
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>  EquipmentPage(
+                              onUpdateEquipments: (newType) {
+                                setState(() {
+                                  equipments=newType;
+                                 });
+                                },
+                            ),
+                          ),
+                        );
+                      },
+                      child: CustomUnderlineText(
+                      text: 'AVAILABLE EQUIPMENT: ${equipments} SELECTED',
+
                       fontSize: 20,
                       textColor: Colors.white,
                       underlineColor: Colors.grey,
                       underlinePadding: 2.0,
                       underlineThickness: 2.0,
+                    ),
                     ),
 
 
@@ -76,6 +103,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           setState(() {
                             metrics.gymType = newType;
                             typeOfPlace=metrics.gymType;
+
                           });
                         },
                         ),

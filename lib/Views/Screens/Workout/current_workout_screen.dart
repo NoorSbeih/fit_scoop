@@ -120,7 +120,10 @@ class _WorkoutPageState extends State<WorkoutPagee> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) =>
-                    EquipmentPage()), // Replace SecondPage() with the desired page widget
+                    EquipmentPage(onUpdateEquipments: (newType) {
+                    setState(() {
+                                         });
+                },)), // Replace SecondPage() with the desired page widget
               );
             },
           ),

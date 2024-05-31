@@ -85,12 +85,12 @@ class _EquipmentListState extends State<EquipmentList> {
                   child: Container(
                     margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                     decoration: BoxDecoration(
-                      color: isSelected[equipmentIndex] ? Colors.white : Color(0xFF0dbab4),
+                      color: isSelected[equipmentIndex] ? Color(0xFF0dbab4) : Color(0xFF2C2A2A),
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: const [
                         BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 5,
+                          color: Color(0x98948F8F),
+                          blurRadius: 1,
                           offset: Offset(0, 2),
                         ),
                       ],
@@ -104,7 +104,7 @@ class _EquipmentListState extends State<EquipmentList> {
                               item.name,
                               style: TextStyle(
                                 fontSize: 15,
-                                color: isSelected[equipmentIndex] ? Colors.blueGrey : Colors.white,
+                                color: isSelected[equipmentIndex] ? Colors.white : Colors.white,
                               ),
                             ),
                           ),
