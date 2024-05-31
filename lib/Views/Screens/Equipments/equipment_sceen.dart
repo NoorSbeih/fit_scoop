@@ -1,5 +1,5 @@
-import 'package:fit_scoop/Controllers/equipment_controller.dart';
 import 'package:flutter/material.dart';
+import '../../../Controllers/equipment_controller.dart';
 import '../../../Models/equipment.dart';
 import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
@@ -9,15 +9,14 @@ class EquipmentPage extends StatefulWidget {
   const EquipmentPage({Key? key}) : super(key: key);
 
   @override
-  State<EquipmentPage> createState() => _EquipmentScreenState();
+  State<EquipmentPage> createState() => _EquipmentPageState();
 }
 
-class _EquipmentScreenState extends State<EquipmentPage>
+class _EquipmentPageState extends State<EquipmentPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   late String currentTabType;
-  late List<List<bool>> isSelectedByTab;
-  Map<int, List<String>> selectedEquipmentIdsByTab = {};
+  late Map<int, List<String>> selectedEquipmentIdsByTab;
   late User_model user;
   late List<Equipment> allEquipment = [];
   bool isLoading = true;
@@ -27,6 +26,9 @@ class _EquipmentScreenState extends State<EquipmentPage>
     super.initState();
     _tabController = TabController(length: equipmentTypes.length, vsync: this);
     currentTabType = 'Free Weights'; // Default tab type
+    selectedEquipmentIdsByTab = {
+      for (var index in List.generate(equipmentTypes.length, (index) => index)) index: []
+    };
     fetchEquipments();
   }
 
@@ -36,10 +38,6 @@ class _EquipmentScreenState extends State<EquipmentPage>
       List<Equipment> equipments = await controller.getAllEquipments();
       setState(() {
         allEquipment = equipments;
-        isSelectedByTab = List.generate(4, (index) => List.filled(allEquipment.length, false));
-        selectedEquipmentIdsByTab = {
-          for (var index in List.generate(equipmentTypes.length, (index) => index)) index: []
-        };
         isLoading = false; // Data fetching complete
       });
       _tabController.addListener(() {
@@ -52,16 +50,6 @@ class _EquipmentScreenState extends State<EquipmentPage>
       setState(() {
         isLoading = false; // Data fetching complete, even on error
       });
-    }
-  }
-
-  void fetchData() async {
-    try {
-      UserSingleton userSingleton = UserSingleton.getInstance();
-      user = userSingleton.getUser();
-    } catch (e) {
-      print('Error fetching data: $e');
-      // Handle error if needed
     }
   }
 
