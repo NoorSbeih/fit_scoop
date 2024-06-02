@@ -205,7 +205,7 @@ class _LoginPageState extends State<LoginPage> {
                                context,
                                MaterialPageRoute(builder: (context) => HomePage()), // Replace SecondPage() with the desired page widget
                              );
-                           }
+                          }
                         } else {
                           print('User authentication failed.');
                           setState(() {

@@ -49,7 +49,7 @@ class BodyMetricsController {
       print("gjgjgj");
       return await _bodyMetricsService.getBodyMetrics(bodyMetrics);
     } catch (e) {
-      print('Error getting workout: $e');
+      print('Error getting : $e');
       throw e;
     }
   }

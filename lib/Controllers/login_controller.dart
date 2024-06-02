@@ -44,9 +44,7 @@ class LoginController {
         Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
         User_model user = User_model.fromMap(data!);
         UserSingleton.getInstance().setUser(user);
-
         final String? bodyMetrics = data?['bodyMetrics'];
-
         BodyMetricsController controller = BodyMetricsController();
         print(UserSingleton.getInstance().getUser().id);
         BodyMetrics? bodyMetricss = await controller.fetchBodyMetrics(UserSingleton.getInstance().getUser().bodyMetrics);

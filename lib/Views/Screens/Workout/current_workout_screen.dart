@@ -65,14 +65,14 @@ class _WorkoutPageState extends State<WorkoutPagee> {
       if (bodyMetricId != null) {
         BodyMetricsController controller = BodyMetricsController();
         BodyMetrics? metrics = await controller.fetchBodyMetrics(bodyMetricId!);
-
+        print("elianananana");
         if (metrics != null) {
           int currentDayIndex = metrics.CurrentDay;
           currentWorkout =
           await Calculate(metrics.workoutSchedule, currentDayIndex);
           setState(() {
             WorkoutPagee.exercises = currentWorkout!.exercises;
-            WorkoutPagee.copyExercisesToLog();
+           WorkoutPagee.copyExercisesToLog();
             print("cureennnnn");
             print(metrics.CurrentDay);
 
@@ -130,26 +130,31 @@ class _WorkoutPageState extends State<WorkoutPagee> {
         ],
       ),
       drawer: CustomDrawer(),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: currentWorkout != null
-                ? Align(
-              alignment: Alignment.centerLeft,
-              child: workout_widget.customcardWidget(
-                currentWorkout!, isSaved(currentWorkout!.id), context,
-                      (Workout workout, bool liked) {}
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: currentWorkout != null
+                  ? Align(
+                alignment: Alignment.centerLeft,
+                child: workout_widget.customcardWidget(
+                  currentWorkout!, isSaved(currentWorkout!.id), context,
+                      (Workout workout, bool liked) {},
+                ),
+              )
+                  : const Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'No Workout Found for This Day',
+                  style: TextStyle(fontSize: 18,color:Colors.white),
+                ),
               ),
-            )
-                : const Align(
-              alignment: Alignment.center,
-              child: CircularProgressIndicator(),
             ),
-          ),
-          const SizedBox(height: 10.0),
+
+
+        const SizedBox(height: 10.0),
           const Padding(
             padding: EdgeInsets.only(left: 20, right: 20),
             child: Divider(
