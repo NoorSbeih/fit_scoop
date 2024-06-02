@@ -306,6 +306,61 @@ class _profileState extends State<ProfilePage> {
                 ),
               ),
             ),
+
+
+
+            SizedBox(height: 20.0),
+            InkWell(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                  ),
+                  builder: (BuildContext context) {
+                    return Container(
+                      height: MediaQuery.of(context).size.height * 0.95,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
+                        border: Border.all(
+                          width: 2.0,
+                        ),
+                      ),
+                      child: reviewsProfile(user: user, reviews: reviews),
+                    );
+                  },
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                padding: EdgeInsets.all(10.0),
+                child: Row(
+                  children: [
+                    const Text(
+                      'FOLLOWERS',
+                      style: TextStyle(
+                        fontSize: 30.0,
+                        fontFamily: 'BebasNeue',
+                        color: Color(0xFF0dbab4),
+                      ),
+                    ),
+                    Expanded(child: Container()),
+                    Text(
+                      '${user.followedUserIds.length}',
+                      style: const TextStyle(
+                        fontSize: 30.0,
+                        fontFamily: 'BebasNeue',
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

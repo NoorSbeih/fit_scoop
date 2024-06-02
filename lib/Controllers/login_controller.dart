@@ -41,7 +41,6 @@ class LoginController {
       CollectionReference users = FirebaseFirestore.instance.collection('users');
       DocumentSnapshot snapshot = await users.doc(user_id).get();
       if (snapshot.exists) {
-        print("fnff");
         Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
         User_model user = User_model.fromMap(data!);
         UserSingleton.getInstance().setUser(user);

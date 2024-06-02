@@ -198,7 +198,7 @@ class _LoginPageState extends State<LoginPage> {
                            //   );
                            // }
                           if(await loginController.getUserBodyMetric()==null){
-
+                            print("empty");
                           }
                            else{
                              Navigator.push(

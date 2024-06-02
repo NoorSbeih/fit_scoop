@@ -37,7 +37,7 @@ class _Weight_HeightUpdate extends State<Weight_HeightUpdate> {
     BodyMetrics metrics = singleton.getMetrices();
      selectedHeight.text=metrics.height.toString();
      selectedWeight.text=metrics.weight.toString();
-    _selectedValue=metrics.unitOfMeasure;
+    //_selectedValue=metrics.unitOfMeasure;
 
   }
 

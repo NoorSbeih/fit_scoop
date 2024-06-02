@@ -13,7 +13,6 @@ class User_model {
    List<String> savedEquipmentIds;
     String? bio;
    String? imageLink;
-   String? unitOfMeasure;
 
   User_model({
     required this.id,
@@ -26,7 +25,6 @@ class User_model {
     this.savedEquipmentIds=const[],
     this.bio,
     this.imageLink,
-    this.unitOfMeasure,
   });
 
   Map<String, dynamic> toMap() {
@@ -41,7 +39,6 @@ class User_model {
       'savedEquipmentIds':savedEquipmentIds,
       'bio': bio,
       'imageLink':imageLink,
-      'unitOfMeasure':unitOfMeasure,
     };
   }
   factory User_model.fromMap(Map<String, dynamic> map) {
@@ -56,7 +53,6 @@ class User_model {
       savedEquipmentIds: List<String>.from(map['savedEquipmentIds']),
       bio: map['bio'],
       imageLink:map['imageLink'],
-        unitOfMeasure:map['unitOfMeasure']
     );
   }
 

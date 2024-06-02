@@ -1,5 +1,6 @@
 
 
+import 'package:fit_scoop/Controllers/login_controller.dart';
 import 'package:fit_scoop/Views/Screens/main_page_screen.dart';
 import 'package:fit_scoop/Views/Screens/register_screen.dart';
 import 'package:fit_scoop/Views/Screens/Registration%20pages/select_day_screen.dart';
@@ -40,13 +41,14 @@ class _CustomPageViewState extends State<CustomPageView> {
          currentPageIndex = controller.page!.round();
        });
      });
-     _loadPreferences();
+    _loadPreferences();
    }
   void _loadPreferences() async{
     SharedPreferences sharedPreferences =await SharedPreferences.getInstance();
     String? unitOfMeasure=sharedPreferences.getString('unitOfMeasure');
     setState(() {
       unit=unitOfMeasure!;
+      print('unitttttt:::{unit}');
     });
   }
   bool isDataFilled_Page1() {
@@ -182,12 +184,18 @@ class _CustomPageViewState extends State<CustomPageView> {
     model.BodyMetrics bodyMetrics= model.BodyMetrics(userId:id,height: RegisterPage2.heightresult,weight: RegisterPage2.weightresult,birthDate: dateString ,
     bodyFat: RegisterPage3.currentValue,gender: RegisterPage1.selectedgender,fitnessGoal:RegisterPage4.selectedGoal,gymType: RegisterPage5.typeOfPlace, CurrentDay:0,workoutSchedule: workoutSchedule,unitOfMeasure: unit);
     _bodyMetricController.addBodyMetrics(bodyMetrics);
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => HomePage()), // Replace SecondPage() with the desired page widget
-    );
-  }
 
+
+   RegisterController controller=RegisterController();
+    controller.getUserBodyMetric(id).then((_) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    }).catchError((error) {
+      print('Error navigating to HomePage: $error');
+    });
+  }
 
   void showError(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(

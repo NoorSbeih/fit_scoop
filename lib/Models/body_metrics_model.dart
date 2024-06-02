@@ -46,6 +46,7 @@ class BodyMetrics {
       'gymType': gymType,
       'CurrentDay':CurrentDay,
       'workoutSchedule': workoutSchedule,
+      'unitOfMeasure':unitOfMeasure
     };
   }
 
@@ -68,7 +69,7 @@ class BodyMetrics {
       gymType: map['gymType'],
       CurrentDay:map['CurrentDay'],
       workoutSchedule: map['workoutSchedule'].cast<String>(),
-      unitOfMeasure:map['unitOfMeasure'],
+     unitOfMeasure:map['unitOfMeasure'],
     );
   }
 }
