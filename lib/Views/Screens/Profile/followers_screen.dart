@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import '../../../Controllers/workout_controller.dart';
 import '../../../Models/review_model.dart';
 import '../../../Models/user_model.dart';
+import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_model.dart';
+import '../../Widgets/follower_widget.dart';
 import '../../Widgets/reviews_widget.dart';
-
 
 class FollowersPage extends StatefulWidget {
   final User_model user;
@@ -20,8 +21,7 @@ class FollowersPage extends StatefulWidget {
 
 class _FollowersScreen extends State<FollowersPage> {
   bool isLoading = false;
-
-  late List<User_model> followers;
+  List<User_model> followers = [];
 
   @override
   void initState() {
@@ -29,22 +29,47 @@ class _FollowersScreen extends State<FollowersPage> {
     fetchFollowers();
   }
 
-  Future<void> fetchFollowers() async {
-    try {
-      List<String> followersIds=widget.user.followedUserIds;
-      for(int i=0;i<followersIds.length;i++){
-        UserController controller=UserController();
-        User_model? followedUser= await controller.getUser(followersIds.toString());
-        followers.add(followedUser!);
-      }
-    } catch (e) {
-      print('Error getting equipments: $e');
-    }
+  void removeFollower(User_model follower) async {
+    UserController controller = UserController();
+
+    await controller.unfollowUser( widget.user.id,follower.id);
+
+    UserSingleton userSingleton = UserSingleton.getInstance();
+    User_model user = userSingleton.getUser();
+    user.followedUserIds.remove(follower.id);
+    setState(() {
+      followers.remove(follower);
+    });
   }
 
 
+    // Add logic to update the database or API if needed
 
-
+  Future<void> fetchFollowers() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      List<String> followersIds = widget.user.followedUserIds;
+      List<User_model> fetchedFollowers = [];
+      UserController controller = UserController();
+      for (String id in followersIds) {
+        User_model? followedUser = await controller.getUser(id);
+        if (followedUser != null) {
+          fetchedFollowers.add(followedUser);
+        }
+      }
+      setState(() {
+        followers = fetchedFollowers;
+      });
+    } catch (e) {
+      print('Error getting followers: $e');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +90,7 @@ class _FollowersScreen extends State<FollowersPage> {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  Text("${widget.user?.name}'s Reviews").data ?? "",
+                  Text("${widget.user.name}'s Followers").data ?? "",
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -83,9 +108,8 @@ class _FollowersScreen extends State<FollowersPage> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(left: 20.0, top: 30),
-            // Adjust the padding as needed
             child: Text(
-              '${widget.user.followedUserIds.length} Followers',
+              '${followers.length} Followers',
               style: const TextStyle(
                 fontSize: 20,
                 color: Color(0xFF0dbab4),
@@ -101,21 +125,19 @@ class _FollowersScreen extends State<FollowersPage> {
               thickness: 1.0,
             ),
           ),
-          // Add this variable to track loading state
-
-          // Expanded(
-          //   child: ListView.builder(
-          //     itemCount: followers.length,
-          //     itemBuilder: (context, index) {
-          //                   return ReviewsWidget.reviewsWidget(
-          //                       workout, review, creator);
-          //                 }
-          //
-          //   ),
-          // ),
+          isLoading
+              ? Center(child: CircularProgressIndicator())
+              : Expanded(
+            child: ListView.builder(
+              itemCount: followers.length,
+              itemBuilder: (context, index) {
+                User_model user = followers[index];
+                return FollowersPageWidget.followersWidget(user, () => removeFollower(user));
+              },
+            ),
+          ),
         ],
       ),
     );
   }
-
 }

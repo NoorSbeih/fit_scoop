@@ -12,6 +12,7 @@ import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_model.dart';
 import '../../Widgets/drawer_widget.dart';
+import 'followers_screen.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -327,7 +328,7 @@ class _profileState extends State<ProfilePage> {
                           width: 2.0,
                         ),
                       ),
-                      child: reviewsProfile(user: user, reviews: reviews),
+                      child: FollowersPage(user: user),
                     );
                   },
                 );

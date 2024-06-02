@@ -1,78 +1,64 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-//
-// import '../../Models/review_model.dart';
-// import '../../Models/user_model.dart';
-// import '../../Models/workout_model.dart';
-//
-// class followersPageWidget {
-//   static Widget followersWidget(User_model user, User_model user) {
-//     return Padding(
-//       padding: const EdgeInsets.only(left: 20.0, right: 20),
-//       child: SizedBox(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.start,
-//           crossAxisAlignment: CrossAxisAlignment.stretch,
-//           children: [
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 Expanded(
-//                   child: Column(
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: <Widget>[
-//                       Text(
-//                         workout.name,
-//                         style: const TextStyle(
-//                           color: Color(0xFF0dbab4),
-//                           fontSize: 15,
-//                           fontWeight: FontWeight.bold,
-//                           fontFamily: 'Montserrat',
-//                         ),
-//                       ),
-//                       const SizedBox(width: 20),
-//                       Text(
-//                         'Created by: ${creator.name}',
-//                         style: const TextStyle(
-//                           color: Colors.grey,
-//                           fontSize: 14,
-//                           fontWeight: FontWeight.bold,
-//                           fontFamily: 'BebasNeue',
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//                 Row(
-//                   children: List.generate(5, (index) {
-//                     return Icon(
-//                       Icons.star,
-//                       color: index < review.rating ? Color(0xFF0dbab4) : Colors.grey,
-//                     );
-//                   }),
-//                 ),
-//               ],
-//             ),
-//             SizedBox(height: 8),
-//             Text(
-//               '${review.comment} ',
-//               style: const TextStyle(
-//                 color: Colors.white,
-//                 fontSize: 16,
-//                 fontWeight: FontWeight.bold,
-//                 fontFamily: 'Montserrat',
-//               ),
-//             ),
-//             SizedBox(height: 10.0),
-//             const Divider(
-//               color: Colors.grey,
-//               thickness: 1.0,
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-//
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../Models/user_model.dart';
+
+class FollowersPageWidget {
+  static Widget followersWidget(User_model follower, VoidCallback onRemove) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20.0, right: 20),
+      child: SizedBox(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Stack(
+                  children: [
+                    follower.imageLink != null
+                        ? CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: NetworkImage(follower.imageLink!),
+                    )
+                        : CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.transparent,
+                      child: SvgPicture.asset(
+                        'images/profile-circle-svgrepo-com.svg',
+                        width: 128,
+                        height: 128,
+                        color: Color(0xFF0dbab4),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    follower.name,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontFamily: 'BebasNeue',
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.remove_circle, color: Colors.red),
+                  onPressed: onRemove,
+                ),
+              ],
+            ),
+            SizedBox(height: 10.0),
+            const Divider(
+              color: Colors.grey,
+              thickness: 1.0,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
