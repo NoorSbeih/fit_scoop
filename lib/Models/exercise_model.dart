@@ -7,6 +7,7 @@ class Exercise {
   final String bodyPart;
   final String target;
   final List<String> secondaryMuscles;
+  final String gifUrl;
   final String equipment;
 
   Exercise({
@@ -16,7 +17,8 @@ class Exercise {
     required this.bodyPart,
     required this.target,
     required this.secondaryMuscles,
-    required this.equipment
+    required this.equipment,
+    required this.gifUrl
   });
 
   Map<String, dynamic> toMap() {
@@ -27,7 +29,8 @@ class Exercise {
       'bodyPart': bodyPart,
       'target': target,
       'secondaryMuscles':secondaryMuscles,
-      'equipment': equipment
+      'equipment': equipment,
+      'gifUrl': gifUrl
     };
   }
 
@@ -39,7 +42,8 @@ class Exercise {
       bodyPart: map['bodyPart'],
       target: map['target'],
       secondaryMuscles:map['secondaryMuscles'].cast<String>(),
-      equipment: map['equipment']
+      equipment: map['equipment'],
+      gifUrl: map['gifUrl']
     );
   }
 
