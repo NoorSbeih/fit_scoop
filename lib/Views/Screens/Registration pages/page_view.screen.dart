@@ -15,11 +15,11 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../Controllers/body_metrics_controller.dart';
-import '../../Services/Database Services/body_metrics_service.dart';
-import 'Registration pages/birth_gender_screen.dart';
-import 'Registration pages/body_fat_screen.dart';
-import 'Registration pages/height_weight_screen.dart';
+import '../../../Controllers/body_metrics_controller.dart';
+import '../../../Services/Database Services/body_metrics_service.dart';
+import 'birth_gender_screen.dart';
+import 'body_fat_screen.dart';
+import 'height_weight_screen.dart';
 import 'package:fit_scoop/Controllers/register_controller.dart';
 import '/Models/body_metrics_model.dart' as model;
 import 'goals_screen.dart';

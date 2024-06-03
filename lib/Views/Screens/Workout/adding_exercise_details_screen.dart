@@ -19,7 +19,7 @@ class AddingExerciseDetailsPage extends StatefulWidget{
 class _AddingExerciseDetailsPageState extends State<AddingExerciseDetailsPage> {
   String name="";
 
-  String description="";
+  List<String> description=[];
   String target="";
   int remainingCount = 0; // Initial remaining count
   void decrementCount() {
@@ -43,8 +43,8 @@ class _AddingExerciseDetailsPageState extends State<AddingExerciseDetailsPage> {
     Exercise? exercise=await controller.getExercise(widget.id) ;
     setState(() {
       name=exercise!.name;
-      description=exercise.description;
-      List<String> muscleGroups = exercise.secondaryMuscleGroups;
+      description=exercise.instructions;
+      List<String> muscleGroups = exercise.secondaryMuscles;
       target = muscleGroups.join(', ');
 
     });
@@ -85,7 +85,7 @@ class _AddingExerciseDetailsPageState extends State<AddingExerciseDetailsPage> {
             padding: EdgeInsets.only( left: 16, bottom: 10),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: custom_widget.WorkoutTexttWidget(description,14),
+              child: custom_widget.WorkoutTexttWidget(description[0],14),
             ),
           ),
           Padding(

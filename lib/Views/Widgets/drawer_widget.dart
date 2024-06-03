@@ -3,6 +3,7 @@ import 'package:fit_scoop/Models/body_metrics_model.dart';
 import 'package:fit_scoop/Models/user_model.dart';
 import 'package:fit_scoop/Models/user_singleton.dart';
 import 'package:fit_scoop/Views/Screens/Equipments/equipment_sceen.dart';
+import 'package:fit_scoop/Views/Screens/Update/goalsUpdate.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,7 +19,7 @@ class CustomDrawer extends StatefulWidget {
 class _CustomDrawerState extends State<CustomDrawer> {
   String typeOfPlace = "";
   String equipments="";
-
+  String goal="";
   @override
   void initState() {
     super.initState();
@@ -29,7 +30,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
         BodyMetricsSingleton singleton = BodyMetricsSingleton.getInstance();
         BodyMetrics metrics = singleton.getMetrices();
         typeOfPlace=metrics.gymType;
-
+        goal=metrics.fitnessGoal;
         UserSingleton usersingleton = UserSingleton.getInstance();
         User_model user = usersingleton.getUser();
 
@@ -146,7 +147,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           onUpdateWeightHeight: (weight,height) {
                             setState(() {
                               metrics.weight = weight;
-                              typeOfPlace=metrics.gymType;
                             });
                           },
                         ),
@@ -199,15 +199,34 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 10),
-                    CustomUnderlineText(
-                      text: 'Goal: ${metrics.fitnessGoal}',
+
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to a new page when the text is tapped
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => goalsUpdate(
+                          onUpdateGoal: (goal) {
+                            setState(() {
+                              metrics.fitnessGoal= goal;
+                              goal=metrics.fitnessGoal;
+                            });
+                          },
+                        ),
+                      ),
+                    );
+                  },
+
+                    child:CustomUnderlineText(
+                      text: 'Goal: ${goal}',
                       fontSize: 20,
                       textColor: Colors.white,
                       underlineColor: Colors.grey,
                       underlinePadding: 2.0,
                       underlineThickness: 2.0,
                     ),
-
+                ),
 
                     SizedBox(height: 10),
                     CustomUnderlineText(

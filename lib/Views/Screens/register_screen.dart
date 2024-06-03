@@ -1,6 +1,6 @@
 
 import 'package:fit_scoop/Controllers/register_controller.dart';
-import 'package:fit_scoop/Views/Screens/page_view.screen.dart';
+import 'package:fit_scoop/Views/Screens/Registration%20pages/page_view.screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

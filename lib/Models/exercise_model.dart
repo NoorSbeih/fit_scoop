@@ -3,28 +3,31 @@
 class Exercise {
   final String id;
   final String name;
-  final String description;
-  final String type;
-  final String mainMuscle;
-  final List<String> secondaryMuscleGroups;
+  final List<String> instructions;
+  final String bodyPart;
+  final String target;
+  final List<String> secondaryMuscles;
+  final String equipment;
 
   Exercise({
     required this.id,
     required this.name,
-    required this.description,
-    required this.type,
-    required this.mainMuscle,
-    required this.secondaryMuscleGroups,
+    required this.instructions,
+    required this.bodyPart,
+    required this.target,
+    required this.secondaryMuscles,
+    required this.equipment
   });
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'name': name,
-      'description': description,
-      'type': type,
-      'mainMuscle': mainMuscle,
-      'secondaryMuscleGroups':secondaryMuscleGroups
+      'instructions': instructions,
+      'bodyPart': bodyPart,
+      'target': target,
+      'secondaryMuscles':secondaryMuscles,
+      'equipment': equipment
     };
   }
 
@@ -32,10 +35,11 @@ class Exercise {
     return Exercise(
       id: id,
       name: map['name'],
-      description: map['description'],
-      type: map['type'],
-      mainMuscle: map['mainMuscle'],
-      secondaryMuscleGroups:map['secondaryMuscleGroups'].cast<String>(),
+      instructions: map['instructions'].cast<String>(),
+      bodyPart: map['bodyPart'],
+      target: map['target'],
+      secondaryMuscles:map['secondaryMuscles'].cast<String>(),
+      equipment: map['equipment']
     );
   }
 
