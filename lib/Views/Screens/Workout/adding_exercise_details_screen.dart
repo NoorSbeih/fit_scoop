@@ -58,12 +58,22 @@ class _AddingExerciseDetailsPageState extends State<AddingExerciseDetailsPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xFF2C2A2A),
+      appBar: AppBar(
+        backgroundColor: Color(0xFF2C2A2A),
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.close, color: (Color(0xFF0dbab4))),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 50, left: 16, bottom: 10),
+              padding: EdgeInsets.only(top:10, left: 16, bottom: 10),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: custom_widget.WorkoutTitletWidget(name, Colors.white),
@@ -73,28 +83,41 @@ class _AddingExerciseDetailsPageState extends State<AddingExerciseDetailsPage> {
               padding: EdgeInsets.all(16.0), // Adjust padding as needed
               child: Container(
                 height: 200, // Set the height of the image
-                width: MediaQuery.of(context).size.width,
-                child: Image.network(url),
+                width: 600, // Set the width of the image
+                child: url.isNotEmpty
+                    ? Image.network(url)
+                    : Text("No image available", style: TextStyle(color: Colors.white)),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 10, left: 16, bottom: 10),
+              padding: EdgeInsets.only(top: 10, left: 16),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: custom_widget.WorkoutTitletWidget("Instructions", Color(0xFF0dbab4)),
+                child: custom_widget.WorkoutTitletWidget("INSTRUCTIONS", Color(0xFF0dbab4)),
               ),
             ),
-            Column(
-              children: instruction.map((instr) =>
-                  Padding(
-                    padding: EdgeInsets.only(left: 16, bottom: 10),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: custom_widget.WorkoutTexttWidget(instr, 18),
-                    ),
-                  )
-              ).toList(),
-            ),
+      Padding(
+        padding: EdgeInsets.all(16.0), // Adjust padding as needed
+        child: Container(
+          decoration: BoxDecoration(
+            color: Color(0xFF2C2A2A),
+            borderRadius: BorderRadius.circular(8.0),
+            border: Border.all(color: Colors.grey),
+
+          ),
+          child: Column(
+            children: instruction.map((instr) =>
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: custom_widget.WorkoutTexttWidget(instr, 18),
+                  ),
+                )
+            ).toList(),
+          ),
+        ),
+      ),
 
             Padding(
               padding: EdgeInsets.only(top: 10, left: 16),
@@ -110,6 +133,13 @@ class _AddingExerciseDetailsPageState extends State<AddingExerciseDetailsPage> {
                 child: custom_widget.WorkoutTexttWidget(target.toUpperCase(), 18),
               ),
             ),
+            const Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20),
+              child: Divider(
+                color: Colors.grey,
+                thickness: 1.0,
+              ),
+            ),
             Padding(
               padding: EdgeInsets.only(top: 10, left: 16),
               child: Align(
@@ -117,11 +147,19 @@ class _AddingExerciseDetailsPageState extends State<AddingExerciseDetailsPage> {
                 child: custom_widget.WorkoutTitletWidget("SECONDARY MUSCLES", Color(0xFF0dbab4)),
               ),
             ),
+
             Padding(
               padding: EdgeInsets.only(left: 16, bottom: 10),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: custom_widget.WorkoutTexttWidget(secondaryMuscles.toUpperCase(), 18),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20),
+              child: Divider(
+                color: Colors.grey,
+                thickness: 1.0,
               ),
             ),
             Padding(
@@ -136,9 +174,10 @@ class _AddingExerciseDetailsPageState extends State<AddingExerciseDetailsPage> {
               padding: EdgeInsets.only(left: 16, bottom: 90),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: custom_widget.WorkoutTexttWidget(equipment, 18),
+                child: custom_widget.WorkoutTexttWidget(equipment.toUpperCase(), 18),
               ),
             ),
+
           ],
         ),
       ),
