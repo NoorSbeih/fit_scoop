@@ -44,9 +44,8 @@ class custom_widget {
       text,
       style: TextStyle(
         color:color, // Change color to blue
-        fontSize: 24, // Set font size to 18
-        fontWeight: FontWeight.bold, // Make text bold
-        fontFamily: 'bebas neue', // Specify font family (optional)
+        fontSize: 30,
+          fontFamily: 'BebasNeue' ,// Specify font family (optional)
       ),
     );
   }
@@ -55,8 +54,7 @@ class custom_widget {
       text,
       style:  TextStyle(
         color: Colors.white, // Change color to blue
-        fontSize: font, // Set font size to 18
-        fontWeight: FontWeight.bold, // Make text bold
+        fontSize: font, // Set font size to 18// Make text bold
         fontFamily: 'source sans pro', // Specify font family (optional)
       ),
     );
