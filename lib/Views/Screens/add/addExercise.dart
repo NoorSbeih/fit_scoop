@@ -111,7 +111,7 @@ class _addExercise  extends State<addExercise> with SingleTickerProviderStateMix
           title: custom_widget.customTextWidgetForExersiceCard(letter,16),
           children: [
             FutureBuilder<List<Exercise>>(
-              future:controller.getExercisesByStartingLetter(letter),
+              future:controller.getExercisesByStartingLetter(letter.toLowerCase()),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -144,7 +144,8 @@ class _addExercise  extends State<addExercise> with SingleTickerProviderStateMix
   }
   Widget muscleGroupTabContent() {
 
-    List<String> mainMuscles = ['abs', 'Back', 'Legs'];
+    List<String> mainMuscles = ['waist', 'back', 'chest','upper arms','upper legs','shoulders','lower arms','cardio','lower legs'
+    ];
     ExerciseController controller=new ExerciseController();
     return ListView(
       children: mainMuscles.map((mainMuscle) {
