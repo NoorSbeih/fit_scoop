@@ -144,7 +144,7 @@ class _addExercise  extends State<addExercise> with SingleTickerProviderStateMix
   }
   Widget muscleGroupTabContent() {
 
-    List<String> mainMuscles = ['chest', 'Back', 'Legs'];
+    List<String> mainMuscles = ['abs', 'Back', 'Legs'];
     ExerciseController controller=new ExerciseController();
     return ListView(
       children: mainMuscles.map((mainMuscle) {
