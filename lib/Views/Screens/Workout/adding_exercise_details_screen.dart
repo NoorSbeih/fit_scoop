@@ -19,8 +19,9 @@ class AddingExerciseDetailsPage extends StatefulWidget{
 class _AddingExerciseDetailsPageState extends State<AddingExerciseDetailsPage> {
   String name="";
 
-  List<String> description=[];
+  List<String> instruction=[];
   String target="";
+  String secondaryMuscles="";
   int remainingCount = 0; // Initial remaining count
   void decrementCount() {
     setState(() {
@@ -43,9 +44,10 @@ class _AddingExerciseDetailsPageState extends State<AddingExerciseDetailsPage> {
     Exercise? exercise=await controller.getExercise(widget.id) ;
     setState(() {
       name=exercise!.name;
-      description=exercise.instructions;
+     instruction=exercise.instructions;
+     target= exercise.target;
       List<String> muscleGroups = exercise.secondaryMuscles;
-      target = muscleGroups.join(', ');
+      secondaryMuscles = muscleGroups.join(', ');
 
     });
   }
@@ -65,12 +67,14 @@ class _AddingExerciseDetailsPageState extends State<AddingExerciseDetailsPage> {
               child: custom_widget.WorkoutTitletWidget(name,Colors.white),
             ),
           ),
+  
+
           Padding(
             padding: EdgeInsets.all(16.0), // Adjust padding as needed
             child: Container(
                 height: 200, // Set the height of the image
                 width: MediaQuery.of(context).size.width,
-                child: Image.asset('images/jumpingJacks.jpg')
+                child: Image.network("https://v2.exercisedb.io/image/UcvY9fRgNeiV4m")
 
             ),
           ),
@@ -78,28 +82,42 @@ class _AddingExerciseDetailsPageState extends State<AddingExerciseDetailsPage> {
             padding: EdgeInsets.only(top: 10, left: 16, bottom: 10),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: custom_widget.WorkoutTitletWidget("Description",Color(0xFF0dbab4)),
+              child: custom_widget.WorkoutTitletWidget("Instructions",Color(0xFF0dbab4)),
             ),
           ),
           Padding(
             padding: EdgeInsets.only( left: 16, bottom: 10),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: custom_widget.WorkoutTexttWidget(description[0],14),
+              child: custom_widget.WorkoutTexttWidget(instruction[0],18),
             ),
           ),
           Padding(
             padding: EdgeInsets.only(top: 10, left: 16),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: custom_widget.WorkoutTitletWidget("TARGETED MUSCLES",Color(0xFF0dbab4)),
+              child: custom_widget.WorkoutTitletWidget("TARGETED MUSCLE",Color(0xFF0dbab4)),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 16,bottom:10),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: custom_widget.WorkoutTexttWidget(target.toUpperCase(),18),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 10, left: 16),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: custom_widget.WorkoutTitletWidget("SECONDARY MUSCLES",Color(0xFF0dbab4)),
             ),
           ),
           Padding(
             padding: EdgeInsets.only(left: 16,bottom:90),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: custom_widget.WorkoutTexttWidget(target,14),
+              child: custom_widget.WorkoutTexttWidget(secondaryMuscles.toUpperCase(),18),
             ),
           ),
 
