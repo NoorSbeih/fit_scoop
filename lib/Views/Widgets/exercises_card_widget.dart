@@ -180,7 +180,7 @@ class exercises_card {
   static Widget AfterAddingExerciseCardWidget(
       String name, String sets, String weight,BuildContext context,String id,int duration, {required Null Function() onDelete}) {
     return SizedBox(
-      height: 105,
+      height: 107,
       child: Card(
         margin: const EdgeInsets.only(left: 20, right: 20, top: 15),
         color: Color(0xFF2C2A2A),
@@ -293,7 +293,7 @@ class exercises_card {
   static Widget CurrentWorkoutCardWidget(
       String name, String sets, String weight,BuildContext context,String id,int duration) {
     return SizedBox(
-      height: 105,
+      height: 110,
       child: Card(
         margin: const EdgeInsets.only(left: 20, right: 20, top: 15),
         color: Color(0xFF2C2A2A),
