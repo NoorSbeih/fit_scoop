@@ -81,7 +81,7 @@ class ExerciseService {
   Future<List<Exercise>> getExercisesByMainMuscle(String mainMuscle) async {
     try {
       QuerySnapshot querySnapshot = await _exercisesRef
-          .where('mainMuscle', isEqualTo: mainMuscle)
+          .where('bodyPart', isEqualTo: mainMuscle)
           .get();
 
       List<Exercise> exercises = querySnapshot.docs
