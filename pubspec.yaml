@@ -135,6 +135,21 @@ flutter:
         - images/jumpingJacks.jpg
         - images/profile-circle-svgrepo-com.svg
         - images/write-svgrepo-com.svg
+        - images/bodyMuscles/abdominals.JPG
+        - images/bodyMuscles/back.JPG
+        - images/bodyMuscles/biceps.JPG
+        - images/bodyMuscles/calves.JPG
+        - images/bodyMuscles/chest.JPG
+        - images/bodyMuscles/glutes.JPG
+        - images/bodyMuscles/hamstrings.JPG
+        - images/bodyMuscles/hips.JPG
+        - images/bodyMuscles/neck.JPG
+        - images/bodyMuscles/quadriceps.JPG
+        - images/bodyMuscles/shoulders.JPG
+        - images/bodyMuscles/triceps.JPG
+        - images/bodyMuscles/waist.JPG
+        - images/bodyMuscles/lowerLegs.JPG
+        - images/bodyMuscles/lowerArms.JPG
     #   - images/a_dot_ham.jpeg
 
     # An image asset can refer to one or more resolution-specific "variants", see

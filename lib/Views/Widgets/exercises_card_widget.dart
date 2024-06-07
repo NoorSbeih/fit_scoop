@@ -15,6 +15,7 @@ class exercises_card {
   static Widget addingExersiceWidget(
       String name,
       String id,
+      String imageUrl,
       BuildContext context,
       ) {
   TextEditingController setsController = TextEditingController();
@@ -111,13 +112,19 @@ class exercises_card {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                margin: EdgeInsets.all(8),
                 height: double.infinity,
                 width: 80,
                 color: Colors.grey, // Placeholder color for the image
-                child: const Icon(
-                  Icons.photo, // Placeholder icon for the image
-                  color: Colors.white,
+                // child: const Icon(
+                //   Icons.photo, // Placeholder icon for the image
+                //   color: Colors.white,
+                // ),
+
+                child: Image.asset(
+                  imageUrl,
+                  width: 148,
+                  height: 128,
+                  fit: BoxFit.cover,
                 ),
               ),
               Expanded(

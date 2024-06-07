@@ -22,7 +22,7 @@ class _AddingExerciseDetailsPageState extends State<AddingExerciseDetailsPage> {
   String target = "";
   String secondaryMuscles = "";
   int remainingCount = 0; // Initial remaining count
-
+  String bodyPart = "";
   String equipment="";
   void decrementCount() {
     setState(() {
@@ -50,6 +50,7 @@ class _AddingExerciseDetailsPageState extends State<AddingExerciseDetailsPage> {
       secondaryMuscles = muscleGroups.join(', ');
       url = exercise.gifUrl;
       equipment=exercise.equipment;
+      bodyPart=exercise.bodyPart;
     });
   }
 
@@ -123,6 +124,28 @@ class _AddingExerciseDetailsPageState extends State<AddingExerciseDetailsPage> {
               padding: EdgeInsets.only(top: 10, left: 16),
               child: Align(
                 alignment: Alignment.centerLeft,
+                child: custom_widget.WorkoutTitletWidget("BODY PART", Color(0xFF0dbab4)),
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.only(left: 16, bottom: 10),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: custom_widget.WorkoutTexttWidget(bodyPart.toUpperCase(), 18),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20),
+              child: Divider(
+                color: Colors.grey,
+                thickness: 1.0,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 10, left: 16),
+              child: Align(
+                alignment: Alignment.centerLeft,
                 child: custom_widget.WorkoutTitletWidget("TARGETED MUSCLE", Color(0xFF0dbab4)),
               ),
             ),
@@ -171,13 +194,19 @@ class _AddingExerciseDetailsPageState extends State<AddingExerciseDetailsPage> {
             ),
 
             Padding(
-              padding: EdgeInsets.only(left: 16, bottom: 90),
+              padding: EdgeInsets.only(left: 16, bottom: 10),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: custom_widget.WorkoutTexttWidget(equipment.toUpperCase(), 18),
               ),
             ),
-
+            const Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20),
+              child: Divider(
+                color: Colors.grey,
+                thickness: 1.0,
+              ),
+            ),
           ],
         ),
       ),
