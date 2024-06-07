@@ -1,3 +1,4 @@
+import 'package:fit_scoop/Controllers/user_controller.dart';
 import 'package:fit_scoop/Models/bodyMetricsSingleton.dart';
 import 'package:fit_scoop/Models/body_metrics_model.dart';
 import 'package:fit_scoop/Models/user_model.dart';
@@ -7,6 +8,7 @@ import 'package:fit_scoop/Views/Screens/Update/goalsUpdate.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../Controllers/authentication_controller.dart';
 import '../Screens/Update/gymType.dart';
 import '../Screens/Update/weight_HeightUpdate.dart';
 import '../Screens/login_screen.dart';
@@ -281,7 +283,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                  // Handle error if needed
                  print("Error clearing shared preferences: $e");
                }
-               Navigator.of(context).pop(); // Close the drawer
+               Navigator.of(context).pop();
+               AuthController controller=AuthController();
+               controller.logout(context);
                Navigator.of(context).pushReplacement(
                  MaterialPageRoute(builder: (context) => Login()), // Navigate to the login screen
                );

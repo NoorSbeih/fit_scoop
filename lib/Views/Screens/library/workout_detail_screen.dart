@@ -18,8 +18,9 @@ class DetailPage extends StatefulWidget {
 
   final Function(Workout, bool) updateSavedWorkouts;
 
-  const DetailPage({Key? key, required this.workout, required this.updateSavedWorkouts}) : super(key: key);
-
+  const DetailPage(
+      {Key? key, required this.workout, required this.updateSavedWorkouts})
+      : super(key: key);
 
   @override
   _DetailPageState createState() => _DetailPageState();
@@ -27,7 +28,7 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   late bool isLiked = false;
-  late List<Workout> savedWorkouts=[];
+  late List<Workout> savedWorkouts = [];
   List<Review>? _reviews = [];
   int numberOfSaves = 0;
   int no = 0;
@@ -41,35 +42,35 @@ class _DetailPageState extends State<DetailPage> {
     no = numberOfSaves;
   }
 
-    Future<List<Workout>> SavedWorkout() async {
-      try {
-        UserSingleton userSingleton = UserSingleton.getInstance();
-        User_model user = userSingleton.getUser();
+  Future<List<Workout>> SavedWorkout() async {
+    try {
+      UserSingleton userSingleton = UserSingleton.getInstance();
+      User_model user = userSingleton.getUser();
 
-        if (user != null && user.id != null) {
-          UserController controller = UserController();
-          List<Workout> newSavedWorkouts = await controller.getSavedWorkouts(user.id) ;
-          savedWorkouts=newSavedWorkouts;
-          print(newSavedWorkouts.first.id);
-          setState(() {
-            isLiked = liked(widget.workout.id!);
-          });
+      if (user != null && user.id != null) {
+        UserController controller = UserController();
+        List<Workout> newSavedWorkouts =
+            await controller.getSavedWorkouts(user.id);
+        savedWorkouts = newSavedWorkouts;
+        print(newSavedWorkouts.first.id);
+        setState(() {
+          isLiked = liked(widget.workout.id!);
+        });
 
-          print(isLiked);
-          return savedWorkouts;
-        } else {
-          print('User or user ID is null.');
-          return [];
-        }
-      } catch (e) {
-        print('Error getting workouts by user ID: $e');
-        throw e;
+        print(isLiked);
+        return savedWorkouts;
+      } else {
+        print('User or user ID is null.');
+        return [];
       }
+    } catch (e) {
+      print('Error getting workouts by user ID: $e');
+      throw e;
     }
+  }
 
-
-    bool liked(String? id) {
-    for(int i=0;i<savedWorkouts.length;i++) {
+  bool liked(String? id) {
+    for (int i = 0; i < savedWorkouts.length; i++) {
       if ((savedWorkouts[i].id) == id) {
         return true;
       }
@@ -80,66 +81,70 @@ class _DetailPageState extends State<DetailPage> {
   void fetchReviews() async {
     try {
       ReviewController controller = ReviewController();
-      List<Review> reviews = await controller.getReviewsByWorkoutId(
-          widget.workout.id);
-      double totalRating = 0;
-      int totalReviews = reviews.length;
-      int counterFiveStars = 0;
-      int counterFourStars = 0;
-      int counterThreeStars = 0;
-      int counterTwoStars = 0;
-      int counterOneStars = 0;
 
-      for (int i = 0; i < totalReviews; i++) {
-        int rating = reviews[i].rating;
-        totalRating += rating;
-        switch (rating) {
-          case 5:
-            counterFiveStars++;
-            break;
-          case 4:
-            counterFourStars++;
-            break;
-          case 3:
-            counterThreeStars++;
-            break;
-          case 2:
-            counterTwoStars++;
-            break;
-          case 1:
-            counterOneStars++;
-            break;
-          default:
-            break;
+      List<Review> reviews =
+          await controller.getReviewsByWorkoutId(widget.workout.id);
+
+      if (!reviews.isEmpty) {
+        double totalRating = 0;
+        int totalReviews = reviews.length;
+        int counterFiveStars = 0;
+        int counterFourStars = 0;
+        int counterThreeStars = 0;
+        int counterTwoStars = 0;
+        int counterOneStars = 0;
+
+        for (int i = 0; i < totalReviews; i++) {
+          int rating = reviews[i].rating;
+          totalRating += rating;
+          switch (rating) {
+            case 5:
+              counterFiveStars++;
+              break;
+            case 4:
+              counterFourStars++;
+              break;
+            case 3:
+              counterThreeStars++;
+              break;
+            case 2:
+              counterTwoStars++;
+              break;
+            case 1:
+              counterOneStars++;
+              break;
+            default:
+              break;
+          }
         }
-      }
-      print('Total Reviews: $totalReviews, Total Rating: $totalRating');
+        print('Total Reviews: $totalReviews, Total Rating: $totalRating');
 
-      double averageRating = totalReviews > 0 ? totalRating / totalReviews : 0;
+        double averageRating =
+            totalReviews > 0 ? totalRating / totalReviews : 0;
 
-      if (averageRating != "Null" && totalReviews != "Null") {
-        setState(() {
-          _ratingSummaryData = {
-            'counter': totalReviews,
-            'showCounter': false,
-            'average': averageRating,
-            'showAverage': true,
-            'color': Color(0xFF0dbab4),
-            'counterFiveStars': counterFiveStars,
-            'counterFourStars': counterFourStars,
-            'counterThreeStars': counterThreeStars,
-            'counterTwoStars': counterTwoStars,
-            'counterOneStars': counterOneStars,
-          };
-          _reviews = reviews;
-        });
+        if (averageRating != "Null" && totalReviews != "Null") {
+          setState(() {
+            _ratingSummaryData = {
+              'counter': totalReviews,
+              'showCounter': false,
+              'average': averageRating,
+              'showAverage': true,
+              'color': Color(0xFF0dbab4),
+              'counterFiveStars': counterFiveStars,
+              'counterFourStars': counterFourStars,
+              'counterThreeStars': counterThreeStars,
+              'counterTwoStars': counterTwoStars,
+              'counterOneStars': counterOneStars,
+            };
+            _reviews = reviews;
+          });
+        }
       }
     } catch (e) {
       print('Error getting workouts by user ID: $e');
       throw e;
     }
   }
-
 
   Map<String, dynamic> _ratingSummaryData = {};
 
@@ -157,7 +162,9 @@ class _DetailPageState extends State<DetailPage> {
           color: Color(0xFF0dbab4), // Change the drawer icon color here
         ),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
+    padding: const EdgeInsets.only(left: 15.0, right: 10),
+    child: Padding(
         padding: const EdgeInsets.only(left: 15.0, right: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -191,11 +198,10 @@ class _DetailPageState extends State<DetailPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => RateWorkoutPage(workout: widget.workout),
+                            builder: (context) =>
+                                RateWorkoutPage(workout: widget.workout),
                           ),
                         );
-
-
                       },
                     ),
                     IconButton(
@@ -203,8 +209,9 @@ class _DetailPageState extends State<DetailPage> {
                         'images/heart_clicked.svg',
                         width: 24,
                         height: 24,
-                        color: isLiked  ? Color(0xFF0dbab4) : Colors
-                            .white, // Change color based on isLiked
+                        color: isLiked
+                            ? Color(0xFF0dbab4)
+                            : Colors.white, // Change color based on isLiked
                       ),
                       onPressed: () async {
                         setState(() {
@@ -218,8 +225,8 @@ class _DetailPageState extends State<DetailPage> {
                           }
                         });
 
-                        UserSingleton userSingleton = UserSingleton
-                            .getInstance();
+                        UserSingleton userSingleton =
+                            UserSingleton.getInstance();
                         User_model user = userSingleton.getUser();
 
                         if (user != null && user.id != null) {
@@ -229,15 +236,13 @@ class _DetailPageState extends State<DetailPage> {
                             await controller.saveWorkout(
                                 userId, widget.workout.id);
                             liked(widget.workout.id!);
-
                           } else {
                             await controller.unsaveWorkout(
                                 userId, widget.workout.id);
-
                           }
                           widget.updateSavedWorkouts(widget.workout, isLiked);
-                          widget.workout.numberOfSaves=numberOfSaves;
-                          WorkoutController controller2=WorkoutController();
+                          widget.workout.numberOfSaves = numberOfSaves;
+                          WorkoutController controller2 = WorkoutController();
                           controller2.updateWorkout(widget.workout);
                         }
                       },
@@ -256,23 +261,23 @@ class _DetailPageState extends State<DetailPage> {
               children: <Widget>[
                 const Text(
                   'INTENSITY ',
-                  style: TextStyle(fontSize: 25,
+                  style: TextStyle(
+                      fontSize: 25,
                       color: Color(0xFF0dbab4),
                       fontFamily: 'BebasNeue'),
                 ),
                 RatingBar.builder(
-                  initialRating: widget.workout.intensity == 'Low'
+                  initialRating: widget.workout.intensity == 'Beginner'
                       ? 1
-                      : widget.workout.intensity == 'Medium'
-                      ? 2
-                      : widget.workout.intensity == 'High'
-                      ? 3
-                      : 0,
+                      : widget.workout.intensity == 'Intermediate'
+                          ? 2
+                          : widget.workout.intensity == 'Advanced'
+                              ? 3
+                              : 0,
                   direction: Axis.horizontal,
                   itemCount: 3,
                   itemSize: 24.0,
-                  itemBuilder: (context, _) =>
-                  const Icon(
+                  itemBuilder: (context, _) => const Icon(
                     Icons.star,
                     color: Color(0xFF0dbab4),
                   ),
@@ -281,51 +286,60 @@ class _DetailPageState extends State<DetailPage> {
                     print(value);
                   },
                 ),
-
               ],
             ),
             SizedBox(height: 5),
             const Text(
               'DESCRIPTION',
-              style: TextStyle(fontSize: 25,
+              style: TextStyle(
+                  fontSize: 25,
                   color: Color(0xFF0dbab4),
                   fontFamily: 'BebasNeue'),
-
             ),
             SizedBox(height: 0),
             Text(
               widget.workout.description,
-              style: TextStyle(fontSize: 20, color: Colors.white),
+              style: TextStyle(fontSize: 22, color: Colors.white),
             ),
-
             const Text(
               "RATINGS AND REVIEWS",
-              style: TextStyle(fontSize: 25,
+              style: TextStyle(
+                  fontSize: 25,
                   color: Color(0xFF0dbab4),
                   fontFamily: 'BebasNeue'),
             ),
-            RatingSummary(
-              counter: _ratingSummaryData['counter'] ?? 0,
-              average: (_ratingSummaryData['average'] ?? 0.0).isFinite
-                  ? (_ratingSummaryData['average'] ?? 0.0)
-                  : 0.0,
-              showAverage: _ratingSummaryData['showAverage'] ?? false,
-              color: _ratingSummaryData['color'] ?? Colors.white,
-              counterFiveStars: _ratingSummaryData['counterFiveStars'] ?? 0,
-              counterFourStars: _ratingSummaryData['counterFourStars'] ?? 0,
-              counterThreeStars: _ratingSummaryData['counterThreeStars'] ?? 0,
-              counterTwoStars: _ratingSummaryData['counterTwoStars'] ?? 0,
-              counterOneStars: _ratingSummaryData['counterOneStars'] ?? 0,
-              labelCounterOneStarsStyle: const TextStyle(color: Colors.white),
-              labelCounterTwoStarsStyle: const TextStyle(color: Colors.white),
-              labelCounterThreeStarsStyle: const TextStyle(color: Colors.white),
-              labelCounterFourStarsStyle: const TextStyle(color: Colors.white),
-              labelCounterFiveStarsStyle: const TextStyle(color: Colors.white),
-              labelStyle: const TextStyle(color: Colors.white),
-              averageStyle: const TextStyle(
-                  color: Colors.white, fontSize: 75, fontFamily: 'BebasNeue'),
-            ),
+            if (_reviews != null && _reviews!.isNotEmpty) ...[
+              RatingSummary(
+                counter: _ratingSummaryData['counter'],
+                average: averageRating,
+                showAverage: _ratingSummaryData['showAverage'],
+                counterFiveStars: _ratingSummaryData['counterFiveStars'],
+                counterFourStars: _ratingSummaryData['counterFourStars'],
+                counterThreeStars: _ratingSummaryData['counterThreeStars'],
+                counterTwoStars: _ratingSummaryData['counterTwoStars'],
+                counterOneStars: _ratingSummaryData['counterOneStars'],
+                color: _ratingSummaryData['color'],
+                labelCounterOneStarsStyle: const TextStyle(color: Colors.white),
+                labelCounterTwoStarsStyle: const TextStyle(color: Colors.white),
+                labelCounterThreeStarsStyle:
+                    const TextStyle(color: Colors.white),
+                labelCounterFourStarsStyle:
+                    const TextStyle(color: Colors.white),
+                labelCounterFiveStarsStyle:
+                    const TextStyle(color: Colors.white),
+                labelStyle: const TextStyle(color: Colors.white),
+                averageStyle: const TextStyle(
+                    color: Colors.white, fontSize: 75, fontFamily: 'BebasNeue'),
+              ),
+              // Add any other widgets you want to display when reviews are present
+            ] else ...[
+              const Text(
+                'No reviews available.',
+                style: TextStyle(fontSize: 22, color: Colors.white),
+              ),
+            ],
 
+            SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
                 // Add your button functionality here
@@ -336,7 +350,7 @@ class _DetailPageState extends State<DetailPage> {
                     const Color(0xFF0dbab4)), // Change color to blue
                 fixedSize: MaterialStateProperty.all<Size>(const Size(10, 30)),
                 shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
-                      (Set<MaterialState> states) {
+                  (Set<MaterialState> states) {
                     return RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0), // Border radius
                     );
@@ -348,14 +362,10 @@ class _DetailPageState extends State<DetailPage> {
                 style: TextStyle(fontSize: 22, color: Colors.white),
               ),
             ),
-
           ],
         ),
+    ),
       ),
     );
   }
-
-
-
-
 }
