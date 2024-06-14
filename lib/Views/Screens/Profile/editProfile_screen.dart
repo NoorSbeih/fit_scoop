@@ -189,8 +189,13 @@ class _EditProfile extends State<EditProfile> {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                Navigator.pop(context);
+
+                //Navigator.popUntil(context, (route) => route.settings.name == '/ProfilePage');
+
+
+                //   Navigator.popUntil(context, ModalRoute.withName('ProfilePage'));
               },
+
             ),
           ],
         ),

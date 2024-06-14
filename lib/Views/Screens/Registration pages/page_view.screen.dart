@@ -17,13 +17,16 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../Controllers/body_metrics_controller.dart';
 import '../../../Services/Database Services/body_metrics_service.dart';
+import 'Female_goals_screen.dart';
+import 'Male_goals_screen.dart';
 import 'birth_gender_screen.dart';
 import 'body_fat_screen.dart';
 import 'height_weight_screen.dart';
 import 'package:fit_scoop/Controllers/register_controller.dart';
 import '/Models/body_metrics_model.dart' as model;
-import 'goals_screen.dart';
  class CustomPageView extends StatefulWidget {
+   static String Gender="";
+   static String Goal="";
    @override
    _CustomPageViewState createState() => _CustomPageViewState();
  }
@@ -31,7 +34,10 @@ import 'goals_screen.dart';
 class _CustomPageViewState extends State<CustomPageView> {
   final controller = PageController();
   int currentPageIndex = 0;
+
   late String unit="";
+
+
 
    @override
    void initState() {
@@ -43,14 +49,19 @@ class _CustomPageViewState extends State<CustomPageView> {
      });
     _loadPreferences();
    }
-  void _loadPreferences() async{
-    SharedPreferences sharedPreferences =await SharedPreferences.getInstance();
-    String? unitOfMeasure=sharedPreferences.getString('unitOfMeasure');
+  void _loadPreferences() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? unitOfMeasure = sharedPreferences.getString('unitOfMeasure');
+    String? gender = sharedPreferences.getString('Gender');
+
+
     setState(() {
-      unit=unitOfMeasure!;
-      print('unitttttt:::{unit}');
+     //gender = sharedPreferences.getString('Gender');
+      unit = unitOfMeasure ?? ""; // Assign default value if unitOfMeasure is null
+      CustomPageView.Gender = gender ?? ""; // Assign default value if gender is null
     });
   }
+
   bool isDataFilled_Page1() {
     return RegisterPage1.selectedgender.isNotEmpty && RegisterPage1.formateddate.isNotEmpty;
   }
@@ -63,10 +74,12 @@ class _CustomPageViewState extends State<CustomPageView> {
     if (currentPageIndex < 5) {
         currentPageIndex = controller.page!.round();
         print(currentPageIndex);
+
         controller.nextPage(
           duration: Duration(milliseconds: 300),
           curve: Curves.ease,
         );
+        _loadPreferences();
     }}
 
      @override
@@ -102,7 +115,7 @@ class _CustomPageViewState extends State<CustomPageView> {
                    RegisterPage1(),
                    RegisterPage2(),
                    RegisterPage3(),
-                   RegisterPage4(),
+                   CustomPageView.Gender == 'Male' ? RegisterPage4M() : RegisterPage4F(),
                    RegisterPage5(),
                    RegisterPage6(),
                  ],
@@ -124,8 +137,23 @@ class _CustomPageViewState extends State<CustomPageView> {
                     showError(context);
 
                 }
-                else if (currentPageIndex == 3 && RegisterPage4.selectedGoal.isEmpty) {
+
+                else if (currentPageIndex == 3 && CustomPageView.Gender.compareTo("Male")==0) {
+
+                  if ( RegisterPage4M.selectedGoal.isEmpty) {
                     showError(context);
+                  }else{
+                    CustomPageView.Goal=RegisterPage4M.selectedGoal;
+                    nextPage(context);
+                  }
+                }
+                else if (currentPageIndex == 3 && CustomPageView.Gender.compareTo("Female")==0) {
+                  if ( RegisterPage4F.selectedGoal.isEmpty) {
+                    showError(context);
+                  }else{
+                    CustomPageView.Goal=RegisterPage4F.selectedGoal;
+                    nextPage(context);
+                  }
                 }
                 else if (currentPageIndex == 4 && RegisterPage5.typeOfPlace.isEmpty) {
                     showError(context);
@@ -181,8 +209,9 @@ class _CustomPageViewState extends State<CustomPageView> {
  //   List<String> parts = dateString.split('/');
    // String formattedDate = '${parts[2]}-${parts[0]}-${parts[1]}T00:00:00';
    // DateTime dateTime = DateTime.parse(formattedDate);
+
     model.BodyMetrics bodyMetrics= model.BodyMetrics(userId:id,height: RegisterPage2.heightresult,weight: RegisterPage2.weightresult,birthDate: dateString ,
-    bodyFat: RegisterPage3.currentValue,gender: RegisterPage1.selectedgender,fitnessGoal:RegisterPage4.selectedGoal,gymType: RegisterPage5.typeOfPlace, CurrentDay:0,workoutSchedule: workoutSchedule,unitOfMeasure: unit);
+    bodyFat: RegisterPage3.currentValue,gender: RegisterPage1.selectedgender,fitnessGoal:CustomPageView.Goal,gymType: RegisterPage5.typeOfPlace, CurrentDay:0,workoutSchedule: workoutSchedule,unitOfMeasure: unit);
     _bodyMetricController.addBodyMetrics(bodyMetrics);
 
 

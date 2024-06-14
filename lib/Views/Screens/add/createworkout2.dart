@@ -1,5 +1,6 @@
 
 import 'package:fit_scoop/Controllers/workout_controller.dart';
+import 'package:fit_scoop/Views/Screens/Schedule/addWorkoutForADay.dart';
 import 'package:fit_scoop/Views/Screens/add/createworkout1.dart';
 import 'package:fit_scoop/Views/Screens/add/addExercise.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,17 +14,20 @@ import '../../../Models/workout_model.dart';
 import '../main_page_screen.dart';
 
 class createWorkout2 extends StatefulWidget {
-
+  static bool isPrivate = true;
+  static double rating = 0;
+  static  String label="Beginner";
+  static TextEditingController descriptionController =new TextEditingController();
   @override
   _createWorkout2  createState() => _createWorkout2();
 }
 
 class _createWorkout2  extends State<createWorkout2> {
 
- TextEditingController descriptionController =new TextEditingController();
+ /*static TextEditingController descriptionController =new TextEditingController();
   bool isPrivate = true;
   double rating = 0;
-  String label="Beginner";
+ static  String label="Beginner";*/
 
   @override
   void initState() {
@@ -75,23 +79,23 @@ class _createWorkout2  extends State<createWorkout2> {
                   ),
                   onRatingUpdate: (newRating) {
                     setState(() {
-                      rating = newRating;
+                      createWorkout2.rating = newRating;
                       switch (newRating.toInt()) {
                         case 1:
-                          label = 'Beginner';
+                          createWorkout2.label = 'Beginner';
                           break;
                         case 2:
-                          label = 'Intermediate';
+                          createWorkout2.label = 'Intermediate';
                           break;
                         case 3:
-                          label = 'Advanced';
+                          createWorkout2.label = 'Advanced';
                           break;
                       }
                     });
                   },
                 ),
               Text(
-                label,
+                createWorkout2.label,
                 style: TextStyle(color: Colors.white),
               )
 
@@ -116,7 +120,7 @@ class _createWorkout2  extends State<createWorkout2> {
                 child:  Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0), // Adjust horizontal padding
                   child: TextField(
-                    controller: descriptionController,
+                    controller: createWorkout2.descriptionController,
                     keyboardType: TextInputType.multiline,
                     maxLines: 10,
                     decoration: const InputDecoration(
@@ -136,10 +140,10 @@ class _createWorkout2  extends State<createWorkout2> {
                 'Private Workout',
                 style: TextStyle(fontSize: 20, color: Colors.white, fontFamily: 'BebasNeue'),
               ),
-              value: isPrivate,
+              value: createWorkout2.isPrivate,
               onChanged: (value) {
                 setState(() {
-                  isPrivate = value;
+                  createWorkout2.isPrivate = value;
                 });
               },
               activeColor: Color(0xFF0dbab4),
@@ -154,15 +158,15 @@ class _createWorkout2  extends State<createWorkout2> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        UserSingleton userSingleton = UserSingleton.getInstance();
+                     /*   UserSingleton userSingleton = UserSingleton.getInstance();
                         User_model user = userSingleton.getUser();
                         Workout workout =new Workout(name: createWorkout1.name, description: descriptionController.text, exercises: addExercise.exercises, duration: 12, intensity: label, creatorId: user.id, numberOfSaves: 0, reviews: [], isPrivate: isPrivate, timestamp: DateTime.now(),);
                         WorkoutController controller =new WorkoutController();
-                       controller.createWorkout(workout);
+                       controller.createWorkout(workout);*/
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) =>
-                              HomePage()), // Replace SecondPage() with the desired page widget
+                              AddWorkoutForADayy()), // Replace SecondPage() with the desired page widget
                         );
                       },
                       style: ButtonStyle(

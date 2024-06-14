@@ -46,13 +46,18 @@ class _RegisterPageState extends State<RegisterPage2> {
 
   }
 
-void _loadPreferences() async{
-    SharedPreferences sharedPreferences =await SharedPreferences.getInstance();
-    String? unitOfMeasure=sharedPreferences.getString('unitOfMeasure');
-    setState(() {
-      _selectedValue=unitOfMeasure!;
-    });
-}
+  void _loadPreferences() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? unitOfMeasure = sharedPreferences.getString('unitOfMeasure');
+    if (unitOfMeasure != null) {
+      setState(() {
+        _selectedValue = unitOfMeasure;
+      });
+    } else {
+      // Handle the case where unitOfMeasure is null, if needed
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {

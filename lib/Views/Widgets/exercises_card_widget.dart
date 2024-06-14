@@ -308,9 +308,9 @@ class exercises_card {
               height: double.infinity,
               width: 80,
               color: Colors.grey, // Placeholder color for the image
-              child: const Icon(
-                Icons.photo, // Placeholder icon for the image
-                color: Colors.white,
+              child: Image.network(
+                'https://v2.exercisedb.io/image/UcvY9fRgNeiV4m', // URL of your image
+                fit: BoxFit.cover, // Adjust the image fit as needed
               ),
             ),
             Expanded(
