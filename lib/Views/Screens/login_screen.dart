@@ -195,7 +195,7 @@ class _LoginPageState extends State<LoginPage> {
                            //   Navigator.push(
                            //     context,
                            //     MaterialPageRoute(builder: (context) => CustomPageView()),
-                           //   );
+                           //   );s
                            // }
                           if(await loginController.getUserBodyMetric()==null){
                             print("empty");

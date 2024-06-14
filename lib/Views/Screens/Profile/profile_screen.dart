@@ -26,12 +26,15 @@ class _profileState extends State<ProfilePage> {
   List<Workout> workouts = [];
   List<Review> reviews = [];
   late User_model user;
+  late  ValueNotifier<int> followingsNotifier;
   String? imageUrl;
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
     fetchData();
+    followingsNotifier = ValueNotifier<int>(user.followedUserIds.length);
+
   }
 
 
@@ -328,7 +331,10 @@ class _profileState extends State<ProfilePage> {
                           width: 2.0,
                         ),
                       ),
-                      child: FollowersPage(user: user),
+                      child: FollowersPage(
+                      user: user,
+                      followingsNotifier: followingsNotifier,
+                    ),
                     );
                   },
                 );
@@ -342,21 +348,36 @@ class _profileState extends State<ProfilePage> {
                 child: Row(
                   children: [
                     const Text(
-                      'FOLLOWERS',
+                      'FOLLOWING',
                       style: TextStyle(
                         fontSize: 30.0,
                         fontFamily: 'BebasNeue',
                         color: Color(0xFF0dbab4),
                       ),
                     ),
+                    // Expanded(child: Container()),
+                    // Text(
+                    //   '${user.followedUserIds.length}',
+                    //   style: const TextStyle(
+                    //     fontSize: 30.0,
+                    //     fontFamily: 'BebasNeue',
+                    //     color: Colors.white,
+                    //   ),
+                    // ),
+
                     Expanded(child: Container()),
-                    Text(
-                      '${user.followedUserIds.length}',
-                      style: const TextStyle(
-                        fontSize: 30.0,
-                        fontFamily: 'BebasNeue',
-                        color: Colors.white,
-                      ),
+                    ValueListenableBuilder<int>(
+                      valueListenable: followingsNotifier,
+                      builder: (context, value, child) {
+                        return Text(
+                          '$value',
+                          style: const TextStyle(
+                            fontSize: 30.0,
+                            fontFamily: 'BebasNeue',
+                            color: Colors.white,
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

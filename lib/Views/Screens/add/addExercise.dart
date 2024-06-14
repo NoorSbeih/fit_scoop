@@ -7,62 +7,67 @@ import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/exercises_card_widget.dart';
 import '../../../Controllers/exercise_controller.dart';
 import '../../../Controllers/workout_controller.dart';
+import '../../../Models/bodyPart.dart';
 import '../../../Models/exercise_model.dart';
 import '../../../Models/workout_model.dart';
+
 class AddExercisePage extends StatelessWidget {
   final OnExerciseAddedCallback onExerciseAdded;
+
   AddExercisePage({required this.onExerciseAdded});
 
-    @override
-    Widget build(BuildContext context) {
-      return   Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: const Color(0xFF2C2A2A),
-          appBar: AppBar(
-          backgroundColor: Color(0xFF2C2A2A),
-      leading: IconButton(
-      icon: const Icon(Icons.arrow_back, color: Color(0xFF0dbab4),),
-      onPressed: () {
-      Navigator.pop(context);
-      onExerciseAdded();
-      },
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: const Color(0xFF2C2A2A),
+      appBar: AppBar(
+        backgroundColor: Color(0xFF2C2A2A),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Color(0xFF0dbab4),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+            onExerciseAdded();
+          },
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.settings,
+              color: Color(0xFF0dbab4),
+            ),
+            onPressed: () {
+              // Handle menu icon pressed
+            },
+          ),
+        ],
       ),
-      actions: [
-      IconButton(
-      icon: const Icon(Icons.settings, color: Color(0xFF0dbab4),),
-      onPressed: () {
-      // Handle menu icon pressed
-      },
-      ),
-      ],
-
-      ),
-     body: addExercise(),
-      );
-
-    }
-
-
+      body: addExercise(),
+    );
+  }
 }
 
 class addExercise extends StatefulWidget {
-
-  static final List<Map<String, dynamic>> exercises=[];
-
+  static final List<Map<String, dynamic>> exercises = [];
 
   @override
   _addExercise createState() => _addExercise();
 }
 
-class _addExercise  extends State<addExercise> with SingleTickerProviderStateMixin {
+class _addExercise extends State<addExercise>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  String imageUrl="";
 
-
-
+  List<BodyPart> parts=[];
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    fetchEquipments();
   }
 
   @override
@@ -72,46 +77,69 @@ class _addExercise  extends State<addExercise> with SingleTickerProviderStateMix
   }
 
 
+  Future<void> fetchEquipments() async {
+    try {
+      ExerciseController controller = ExerciseController();
+      List<BodyPart> equipments = await controller.getAllBoyImages();
+      setState(() {
+        parts = equipments;
+      });
+
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+  }
+
+  String getImageUrl(Exercise exercise)  {
+
+    for(int i =0;i<parts.length;i++){
+      if(parts[i].name==exercise.bodyPart){
+        return parts[i].imageUrl;
+      }
+      if(parts[i].name!=exercise.bodyPart && parts[i].name==exercise.target){
+        return parts[i].imageUrl;
+      }
+    }
+    return "";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFF2C2A2A),
-       appBar:TabBar(
-          controller: _tabController,
-          labelColor: Colors.white,
-          dividerColor: const Color(0xFF2C2A2A),
-          labelStyle: TextStyle(fontWeight: FontWeight.bold),
-          indicatorColor: const Color(0xFF0dbab4),
-          tabs: const [
-            Tab(text: 'ALPHABETICAL'),
-            Tab(text: 'MUSCLE GROUP'),
-          ],
-
-        ),
-      body:TabBarView(
+      appBar: TabBar(
+        controller: _tabController,
+        labelColor: Colors.white,
+        dividerColor: const Color(0xFF2C2A2A),
+        labelStyle: TextStyle(fontWeight: FontWeight.bold),
+        indicatorColor: const Color(0xFF0dbab4),
+        tabs: const [
+          Tab(text: 'ALPHABETICAL'),
+          Tab(text: 'MUSCLE GROUP'),
+        ],
+      ),
+      body: TabBarView(
         controller: _tabController,
         children: [
           alphabeticalTabContent(),
           muscleGroupTabContent(), // Call the function here
         ],
       ),
-
-      );
-
-
-
+    );
   }
+
   Widget alphabeticalTabContent() {
     List<String> alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-    ExerciseController controller=new ExerciseController();
+    ExerciseController controller = new ExerciseController();
     return ListView(
       children: alphabet.map((letter) {
         return ExpansionTile(
-          title: custom_widget.customTextWidgetForExersiceCard(letter,16),
+          title: custom_widget.customTextWidgetForExersiceCard(letter, 16),
           children: [
             FutureBuilder<List<Exercise>>(
-              future:controller.getExercisesByStartingLetter(letter.toLowerCase()),
+              future:
+                  controller.getExercisesByStartingLetter(letter.toLowerCase()),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -124,9 +152,12 @@ class _addExercise  extends State<addExercise> with SingleTickerProviderStateMix
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       Exercise exercise = snapshot.data![index];
+
+
                       return exercises_card.addingExersiceWidget(
                         exercise.name,
                         exercise.id,
+                        getImageUrl(exercise),
                         context,
                       );
                     },
@@ -140,20 +171,28 @@ class _addExercise  extends State<addExercise> with SingleTickerProviderStateMix
         );
       }).toList(),
     );
-
   }
-  Widget muscleGroupTabContent() {
 
-    List<String> mainMuscles = ['waist', 'back', 'chest','upper arms','upper legs','shoulders','lower arms','cardio','lower legs','neck'
+  Widget muscleGroupTabContent() {
+    List<String> mainMuscles = [
+      'waist',
+      'back',
+      'chest',
+      'upper arms',
+      'upper legs',
+      'shoulders',
+      'lower arms',
+      'cardio',
+      'lower legs'
     ];
-    ExerciseController controller=new ExerciseController();
+    ExerciseController controller = new ExerciseController();
     return ListView(
       children: mainMuscles.map((mainMuscle) {
         return ExpansionTile(
-          title: custom_widget.customTextWidgetForExersiceCard(mainMuscle,16),
+          title: custom_widget.customTextWidgetForExersiceCard(mainMuscle, 16),
           children: [
             FutureBuilder<List<Exercise>>(
-              future:controller.getExercisesByMainMuscle(mainMuscle),
+              future: controller.getExercisesByMainMuscle(mainMuscle),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -166,10 +205,13 @@ class _addExercise  extends State<addExercise> with SingleTickerProviderStateMix
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       Exercise exercise = snapshot.data![index];
-                     return exercises_card.addingExersiceWidget(
+
+                      getImageUrl(exercise);
+                      return exercises_card.addingExersiceWidget(
                         exercise.name,
-                       exercise.id,
-                       context,
+                        exercise.id,
+                        getImageUrl(exercise),
+                        context,
                       );
                     },
                   );
@@ -183,5 +225,5 @@ class _addExercise  extends State<addExercise> with SingleTickerProviderStateMix
       }).toList(),
     );
   }
-
 }
+

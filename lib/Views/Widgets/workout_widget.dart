@@ -50,6 +50,7 @@ class workout_widget {
                         color: Color(0xFF0dbab4),
                       ),
                     ),
+                    ignoreGestures: true,
                     onRatingUpdate: (rating) {
                       print(rating);
                     },

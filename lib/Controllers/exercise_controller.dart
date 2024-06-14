@@ -1,10 +1,14 @@
+import 'package:fit_scoop/Models/bodyPart.dart';
+
 import '../Models/exercise_model.dart';
+import '../Services/Database Services/bodyParts.dart';
 import '../Services/Database Services/exercise_service.dart';
 
 
 
 class ExerciseController {
   final ExerciseService _exerciseService = ExerciseService();
+  final BodyPartService _bodyPartService = BodyPartService();
 
   Future<void> addExercise(Exercise exercise) async {
     try {
@@ -63,6 +67,25 @@ class ExerciseController {
       return await _exerciseService.getExercisesByMainMuscle(mainMuscle);
     } catch (e) {
       print('Error getting exercises by main muscle: $e');
+      throw e;
+    }
+  }
+
+
+  Future<String?> getBodyImage(String name) async {
+    try {
+      return await _bodyPartService.getImage(name);
+    } catch (e) {
+      print('Error getting body part image: $e');
+      throw e;
+    }
+  }
+
+  Future<List<BodyPart>> getAllBoyImages() async {
+    try {
+      return await _bodyPartService.getAllImages();
+    } catch (e) {
+      print('Error getting body part image: $e');
       throw e;
     }
   }

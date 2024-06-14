@@ -11,9 +11,10 @@ import '../../Widgets/follower_widget.dart';
 import '../../Widgets/reviews_widget.dart';
 
 class FollowersPage extends StatefulWidget {
+  final ValueNotifier<int> followingsNotifier;
   final User_model user;
 
-  const FollowersPage({super.key, required this.user});
+  const FollowersPage({super.key, required this.user,required this.followingsNotifier});
 
   @override
   State<FollowersPage> createState() => _FollowersScreen();
@@ -31,14 +32,14 @@ class _FollowersScreen extends State<FollowersPage> {
 
   void removeFollower(User_model follower) async {
     UserController controller = UserController();
-
     await controller.unfollowUser( widget.user.id,follower.id);
-
     UserSingleton userSingleton = UserSingleton.getInstance();
     User_model user = userSingleton.getUser();
     user.followedUserIds.remove(follower.id);
     setState(() {
+      user.followedUserIds.remove(follower.id);
       followers.remove(follower);
+      widget.followingsNotifier.value = user.followedUserIds.length;
     });
   }
 
@@ -90,7 +91,7 @@ class _FollowersScreen extends State<FollowersPage> {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  Text("${widget.user.name}'s Followers").data ?? "",
+                  Text("${widget.user.name}'s Followings").data ?? "",
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -109,7 +110,7 @@ class _FollowersScreen extends State<FollowersPage> {
           Padding(
             padding: const EdgeInsets.only(left: 20.0, top: 30),
             child: Text(
-              '${followers.length} Followers',
+              '${followers.length} Followings',
               style: const TextStyle(
                 fontSize: 20,
                 color: Color(0xFF0dbab4),
