@@ -35,7 +35,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
         goal=metrics.fitnessGoal;
         UserSingleton usersingleton = UserSingleton.getInstance();
         User_model user = usersingleton.getUser();
-
         equipments=user.savedEquipmentIds.length.toString();
 
         return Drawer(

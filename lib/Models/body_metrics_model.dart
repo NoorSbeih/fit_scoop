@@ -31,8 +31,7 @@ class BodyMetrics {
     required this.CurrentDay,
     List<String>? workoutSchedule,
     required this.unitOfMeasure,
-  }) : this.workoutSchedule = workoutSchedule ?? List.filled(7, '');
-
+  }) : this.workoutSchedule =List.filled(7,'');
 
   Map<String, dynamic> toMap() {
     return {

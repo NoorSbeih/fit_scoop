@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 import 'package:input_slider/input_slider.dart';
 
+import '../../../Controllers/body_metrics_controller.dart';
 import '../../../Controllers/workout_controller.dart';
+import '../../../Models/body_metrics_model.dart';
 import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_model.dart';
@@ -141,26 +143,60 @@ class _AddWorkoutForADayState extends State<AddWorkoutForADayy> {
               child:  custom_widget.customTextWidget('No',16),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
+                // Perform asynchronous work outside setState
+                for (int i = 0; i < AddWorkoutForADayy.isSelected.length; i++) {
+                  AddWorkoutForADayy.isSelected[i] = (i == index);
+                }
+
+                UserSingleton userSingleton = UserSingleton.getInstance();
+                User_model user = userSingleton.getUser();
+
+                Workout workout = Workout(
+                  name: createWorkout1.name,
+                  description: createWorkout2.descriptionController.text,
+                  exercises: addExercise.exercises,
+                  duration: 12,
+                  intensity: createWorkout2.label,
+                  creatorId: user.id,
+                  numberOfSaves: 0,
+                  reviews: [],
+                  isPrivate: createWorkout2.isPrivate,
+                  timestamp: DateTime.now(),
+                );
+
+                WorkoutController workoutController = WorkoutController();
+                await workoutController.createWorkout(workout);
+
+                String? bodyMetricId = user.bodyMetrics;
+                print( user.bodyMetrics);
+                print(user.name);
+
+                BodyMetrics? metrics;
+                if (bodyMetricId != null) {
+                  BodyMetricsController bodyMetricsController = BodyMetricsController();
+                  metrics = await bodyMetricsController.fetchBodyMetrics("hDPf8Ekb6hf6fBVFnCDD");
+                }
+
                 setState(() {
-                  for (int i = 0; i < AddWorkoutForADayy.isSelected.length; i++) {
-                    AddWorkoutForADayy.isSelected[i] = (i == index);
-                  }
-                  UserSingleton userSingleton = UserSingleton.getInstance();
-                  User_model user = userSingleton.getUser();
-                  Workout workout =new Workout(name: createWorkout1.name, description: createWorkout2.descriptionController.text, exercises: addExercise.exercises, duration: 12, intensity: createWorkout2.label, creatorId: user.id, numberOfSaves: 0, reviews: [], isPrivate: createWorkout2.isPrivate, timestamp: DateTime.now(),);
-                  WorkoutController controller =new WorkoutController();
-                  controller.createWorkout(workout);
+                  print("indexxxxxxxxx");
+                  print(index);
+                  print("workoutSchedule length: ${metrics?.workoutSchedule.length}");
+
+                    metrics?.workoutSchedule[index] = workout.id!;
+
                 });
-                //_getSelectedDays();
+
+                // Navigate to the home page
                 Navigator.of(context).pop();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => HomePage()), // Replace SecondPage() with the desired page widget
-                );// Close the dialog
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                );
               },
-              child:  custom_widget.customTextWidget('Yes',16),
+              child: custom_widget.customTextWidget('Yes', 16),
             ),
+
           ],
         );
       },
