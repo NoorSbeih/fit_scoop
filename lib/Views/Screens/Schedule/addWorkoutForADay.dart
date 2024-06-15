@@ -175,18 +175,15 @@ class _AddWorkoutForADayState extends State<AddWorkoutForADayy> {
                 BodyMetrics? metrics;
                 if (bodyMetricId != null) {
                   BodyMetricsController bodyMetricsController = BodyMetricsController();
-                  metrics = await bodyMetricsController.fetchBodyMetrics("hDPf8Ekb6hf6fBVFnCDD");
-                }
+                  metrics = await bodyMetricsController.fetchBodyMetrics(
+                      user.bodyMetrics);
 
-                setState(() {
-                  print("indexxxxxxxxx");
-                  print(index);
-                  print("workoutSchedule length: ${metrics?.workoutSchedule.length}");
 
+                  setState(() {
                     metrics?.workoutSchedule[index] = workout.id!;
-
-                });
-
+                    bodyMetricsController.updateBodyMetrics(user.bodyMetrics, metrics!);
+                  });
+                }
                 // Navigate to the home page
                 Navigator.of(context).pop();
                 Navigator.push(

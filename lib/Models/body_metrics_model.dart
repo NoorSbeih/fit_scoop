@@ -31,7 +31,7 @@ class BodyMetrics {
     required this.CurrentDay,
     List<String>? workoutSchedule,
     required this.unitOfMeasure,
-  }) : this.workoutSchedule =List.filled(7,'');
+  }) : this.workoutSchedule =List.filled(7,'No workout');
 
   Map<String, dynamic> toMap() {
     return {
@@ -67,7 +67,9 @@ class BodyMetrics {
       fitnessGoal:map['fitnessGoal'],
       gymType: map['gymType'],
       CurrentDay:map['CurrentDay'],
-      workoutSchedule: map['workoutSchedule'].cast<String>(),
+      workoutSchedule: (map['workoutSchedule'] as List<dynamic>?)
+          ?.map((e) => e.toString())
+          .toList() ?? List.filled(7, 'No workout'),
      unitOfMeasure:map['unitOfMeasure'],
     );
   }

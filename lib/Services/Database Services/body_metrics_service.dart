@@ -3,6 +3,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fit_scoop/Views/Screens/Workout/current_workout_screen.dart';
 import '../../Models/body_metrics_model.dart';
+import '../../Models/user_model.dart';
+import '../../Models/user_singleton.dart';
 
 class BodyMetricsService {
   final CollectionReference _bodyMetricsRef = FirebaseFirestore.instance.collection('bodyMetrics');
@@ -11,14 +13,22 @@ class BodyMetricsService {
     try {
       DocumentReference documentRef = await _bodyMetricsRef.add(bodyMetrics.toMap());
       String documentId = documentRef.id;
-      await _usersRef.doc(bodyMetrics.userId).update({'bodyMetrics':documentId});
+     await _usersRef.doc(bodyMetrics.userId).update({'bodyMetrics':documentId});
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('users').doc(bodyMetrics.userId).get();
+      Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+
+      User_model user = User_model.fromMap(data!);
+      UserSingleton.getInstance().setUser(user);
+      print("Makakakakaka");
+      print(user.bodyMetrics);
+
     } catch (e) {
       print('Error adding body metrics: $e');
       throw e;
     }
   }
 
-  Future<void> updateBodyMetrics(String id,BodyMetrics bodyMetrics) async {
+  Future<void> updateBodyMetrics(String? id,BodyMetrics bodyMetrics) async {
     try {
       await _bodyMetricsRef.doc(id).update(bodyMetrics.toMap());
     } catch (e) {

@@ -45,14 +45,12 @@ class RegisterController {
         }
         User_model user = User_model.fromMap(data);
         UserSingleton.getInstance().setUser(user);
-
         final String? bodyMetrics = data['bodyMetrics'];
 
         if (bodyMetrics == null) {
           print('No bodyMetrics available for user_id: $user_id');
           return null;
         }
-
         BodyMetricsController controller = BodyMetricsController();
         BodyMetrics? bodyMetricss = await controller.fetchBodyMetrics(bodyMetrics);
 

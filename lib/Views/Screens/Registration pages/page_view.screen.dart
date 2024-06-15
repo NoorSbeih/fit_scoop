@@ -200,7 +200,7 @@ class _CustomPageViewState extends State<CustomPageView> {
        );
      }
 
-  void finishRegistration(BuildContext context) {
+  Future<void> finishRegistration(BuildContext context) async {
     List<String> workoutSchedule=[];
     BodyMetricsController _bodyMetricController=new BodyMetricsController();
     String id=RegisterController.userId;
@@ -211,8 +211,7 @@ class _CustomPageViewState extends State<CustomPageView> {
 
     model.BodyMetrics bodyMetrics= model.BodyMetrics(userId:id,height: RegisterPage2.heightresult,weight: RegisterPage2.weightresult,birthDate: dateString ,
     bodyFat: RegisterPage3.currentValue,gender: RegisterPage1.selectedgender,fitnessGoal:CustomPageView.Goal,gymType: RegisterPage5.typeOfPlace, CurrentDay:0,workoutSchedule: workoutSchedule,unitOfMeasure: unit);
-    _bodyMetricController.addBodyMetrics(bodyMetrics);
-
+    await _bodyMetricController.addBodyMetrics(bodyMetrics);
 
    RegisterController controller=RegisterController();
     controller.getUserBodyMetric(id).then((_) {

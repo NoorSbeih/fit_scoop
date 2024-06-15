@@ -57,8 +57,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
   void fetchData() async {
     try {
       UserSingleton userSingleton = UserSingleton.getInstance();
-       user = userSingleton.getUser();
-
+      user = userSingleton.getUser();
       String? bodyMetricId = user.bodyMetrics;
       print("djdjdj");
       print(bodyMetricId); // Assuming you want the user's UID

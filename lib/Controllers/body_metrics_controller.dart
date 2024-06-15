@@ -25,7 +25,7 @@ class BodyMetricsController {
       throw e;
     }
   }
-  Future<void> updateBodyMetrics(String id,BodyMetrics bodyMetrics) async {
+  Future<void> updateBodyMetrics(String? id,BodyMetrics bodyMetrics) async {
     try {
       // Update body metrics in the database using the BodyMetricsService
       await _bodyMetricsService.updateBodyMetrics(id,bodyMetrics);
