@@ -43,6 +43,11 @@ class BodyMetricsService {
         print("Document exists: ${snapshot.data()}");
         var data = snapshot.data();
         if (data != null) {
+          BodyMetrics? bb= BodyMetrics.fromMap(data as Map<String, dynamic>);
+          for(int i=0;i<bb.workoutSchedule.length;++i){
+            print("hi");
+            print(bb.workoutSchedule[i]);
+          }
           return BodyMetrics.fromMap(data as Map<String, dynamic>);
         } else {
           print("Document data is null");

@@ -67,6 +67,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
         print("elianananana");
         if (metrics != null) {
           int currentDayIndex = metrics.CurrentDay;
+          print(metrics.workoutSchedule[6]);
           currentWorkout =
           await Calculate(metrics.workoutSchedule, currentDayIndex);
           setState(() {
@@ -226,11 +227,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
         }
       },
     );
-
   }
-
-
-
   Future<Workout?> Calculate(List<String> workoutSchedule,int currentDayIndex) async {
     int currentDayOfWeek = DateTime
         .now()
@@ -238,9 +235,9 @@ class _WorkoutPageState extends State<WorkoutPagee> {
     print("The day of the week");
     print(getDayOfWeek(currentDayOfWeek));
 
-   WorkoutPagee.currentWorkoutId = workoutSchedule[currentDayIndex];
-  //  print(WorkoutPagee.currentWorkoutId);
+    WorkoutPagee.currentWorkoutId = workoutSchedule[6];
     print("IDDDD");
+    print(WorkoutPagee.currentWorkoutId);
     WorkoutController controller = new WorkoutController();
     return controller.getWorkout(WorkoutPagee.currentWorkoutId);
   }
@@ -248,19 +245,19 @@ class _WorkoutPageState extends State<WorkoutPagee> {
   int getDayOfWeek(int day) {
     switch (day) {
       case DateTime.saturday:
-        return 0;
+        return 6;
       case DateTime.sunday:
-        return 1;
+        return 5;
       case DateTime.monday:
-        return 2;
+        return 4;
       case DateTime.tuesday:
         return 3;
       case DateTime.wednesday:
-        return 4;
+        return 2;
       case DateTime.thursday:
-        return 5;
+        return 1;
       case DateTime.friday:
-        return 6;
+        return 0;
       default:
         return 7;
     }
