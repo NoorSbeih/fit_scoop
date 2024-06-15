@@ -7,6 +7,7 @@ import 'package:flutter_holo_date_picker/date_picker.dart';
 import 'package:flutter_holo_date_picker/date_picker_theme.dart';
 import 'package:flutter_holo_date_picker/i18n/date_picker_i18n.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Models/user_model.dart';
 
@@ -197,8 +198,8 @@ class _RegisterPageState extends State<RegisterPage1> {
                           setState(()  {
                             RegisterPage1.selectedgender= value!;
                           });
-                          //       SharedPreferences prefs =await SharedPreferences.getInstance() ;
-                          //     prefs.setString('Gender',  _selectedgender!);
+                               SharedPreferences prefs =await SharedPreferences.getInstance() ;
+                               prefs.setString('Gender', 'Male');
                         },
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         fillColor: MaterialStateColor.resolveWith(
@@ -221,8 +222,9 @@ class _RegisterPageState extends State<RegisterPage1> {
                           setState(() {
                             RegisterPage1.selectedgender = value!;
                           });
-                          // SharedPreferences prefs =await SharedPreferences.getInstance() ;
-                          // prefs.setString('Gender',  _selectedgender!);
+
+                          SharedPreferences prefs =await SharedPreferences.getInstance() ;
+                          prefs.setString('Gender', 'Female');
                         },
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         fillColor: MaterialStateColor.resolveWith(

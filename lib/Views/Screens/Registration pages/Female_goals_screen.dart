@@ -7,20 +7,20 @@ class Page4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
-      home: RegisterPage4(),
+      home: RegisterPage4F(),
     );
   }
 }
 
 
-class RegisterPage4 extends StatefulWidget {
+class RegisterPage4F extends StatefulWidget {
   static String selectedGoal = '';
-  const RegisterPage4({Key? key}) : super(key: key);
+  const RegisterPage4F({Key? key}) : super(key: key);
   @override
-  State<RegisterPage4> createState() => _RegisterPageState();
+  State<RegisterPage4F> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage4> {
+class _RegisterPageState extends State<RegisterPage4F> {
 
   @override
   void initState() {
@@ -56,39 +56,33 @@ class _RegisterPageState extends State<RegisterPage4> {
 
               ),
 
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child:cardWidget("Weight loss","Primarily focus on burning fat and losing weight."),
-                  ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child:cardWidget("Toning/Shaping","Focus on improving muscle definition and achieving a more sculpted appearance."),
+              ),
 
 
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child:cardWidget("Bodybuilding","Focus on increasing overall muscle mass and decreasing body fat percentage."),
-                  ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child:cardWidget("Muscle Gain","Focus on progressive resistance training, and adequate rest for effective muscle gain."),
+              ),
 
-                   Align(
-                    alignment: Alignment.centerLeft,
-                    child:cardWidget("Strength Training","Focus on increasing muscle strength and lifting heavy weights."),
-                  ),
-
-
-                 Align(
-                    alignment: Alignment.centerLeft,
-                    child:cardWidget("Powerlifting","Specialized training that focuses on extremely heavy weights and low amount of reps."),
-                  ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child:cardWidget("Strength Training","Focus on increasing muscle strength and lifting heavy weights."),
+              ),
 
             ]
         )
     );
   }
   Widget cardWidget(String title, String description) {
-    String selectedGoal = RegisterPage4.selectedGoal;
+    String selectedGoal = RegisterPage4F.selectedGoal;
 
     return GestureDetector(
       onTap: () {
         setState(() {
-          RegisterPage4.selectedGoal = title;
+          RegisterPage4F.selectedGoal = title;
         });
       },
       child: card_widget.customcardWidget(

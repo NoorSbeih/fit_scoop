@@ -87,12 +87,13 @@ flutter:
         - asset: fonts/BebasNeue-Regular.ttf
   uses-material-design: true
 
-    
+
     # To add assets to your application, add an assets section, like this:
   assets:
         - images/google.jpg
         - images/trapBar.png
         - images/ez-bar.png
+        - images/biceps_curl.png
         - images/preacher_curl_bench.png
         - images/medicine_ball.png
         - images/barbells.png
