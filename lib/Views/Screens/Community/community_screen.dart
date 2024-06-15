@@ -10,7 +10,6 @@ import '../../../Models/review_model.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_model.dart';
 import '../../Widgets/drawer_widget.dart';
-import '../../Widgets/reviews_widget.dart';
 import 'community_workout_widget.dart';
 import 'community_review_widget.dart';
 
@@ -135,7 +134,7 @@ class _CommunityPageState extends State<CommunityPage> {
           if (activityList.isEmpty) {
             return const Center(
               child: Text(
-                'No community found',
+                'No activity found',
                 style: TextStyle(fontSize: 18, color: Colors.white),
               ),
             );

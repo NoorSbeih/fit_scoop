@@ -150,6 +150,8 @@ flutter:
         - images/bodyMuscles/waist.JPG
         - images/bodyMuscles/lowerLegs.JPG
         - images/bodyMuscles/lowerArms.JPG
+        - images/bodyMuscles/upperLegs.JPG
+        - images/bodyMuscles/cardio.png
     #   - images/a_dot_ham.jpeg
 
     # An image asset can refer to one or more resolution-specific "variants", see

@@ -184,32 +184,26 @@ class _LoginPageState extends State<LoginPage> {
                     }
 
 
-                    if(eV.validateEmail(email)=="" && !password.isEmpty) {
+                    if (eV.validateEmail(email) == "" && !password.isEmpty) {
                       LoginController loginController = LoginController();
-                      loginController.signInWithEmailAndPassword(
-                          email, password)
-                          .then((user) async {
+                      loginController.signInWithEmailAndPassword(email, password).then((user) async {
                         if (user != null) {
-
-                           // if(await loginController.getUserBodyMetric()==null){
-                           //   Navigator.push(
-                           //     context,
-                           //     MaterialPageRoute(builder: (context) => CustomPageView()),
-                           //   );s
-                           // }
-                          if(await loginController.getUserBodyMetric()==null){
+                          if (await loginController.getUserBodyMetric() == null) {
                             print("empty");
-                          }
-                           else{
-                             Navigator.push(
-                               context,
-                               MaterialPageRoute(builder: (context) => HomePage()), // Replace SecondPage() with the desired page widget
-                             );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => HomePage()), // Replace HomePage() with the desired page widget
+                            );
                           }
                         } else {
                           print('User authentication failed.');
                           setState(() {
-                            _passwordErrorText = 'Incorrect password';
+                            if (user == null) {
+                              emailErrorText = 'Email not found';
+                            } else {
+                              _passwordErrorText = 'Incorrect password';
+                            }
                           });
                         }
                       });

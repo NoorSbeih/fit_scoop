@@ -10,9 +10,9 @@ import '../Models/user_singleton.dart';
 import 'body_metrics_controller.dart';
 
 class LoginController {
-  static String user_id="";
-  Future<User?> signInWithEmailAndPassword(String email,
-      String password) async {
+  static String user_id = "";
+
+  Future<User?> signInWithEmailAndPassword(String email, String password) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
@@ -21,23 +21,27 @@ class LoginController {
       );
       User? user = userCredential.user;
 
-      user_id=user!.uid;
+      if (user != null) {
+        user_id = user.uid;
+      }
       return user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
+        return null;
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided.');
+        return null;
       }
     } catch (e) {
       print('An error occurred: $e');
+      return null;
     }
     return null;
   }
 
   Future<String?> getUserBodyMetric() async {
     try {
-  //  User _user;
       CollectionReference users = FirebaseFirestore.instance.collection('users');
       DocumentSnapshot snapshot = await users.doc(user_id).get();
       if (snapshot.exists) {
@@ -50,7 +54,6 @@ class LoginController {
         BodyMetrics? bodyMetricss = await controller.fetchBodyMetrics(UserSingleton.getInstance().getUser().bodyMetrics);
         BodyMetricsSingleton.getInstance().setBodyMetrics(bodyMetricss!);
         return bodyMetrics;
-
       } else {
         print('No data available for user_id: $user_id');
         return null;
@@ -60,7 +63,6 @@ class LoginController {
       return null;
     }
   }
-
 }
 
 

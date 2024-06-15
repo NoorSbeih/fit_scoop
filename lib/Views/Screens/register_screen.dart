@@ -1,6 +1,7 @@
 
 import 'package:fit_scoop/Controllers/register_controller.dart';
 import 'package:fit_scoop/Views/Screens/Registration%20pages/page_view.screen.dart';
+import 'package:fit_scoop/Views/Screens/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -414,11 +415,31 @@ Navigator.push(
                         color:Color(0xFF2C2A2A),
 
                       ),),
+
                   ],
                 ),
 
               ),
             ),
+
+
+      GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+              MaterialPageRoute(builder: (context) => Login()),
+          );
+        },
+
+
+        child: const Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Text(
+                "Have account? Sign in",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+      ),
 
           ],
         ),
