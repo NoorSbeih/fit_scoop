@@ -13,6 +13,7 @@ import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_model.dart';
 import 'package:fit_scoop/Views/Widgets/exercises_card_widget.dart';
+import '../WorkoutScheduling/addWorkoutForADay.dart';
 
 class DetailPage extends StatefulWidget {
   final Workout workout;
@@ -251,9 +252,9 @@ class _DetailPageState extends State<DetailPage> {
                             }
                           });
 
-                          UserSingleton userSingleton =
-                              UserSingleton.getInstance();
-                          User_model user = userSingleton.getUser();
+                        UserSingleton userSingleton =
+                            UserSingleton.getInstance();
+                        User_model user = userSingleton.getUser();
 
                           if (user != null && user.id != null) {
                             String userId = user.id;
@@ -371,8 +372,15 @@ class _DetailPageState extends State<DetailPage> {
               SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
-                  // Add your button functionality here
-                  print('Your button action');
+                  //  AddWorkoutForADay()
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          AddWorkoutForADay(),
+                    ),
+                  );
+
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(

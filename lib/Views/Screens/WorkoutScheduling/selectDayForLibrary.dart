@@ -14,28 +14,28 @@ import '../add/createworkout2.dart';
 import '../main_page_screen.dart';
 import 'package:fit_scoop/Views/Screens/add/addExercise.dart';
 
-class AddWorkoutForADay extends StatelessWidget {
-  const AddWorkoutForADay({Key? key}) : super(key: key);
+class selectDayForLibrary extends StatelessWidget {
+  const selectDayForLibrary({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: AddWorkoutForADayy(),
+      home: selectDayForLibraryy(),
     );
   }
 }
 
-class AddWorkoutForADayy extends StatefulWidget {
+class selectDayForLibraryy extends StatefulWidget {
   static String daysSelected = "";
   static List<bool> isSelected = [false, false, false, false, false, false, false];
 
-  const AddWorkoutForADayy({Key? key}) : super(key: key);
+  const selectDayForLibraryy({Key? key}) : super(key: key);
 
   @override
-  State<AddWorkoutForADayy> createState() => _AddWorkoutForADayState();
+  State<selectDayForLibraryy> createState() => _selectDayForLibrary();
 }
 
-class _AddWorkoutForADayState extends State<AddWorkoutForADayy> {
+class _selectDayForLibrary extends State<selectDayForLibraryy> {
   final List<String> _daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
   @override
@@ -145,8 +145,8 @@ class _AddWorkoutForADayState extends State<AddWorkoutForADayy> {
             TextButton(
               onPressed: () async {
                 // Perform asynchronous work outside setState
-                for (int i = 0; i < AddWorkoutForADayy.isSelected.length; i++) {
-                  AddWorkoutForADayy.isSelected[i] = (i == index);
+                for (int i = 0; i < selectDayForLibraryy.isSelected.length; i++) {
+                  selectDayForLibraryy.isSelected[i] = (i == index);
                 }
 
                 UserSingleton userSingleton = UserSingleton.getInstance();
@@ -177,8 +177,6 @@ class _AddWorkoutForADayState extends State<AddWorkoutForADayy> {
                   BodyMetricsController bodyMetricsController = BodyMetricsController();
                   metrics = await bodyMetricsController.fetchBodyMetrics(
                       user.bodyMetrics);
-
-
                   setState(() {
                     metrics?.workoutSchedule[index] = workout.id!;
                     bodyMetricsController.updateBodyMetrics(user.bodyMetrics, metrics!);
@@ -200,7 +198,7 @@ class _AddWorkoutForADayState extends State<AddWorkoutForADayy> {
     );
   }
 
- /* String _getSelectedDays() {
+/* String _getSelectedDays() {
     List<String> days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     List<String> selectedDays = [];
     for (int i = 0; i < AddWorkoutForADayy.isSelected.length; i++) {
