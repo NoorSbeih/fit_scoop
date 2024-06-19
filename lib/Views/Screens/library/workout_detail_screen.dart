@@ -13,6 +13,7 @@ import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_model.dart';
 import '../WorkoutScheduling/addWorkoutForADay.dart';
+import '../WorkoutScheduling/selectDayForLibrary.dart';
 
 class DetailPage extends StatefulWidget {
   final Workout workout;
@@ -348,7 +349,7 @@ class _DetailPageState extends State<DetailPage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        AddWorkoutForADay(),
+                        selectDayForLibraryy(workout: widget.workout,),
                   ),
                 );
 
