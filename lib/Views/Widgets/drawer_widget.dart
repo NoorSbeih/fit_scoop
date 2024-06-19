@@ -4,12 +4,14 @@ import 'package:fit_scoop/Models/body_metrics_model.dart';
 import 'package:fit_scoop/Models/user_model.dart';
 import 'package:fit_scoop/Models/user_singleton.dart';
 import 'package:fit_scoop/Views/Screens/Equipments/equipment_sceen.dart';
+import 'package:fit_scoop/Views/Screens/Update/femaleGoalsUpdate.dart';
 import 'package:fit_scoop/Views/Screens/Update/goalsUpdate.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Controllers/authentication_controller.dart';
 import '../Screens/Update/gymType.dart';
+import '../Screens/Update/maleGoalsUpdate.dart';
 import '../Screens/Update/weight_HeightUpdate.dart';
 import '../Screens/login_screen.dart';
 
@@ -22,6 +24,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
   String typeOfPlace = "";
   String equipments="";
   String goal="";
+  String gender="";
   @override
   void initState() {
     super.initState();
@@ -33,6 +36,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
         BodyMetrics metrics = singleton.getMetrices();
         typeOfPlace=metrics.gymType;
         goal=metrics.fitnessGoal;
+        gender=metrics.gender;
+        print(gender);
         UserSingleton usersingleton = UserSingleton.getInstance();
         User_model user = usersingleton.getUser();
         equipments=user.savedEquipmentIds.length.toString();
@@ -203,11 +208,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
                 GestureDetector(
                   onTap: () {
-                    // Navigate to a new page when the text is tapped
+                    if(gender=="Female"){
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => goalsUpdate(
+                        builder: (context) => femaleGoalsUpdate(
                           onUpdateGoal: (goal) {
                             setState(() {
                               metrics.fitnessGoal= goal;
@@ -217,6 +222,23 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         ),
                       ),
                     );
+                    }
+
+                    else{
+                      Navigator.push(
+                          context,
+                      MaterialPageRoute(
+                        builder: (context) => maleGoalsUpdate(
+                          onUpdateGoal: (goal) {
+                            setState(() {
+                              metrics.fitnessGoal= goal;
+                              goal=metrics.fitnessGoal;
+                            });
+                          },
+                        ),
+                      ),
+                      );
+                    }
                   },
 
                     child:CustomUnderlineText(
@@ -230,15 +252,15 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 ),
 
                     SizedBox(height: 10),
-                    CustomUnderlineText(
-                      text: 'Training Days: ${metrics.workoutSchedule
-                          .length} Selected',
-                      fontSize: 20,
-                      textColor: Colors.white,
-                      underlineColor: Colors.grey,
-                      underlinePadding: 2.0,
-                      underlineThickness: 2.0,
-                    ),
+                    // CustomUnderlineText(
+                    //   text: 'Training Days: ${metrics.workoutSchedule
+                    //       .length} Selected',
+                    //   fontSize: 20,
+                    //   textColor: Colors.white,
+                    //   underlineColor: Colors.grey,
+                    //   underlinePadding: 2.0,
+                    //   underlineThickness: 2.0,
+                    // ),
 
                     // SizedBox(height: 10),
                     // CustomUnderlineText(

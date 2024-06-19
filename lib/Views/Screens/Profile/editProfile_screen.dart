@@ -193,7 +193,7 @@ class _EditProfile extends State<EditProfile> {
                 //Navigator.popUntil(context, (route) => route.settings.name == '/ProfilePage');
 
 
-                //   Navigator.popUntil(context, ModalRoute.withName('ProfilePage'));
+               // Navigator.popUntil(context, ModalRoute.withName('ProfilePage'));
               },
 
             ),
@@ -309,49 +309,49 @@ class _EditProfile extends State<EditProfile> {
                         fontFamily: 'BebasNeue'),
                   ),
                   const SizedBox(height: 10.0),
-                  const Text(
-                    'GENDER',
-                    style: TextStyle(
-                        color: Color(0xFF0dbab4),
-                        fontSize: 30,
-                        fontFamily: 'BebasNeue'),
-                  ),
-                  Row(
-                    children: [
-                      Radio<String>(
-                        value: 'Male',
-                        groupValue: gender,
-                        activeColor: Color(0xFF0dbab4),
-                        onChanged: (value) {
-                          setState(() {
-                            gender = value;
-                          });
-                        },
-                      ),
-                      const Text(
-                        'Male',
-                        style: TextStyle(color: Colors.white,
-                            fontFamily: 'BebasNeue',
-                            fontSize: 20),
-                      ),
-                      Radio<String>(
-                        value: 'Female',
-                        groupValue: gender,
-                        activeColor: Color(0xFF0dbab4),
-                        onChanged: (value) {
-                          setState(() {
-                            gender = value;
-                          });
-                        },
-                      ),
-                      const Text(
-                        'Female',
-                        style: TextStyle(color: Colors.white,
-                            fontFamily: 'BebasNeue',
-                            fontSize: 20),
-                      ),
-                    ],
-                  ),
+                  // const Text(
+                  //   'GENDER',
+                  //   style: TextStyle(
+                  //       color: Color(0xFF0dbab4),
+                  //       fontSize: 30,
+                  //       fontFamily: 'BebasNeue'),
+                  // ),
+                  // Row(
+                  //   children: [
+                  //     Radio<String>(
+                  //       value: 'Male',
+                  //       groupValue: gender,
+                  //       activeColor: Color(0xFF0dbab4),
+                  //       onChanged: (value) {
+                  //         setState(() {
+                  //           gender = value;
+                  //         });
+                  //       },
+                  //     ),
+                  //     const Text(
+                  //       'Male',
+                  //       style: TextStyle(color: Colors.white,
+                  //           fontFamily: 'BebasNeue',
+                  //           fontSize: 20),
+                  //     ),
+                  //     Radio<String>(
+                  //       value: 'Female',
+                  //       groupValue: gender,
+                  //       activeColor: Color(0xFF0dbab4),
+                  //       onChanged: (value) {
+                  //         setState(() {
+                  //           gender = value;
+                  //         });
+                  //       },
+                  //     ),
+                  //     const Text(
+                  //       'Female',
+                  //       style: TextStyle(color: Colors.white,
+                  //           fontFamily: 'BebasNeue',
+                  //           fontSize: 20),
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(height: 10.0),
                   const Text(
                     'BIO',

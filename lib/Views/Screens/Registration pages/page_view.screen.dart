@@ -15,11 +15,16 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Controllers/body_metrics_controller.dart';
+import '../../../Controllers/user_controller.dart';
+import '../../../Models/user_model.dart';
+import '../../../Models/user_singleton.dart';
 import '../../../Services/Database Services/body_metrics_service.dart';
+import '../Equipments/equipment_sceen.dart';
 import 'Female_goals_screen.dart';
 import 'Male_goals_screen.dart';
 import 'birth_gender_screen.dart';
 import 'body_fat_screen.dart';
+import 'equipment_screen.dart';
 import 'height_weight_screen.dart';
 import 'package:fit_scoop/Controllers/register_controller.dart';
 import '/Models/body_metrics_model.dart' as model;
@@ -36,7 +41,7 @@ class _CustomPageViewState extends State<CustomPageView> {
 
   late String unit="";
 
-
+  List<String> selectedEquipmentIds = [];
 
    @override
    void initState() {
@@ -102,7 +107,7 @@ class _CustomPageViewState extends State<CustomPageView> {
          }
        },
        icon: Icon(Icons.arrow_back),
-       color: Colors.orange,
+       color: Color(0xFF0dbab4),
        ),
            ),
              SizedBox(
@@ -116,7 +121,13 @@ class _CustomPageViewState extends State<CustomPageView> {
                    RegisterPage3(),
                    CustomPageView.Gender == 'Male' ? RegisterPage4M() : RegisterPage4F(),
                    RegisterPage5(),
-                   RegisterPage6(),
+                 Page6(
+                 onEquipmentSelected: (selectedEquipmentIds) {
+                   setState(() {
+                     this.selectedEquipmentIds = selectedEquipmentIds;
+                   });
+                 },
+                 ),
                  ],
                ),
              ),
@@ -129,9 +140,10 @@ class _CustomPageViewState extends State<CustomPageView> {
                    showError(context);
                        }
                 else if (currentPageIndex >= 5 ) {
-                  if(!RegisterPage6.daysSelected.isEmpty){
+                 // if(!RegisterPage6.daysSelected.isEmpty){
                    finishRegistration(context);
-                }}
+                //}
+              }
                 else if (currentPageIndex == 1 && !isDataFilled2()) {
                     showError(context);
 
@@ -157,9 +169,10 @@ class _CustomPageViewState extends State<CustomPageView> {
                 else if (currentPageIndex == 4 && RegisterPage5.typeOfPlace.isEmpty) {
                     showError(context);
                 }
-                else if (currentPageIndex == 5&& RegisterPage6.daysSelected.isEmpty) {
+
+                else if (currentPageIndex == 5 && selectedEquipmentIds.isEmpty) {
                    showError(context);
-                   // finishRegistration(context);
+                    finishRegistration(context);
                   }
                 else  {
                   nextPage(context);
@@ -202,13 +215,13 @@ class _CustomPageViewState extends State<CustomPageView> {
 
   Future<void> finishRegistration(BuildContext context) async {
     List<String> workoutSchedule=[];
+    //Page6.saveSelectedEquipment();
+    UserController userController= UserController();
+
+    userController.saveEquipments(RegisterController.userId, selectedEquipmentIds);
     BodyMetricsController _bodyMetricController=new BodyMetricsController();
     String id=RegisterController.userId;
     String dateString = RegisterPage1.formateddate;
- //   List<String> parts = dateString.split('/');
-   // String formattedDate = '${parts[2]}-${parts[0]}-${parts[1]}T00:00:00';
-   // DateTime dateTime = DateTime.parse(formattedDate);
-
     model.BodyMetrics bodyMetrics= model.BodyMetrics(userId:id,height: RegisterPage2.heightresult,weight: RegisterPage2.weightresult,birthDate: dateString ,
     bodyFat: RegisterPage3.currentValue,gender: RegisterPage1.selectedgender,fitnessGoal:CustomPageView.Goal,gymType: RegisterPage5.typeOfPlace, CurrentDay:0,workoutSchedule: workoutSchedule,unitOfMeasure: unit);
     await _bodyMetricController.addBodyMetrics(bodyMetrics);
