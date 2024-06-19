@@ -160,8 +160,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     );
                   },
                    child: CustomUnderlineText(
-                      text: 'Weight: ${metrics.weight}',
-                      fontSize: 20,
+                     text: 'Weight: ${metrics.weight.toStringAsFixed(2)}',
+                     fontSize: 20,
                       textColor: Colors.white,
                       underlineColor: Colors.grey,
                       underlinePadding: 2.0,
@@ -171,7 +171,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
                     SizedBox(height: 10),
                     CustomUnderlineText(
-                      text: 'Height: ${metrics.height}',
+                      text: 'Height: ${metrics.height.toStringAsFixed(2)}',
                       fontSize: 20,
                       textColor: Colors.white,
                       underlineColor: Colors.grey,

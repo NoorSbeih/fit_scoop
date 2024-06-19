@@ -216,6 +216,7 @@
 // }
 import 'package:fit_scoop/Controllers/review_controller.dart';
 import 'package:fit_scoop/Models/user_model.dart';
+import 'package:fit_scoop/Views/Screens/library/workout_detail_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -379,6 +380,7 @@ class _CommunitySearchWorkoutWidgetState extends State<CommunitySearchWorkoutWid
                         initialRating: intensity.toDouble(),
                         direction: Axis.horizontal,
                         itemCount: 3,
+                        ignoreGestures: true,
                         tapOnlyMode: true,
                         itemPadding: const EdgeInsets.all(0),
                         itemSize: 26.0,
@@ -432,6 +434,11 @@ class _CommunitySearchWorkoutWidgetState extends State<CommunitySearchWorkoutWid
                             workout: widget.workout,
                           ),
                         ),
+                        // MaterialPageRoute(
+                        //   builder: (context) => DetailPage(
+                        //     workout: widget.workout, updateSavedWorkouts: (Workout , bool ) {  },
+                        //   ),
+                        // ),
                       );
                     },
                     child: Container(

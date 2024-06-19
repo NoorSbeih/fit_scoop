@@ -91,6 +91,7 @@ class communityWorkoutWidget {
                         direction: Axis.horizontal,
                         itemCount: 3,
                         tapOnlyMode: true,
+                        ignoreGestures: true,
                         itemPadding: const EdgeInsets.all(0),
                         itemSize: 26.0,
                         itemBuilder: (context, _) => Transform.scale(

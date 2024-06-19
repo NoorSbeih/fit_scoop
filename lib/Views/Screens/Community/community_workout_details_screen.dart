@@ -35,8 +35,6 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage
   void initState() {
     super.initState();
     fetchReviews();
-    print("elianaaaaaaa");
- print(widget.workout.intensity);
   }
 
   void fetchReviews() async {
@@ -200,27 +198,27 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage
                   color: Color(0xFF0dbab4),
                   fontFamily: 'BebasNeue'),
             ),
-            // RatingSummary(
-            //   counter: _ratingSummaryData['counter'] ?? 0,
-            //   average: (_ratingSummaryData['average'] ?? 0.0).isFinite
-            //       ? (_ratingSummaryData['average'] ?? 0.0)
-            //       : 0.0,
-            //   showAverage: _ratingSummaryData['showAverage'] ?? false,
-            //   color: _ratingSummaryData['color'] ?? Colors.white,
-            //   counterFiveStars: _ratingSummaryData['counterFiveStars'] ?? 0,
-            //   counterFourStars: _ratingSummaryData['counterFourStars'] ?? 0,
-            //   counterThreeStars: _ratingSummaryData['counterThreeStars'] ?? 0,
-            //   counterTwoStars: _ratingSummaryData['counterTwoStars'] ?? 0,
-            //   counterOneStars: _ratingSummaryData['counterOneStars'] ?? 0,
-            //   labelCounterOneStarsStyle: const TextStyle(color: Colors.white),
-            //   labelCounterTwoStarsStyle: const TextStyle(color: Colors.white),
-            //   labelCounterThreeStarsStyle: const TextStyle(color: Colors.white),
-            //   labelCounterFourStarsStyle: const TextStyle(color: Colors.white),
-            //   labelCounterFiveStarsStyle: const TextStyle(color: Colors.white),
-            //   labelStyle: const TextStyle(color: Colors.white),
-            //   averageStyle: const TextStyle(
-            //       color: Colors.white, fontSize: 75, fontFamily: 'BebasNeue'),
-            // ),
+            RatingSummary(
+              counter: _ratingSummaryData['counter'] ?? 0,
+              average: (_ratingSummaryData['average'] ?? 0.0).isFinite
+                  ? (_ratingSummaryData['average'] ?? 0.0)
+                  : 0.0,
+              showAverage: _ratingSummaryData['showAverage'] ?? false,
+              color: _ratingSummaryData['color'] ?? Colors.white,
+              counterFiveStars: _ratingSummaryData['counterFiveStars'] ?? 0,
+              counterFourStars: _ratingSummaryData['counterFourStars'] ?? 0,
+              counterThreeStars: _ratingSummaryData['counterThreeStars'] ?? 0,
+              counterTwoStars: _ratingSummaryData['counterTwoStars'] ?? 0,
+              counterOneStars: _ratingSummaryData['counterOneStars'] ?? 0,
+              labelCounterOneStarsStyle: const TextStyle(color: Colors.white),
+              labelCounterTwoStarsStyle: const TextStyle(color: Colors.white),
+              labelCounterThreeStarsStyle: const TextStyle(color: Colors.white),
+              labelCounterFourStarsStyle: const TextStyle(color: Colors.white),
+              labelCounterFiveStarsStyle: const TextStyle(color: Colors.white),
+              labelStyle: const TextStyle(color: Colors.white),
+              averageStyle: const TextStyle(
+                  color: Colors.white, fontSize: 75, fontFamily: 'BebasNeue'),
+            ),
 
             ElevatedButton(
               onPressed: () {

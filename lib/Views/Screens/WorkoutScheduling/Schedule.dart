@@ -58,7 +58,7 @@ class _SchedulePageScreenState extends State<SchedulePageScreen> {
         metrics = await bodyMetricsController.fetchBodyMetrics(bodyMetricId!);
 
         if (metrics?.workoutSchedule != null) {
-           workoutIds = metrics!.workoutSchedule;
+          workoutIds = metrics!.workoutSchedule;
           print("Fetched workout IDs: $workoutIds"); // Debug print
           fetchWorkouts(workoutIds);
         }
@@ -148,8 +148,8 @@ class _SchedulePageScreenState extends State<SchedulePageScreen> {
                               ),
                             ),
                             if (workoutSchedule[index] == null)
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10.0),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 10.0),
                                 child: Text(
                                   '- NO WORKOUT',
                                   style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
@@ -189,8 +189,8 @@ class _SchedulePageScreenState extends State<SchedulePageScreen> {
                         },
                       ),
                     ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0, left: 10.0, right: 10.0),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 8.0, left: 10.0, right: 10.0),
                     child: Divider(
                       color: Colors.grey,
                       thickness: 1.0,
