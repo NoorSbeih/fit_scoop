@@ -78,7 +78,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
 
             intensity = checkIntensity(currentWorkout!.intensity);
             name = currentWorkout!.name;
-            duration = currentWorkout!.duration;
+            // duration = currentWorkout!.duration;
           });
         } else {
           print("Empty body metrics");
@@ -219,8 +219,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
             sets.toString(),
             weight.toString(),
             context,
-            id,
-            duration,
+            id
           );
         } else {
           return SizedBox(); // Placeholder widget, replace it with your preferred widget

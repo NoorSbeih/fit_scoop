@@ -22,6 +22,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
   String typeOfPlace = "";
   String equipments="";
   String goal="";
+  String gender="";
   @override
   void initState() {
     super.initState();
@@ -33,6 +34,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
         BodyMetrics metrics = singleton.getMetrices();
         typeOfPlace=metrics.gymType;
         goal=metrics.fitnessGoal;
+        gender=metrics.gender;
         UserSingleton usersingleton = UserSingleton.getInstance();
         User_model user = usersingleton.getUser();
         equipments=user.savedEquipmentIds.length.toString();
@@ -204,6 +206,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 GestureDetector(
                   onTap: () {
                     // Navigate to a new page when the text is tapped
+
+                    if(gender=="Female"){
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -216,7 +220,21 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           },
                         ),
                       ),
-                    );
+                    );}
+
+                    else{
+
+                      MaterialPageRoute(
+                        builder: (context) => goalsUpdate(
+                          onUpdateGoal: (goal) {
+                            setState(() {
+                              metrics.fitnessGoal= goal;
+                              goal=metrics.fitnessGoal;
+                            });
+                          },
+                        ),
+                      );
+                    }
                   },
 
                     child:CustomUnderlineText(

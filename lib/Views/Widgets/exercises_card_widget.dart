@@ -298,7 +298,7 @@ class exercises_card {
   }
 
   static Widget CurrentWorkoutCardWidget(
-      String name, String sets, String weight,BuildContext context,String id,int duration) {
+      String name, String sets, String weight,BuildContext context,String id) {
     return SizedBox(
       height: 110,
       child: Card(

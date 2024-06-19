@@ -86,23 +86,41 @@ class workout_widget {
                 ],
               ),
               const Spacer(),
-              GestureDetector(
-                onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailPage(workout: workout, updateSavedWorkouts: updateSavedWorkouts,),
-                      ),
-                    );
-                },
-                child: Container(
-                  margin: const EdgeInsets.only(left: 10),
-                  child: const Icon(
-                    Icons.more_horiz_outlined,
-                    color: Color(0xFF0dbab4),
+                // onTap: () {
+                //     showModalBottomSheet(
+                //       context: context,
+                //       isScrollControlled: true,
+                //       shape: const RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                //       ),
+                //       builder: (BuildContext context) {
+                //         return Container(
+                //           height: MediaQuery.of(context).size.height * 0.95,
+                //           decoration: BoxDecoration(
+                //             borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
+                //             border: Border.all(
+                //               width: 2.0,
+                //             ),
+                //           ),
+                //           child:DetailPage(workout: workout, updateSavedWorkouts: updateSavedWorkouts,),
+                //         );
+                //       },
+                //     );
+                // },
+                GestureDetector(
+                  onTap: () {
+                    showCustomDialog(context, workout, updateSavedWorkouts);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    child: const Icon(
+                      Icons.more_horiz_outlined,
+                      color: Color(0xFF0dbab4),
+                    ),
                   ),
                 ),
-              ),
+
+
             ],
           ),
         ),
@@ -110,3 +128,38 @@ class workout_widget {
     );
   }
 }
+void showCustomDialog(BuildContext context, Workout workout, Function(Workout, bool) updateSavedWorkouts) {
+  showGeneralDialog(
+    context: context,
+    barrierDismissible: true,
+    barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+    barrierColor: Colors.black45,
+    pageBuilder: (BuildContext buildContext, Animation animation, Animation secondaryAnimation) {
+      return Center(
+        child: FractionallySizedBox(
+          heightFactor: 1.0,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: DetailPage(workout: workout, updateSavedWorkouts: updateSavedWorkouts),
+          ),
+        ),
+      );
+    },
+    transitionBuilder: (context, animation, secondaryAnimation, child) {
+      return SlideTransition(
+        position: CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeOut,
+        ).drive(Tween<Offset>(
+          begin: const Offset(0, 1.0),
+          end: Offset.zero,
+        )),
+        child: child,
+      );
+    },
+  );
+}
+
