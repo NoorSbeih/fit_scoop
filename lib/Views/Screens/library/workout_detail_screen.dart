@@ -12,6 +12,7 @@ import '../../../Models/review_model.dart';
 import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_model.dart';
+import '../WorkoutScheduling/addWorkoutForADay.dart';
 
 class DetailPage extends StatefulWidget {
   final Workout workout;
@@ -342,8 +343,15 @@ class _DetailPageState extends State<DetailPage> {
             SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                // Add your button functionality here
-                print('Your button action');
+              //  AddWorkoutForADay()
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        AddWorkoutForADay(),
+                  ),
+                );
+
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
@@ -358,7 +366,7 @@ class _DetailPageState extends State<DetailPage> {
                 ),
               ),
               child: const Text(
-                'Try this workout',
+                'ADD TO SCHEDULE',
                 style: TextStyle(fontSize: 22, color: Colors.white),
               ),
             ),

@@ -12,7 +12,7 @@ class BodyMetrics {
   double bodyFat;
   String fitnessGoal;
   String gymType;
-  int CurrentDay;
+  int CurrentDay;//DELETE
   List<String> workoutSchedule;
   String unitOfMeasure;
 

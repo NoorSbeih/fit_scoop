@@ -10,6 +10,7 @@ import 'package:fit_scoop/Views/Widgets/workout_widget.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_model.dart';
 import '../../Widgets/drawer_widget.dart';
+import '../WorkoutScheduling/Schedule.dart';
 import '../main_page_screen.dart';
 import 'begin_workout_screen.dart';
 class WorkoutPage extends StatelessWidget {
@@ -54,7 +55,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
     fetchData();
   }
 
-  void fetchData() async {
+  void fetchData()  async{
     try {
       UserSingleton userSingleton = UserSingleton.getInstance();
       user = userSingleton.getUser();
@@ -67,7 +68,6 @@ class _WorkoutPageState extends State<WorkoutPagee> {
         print("elianananana");
         if (metrics != null) {
           int currentDayIndex = metrics.CurrentDay;
-          print(metrics.workoutSchedule[6]);
           currentWorkout =
           await Calculate(metrics.workoutSchedule, currentDayIndex);
           setState(() {
@@ -115,15 +115,12 @@ class _WorkoutPageState extends State<WorkoutPagee> {
           ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.settings, color: Color(0xFF0dbab4),),
+            icon: const Icon(Icons.table_chart_outlined, color: Color(0xFF0dbab4),),
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) =>
-                    EquipmentPage(onUpdateEquipments: (newType) {
-                    setState(() {
-                                         });
-                },)), // Replace SecondPage() with the desired page widget
+                      SchedulePage()), // Replace SecondPage() with the desired page widget
               );
             },
           ),

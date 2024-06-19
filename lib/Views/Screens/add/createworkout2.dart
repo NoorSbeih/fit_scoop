@@ -1,6 +1,6 @@
 
 import 'package:fit_scoop/Controllers/workout_controller.dart';
-import 'package:fit_scoop/Views/Screens/Schedule/addWorkoutForADay.dart';
+import 'package:fit_scoop/Views/Screens/WorkoutScheduling/addWorkoutForADay.dart';
 import 'package:fit_scoop/Views/Screens/add/createworkout1.dart';
 import 'package:fit_scoop/Views/Screens/add/addExercise.dart';
 import 'package:flutter/cupertino.dart';
