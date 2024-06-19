@@ -32,7 +32,10 @@ class _SchedulePageScreenState extends State<SchedulePageScreen> {
   List<String> daysOfWeek = ["SUNDAY","MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"];
   List<Workout?> workoutSchedule = List.filled(7, null); // Initialize with null values
   WorkoutController controller = WorkoutController();
+  BodyMetricsController bodyMetricsController = BodyMetricsController();
+  late List<String> workoutIds;
   late User_model user;
+  BodyMetrics? metrics;
 
   @override
   void initState() {
@@ -51,11 +54,11 @@ class _SchedulePageScreenState extends State<SchedulePageScreen> {
       user = userSingleton.getUser();
       String? bodyMetricId = user.bodyMetrics;
       if (user != null && user.id != null) {
-        BodyMetricsController bodyMetricsController = BodyMetricsController();
-        BodyMetrics? metrics = await bodyMetricsController.fetchBodyMetrics(bodyMetricId!);
+
+        metrics = await bodyMetricsController.fetchBodyMetrics(bodyMetricId!);
 
         if (metrics?.workoutSchedule != null) {
-          List<String> workoutIds = metrics!.workoutSchedule!;
+           workoutIds = metrics!.workoutSchedule;
           print("Fetched workout IDs: $workoutIds"); // Debug print
           fetchWorkouts(workoutIds);
         }
@@ -161,8 +164,12 @@ class _SchedulePageScreenState extends State<SchedulePageScreen> {
 
                               IconButton(
                                 icon: Icon(Icons.delete_outline, color: Colors.red),
-                                onPressed: () {
-                                  // Handle delete action for this day
+                                onPressed: () async {
+                                  setState(() {
+                                    metrics?.workoutSchedule[index] = 'No workout';
+                                    workoutSchedule[index] = null; // Update the local schedule
+                                  });
+                                  await bodyMetricsController.updateBodyMetrics(user.bodyMetrics, metrics!);
                                 },
                               ),
                             ],
