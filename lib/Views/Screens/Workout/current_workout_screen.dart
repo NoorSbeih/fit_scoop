@@ -112,7 +112,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
         actions: [
           IconButton(
             icon: const Icon(
-              Icons.table_chart_outlined,
+              Icons.table_view_outlined,
               color: Color(0xFF0dbab4),
             ),
             onPressed: () {
