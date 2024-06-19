@@ -6,31 +6,36 @@ import 'package:flutter_svg/svg.dart';
 import '../../Widgets/drawer_widget.dart';
 import 'addExercise.dart';
 import 'createworkout2.dart';
+
 typedef void OnExerciseAddedCallback();
+
 class createWorkout1 extends StatefulWidget {
-  static String name="";
+  static String name = "";
+
   @override
   _createWorkout1 createState() => _createWorkout1();
 }
 
 class _createWorkout1 extends State<createWorkout1> {
-  TextEditingController nameController =new TextEditingController();
+  TextEditingController nameController = new TextEditingController();
+  String emailErrorText = '';
+
+  String errorText = '';
 
   @override
   void initState() {
-
     super.initState();
   }
+
   void handleExerciseAdded() {
     setState(() {
-      addExercise.exercises;
       retrieveAddedExercise(addExercise.exercises);
     });
   }
+
   Future<void> _handleRefresh() async {
     setState(() {
-    addExercise.exercises;
-    retrieveAddedExercise(addExercise.exercises);
+      retrieveAddedExercise(addExercise.exercises);
     });
   }
 
@@ -47,9 +52,7 @@ class _createWorkout1 extends State<createWorkout1> {
         actions: [
           IconButton(
             icon: const Icon(Icons.settings, color: Color(0xFF0dbab4)),
-            onPressed: () {
-              // Handle menu icon pressed
-            },
+            onPressed: () {},
           ),
         ],
       ),
@@ -60,42 +63,76 @@ class _createWorkout1 extends State<createWorkout1> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-             Padding(
+            Padding(
               padding: EdgeInsets.only(left: 16, right: 16),
               child: TextField(
-                controller:nameController,
+                controller: nameController,
                 style: TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Workout Name',
                   hintStyle: TextStyle(fontSize: 18, color: Colors.white),
-                  border: UnderlineInputBorder(
+                  errorText: emailErrorText.isNotEmpty ? emailErrorText : null,
+                  errorStyle: TextStyle(color: Colors.red, fontSize: 14),
+                  border: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.transparent),
                   ),
-                  focusedBorder: UnderlineInputBorder(
+                  focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.white),
                   ),
                 ),
+                onChanged: (text) {
+                  setState(() {
+                    emailErrorText = '';
+                    createWorkout1.name = text;
+                  });
+                },
               ),
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(bottom:5),
-                child: retrieveAddedExercise(addExercise.exercises),
+                padding: const EdgeInsets.only(bottom: 5),
+                child: addExercise.exercises.isEmpty
+                    ? Center(
+                  child: Text(
+                    errorText,
+                    style: TextStyle(color: Colors.red, fontSize: 14),
+                  ),
+                )
+                    : retrieveAddedExercise(addExercise.exercises),
               ),
             ),
-
-              _buildAddExerciseButton(context),
+            _buildAddExerciseButton(context),
             Padding(
-              padding: const EdgeInsets.only(top:20,left: 16.0, right: 16,bottom: 20),
+              padding: const EdgeInsets.only(
+                  top: 20, left: 16.0, right: 16, bottom: 20),
               child: ElevatedButton(
                 onPressed: () async {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => createWorkout2()),
-                  );
+                  if (createWorkout1.name.isEmpty) {
+                    setState(() {
+                      emailErrorText = 'Please enter name for the workout';
+                    });
+                  } else {
+                    setState(() {
+                      emailErrorText = '';
+                    });
+                  }
+
+                  if (addExercise.exercises.isEmpty) {
+                    setState(() {
+                      errorText = 'Please choose exercises for the workout ';
+                    });
+                  }
+                  if(!createWorkout1.name.isEmpty && !addExercise.exercises.isEmpty) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => createWorkout2()),
+                    );
+                  }
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0dbab4)),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color(0xFF0dbab4)),
                   fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
                   shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                         (Set<MaterialState> states) {
@@ -126,16 +163,16 @@ class _createWorkout1 extends State<createWorkout1> {
       child: GestureDetector(
         onTap: () async {
           setState(() {
-            createWorkout1.name=nameController.text;
-            print( createWorkout1.name);
+            createWorkout1.name = nameController.text;
+            print(createWorkout1.name);
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => AddExercisePage(onExerciseAdded: handleExerciseAdded),
+                builder: (context) =>
+                    AddExercisePage(onExerciseAdded: handleExerciseAdded),
               ),
             );
           });
-
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -149,19 +186,13 @@ class _createWorkout1 extends State<createWorkout1> {
             SizedBox(width: 15), // Add some space between the icon and text
             custom_widget.customTextWidget("ADD EXERCISE", 18),
           ],
-
-
-
-
-
         ),
       ),
     );
   }
 
   Widget retrieveAddedExercise(List<Map<String, dynamic>> exercises) {
-    return
-      Container(
+    return Container(
       constraints: BoxConstraints.expand(),
       child: ListView.builder(
         itemCount: exercises.length,
@@ -180,7 +211,7 @@ class _createWorkout1 extends State<createWorkout1> {
               id,
               0,
               onDelete: () {
-                deleteExersice(id);
+                deleteExercise(id);
               },
             );
           } else {
@@ -190,11 +221,11 @@ class _createWorkout1 extends State<createWorkout1> {
       ),
     );
   }
-  void deleteExersice(String id){
+
+  void deleteExercise(String id) {
     int index = addExercise.exercises.indexWhere((exercise) => exercise['id'] == id);
     setState(() {
       addExercise.exercises.removeAt(index); // Remove the exercise from the list
     });
-
   }
 }

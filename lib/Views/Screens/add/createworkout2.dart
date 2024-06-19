@@ -1,4 +1,3 @@
-
 import 'package:fit_scoop/Controllers/workout_controller.dart';
 import 'package:fit_scoop/Views/Screens/WorkoutScheduling/addWorkoutForADay.dart';
 import 'package:fit_scoop/Views/Screens/add/createworkout1.dart';
@@ -8,26 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-import '../../../Models/user_model.dart';
-import '../../../Models/user_singleton.dart';
-import '../../../Models/workout_model.dart';
-import '../main_page_screen.dart';
-
 class createWorkout2 extends StatefulWidget {
   static bool isPrivate = true;
   static double rating = 0;
-  static  String label="Beginner";
-  static TextEditingController descriptionController =new TextEditingController();
+  static String label = "Beginner";
+  static TextEditingController descriptionController = new TextEditingController();
+
   @override
-  _createWorkout2  createState() => _createWorkout2();
+  _createWorkout2 createState() => _createWorkout2();
 }
 
-class _createWorkout2  extends State<createWorkout2> {
-
- /*static TextEditingController descriptionController =new TextEditingController();
-  bool isPrivate = true;
-  double rating = 0;
- static  String label="Beginner";*/
+class _createWorkout2 extends State<createWorkout2> {
+  String ErrorText = '';
 
   @override
   void initState() {
@@ -48,76 +39,76 @@ class _createWorkout2  extends State<createWorkout2> {
         iconTheme: IconThemeData(color: Color(0xFF0dbab4)),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top:16.0,left:20,right:20),
+        padding: const EdgeInsets.only(top: 16.0, left: 20, right: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-        Padding(
-        padding: EdgeInsets.only(top:15,bottom: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Select Workout Intensity',
-                  style: TextStyle(fontSize: 20, color: Colors.white, fontFamily: 'BebasNeue'),
-                ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-                RatingBar.builder(
-                  direction: Axis.horizontal,
-                  itemCount: 3,
-                  tapOnlyMode: true,
-                  itemPadding: EdgeInsets.all(0),
-                  itemSize: 35.0,
-                  itemBuilder: (context, _) => Transform.scale(
-                    scale: 0.7,
-                    child: const Icon(
-                      Icons.star,
-                      color: Color(0xFF0dbab4),
-                    ),
+            Padding(
+              padding: EdgeInsets.only(top: 15, bottom: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Select Workout Intensity',
+                    style: TextStyle(fontSize: 20, color: Colors.white, fontFamily: 'BebasNeue'),
                   ),
-                  onRatingUpdate: (newRating) {
-                    setState(() {
-                      createWorkout2.rating = newRating;
-                      switch (newRating.toInt()) {
-                        case 1:
-                          createWorkout2.label = 'Beginner';
-                          break;
-                        case 2:
-                          createWorkout2.label = 'Intermediate';
-                          break;
-                        case 3:
-                          createWorkout2.label = 'Advanced';
-                          break;
-                      }
-                    });
-                  },
-                ),
-              Text(
-                createWorkout2.label,
-                style: TextStyle(color: Colors.white),
-              )
-
-              ],
-          ),
-              ],
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      RatingBar.builder(
+                        initialRating: 1,
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        itemCount: 3,
+                        tapOnlyMode: true,
+                        itemPadding: EdgeInsets.all(0),
+                        itemSize: 35.0,
+                        itemBuilder: (context, _) => Transform.scale(
+                          scale: 0.7,
+                          child: const Icon(
+                            Icons.star,
+                            color: Color(0xFF0dbab4),
+                          ),
+                        ),
+                        onRatingUpdate: (newRating) {
+                          setState(() {
+                            createWorkout2.rating = newRating;
+                            switch (newRating.toInt()) {
+                              case 1:
+                                createWorkout2.label = 'Beginner';
+                                break;
+                              case 2:
+                                createWorkout2.label = 'Intermediate';
+                                break;
+                              case 3:
+                                createWorkout2.label = 'Advanced';
+                                break;
+                            }
+                          });
+                        },
+                      ),
+                      Text(
+                        createWorkout2.label,
+                        style: TextStyle(color: Colors.white),
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
-        ),
             SizedBox(height: 16.0),
-
             const Text(
               'Add a Description:',
               style: TextStyle(fontSize: 20, color: Colors.white, fontFamily: 'BebasNeue'),
             ),
             Padding(
-              padding: EdgeInsets.only(top:15,bottom: 15),
+              padding: EdgeInsets.only(top: 15, bottom: 15),
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.white),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                child:  Padding(
+                child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0), // Adjust horizontal padding
                   child: TextField(
                     controller: createWorkout2.descriptionController,
@@ -128,12 +119,24 @@ class _createWorkout2  extends State<createWorkout2> {
                       contentPadding: EdgeInsets.all(15.0),
                     ),
                     style: TextStyle(color: Colors.white),
+                    onChanged: (text) {
+                      setState(() {
+                        ErrorText = '';
+                        createWorkout2.descriptionController.text = text;
+                      });
+                    },
                   ),
                 ),
               ),
             ),
-
-
+            if (ErrorText.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                  ErrorText,
+                  style: TextStyle(color: Colors.red, fontSize: 16),
+                ),
+              ),
             const SizedBox(height: 16.0),
             SwitchListTile(
               title: const Text(
@@ -148,9 +151,8 @@ class _createWorkout2  extends State<createWorkout2> {
               },
               activeColor: Color(0xFF0dbab4),
             ),
-
             Padding(
-              padding: const EdgeInsets.only(top: 50,left:15,right:15),
+              padding: const EdgeInsets.only(top: 50, left: 15, right: 15),
               child: SingleChildScrollView( // Wrap the Row with SingleChildScrollView
                 scrollDirection: Axis.horizontal, // Allow horizontal scrolling
                 child: Row(
@@ -158,16 +160,20 @@ class _createWorkout2  extends State<createWorkout2> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                     /*   UserSingleton userSingleton = UserSingleton.getInstance();
-                        User_model user = userSingleton.getUser();
-                        Workout workout =new Workout(name: createWorkout1.name, description: descriptionController.text, exercises: addExercise.exercises, duration: 12, intensity: label, creatorId: user.id, numberOfSaves: 0, reviews: [], isPrivate: isPrivate, timestamp: DateTime.now(),);
-                        WorkoutController controller =new WorkoutController();
-                       controller.createWorkout(workout);*/
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) =>
-                              AddWorkoutForADayy()), // Replace SecondPage() with the desired page widget
-                        );
+                        if (createWorkout2.descriptionController.text.isEmpty) {
+                          setState(() {
+                            ErrorText = 'Please enter a description for the workout';
+                          });
+                        } else {
+                          setState(() {
+                            ErrorText = '';
+                          });
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => AddWorkoutForADayy()), // Replace SecondPage() with the desired page widget
+                          );
+                        }
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0dbab4)),
@@ -192,11 +198,9 @@ class _createWorkout2  extends State<createWorkout2> {
                 ),
               ),
             ),
-
           ],
-            ),
+        ),
       ),
-
     );
   }
 }
