@@ -14,6 +14,7 @@ import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_model.dart';
 import 'package:fit_scoop/Views/Widgets/exercises_card_widget.dart';
 import '../WorkoutScheduling/addWorkoutForADay.dart';
+import '../WorkoutScheduling/selectDayForLibrary.dart';
 
 class DetailPage extends StatefulWidget {
   final Workout workout;
@@ -377,7 +378,7 @@ class _DetailPageState extends State<DetailPage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          AddWorkoutForADay(),
+                          selectDayForLibraryy(workout :widget.workout),
                     ),
                   );
 
@@ -397,7 +398,7 @@ class _DetailPageState extends State<DetailPage> {
                   ),
                 ),
                 child: const Text(
-                  'Add to schedule',
+                  'ADD TO SCHEDULE',
                   style: TextStyle(fontSize: 22, color: Colors.white),
                 ),
               ),
@@ -424,6 +425,7 @@ Widget buildExerciseCards(exercises) {
           weight.toString(),
           context,
           id,
+          0
         );
       } else {
         return SizedBox(); // Placeholder widget, replace it with your preferred widget

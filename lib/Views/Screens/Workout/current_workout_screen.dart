@@ -13,20 +13,21 @@ import '../../Widgets/drawer_widget.dart';
 import '../WorkoutScheduling/Schedule.dart';
 import '../main_page_screen.dart';
 import 'begin_workout_screen.dart';
-class WorkoutPage extends StatelessWidget {
 
+class WorkoutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: WorkoutPagee (),
+      home: WorkoutPagee(),
     );
   }
 }
 
-class WorkoutPagee extends StatefulWidget{
+class WorkoutPagee extends StatefulWidget {
   static late List<Map<String, dynamic>> exercises = [];
-  static List<Map<String, dynamic>> exerciseslog=[];
+  static List<Map<String, dynamic>> exerciseslog = [];
   static late String currentWorkoutId;
+
   static void copyExercisesToLog() {
     exerciseslog = [];
     for (var exercise in exercises) {
@@ -36,10 +37,11 @@ class WorkoutPagee extends StatefulWidget{
       });
     }
   }
-  const WorkoutPagee ({Key? key}) : super(key: key);
+
+  const WorkoutPagee({Key? key}) : super(key: key);
 
   @override
-  State<WorkoutPagee > createState() => _WorkoutPageState();
+  State<WorkoutPagee> createState() => _WorkoutPageState();
 }
 
 class _WorkoutPageState extends State<WorkoutPagee> {
@@ -47,61 +49,55 @@ class _WorkoutPageState extends State<WorkoutPagee> {
   int intensity = 0;
   String name = "";
   int duration = 0;
-
   late User_model user;
-  void initState() {
+  bool isLoading = true;
 
+  @override
+  void initState() {
     super.initState();
     fetchData();
   }
 
-  void fetchData()  async{
+  void fetchData() async {
     try {
       UserSingleton userSingleton = UserSingleton.getInstance();
       user = userSingleton.getUser();
       String? bodyMetricId = user.bodyMetrics;
-      print("djdjdj");
-      print(bodyMetricId); // Assuming you want the user's UID
       if (bodyMetricId != null) {
         BodyMetricsController controller = BodyMetricsController();
-        BodyMetrics? metrics = await controller.fetchBodyMetrics(bodyMetricId!);
-        print("elianananana");
+        BodyMetrics? metrics = await controller.fetchBodyMetrics(bodyMetricId);
         if (metrics != null) {
           int currentDayIndex = metrics.CurrentDay;
-          currentWorkout =
-          await Calculate(metrics.workoutSchedule, currentDayIndex);
+          currentWorkout = await Calculate(metrics.workoutSchedule, currentDayIndex);
           setState(() {
-            WorkoutPagee.exercises = currentWorkout!.exercises;
-           WorkoutPagee.copyExercisesToLog();
-            print("cureennnnn");
-            print(metrics.CurrentDay);
-
-            intensity = checkIntensity(currentWorkout!.intensity);
-            name = currentWorkout!.name;
-            // duration = currentWorkout!.duration;
+            WorkoutPagee.exercises = currentWorkout?.exercises ?? [];
+            WorkoutPagee.copyExercisesToLog();
+            intensity = checkIntensity(currentWorkout?.intensity ?? '');
+            name = currentWorkout?.name ?? '';
+            duration = currentWorkout?.duration ?? 0;
+            isLoading = false;
           });
         } else {
-          print("Empty body metrics");
+          setState(() {
+            isLoading = false;
+          });
         }
+      } else {
+        setState(() {
+          isLoading = false;
+        });
       }
-      else {
-        print("fffffffff");
-      }
-
     } catch (e) {
       print('Error fetching data: $e');
-      // Handle error if needed
+      setState(() {
+        isLoading = false;
+      });
     }
-
   }
 
   bool isSaved(String? id) {
-
-    // Check if any workout in the list has the given id
-    return user.savedWorkoutIds.any((workout) => id == id);
+    return user.savedWorkoutIds.any((workout) => workout == id);
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -110,94 +106,115 @@ class _WorkoutPageState extends State<WorkoutPagee> {
       backgroundColor: Color(0xFF2C2A2A),
       appBar: AppBar(
         backgroundColor: Color(0xFF2C2A2A),
-          iconTheme: const IconThemeData(
-            color: Color(0xFF0dbab4), // Change the drawer icon color here
-          ),
+        iconTheme: const IconThemeData(
+          color: Color(0xFF0dbab4),
+        ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.table_chart_outlined, color: Color(0xFF0dbab4),),
+            icon: const Icon(
+              Icons.table_view_outlined,
+              color: Color(0xFF0dbab4),
+            ),
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>
-                      SchedulePage()), // Replace SecondPage() with the desired page widget
+                MaterialPageRoute(builder: (context) => SchedulePage()),
               );
             },
           ),
         ],
       ),
       drawer: CustomDrawer(),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: currentWorkout != null
-                  ? Align(
-                alignment: Alignment.centerLeft,
-                child: workout_widget.customcardWidget(
-                  currentWorkout!, isSaved(currentWorkout!.id), context,
-                      (Workout workout, bool liked) {},
-                ),
-              )
-                  : const Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'No Workout Found for This Day',
-                  style: TextStyle(fontSize: 18,color:Colors.white),
-                ),
-              ),
-            ),
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : currentWorkout != null
+          ? buildWorkoutContent()
+          : buildNoWorkoutContent(),
+    );
+  }
 
-
-        const SizedBox(height: 10.0),
-          const Padding(
-            padding: EdgeInsets.only(left: 20, right: 20),
-            child: Divider(
-              color: Colors.grey,
-              thickness: 1.0,
+  Widget buildWorkoutContent() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: workout_widget.customcardWidget(
+              currentWorkout!,
+              isSaved(currentWorkout!.id),
+              context,
+                  (Workout workout, bool liked) {},
             ),
-          ), // Adjust the height as needed for spacing
-          Expanded(
-            child: buildExerciseCards(WorkoutPagee.exercises),
           ),
-          Container(
-            alignment: Alignment.center,
-            height: 80.0, // Set a fixed height for the button container
-            child: ElevatedButton(
-              onPressed: () async {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>
-                      BeginWorkoutPage()), // Replace SecondPage() with the desired page widget
-                );
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                    const Color(0xFF0dbab4)),
-                fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
-                shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
-                      (Set<MaterialState> states) {
-                    return RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          10.0), // Border radius
-                    );
-                  },
-                ),
+        ),
+        const SizedBox(height: 10.0),
+        const Padding(
+          padding: EdgeInsets.only(left: 20, right: 20),
+          child: Divider(
+            color: Colors.grey,
+            thickness: 1.0,
+          ),
+        ),
+        Expanded(
+          child: buildExerciseCards(WorkoutPagee.exercises),
+        ),
+        Container(
+          alignment: Alignment.center,
+          height: 80.0,
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BeginWorkoutPage()),
+              );
+            },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0dbab4)),
+              fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
+              shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
+                    (Set<MaterialState> states) {
+                  return RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  );
+                },
               ),
-              child: const Text(
-                'BEGIN WORKOUT',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Color(0xFF2C2A2A),
-                ),
+            ),
+            child: const Text(
+              'BEGIN WORKOUT',
+              style: TextStyle(
+                fontSize: 20,
+                color: Color(0xFF2C2A2A),
               ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildNoWorkoutContent() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.fitness_center,
+            size: 80,
+            color: Colors.grey,
+          ),
+          SizedBox(height: 10),
+          Text(
+            'No Workout for Today',
+            style: TextStyle(
+              fontSize: 18,
+              color: Colors.white,
             ),
           ),
         ],
       ),
-
     );
   }
 
@@ -216,25 +233,20 @@ class _WorkoutPageState extends State<WorkoutPagee> {
             sets.toString(),
             weight.toString(),
             context,
-            id
+            id,
+            duration,
           );
         } else {
-          return SizedBox(); // Placeholder widget, replace it with your preferred widget
+          return SizedBox();
         }
       },
     );
   }
-  Future<Workout?> Calculate(List<String> workoutSchedule,int currentDayIndex) async {
-    int currentDayOfWeek = DateTime
-        .now()
-        .weekday;
-    print("The day of the week");
-    print(getDayOfWeek(currentDayOfWeek));
 
-    WorkoutPagee.currentWorkoutId = workoutSchedule[6];
-    print("IDDDD");
-    print(WorkoutPagee.currentWorkoutId);
-    WorkoutController controller = new WorkoutController();
+  Future<Workout?> Calculate(List<String> workoutSchedule, int currentDayIndex) async {
+    int currentDayOfWeek = DateTime.now().weekday;
+    WorkoutPagee.currentWorkoutId = workoutSchedule[currentDayOfWeek];
+    WorkoutController controller = WorkoutController();
     return controller.getWorkout(WorkoutPagee.currentWorkoutId);
   }
 
@@ -269,6 +281,4 @@ class _WorkoutPageState extends State<WorkoutPagee> {
     }
     return 0;
   }
-
-
 }

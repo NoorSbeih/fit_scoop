@@ -14,22 +14,12 @@ import '../add/createworkout2.dart';
 import '../main_page_screen.dart';
 import 'package:fit_scoop/Views/Screens/add/addExercise.dart';
 
-class selectDayForLibrary extends StatelessWidget {
-  const selectDayForLibrary({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: selectDayForLibraryy(),
-    );
-  }
-}
-
 class selectDayForLibraryy extends StatefulWidget {
   static String daysSelected = "";
   static List<bool> isSelected = [false, false, false, false, false, false, false];
+  final Workout workout;
 
-  const selectDayForLibraryy({Key? key}) : super(key: key);
+  const selectDayForLibraryy({Key? key, required this.workout}) : super(key: key);
 
   @override
   State<selectDayForLibraryy> createState() => _selectDayForLibrary();
@@ -37,7 +27,6 @@ class selectDayForLibraryy extends StatefulWidget {
 
 class _selectDayForLibrary extends State<selectDayForLibraryy> {
   final List<String> _daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
   @override
   void initState() {
     super.initState();
@@ -75,20 +64,7 @@ class _selectDayForLibrary extends State<selectDayForLibraryy> {
               child: custom_widget.customTextWidget("Assign the new workout For Specific Day", 15),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(top: 10, left: 16, bottom: 10),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Please choose only one day!',
-                style: TextStyle(
-                  fontSize: 15.0,
-                  fontFamily: 'Montserrat',
-                  color: Colors.red,
-                ),
-              ),
-            ),
-          ),
+
           GridView.builder(
             shrinkWrap: true,
             padding: const EdgeInsets.all(15),
@@ -151,23 +127,6 @@ class _selectDayForLibrary extends State<selectDayForLibraryy> {
 
                 UserSingleton userSingleton = UserSingleton.getInstance();
                 User_model user = userSingleton.getUser();
-
-                Workout workout = Workout(
-                  name: createWorkout1.name,
-                  description: createWorkout2.descriptionController.text,
-                  exercises: addExercise.exercises,
-                  duration: 12,
-                  intensity: createWorkout2.label,
-                  creatorId: user.id,
-                  numberOfSaves: 0,
-                  reviews: [],
-                  isPrivate: createWorkout2.isPrivate,
-                  timestamp: DateTime.now(),
-                );
-
-                WorkoutController workoutController = WorkoutController();
-                await workoutController.createWorkout(workout);
-
                 String? bodyMetricId = user.bodyMetrics;
                 print( user.bodyMetrics);
                 print(user.name);
@@ -178,7 +137,7 @@ class _selectDayForLibrary extends State<selectDayForLibraryy> {
                   metrics = await bodyMetricsController.fetchBodyMetrics(
                       user.bodyMetrics);
                   setState(() {
-                    metrics?.workoutSchedule[index] = workout.id!;
+                    metrics?.workoutSchedule[index] =widget.workout.id!;
                     bodyMetricsController.updateBodyMetrics(user.bodyMetrics, metrics!);
                   });
                 }
