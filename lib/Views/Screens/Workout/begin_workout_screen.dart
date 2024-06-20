@@ -214,8 +214,8 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
 
       );
       controller.addWorkoutLog(workoutLog);
-      BodyMetricsController bodyController=new BodyMetricsController();
-      await bodyController.updateCurrentDay(user.bodyMetrics);
+      // BodyMetricsController bodyController=new BodyMetricsController();
+      // await bodyController.updateCurrentDay(user.bodyMetrics);
 
       Navigator.push(
         context,

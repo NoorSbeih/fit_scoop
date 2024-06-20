@@ -17,14 +17,14 @@ class BodyMetricsController {
     }
   }
 
-  Future<void> updateCurrentDay(String? id) async {
-    try {
-      await _bodyMetricsService.updateCurrentDay(id!);
-    } catch (e) {
-      print('Error adding body metrics: $e');
-      throw e;
-    }
-  }
+  // Future<void> updateCurrentDay(String? id) async {
+  //   try {
+  //     await _bodyMetricsService.updateCurrentDay(id!);
+  //   } catch (e) {
+  //     print('Error adding body metrics: $e');
+  //     throw e;
+  //   }
+  // }
   Future<void> updateBodyMetrics(String? id,BodyMetrics bodyMetrics) async {
     try {
       // Update body metrics in the database using the BodyMetricsService

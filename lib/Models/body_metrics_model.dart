@@ -12,9 +12,14 @@ class BodyMetrics {
   double bodyFat;
   String fitnessGoal;
   String gymType;
-  int CurrentDay;//DELETE
   List<String> workoutSchedule;
   String unitOfMeasure;
+  double? diastolic;
+  double? systolic;
+  double? sitUpCount;
+  double? broadJumpCm;
+  int? performanceLevel;
+
 
   BodyMetrics({
     required this.userId,
@@ -25,9 +30,14 @@ class BodyMetrics {
     required this.bodyFat,
     required this.fitnessGoal,
     required this.gymType,
-    required this.CurrentDay,
     List<String>? workoutSchedule,
     required this.unitOfMeasure,
+    this.diastolic,
+    this.systolic,
+    this.sitUpCount,
+    this.broadJumpCm,
+    this.performanceLevel,
+
   }) : this.workoutSchedule = workoutSchedule ?? List.filled(7, 'No workout'); // Ensure the default value is only used if workoutSchedule is null
 
   Map<String, dynamic> toMap() {
@@ -39,16 +49,14 @@ class BodyMetrics {
       'gender': gender,
       'bodyFat': bodyFat,
       'fitnessGoal': fitnessGoal,
-      'gymType': gymType,
-      'CurrentDay': CurrentDay,
       'workoutSchedule': workoutSchedule,
-      'unitOfMeasure': unitOfMeasure
-    };
-  }
-
-  Map<String, dynamic> toUpdateMap() {
-    return {
-      'CurrentDay': CurrentDay,
+      'unitOfMeasure': unitOfMeasure,
+      'diastolic': diastolic,
+      'systolic': systolic,
+      'gymsType': gymType,
+      'sitUpCount': sitUpCount,
+      'broadJumpCm': broadJumpCm,
+      'performanceLevel': performanceLevel,
     };
   }
 
@@ -77,10 +85,14 @@ class BodyMetrics {
       gender: map['gender'],
       bodyFat: map['bodyFat'],
       fitnessGoal: map['fitnessGoal'],
-      gymType: map['gymType'],
-      CurrentDay: map['CurrentDay'],
       workoutSchedule: workoutSchedule,
       unitOfMeasure: map['unitOfMeasure'],
+      diastolic: map['diastolic'],
+      systolic: map['systolic'],
+      gymType: map['gymType'],
+      sitUpCount: map['sitUpCount'],
+      broadJumpCm: map['broadJumpCm'],
+      performanceLevel: map['performanceLevel'],
     );
   }
 }
