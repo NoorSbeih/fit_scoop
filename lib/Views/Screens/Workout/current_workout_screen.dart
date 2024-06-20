@@ -123,6 +123,15 @@ class _WorkoutPageState extends State<WorkoutPagee> {
             },
           ),
         ],
+        title: const Text(
+          'TODAY WORKOUT',
+          style: TextStyle(
+            color: Colors.white, // Text color
+            fontSize: 20, // Adjust font size as needed
+            fontWeight: FontWeight.bold, // Make the text bold
+          ),
+        ),
+        centerTitle: true,
       ),
       drawer: CustomDrawer(),
       body: isLoading

@@ -49,12 +49,15 @@ class _createWorkout1 extends State<createWorkout1> {
         iconTheme: const IconThemeData(
           color: Color(0xFF0dbab4), // Change the drawer icon color here
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings, color: Color(0xFF0dbab4)),
-            onPressed: () {},
+        title: const Text(
+          'CREATE WORKOUT',
+          style: TextStyle(
+            color: Colors.white, // Text color
+            fontSize: 20, // Adjust font size as needed
+            fontWeight: FontWeight.bold, // Make the text bold
           ),
-        ],
+        ),
+        centerTitle: true,
       ),
       drawer: CustomDrawer(),
       body: RefreshIndicator(
