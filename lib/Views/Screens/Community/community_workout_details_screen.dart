@@ -12,6 +12,7 @@ import '../../../Models/review_model.dart';
 import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_model.dart';
+import '../WorkoutScheduling/selectDayForLibrary.dart';
 
 
 class CommunityWorkoutDetailPage
@@ -222,8 +223,14 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage
 
             ElevatedButton(
               onPressed: () {
-                // Add your button functionality here
-                print('Your button action');
+                //  AddWorkoutForADay()
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        selectDayForLibraryy(workout :widget.workout),
+                  ),
+                );
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
@@ -238,7 +245,7 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage
                 ),
               ),
               child: const Text(
-                'Try this workout',
+                'ADD TO SCHEDULE',
                 style: TextStyle(fontSize: 22, color: Colors.white),
               ),
             ),
