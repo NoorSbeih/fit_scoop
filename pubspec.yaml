@@ -100,7 +100,7 @@ flutter:
         - images/medicine_ball.png
         - images/barbells.png
         - images/fly_machine.png
-        - images/smith_machine.png
+        - images/smith-machine.png
         - images/crunch_machine.png
         - images/squat_rack.png
         - images/pull_up.png
@@ -157,6 +157,23 @@ flutter:
         - images/bodyMuscles/cardio.png
         - assets/model.tflite
         - assets/bodyPerformance_model.tflite
+        - images/pen.png
+        - images/review.png
+        - images/equipments/bosuBall.png
+        - images/equipments/crossOver.png
+        - images/equipments/resistanceBand.png
+        - images/equipments/assistedMachine.png
+        - images/equipments/ellipticalMachine.png
+        - images/equipments/leverageMachine.png
+        - images/equipments/olympicBarbell.png
+        - images/equipments/sledMachine.png
+        - images/equipments/skiergMachine.png
+        - images/equipments/stabilityBall.png
+        - images/equipments/stationaryBike.png
+        - images/equipments/stepmillMachine.png
+        - images/equipments/tire.png
+        - images/equipments/upperbodyErgometer.png
+        - images/equipments/wheelRoller.jpg
     #   - images/a_dot_ham.jpeg
 
     # An image asset can refer to one or more resolution-specific "variants", see

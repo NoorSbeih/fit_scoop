@@ -5,6 +5,7 @@ import 'package:fit_scoop/Views/Screens/Community/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../Controllers/community_controller.dart';
+import '../../../Controllers/review_controller.dart';
 import '../../../Controllers/user_controller.dart';
 import '../../../Models/review_model.dart';
 import '../../../Models/user_singleton.dart';
@@ -26,6 +27,7 @@ class _CommunityPageState extends State<CommunityPage> {
   WorkoutController workoutController = WorkoutController();
   UserSingleton userSingleton = UserSingleton.getInstance();
   String _searchQuery = '';
+  List<Review> reviews=[];
 
   @override
   void initState() {
@@ -197,6 +199,8 @@ class _CommunityPageState extends State<CommunityPage> {
 
   Future<Widget> fetchWorkout(Workout activity) async {
     User_model? user = await userController.getUser(activity.creatorId);
+    ReviewController controller = ReviewController();
+    var reviews = await controller.getReviewsByWorkoutId(activity.id);
     return communityWorkoutWidget.communityCardWidget(
       activity,
       context,
@@ -218,6 +222,7 @@ class _CommunityPageState extends State<CommunityPage> {
         });
       },
       formatTimestamp(activity.timestamp),
+      reviews
     );
   }
 
