@@ -43,7 +43,6 @@ class _gymTypeState extends State<GymType> {
           iconTheme: const IconThemeData(
             color: Color(0xFF0dbab4), // Change the drawer icon color here
           ),
-
         ),
         body: Column(
             mainAxisAlignment: MainAxisAlignment.start,

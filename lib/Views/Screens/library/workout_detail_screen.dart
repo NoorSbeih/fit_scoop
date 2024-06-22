@@ -271,13 +271,26 @@ class _DetailPageState extends State<DetailPage> {
                         ),
                         color: Colors.white,
                         onPressed: () async {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                             // builder: (context) => RateWorkoutPage(workout: workout),
-                              builder: (context) =>
-                                  RateWorkoutPage(workout: widget.workout),
+
+
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
                             ),
+                            builder: (BuildContext context) {
+                              return Container(
+                                height: MediaQuery.of(context).size.height * 0.95,
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
+                                  border: Border.all(
+                                    width: 2.0,
+                                  ),
+                                ),
+                                child:   RateWorkoutPage(workout: widget.workout),
+                              );
+                            },
                           );
                         },
                       ),

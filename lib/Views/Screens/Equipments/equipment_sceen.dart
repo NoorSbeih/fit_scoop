@@ -6,6 +6,8 @@ import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
 import 'EquipmentList.dart';
 
+
+
 class EquipmentPage extends StatefulWidget {
   final Function(String) onUpdateEquipments;
   EquipmentPage({Key? key, required this.onUpdateEquipments}) : super(key: key);
@@ -166,7 +168,7 @@ class _EquipmentPageState extends State<EquipmentPage>
               dividerColor: const Color(0xFF2C2A2A),
               labelStyle: const TextStyle(fontWeight: FontWeight.bold),
               indicatorColor: const Color(0xFF0dbab4),
-              isScrollable: true,
+              isScrollable: false,
               padding: EdgeInsets.zero,
               tabs: equipmentTypes.map((type) => Tab(text: type)).toList(),
             ),

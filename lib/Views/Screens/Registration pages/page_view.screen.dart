@@ -24,7 +24,7 @@ import 'Female_goals_screen.dart';
 import 'Male_goals_screen.dart';
 import 'birth_gender_screen.dart';
 import 'body_fat_screen.dart';
-import 'equipment_screen.dart';
+import 'availableEquipment_screen.dart';
 import 'height_weight_screen.dart';
 import 'package:fit_scoop/Controllers/register_controller.dart';
 import '/Models/body_metrics_model.dart' as model;
@@ -57,10 +57,7 @@ class _CustomPageViewState extends State<CustomPageView> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? unitOfMeasure = sharedPreferences.getString('unitOfMeasure');
     String? gender = sharedPreferences.getString('Gender');
-
-
     setState(() {
-     //gender = sharedPreferences.getString('Gender');
       unit = unitOfMeasure ?? ""; // Assign default value if unitOfMeasure is null
       CustomPageView.Gender = gender ?? ""; // Assign default value if gender is null
     });
@@ -121,7 +118,7 @@ class _CustomPageViewState extends State<CustomPageView> {
                    RegisterPage3(),
                    CustomPageView.Gender == 'Male' ? RegisterPage4M() : RegisterPage4F(),
                    RegisterPage5(),
-                 Page6(
+                   RegisterPage6(
                  onEquipmentSelected: (selectedEquipmentIds) {
                    setState(() {
                      this.selectedEquipmentIds = selectedEquipmentIds;

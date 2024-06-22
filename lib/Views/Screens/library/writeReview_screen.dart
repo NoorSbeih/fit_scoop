@@ -196,7 +196,7 @@ class _RateWorkoutPageState extends State<RateWorkoutPage> {
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0dbab4)),
-                      fixedSize: MaterialStateProperty.all<Size>(const Size(370, 50)),
+                      fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
                       shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                             (Set<MaterialState> states) {
                           return RoundedRectangleBorder(

@@ -3,31 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 import 'package:input_slider/input_slider.dart';
 
-class Page3 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: RegisterPage3(),
-    );
-  }
-}
+import '../../../Models/bodyMetricsSingleton.dart';
+import '../../../Models/body_metrics_model.dart';
 
-class RegisterPage3 extends StatefulWidget {
-  static double currentValue = 12;
-
-  RegisterPage3();
+class BodyfatUpdate extends StatefulWidget {
+  //static double currentValue = 12
+  final Function(double) onUpdateBodyFat;
+  BodyfatUpdate({Key? key, required this.onUpdateBodyFat}) : super(key: key);
 
   @override
-  State<RegisterPage3> createState() => _RegisterPageState();
+  State<BodyfatUpdate> createState() => _bodyfatUpdateState();
 }
 
-class _RegisterPageState extends State<RegisterPage3> {
+class _bodyfatUpdateState extends State<BodyfatUpdate> {
   late Map<String, String> imagePaths;
+  double currentValue = 12;
 
   @override
   void initState() {
     super.initState();
-
+    BodyMetricsSingleton singleton = BodyMetricsSingleton.getInstance();
+    BodyMetrics metrics = singleton.getMetrices();
+    currentValue = metrics.bodyFat;
     imagePaths = {
       'Underweight': 'images/underweight.JPG',
       'Normal': 'images/normal.JPG',
@@ -54,6 +51,13 @@ class _RegisterPageState extends State<RegisterPage3> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFF2C2A2A),
+        iconTheme: const IconThemeData(
+          color: Color(0xFF0dbab4), // Change the drawer icon color here
+        ),
+
+      ),
       backgroundColor: const Color(0xFF2C2A2A),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -81,7 +85,7 @@ class _RegisterPageState extends State<RegisterPage3> {
                 children: [
                   custom_widget.customTextWidget("Body Fat %: ", 20),
                   Text(
-                  '${RegisterPage3.currentValue.toStringAsFixed(2)}',
+                    '${currentValue.toStringAsFixed(2)}',
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                 ],
@@ -89,19 +93,19 @@ class _RegisterPageState extends State<RegisterPage3> {
             ),
           ),
 
-    Padding(
-    padding: const EdgeInsets.only(top:25),
-    child: Align(
-    alignment: Alignment.center,
-          child:
-          Image.asset(
-            imagePaths[getBodyType(RegisterPage3.currentValue)]!,
-            fit: BoxFit.contain,
-            width: 250, // Adjust width as needed
-            height: 250, // Adjust height as needed
+          Padding(
+            padding: const EdgeInsets.only(top: 25),
+            child: Align(
+              alignment: Alignment.center,
+              child:
+              Image.asset(
+                imagePaths[getBodyType(currentValue)]!,
+                fit: BoxFit.contain,
+                width: 250, // Adjust width as needed
+                height: 250, // Adjust height as needed
+              ),
+            ),
           ),
-    ),
-    ),
           Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child: Align(
@@ -115,13 +119,15 @@ class _RegisterPageState extends State<RegisterPage3> {
                   valueIndicatorColor: const Color(0xFF0FF954D),
                 ),
                 child: Slider(
-                  value: RegisterPage3.currentValue,
+                  value: currentValue,
                   min: 5,
                   max: 35,
                   onChanged: (newValue) {
                     setState(() {
-                      RegisterPage3.currentValue = newValue;
+                      currentValue = newValue;
+                      widget.onUpdateBodyFat(currentValue);
                     });
+
                   },
                 ),
               ),

@@ -25,7 +25,6 @@ class _goalsUpdateState extends State<goalsUpdate> {
   @override
   void initState() {
     super.initState();
-
     BodyMetricsSingleton singleton = BodyMetricsSingleton.getInstance();
     BodyMetrics metrics = singleton.getMetrices();
     selectedGoal=metrics.fitnessGoal;

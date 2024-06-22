@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Controllers/authentication_controller.dart';
+import '../Screens/Registration pages/body_fat_screen.dart';
+import '../Screens/Update/bodyFatUpdate.dart';
 import '../Screens/Update/gymType.dart';
 import '../Screens/Update/maleGoalsUpdate.dart';
 import '../Screens/Update/weight_HeightUpdate.dart';
@@ -25,6 +27,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
   String equipments="";
   String goal="";
   String gender="";
+  double bodyfat=0;
   @override
   void initState() {
     super.initState();
@@ -41,6 +44,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
         UserSingleton usersingleton = UserSingleton.getInstance();
         User_model user = usersingleton.getUser();
         equipments=user.savedEquipmentIds.length.toString();
+        bodyfat=metrics.bodyFat;
 
         return Drawer(
           backgroundColor: Color(0xFF2C2A2A),
@@ -199,16 +203,32 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       ),
                     ),
 
+                SizedBox(height: 10),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BodyfatUpdate(
+                          onUpdateBodyFat: (bodyfat) {
+                            setState(() {
+                              metrics.bodyFat = bodyfat;
+                            });
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                  child: CustomUnderlineText(
+                    text: 'BODY FAT PERCENTAGE: ${metrics.bodyFat.toStringAsFixed(2)}',
+                    fontSize: 20,
+                    textColor: Colors.white,
+                    underlineColor: Colors.grey,
+                    underlinePadding: 2.0,
+                    underlineThickness: 2.0,
+                  ),
 
-                    SizedBox(height: 10),
-                    CustomUnderlineText(
-                      text: 'BODY FAT PERCENTAGE: ${metrics.bodyFat}',
-                      fontSize: 20,
-                      textColor: Colors.white,
-                      underlineColor: Colors.grey,
-                      underlinePadding: 2.0,
-                      underlineThickness: 2.0,
-                    ),
+                ),
                   ],
                 ),
               ),

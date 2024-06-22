@@ -78,21 +78,23 @@ class BodyMetrics {
     print("Parsed workoutSchedule: $workoutSchedule");
 
     return BodyMetrics(
-      userId: map['userId'],
-      height: map['height'],
-      weight: map['weight'],
-      birthDate: map['birthDate'],
-      gender: map['gender'],
-      bodyFat: map['bodyFat'],
-      fitnessGoal: map['fitnessGoal'],
+      userId: map['userId'] ?? '',
+      height: (map['height'] as num?)?.toDouble() ?? 0.0,
+      weight: (map['weight'] as num?)?.toDouble() ?? 0.0,
+      birthDate: map['birthDate'] ?? '',
+      gender: map['gender'] ?? '',
+      bodyFat: (map['bodyFat'] as num?)?.toDouble() ?? 0.0,
+      fitnessGoal: map['fitnessGoal'] ?? '',
       workoutSchedule: workoutSchedule,
-      unitOfMeasure: map['unitOfMeasure'],
-      diastolic: map['diastolic'],
-      systolic: map['systolic'],
-      gymType: map['gymType'],
-      sitUpCount: map['sitUpCount'],
-      broadJumpCm: map['broadJumpCm'],
-      performanceLevel: map['performanceLevel'],
+      unitOfMeasure: map['unitOfMeasure'] ?? '',
+      diastolic: (map['diastolic'] as num?)?.toDouble(),
+      systolic: (map['systolic'] as num?)?.toDouble(),
+      gymType: map['gymType'] ?? '',
+      sitUpCount: (map['sitUpCount'] as num?)?.toDouble(),
+      broadJumpCm: (map['broadJumpCm'] as num?)?.toDouble(),
+      performanceLevel: (map['performanceLevel'] is String && map['performanceLevel'].isEmpty)
+          ? null
+          : (map['performanceLevel'] as num?)?.toInt(),
     );
   }
 }

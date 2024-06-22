@@ -7,17 +7,16 @@ import '../../../Models/user_singleton.dart';
 import '../Equipments/EquipmentList.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 
-class Page6 extends StatefulWidget {
-  //static List<String> selectedEquipments=[];
+class RegisterPage6 extends StatefulWidget {
+  static List<String> selectedEquipments = [];
   final Function(List<String>) onEquipmentSelected;
-   Page6({Key? key, required this.onEquipmentSelected}) : super(key: key);
+  RegisterPage6({Key? key, required this.onEquipmentSelected}) : super(key: key);
 
   @override
-  State<Page6> createState() => _EquipmentPageState();
+  State<RegisterPage6> createState() => _EquipmentPageState();
 }
 
-class _EquipmentPageState extends State<Page6>
-    with SingleTickerProviderStateMixin {
+class _EquipmentPageState extends State<RegisterPage6> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   late String currentTabType;
   late Map<int, List<String>> selectedEquipmentIdsByTab;
@@ -26,27 +25,41 @@ class _EquipmentPageState extends State<Page6>
   bool isLoading = true;
   UserController userController = UserController();
   UserSingleton userSingleton = UserSingleton.getInstance();
-
-
   late List<String> selectedEquipmentsForUser;
 
   @override
   void initState() {
     super.initState();
+
     _tabController = TabController(length: equipmentTypes.length, vsync: this);
     currentTabType = 'Free Weights'; // Default tab type
     selectedEquipmentIdsByTab = {
       for (var index in List.generate(equipmentTypes.length, (index) => index)) index: []
     };
     fetchEquipments();
+
+    _tabController.addListener(() {
+      setState(() {
+        currentTabType = equipmentTypes[_tabController.index];
+      });
+    });
   }
 
+  Future<void> loadSelectedEquipments() async {
+    if (RegisterPage6.selectedEquipments.isNotEmpty) {
+      setState(() {
+        for (int i = 0; i < equipmentTypes.length; i++) {
+          selectedEquipmentIdsByTab[i] = RegisterPage6.selectedEquipments.where((id) => allEquipment.firstWhere((equipment) => equipment.name == id).type1 == equipmentTypes[i]).toList();
+        }
+      });
+    }
+  }
 
   void saveSelectedEquipment() {
     List<String> allSelectedEquipmentIds = selectedEquipmentIdsByTab.values.expand((ids) => ids).toList();
     widget.onEquipmentSelected(allSelectedEquipmentIds);
+    RegisterPage6.selectedEquipments = allSelectedEquipmentIds;
   }
-
 
   Future<void> fetchEquipments() async {
     try {
@@ -56,11 +69,7 @@ class _EquipmentPageState extends State<Page6>
         allEquipment = equipments;
         isLoading = false; // Data fetching complete
       });
-      _tabController.addListener(() {
-        setState(() {
-          currentTabType = equipmentTypes[_tabController.index];
-        });
-      });
+      await loadSelectedEquipments(); // Load selected equipments after fetching
     } catch (e) {
       print('Error fetching data: $e');
       setState(() {
@@ -71,7 +80,6 @@ class _EquipmentPageState extends State<Page6>
 
   final List<String> equipmentTypes = [
     'Free Weights',
-    //'Benches, Bars, and Racks',
     'Machines',
     'Bands and more'
   ];
@@ -81,22 +89,6 @@ class _EquipmentPageState extends State<Page6>
     _tabController.dispose();
     super.dispose();
   }
-  //  void saveSelectedEquipment() {
-  //   UserSingleton userSingleton = UserSingleton.getInstance();
-  //   User_model user = userSingleton.getUser();
-  //   List<String> allSelectedEquipmentIds = selectedEquipmentIdsByTab.values.expand((ids) => ids).toList();
-  //   user.savedEquipmentIds=allSelectedEquipmentIds;
-  //   print('Selected Equipment IDs: $allSelectedEquipmentIds');
-  //   try {
-  //     List<String> previouslySelectedEquipmentIds = selectedEquipmentsForUser;
-  //     List<String> deselectedEquipmentIds = previouslySelectedEquipmentIds.where((id) => !allSelectedEquipmentIds.contains(id)).toList();
-  //     userController.unsaveEquipments(user.id, deselectedEquipmentIds);
-  //     userController.saveEquipments(user.id, allSelectedEquipmentIds);
-  //     print('Equipments saved successfully');
-  //   } catch (e) {
-  //     print('Error saving equipments: $e');
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -104,16 +96,29 @@ class _EquipmentPageState extends State<Page6>
       backgroundColor: const Color(0xFF2C2A2A),
       body: Column(
         children: [
-
+          Padding(
+            padding: const EdgeInsets.only(top: 0, left: 16, bottom: 10),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: custom_widget.startTextWidget("Available Equipments"),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 30.0, left: 16),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: custom_widget.customTextWidget("Please choose the available equipments", 15),
+            ),
+          ),
           Container(
-            alignment: Alignment.centerLeft, // Aligns the TabBar to the left
+            alignment: Alignment.centerLeft,
             child: TabBar(
               controller: _tabController,
               labelColor: Colors.white,
               dividerColor: const Color(0xFF2C2A2A),
               labelStyle: const TextStyle(fontWeight: FontWeight.bold),
               indicatorColor: const Color(0xFF0dbab4),
-              isScrollable: true,
+              isScrollable: false,
               padding: EdgeInsets.zero,
               tabs: equipmentTypes.map((type) => Tab(text: type)).toList(),
             ),
@@ -126,17 +131,6 @@ class _EquipmentPageState extends State<Page6>
               children: equipmentTypes.map((type) {
                 return Column(
                   children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.fromLTRB(10, 15.0, 20.0, 0.0),
-                      child: Text(
-                        '$type',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
                     Expanded(
                       child: EquipmentList(
                         equipment: allEquipment.where((equipment) => equipment.type1 == type).toList(),
@@ -158,5 +152,4 @@ class _EquipmentPageState extends State<Page6>
       ),
     );
   }
-
 }
