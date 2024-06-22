@@ -190,7 +190,7 @@ class _createWorkout2 extends State<createWorkout2> {
                         'Finish',
                         style: TextStyle(
                           fontSize: 20,
-                          color: Color(0xFF2C2A2A),
+                          color: Colors.white
                         ),
                       ),
                     ),

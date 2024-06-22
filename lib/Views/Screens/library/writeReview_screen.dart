@@ -195,14 +195,12 @@ class _RateWorkoutPageState extends State<RateWorkoutPage> {
                       }
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color(0xFF0dbab4)),
-                      fixedSize:
-                          MaterialStateProperty.all<Size>(const Size(340, 50)),
+                      backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0dbab4)),
+                      fixedSize: MaterialStateProperty.all<Size>(const Size(370, 50)),
                       shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
-                        (Set<MaterialState> states) {
+                            (Set<MaterialState> states) {
                           return RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(5.0),
                           );
                         },
                       ),
@@ -211,7 +209,7 @@ class _RateWorkoutPageState extends State<RateWorkoutPage> {
                       'Submit',
                       style: TextStyle(
                         fontSize: 20,
-                        color: Color(0xFF2C2A2A),
+                        color: Colors.white
                       ),
                     ),
                   ),

@@ -225,7 +225,8 @@ import '../../../Models/workout_model.dart';
 import '../../Models/review_model.dart';
 import '../Screens/Community/community_workout_details_screen.dart';
 import '../../../Controllers/workout_controller.dart';
-import '../Screens/Community/reviewsScreen.dart'; // Import the controller
+import '../Screens/Community/reviewsScreen.dart';
+import '../Screens/library/writeReview_screen.dart'; // Import the controller
 
 class CommunitySearchWorkoutWidget extends StatefulWidget {
   final Workout workout;
@@ -434,11 +435,6 @@ class _CommunitySearchWorkoutWidgetState extends State<CommunitySearchWorkoutWid
                             workout: widget.workout,
                           ),
                         ),
-                        // MaterialPageRoute(
-                        //   builder: (context) => DetailPage(
-                        //     workout: widget.workout, updateSavedWorkouts: (Workout , bool ) {  },
-                        //   ),
-                        // ),
                       );
                     },
                     child: Container(
@@ -454,9 +450,10 @@ class _CommunitySearchWorkoutWidgetState extends State<CommunitySearchWorkoutWid
             ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   IconButton(
                     icon: SvgPicture.asset(
@@ -468,7 +465,23 @@ class _CommunitySearchWorkoutWidgetState extends State<CommunitySearchWorkoutWid
                     onPressed: handleLikeButtonPressed,
                   ),
                   IconButton(
-                    icon: Icon(Icons.rate_review_outlined),
+                    icon: const ImageIcon(
+                      AssetImage('images/pen.png'),
+                    ),
+                    color: Colors.white,
+                    onPressed: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RateWorkoutPage(workout: widget.workout),
+                        ),
+                      );
+                    },
+                  ),
+                  IconButton(
+                    icon: const ImageIcon(
+                      AssetImage('images/review.png'),
+                    ),
                     color: Colors.white,
                     onPressed: () async {
                       showModalBottomSheet(

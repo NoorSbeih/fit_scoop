@@ -13,6 +13,7 @@ import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_model.dart';
 import 'package:fit_scoop/Views/Widgets/exercises_card_widget.dart';
+import '../Community/reviewsScreen.dart';
 import '../WorkoutScheduling/addWorkoutForADay.dart';
 import '../WorkoutScheduling/selectDayForLibrary.dart';
 
@@ -33,6 +34,7 @@ class _DetailPageState extends State<DetailPage> {
   late bool isLiked = false;
   late List<Workout> savedWorkouts = [];
   List<Review>? _reviews = [];
+  List<Review> reviews = [];
   int numberOfSaves = 0;
   int no = 0;
 
@@ -85,7 +87,7 @@ class _DetailPageState extends State<DetailPage> {
     try {
       ReviewController controller = ReviewController();
 
-      List<Review> reviews =
+     reviews =
           await controller.getReviewsByWorkoutId(widget.workout.id);
 
       if (!reviews.isEmpty) {
@@ -199,6 +201,7 @@ class _DetailPageState extends State<DetailPage> {
                 style: const TextStyle(
                     color: Colors.white, fontSize: 25, fontFamily: 'BebasNeue'),
               ),
+              SizedBox(height: 5),
               SingleChildScrollView(
                 child: Container(
                   height: 250,
@@ -219,19 +222,6 @@ class _DetailPageState extends State<DetailPage> {
                 children: [
                   Row(
                     children: [
-                      IconButton(
-                        icon: Icon(Icons.rate_review_sharp),
-                        color: Colors.white,
-                        onPressed: () async {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  RateWorkoutPage(workout: widget.workout),
-                            ),
-                          );
-                        },
-                      ),
                       IconButton(
                         icon: SvgPicture.asset(
                           'images/heart_clicked.svg',
@@ -275,6 +265,50 @@ class _DetailPageState extends State<DetailPage> {
                           }
                         },
                       ),
+                      IconButton(
+                        icon: const ImageIcon(
+                          AssetImage('images/pen.png'),
+                        ),
+                        color: Colors.white,
+                        onPressed: () async {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                             // builder: (context) => RateWorkoutPage(workout: workout),
+                              builder: (context) =>
+                                  RateWorkoutPage(workout: widget.workout),
+                            ),
+                          );
+                        },
+                      ),
+
+                      IconButton(
+                        icon: const ImageIcon(
+                          AssetImage('images/review.png'),
+                        ),
+                        color: Colors.white,
+                        onPressed: () async {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                            ),
+                            builder: (BuildContext context) {
+                              return Container(
+                                height: MediaQuery.of(context).size.height * 0.95,
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
+                                  border: Border.all(
+                                    width: 2.0,
+                                  ),
+                                ),
+                                child: reviewsScreen(workout: widget.workout, reviews: reviews),
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ],
                   ),
                   Text(
@@ -283,7 +317,7 @@ class _DetailPageState extends State<DetailPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -293,6 +327,11 @@ class _DetailPageState extends State<DetailPage> {
                         fontSize: 25,
                         color: Color(0xFF0dbab4),
                         fontFamily: 'BebasNeue'),
+                  ),
+                  SizedBox(height: 10.0),
+                  const Divider(
+                    color: Colors.grey,
+                    thickness: 1.0,
                   ),
                   RatingBar.builder(
                     initialRating: widget.workout.intensity == 'Beginner'
@@ -316,7 +355,12 @@ class _DetailPageState extends State<DetailPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 10.0),
+              const Divider(
+                color: Colors.grey,
+                thickness: 1.0,
+              ),
+
               const Text(
                 'DESCRIPTION',
                 style: TextStyle(
@@ -329,6 +373,12 @@ class _DetailPageState extends State<DetailPage> {
                 widget.workout.description,
                 style: TextStyle(fontSize: 22, color: Colors.white),
               ),
+              SizedBox(height: 10.0),
+              const Divider(
+                color: Colors.grey,
+                thickness: 1.0,
+              ),
+
               const Text(
                 "RATINGS AND REVIEWS",
                 style: TextStyle(
@@ -370,7 +420,12 @@ class _DetailPageState extends State<DetailPage> {
                   style: TextStyle(fontSize: 22, color: Colors.white),
                 ),
               ],
-              SizedBox(height: 10),
+              SizedBox(height: 15.0),
+              const Divider(
+                color: Colors.grey,
+                thickness: 1.0,
+              ),
+
               ElevatedButton(
                 onPressed: () {
                   //  AddWorkoutForADay()
@@ -385,21 +440,19 @@ class _DetailPageState extends State<DetailPage> {
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
-                      const Color(0xFF0dbab4)), // Change color to blue
-                  fixedSize:
-                      MaterialStateProperty.all<Size>(const Size(10, 30)),
+                      const Color(0xFF0dbab4)),
+                  fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
                   shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
-                    (Set<MaterialState> states) {
+                        (Set<MaterialState> states) {
                       return RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(5.0), // Border radius
+                        borderRadius: BorderRadius.circular(5.0),
                       );
                     },
                   ),
                 ),
                 child: const Text(
                   'ADD TO SCHEDULE',
-                  style: TextStyle(fontSize: 22, color: Colors.white),
+                  style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
               ),
             ],

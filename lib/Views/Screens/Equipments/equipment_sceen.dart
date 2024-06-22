@@ -64,7 +64,7 @@ class _EquipmentPageState extends State<EquipmentPage>
 
        setState(() {
          for (int i = 0; i < equipmentTypes.length; i++) {
-           selectedEquipmentIdsByTab[i] = selectedEquipmentsForUser.where((id) => allEquipment.firstWhere((equipment) => equipment.id == id).type1 == equipmentTypes[i]).toList();
+           selectedEquipmentIdsByTab[i] = selectedEquipmentsForUser.where((id) => allEquipment.firstWhere((equipment) => equipment.name == id).type1 == equipmentTypes[i]).toList();
          }
        });
     } catch (e) {
@@ -96,7 +96,6 @@ class _EquipmentPageState extends State<EquipmentPage>
 
   final List<String> equipmentTypes = [
     'Free Weights',
-    'Benches, Bars, and Racks',
     'Machines',
     'Bands and more'
   ];

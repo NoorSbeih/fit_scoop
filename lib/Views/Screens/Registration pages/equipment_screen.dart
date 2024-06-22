@@ -71,7 +71,7 @@ class _EquipmentPageState extends State<Page6>
 
   final List<String> equipmentTypes = [
     'Free Weights',
-    'Benches, Bars, and Racks',
+    //'Benches, Bars, and Racks',
     'Machines',
     'Bands and more'
   ];

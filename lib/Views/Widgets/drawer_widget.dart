@@ -153,6 +153,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           onUpdateWeightHeight: (weight,height) {
                             setState(() {
                               metrics.weight = weight;
+                              metrics.height = height;
                             });
                           },
                         ),

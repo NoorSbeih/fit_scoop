@@ -7,7 +7,7 @@ import '../../Models/workout_model.dart';
 
 
 class EquipmentService {
-  final CollectionReference _equipmentsRef = FirebaseFirestore.instance.collection('equipment');
+  final CollectionReference _equipmentsRef = FirebaseFirestore.instance.collection('equipments');
 
 
 

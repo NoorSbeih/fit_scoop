@@ -20,7 +20,7 @@ class _EquipmentListState extends State<EquipmentList> {
     super.initState();
     isSelected = List.generate(
       widget.equipment.length,
-          (index) => widget.selectedEquipmentIdsByTab.contains(widget.equipment[index].id),
+          (index) => widget.selectedEquipmentIdsByTab.contains(widget.equipment[index].name),
     );
   }
 
@@ -31,7 +31,7 @@ class _EquipmentListState extends State<EquipmentList> {
       setState(() {
         isSelected = List.generate(
           widget.equipment.length,
-              (index) => widget.selectedEquipmentIdsByTab.contains(widget.equipment[index].id),
+              (index) => widget.selectedEquipmentIdsByTab.contains(widget.equipment[index].name),
         );
       });
     }
@@ -134,7 +134,7 @@ class _EquipmentListState extends State<EquipmentList> {
     List<String> selectedIds = [];
     for (int i = 0; i < isSelected.length; i++) {
       if (isSelected[i]) {
-        selectedIds.add(widget.equipment[i].id);
+        selectedIds.add(widget.equipment[i].name);
       }
     }
     return selectedIds;

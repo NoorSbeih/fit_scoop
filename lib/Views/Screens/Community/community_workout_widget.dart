@@ -1,9 +1,11 @@
 
+import 'package:fit_scoop/Views/Screens/Community/reviewsScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../Models/review_model.dart';
 import '../../../Models/user_model.dart';
 import '../../../Models/workout_model.dart';
 import '../library/writeReview_screen.dart';
@@ -12,7 +14,7 @@ import '../library/workout_detail_screen.dart';
 import '../../Widgets/custom_widget.dart';
 
 class communityWorkoutWidget {
-  static Widget communityCardWidget(Workout workout, BuildContext context,User_model user,bool isLike,  final ValueChanged<bool> onLikedChanged,String time) {
+  static Widget communityCardWidget(Workout workout, BuildContext context,User_model user,bool isLike,  final ValueChanged<bool> onLikedChanged,String time,  List<Review> reviews) {
 
     int intensity = 0;
     if (workout.intensity == "Beginner") {
@@ -158,41 +160,69 @@ class communityWorkoutWidget {
               ),
             ),
 
-    Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-    Row(
-    children: [
-      IconButton(
-        icon: SvgPicture.asset(
-          'images/heart_clicked.svg',
-          width: 24,
-          height: 24,
-          color:isLike  ? Color(0xFF0dbab4) : Colors
-              .white, // Change color based on isLiked
-        ),
-        onPressed: () async {
-          print(isLike);
-          onLikedChanged(!isLike);
-        },
-      ),
-      IconButton(
-        icon: Icon(Icons.rate_review_outlined),
-        color: Colors.white,
-        onPressed: () async {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) =>
-          RateWorkoutPage(workout: workout,) // Replace SecondPage() with the desired page widget
-          )
-          );
-        },
-      ),
-        ],
-
-    ),
-    ]
-    ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                    icon: SvgPicture.asset(
+                      'images/heart_clicked.svg',
+                      width: 24,
+                      height: 24,
+                      color: isLike ? Color(0xFF0dbab4) : Colors.white,
+                    ),
+                    onPressed: () async {
+                      print(isLike);
+                      onLikedChanged(!isLike);
+                    },
+                  ),
+                  IconButton(
+                    icon: const ImageIcon(
+                      AssetImage('images/pen.png'),
+                    ),
+                    color: Colors.white,
+                    onPressed: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RateWorkoutPage(workout: workout),
+                        ),
+                      );
+                    },
+                  ),
+                  IconButton(
+                    icon: const ImageIcon(
+                      AssetImage('images/review.png'),
+                    ),
+                    color: Colors.white,
+                    onPressed: () async {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                        ),
+                        builder: (BuildContext context) {
+                          return Container(
+                            height: MediaQuery.of(context).size.height * 0.95,
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
+                              border: Border.all(
+                                width: 2.0,
+                              ),
+                            ),
+                            child: reviewsScreen(workout: workout, reviews: reviews),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
 
           const Divider(
             color: Colors.grey,
