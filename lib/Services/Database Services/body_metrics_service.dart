@@ -61,29 +61,29 @@ class BodyMetricsService {
       throw e;
     }
   }
-  Future<void> updateCurrentDay(String id) async {
-    try {
-      // Fetch the current body metrics
-      var snapshot = await _bodyMetricsRef.doc(id).get();
-      if (snapshot.exists && snapshot.data() != null) {
-        // Convert the snapshot data to a BodyMetrics object
-        BodyMetrics bodyMetrics = BodyMetrics.fromMap(snapshot.data() as Map<String, dynamic>);
-         int currentday= bodyMetrics.CurrentDay;
-        currentday=currentday+1;
-
-        await _bodyMetricsRef.doc(id).update({
-          'CurrentDay': currentday,
-        });
-
-        print('Current day updated successfully.');
-      } else {
-        print('Body metrics not found.');
-      }
-    } catch (e) {
-      print('Error updating current day: $e');
-      throw e;
-    }
-  }
+  // Future<void> updateCurrentDay(String id) async {
+  //   try {
+  //     // Fetch the current body metrics
+  //     var snapshot = await _bodyMetricsRef.doc(id).get();
+  //     if (snapshot.exists && snapshot.data() != null) {
+  //       // Convert the snapshot data to a BodyMetrics object
+  //       BodyMetrics bodyMetrics = BodyMetrics.fromMap(snapshot.data() as Map<String, dynamic>);
+  //        int currentday= bodyMetrics.CurrentDay;
+  //       currentday=currentday+1;
+  //
+  //       await _bodyMetricsRef.doc(id).update({
+  //         'CurrentDay': currentday,
+  //       });
+  //
+  //       print('Current day updated successfully.');
+  //     } else {
+  //       print('Body metrics not found.');
+  //     }
+  //   } catch (e) {
+  //     print('Error updating current day: $e');
+  //     throw e;
+  //   }
+  // }
 
 
   // Delete body metrics document from Firestore based on user ID

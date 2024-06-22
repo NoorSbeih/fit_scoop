@@ -171,14 +171,34 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 ),
 
                     SizedBox(height: 10),
-                    CustomUnderlineText(
-                      text: 'Height: ${metrics.height.toStringAsFixed(2)}',
-                      fontSize: 20,
-                      textColor: Colors.white,
-                      underlineColor: Colors.grey,
-                      underlinePadding: 2.0,
-                      underlineThickness: 2.0,
+
+                    GestureDetector(
+                      onTap: () {
+                        // Navigate to a new page when the text is tapped
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Weight_HeightUpdate(
+                              onUpdateWeightHeight: (weight,height) {
+                                setState(() {
+                                  metrics.weight = weight;
+                                  metrics.height = height;
+                                });
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                      child: CustomUnderlineText(
+                        text: 'Height: ${metrics.height.toStringAsFixed(2)}',
+                        fontSize: 20,
+                        textColor: Colors.white,
+                        underlineColor: Colors.grey,
+                        underlinePadding: 2.0,
+                        underlineThickness: 2.0,
+                      ),
                     ),
+
 
                     SizedBox(height: 10),
                     CustomUnderlineText(

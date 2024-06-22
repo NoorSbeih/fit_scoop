@@ -67,8 +67,8 @@ class _WorkoutPageState extends State<WorkoutPagee> {
         BodyMetricsController controller = BodyMetricsController();
         BodyMetrics? metrics = await controller.fetchBodyMetrics(bodyMetricId);
         if (metrics != null) {
-          int currentDayIndex = metrics.CurrentDay;
-          currentWorkout = await Calculate(metrics.workoutSchedule, currentDayIndex);
+          // int currentDayIndex = metrics.CurrentDay;
+          currentWorkout = await Calculate(metrics.workoutSchedule);
           setState(() {
             WorkoutPagee.exercises = currentWorkout?.exercises ?? [];
             WorkoutPagee.copyExercisesToLog();
@@ -205,7 +205,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
   }
 
   Widget buildNoWorkoutContent() {
-    return Center(
+    return const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -252,7 +252,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
     );
   }
 
-  Future<Workout?> Calculate(List<String> workoutSchedule, int currentDayIndex) async {
+  Future<Workout?> Calculate(List<String> workoutSchedule) async {
     int currentDayOfWeek = DateTime.now().weekday;
     WorkoutPagee.currentWorkoutId = workoutSchedule[currentDayOfWeek];
     WorkoutController controller = WorkoutController();

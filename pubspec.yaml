@@ -37,6 +37,8 @@ dependencies:
   google_sign_in: ^6.2.1
   cloud_firestore: ^4.15.10
   uuid: ^3.0.4
+  tflite_flutter: ^0.10.4
+
 
 
 
@@ -153,6 +155,8 @@ flutter:
         - images/bodyMuscles/lowerArms.JPG
         - images/bodyMuscles/upperLegs.JPG
         - images/bodyMuscles/cardio.png
+        - assets/model.tflite
+        - assets/bodyPerformance_model.tflite
         - images/pen.png
         - images/review.png
         - images/equipments/bosuBall.png
