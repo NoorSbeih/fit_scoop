@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Controllers/authentication_controller.dart';
+import '../Screens/GenerateWorkout/diastolic_systolic_screen.dart';
 import '../Screens/Registration pages/body_fat_screen.dart';
 import '../Screens/Update/bodyFatUpdate.dart';
 import '../Screens/Update/gymType.dart';
@@ -51,16 +52,56 @@ class _CustomDrawerState extends State<CustomDrawer> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-               const DrawerHeader(
-                child: Text(
-                  'FitScoop',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                      fontFamily: 'BebasNeue')
-                  ),
+              DrawerHeader(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'FitScoop',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontFamily: 'BebasNeue',
+                      ),
+                    ),
+          Center(
+            child:Container(
+              margin: EdgeInsets.symmetric(vertical: 20),
+              width: 250, // Set the width of the Container
+              height: 50, // Set the height of the Container
+              decoration: BoxDecoration(
+                color: Color(0xFF0dbab4),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.red, width: 0),
+              ),
+              child:Center(
+                child:ListTile(
+                      leading: Icon(Icons.fitness_center, color: Colors.white),
+                      title: const Text(
+                        'GENERATE WORKOUT',
+                         style: TextStyle(
+                           color: Colors.white,
+                          fontSize: 20,
+                          fontFamily: 'BebasNeue',
+                        ),
+                      ),
+                      onTap: () async {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>  DiastolicSystolicScreen()
+                            ),
+                          );
 
+
+                      },
+                    ),
+              ),
+            ),
+          )
+                  ],
                 ),
+              ),
               ListTile(
                 title: const Text(
                   'GYM EQUIPMENT',
