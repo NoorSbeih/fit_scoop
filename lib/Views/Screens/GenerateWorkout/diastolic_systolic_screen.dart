@@ -4,6 +4,8 @@ import 'package:numberpicker/numberpicker.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 
 class DiastolicSystolicScreen extends StatefulWidget {
+  static double diastolic=0;
+  static double systolic=0;
   const DiastolicSystolicScreen({Key? key}) : super(key: key);
 
   @override
@@ -13,7 +15,6 @@ class DiastolicSystolicScreen extends StatefulWidget {
 class _DiastolicSystolicScreen extends State<DiastolicSystolicScreen> {
   late TextEditingController selectedDiastolic = TextEditingController();
   late TextEditingController selectedSystolic = TextEditingController();
-
   @override
   void initState() {
     super.initState();

@@ -195,7 +195,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
               'BEGIN WORKOUT',
               style: TextStyle(
                 fontSize: 20,
-                color: Color(0xFF2C2A2A),
+                color: Colors.white,
               ),
             ),
           ),
@@ -254,7 +254,9 @@ class _WorkoutPageState extends State<WorkoutPagee> {
 
   Future<Workout?> Calculate(List<String> workoutSchedule) async {
     int currentDayOfWeek = DateTime.now().weekday;
-    WorkoutPagee.currentWorkoutId = workoutSchedule[currentDayOfWeek];
+  print(getDayOfWeek(currentDayOfWeek));
+  print("elianananana");
+    WorkoutPagee.currentWorkoutId = workoutSchedule[getDayOfWeek(currentDayOfWeek)];
     WorkoutController controller = WorkoutController();
     return controller.getWorkout(WorkoutPagee.currentWorkoutId);
   }
@@ -264,17 +266,17 @@ class _WorkoutPageState extends State<WorkoutPagee> {
       case DateTime.saturday:
         return 6;
       case DateTime.sunday:
-        return 5;
-      case DateTime.monday:
-        return 4;
-      case DateTime.tuesday:
-        return 3;
-      case DateTime.wednesday:
-        return 2;
-      case DateTime.thursday:
-        return 1;
-      case DateTime.friday:
         return 0;
+      case DateTime.monday:
+        return 1;
+      case DateTime.tuesday:
+        return 2;
+      case DateTime.wednesday:
+        return 3;
+      case DateTime.thursday:
+        return 4;
+      case DateTime.friday:
+        return 5;
       default:
         return 7;
     }
