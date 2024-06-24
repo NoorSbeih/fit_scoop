@@ -36,24 +36,21 @@ late TextEditingController  selectedWeight = TextEditingController();
 void initState() {
 super.initState();
 _loadPreferences();
-BodyMetricsSingleton singleton = BodyMetricsSingleton.getInstance();
-BodyMetrics metrics = singleton.getMetrices();
-selectedHeight.text = metrics.height.toString();
-selectedWeight.text = metrics.weight.toString();
 
 
 }
 
 void _loadPreferences() async {
-SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-String? unitOfMeasure = sharedPreferences.getString('unitOfMeasure');
-if (unitOfMeasure != null) {
+  BodyMetricsSingleton singleton = BodyMetricsSingleton.getInstance();
+  BodyMetrics metrics = singleton.getMetrices();
+  selectedHeight.text = metrics.height.toString();
+  selectedWeight.text = metrics.weight.toString();
+String? unitOfMeasure =metrics.unitOfMeasure;
 setState(() {
+  print("unit");
+  print(metrics.unitOfMeasure);
 _selectedValue = unitOfMeasure;
 });
-} else {
-// Handle the case where unitOfMeasure is null, if needed
-}
 }
 
 
@@ -114,7 +111,7 @@ fontSize: 20.0,
 ),
 Padding(
 padding: EdgeInsets.all(15),
-child:  _selectedValue == 'imperial'
+child:  _selectedValue == 'Imperial'
 ? _buildImperialPicker(context)
     : _buildMetricPicker(context),
 ),
@@ -147,7 +144,7 @@ fontSize: 20.0,
 ),
 Padding(
 padding: EdgeInsets.all(15),
-child: _selectedValue == 'imperial'
+child: _selectedValue == 'Imperial'
 ? _buildImperialWeightPicker(context)
     :  _buildMetricWeightPicker(context),
 ),
