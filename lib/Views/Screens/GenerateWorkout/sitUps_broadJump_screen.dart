@@ -146,10 +146,11 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
                     metrics?.sitUpCount=double.parse(selectedSitUp.text);
                     metrics?.broadJumpCm=double.parse(selectedBroadJump.text);
                     bodyMetricsController.updateBodyMetrics(user.bodyMetrics, metrics!);
-                  //  double age=calculateAge(metrics.birthDate);
+
                   });
+                  double age=calculateAge(metrics!.birthDate);
                     TensorFlowService predictTensor=TensorFlowService();
-                    int x= await predictTensor.predict(age:22,gender:metrics!.gender,
+                    int x= await predictTensor.predict(age:age,gender:metrics!.gender,
                     height :metrics.height,
                     weight:metrics.weight,
                         bodyFat: metrics.bodyFat,
@@ -162,14 +163,6 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
                     print(x);
 
                 }
-                //  AddWorkoutForADay()
-                /* Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        selectDayForLibraryy(workout :widget.workout),
-                  ),
-                );*/
 
               },
               style: ButtonStyle(
@@ -272,16 +265,11 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
     String dateFormat = "dd/MM/yyyy";
     DateFormat format = DateFormat(dateFormat);
     DateTime birthDate = format.parse(dateString);
-
-    // Get the current date
     DateTime today = DateTime.now();
-
-    // Calculate the age
-    double age = (today.year - birthDate.year) as double;
+    double age = (today.year - birthDate.year).toDouble();
     if (today.month < birthDate.month || (today.month == birthDate.month && today.day < birthDate.day)) {
       age--;
     }
-
     return age;
   }
 }
