@@ -1,11 +1,12 @@
+import 'package:fit_scoop/Views/Screens/GenerateWorkout/sitUps_broadJump_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 
 class DiastolicSystolicScreen extends StatefulWidget {
-  static double diastolic=0;
-  static double systolic=0;
+  static late double diastolic;
+  static late double systolic;
   const DiastolicSystolicScreen({Key? key}) : super(key: key);
 
   @override
@@ -28,8 +29,17 @@ class _DiastolicSystolicScreen extends State<DiastolicSystolicScreen> {
         backgroundColor: const Color(0xFF2C2A2A),
         appBar: AppBar(
           backgroundColor: const Color(0xFF2C2A2A),
-          iconTheme: const IconThemeData(
-            color: Color(0xFF0dbab4), // Change the drawer icon color here
+          automaticallyImplyLeading: false,
+          title: Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back, color: Color(0xFF0dbab4)),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the page
+                },
+              ),
+         // To balance the space taken by IconButton
+            ],
           ),
         ),
         body: Column(
@@ -115,13 +125,13 @@ class _DiastolicSystolicScreen extends State<DiastolicSystolicScreen> {
             ElevatedButton(
               onPressed: () {
                 //  AddWorkoutForADay()
-               /* Navigator.push(
+               Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        selectDayForLibraryy(workout :widget.workout),
+                    SitupsBroadjumpScreen(),
                   ),
-                );*/
+                );
 
               },
               style: ButtonStyle(
@@ -173,7 +183,7 @@ class _DiastolicSystolicScreen extends State<DiastolicSystolicScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildNumberPicker(80, "mm Hg", 80, 120, 80, selectedDiastolic),
+        _buildNumberPicker(80, "mm Hg", 80, 120, 80, selectedDiastolic,0),
       ],
     );
   }
@@ -182,12 +192,12 @@ class _DiastolicSystolicScreen extends State<DiastolicSystolicScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildNumberPicker(120, "mm Hg", 120, 180, 80, selectedSystolic),
+        _buildNumberPicker(120, "mm Hg", 80, 120, 80, selectedSystolic,1),
       ],
     );
   }
 
-  Widget _buildNumberPicker(int x, String text, int minValue, int maxValue, double itemWidth, TextEditingController controller) {
+  Widget _buildNumberPicker(int x, String text, int minValue, int maxValue, double itemWidth, TextEditingController controller,int flag) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -202,7 +212,12 @@ class _DiastolicSystolicScreen extends State<DiastolicSystolicScreen> {
               onChanged: (value) {
                 setState(() {
                   x = value;
-                  controller.text = value.toString(); // Update the text in the controller
+                  controller.text = value.toString();
+                  if(flag==0){
+                    DiastolicSystolicScreen.diastolic=value.toDouble();
+                  }else{
+                    DiastolicSystolicScreen.systolic=value.toDouble();
+                  }
                 });
               },
               selectedTextStyle: const TextStyle(fontSize: 16, color: Colors.white),
