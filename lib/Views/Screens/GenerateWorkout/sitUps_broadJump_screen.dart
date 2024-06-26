@@ -149,7 +149,6 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
                     metrics?.systolic=DiastolicSystolicScreen.systolic;
                     metrics?.sitUpCount=double.parse(selectedSitUp.text);
                     metrics?.broadJumpCm=double.parse(selectedBroadJump.text);
-                    bodyMetricsController.updateBodyMetrics(user.bodyMetrics, metrics!);
                   });
                   double age=calculateAge(metrics!.birthDate);
 
@@ -164,6 +163,8 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
                     );
                     print("predictttt");
                     print(x);
+                  metrics.performanceLevel=x;
+                   bodyMetricsController.updateBodyMetrics(user.bodyMetrics, metrics!);
 
                 }
 
