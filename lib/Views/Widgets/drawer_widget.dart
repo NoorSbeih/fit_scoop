@@ -381,6 +381,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                try {
                  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
                  await sharedPreferences.clear(); // Clear all shared preferences
+
+
+
                  print("Shared preferences cleared");
                } catch (e) {
                  // Handle error if needed

@@ -5,9 +5,12 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rating_summary/rating_summary.dart';
 
+import '../../../Controllers/exercise_controller.dart';
 import '../../../Controllers/review_controller.dart';
 import '../../../Controllers/user_controller.dart';
 import '../../../Controllers/workout_controller.dart';
+import '../../../Models/bodyPart.dart';
+import '../../../Models/exercise_model.dart';
 import '../../../Models/review_model.dart';
 import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
@@ -37,12 +40,14 @@ class _DetailPageState extends State<DetailPage> {
   List<Review> reviews = [];
   int numberOfSaves = 0;
   int no = 0;
+  List<BodyPart> parts=[];
 
   @override
   void initState() {
     super.initState();
     SavedWorkout();
     fetchReviews();
+    fetchBodyParts();
     numberOfSaves = widget.workout.numberOfSaves;
     no = numberOfSaves;
   }
@@ -73,6 +78,47 @@ class _DetailPageState extends State<DetailPage> {
       throw e;
     }
   }
+
+  Future<void> fetchBodyParts() async {
+    try {
+      ExerciseController controller = ExerciseController();
+      List<BodyPart> equipments = await controller.getAllBoyImages();
+      setState(() {
+        parts = equipments;
+      });
+
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+  }
+
+  Future<String> getImageUrl(Map<String, dynamic> exercise) async {
+    String id = exercise['id'];
+    ExerciseController controller=new ExerciseController() ;
+    Exercise? exersice=await controller.getExercise(id);
+    String? bodyPart = exersice?.bodyPart;
+    String? target = exersice?.target;
+    print("ffffffffffffffffff");
+    print(bodyPart);
+    print(target);
+
+    for (int i = 0; i < parts.length; i++) {
+      if (parts[i].name == bodyPart) {
+        print("ffjjfjf");
+        print(parts[i].imageUrl);
+        return parts[i].imageUrl;
+
+      }
+      if (parts[i].name != bodyPart && parts[i].name == target) {
+        print("cfff");
+        print(parts[i].imageUrl);
+        return parts[i].imageUrl;
+      }
+    }
+    return "";
+  }
+
+
 
   bool liked(String? id) {
     for (int i = 0; i < savedWorkouts.length; i++) {
@@ -474,7 +520,7 @@ class _DetailPageState extends State<DetailPage> {
       ),
     );
   }
-}
+
 Widget buildExerciseCards(exercises) {
   return ListView.builder(
     itemCount: exercises.length,
@@ -491,11 +537,12 @@ Widget buildExerciseCards(exercises) {
           weight.toString(),
           context,
           id,
-          0
+            getImageUrl(exercise)
         );
       } else {
         return SizedBox(); // Placeholder widget, replace it with your preferred widget
       }
     },
   );
+}
 }

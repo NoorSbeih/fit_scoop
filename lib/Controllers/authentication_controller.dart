@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 
+import '../Models/bodyMetricsSingleton.dart';
+import '../Models/user_singleton.dart';
 import '../Services/authentication_service.dart';
 
 class AuthController {

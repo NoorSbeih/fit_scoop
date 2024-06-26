@@ -33,17 +33,6 @@ class AddExercisePage extends StatelessWidget {
             onExerciseAdded();
           },
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-              color: Color(0xFF0dbab4),
-            ),
-            onPressed: () {
-              // Handle menu icon pressed
-            },
-          ),
-        ],
       ),
       body: addExercise(),
     );
@@ -67,7 +56,7 @@ class _addExercise extends State<addExercise>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    fetchEquipments();
+    fetchBodyParts();
   }
 
   @override
@@ -77,7 +66,7 @@ class _addExercise extends State<addExercise>
   }
 
 
-  Future<void> fetchEquipments() async {
+  Future<void> fetchBodyParts() async {
     try {
       ExerciseController controller = ExerciseController();
       List<BodyPart> equipments = await controller.getAllBoyImages();
@@ -175,15 +164,15 @@ class _addExercise extends State<addExercise>
 
   Widget muscleGroupTabContent() {
     List<String> mainMuscles = [
-      'waist',
-      'back',
-      'chest',
-      'upper arms',
-      'upper legs',
-      'shoulders',
-      'lower arms',
-      'cardio',
-      'lower legs'
+      'Waist',
+      'Back',
+      'Chest',
+      'Upper arms',
+      'Upper legs',
+      'Shoulders',
+      'Lower arms',
+      'Cardio',
+      'Lower legs'
     ];
     ExerciseController controller = new ExerciseController();
     return ListView(

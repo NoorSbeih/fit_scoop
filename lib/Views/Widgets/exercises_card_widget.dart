@@ -298,7 +298,7 @@ class exercises_card {
   }
 
   static Widget CurrentWorkoutCardWidget(
-      String name, String sets, String weight,BuildContext context,String id, int duration) {
+      String name, String sets, String weight,BuildContext context,String id, Future<String> imageUrl) {
     return SizedBox(
       height: 110,
       child: Card(
@@ -314,10 +314,24 @@ class exercises_card {
               margin: EdgeInsets.all(8),
               height: double.infinity,
               width: 80,
-              color: Colors.grey, // Placeholder color for the image
-              child: Image.network(
-                'https://v2.exercisedb.io/image/4yyx2YSnXKcRwr', // URL of your image
-                fit: BoxFit.cover, // Adjust the image fit as needed
+              child: FutureBuilder<String>(
+                future: imageUrl,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator(); // Placeholder while loading
+                  } else if (snapshot.hasError) {
+                    return Icon(Icons.error); // Show error icon if there is an error
+                  } else if (snapshot.hasData) {
+                    return Image.asset(
+                      snapshot.data!,
+                      width: 148,
+                      height: 128,
+                      fit: BoxFit.cover,
+                    );
+                  } else {
+                    return Icon(Icons.photo); // Placeholder if no data
+                  }
+                },
               ),
             ),
             Expanded(
