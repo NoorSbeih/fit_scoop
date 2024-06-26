@@ -25,10 +25,13 @@ class ExerciseDetailsPage extends StatefulWidget {
 
 class _ExerciseDetailsPageState extends State<ExerciseDetailsPage> {
   String name = "";
-  List<String> description = [];
+  String url = "";
+  List<String> instruction = [];
   String target = "";
+  String secondaryMuscles = "";
   int remainingCount = 0;
-
+  String bodyPart = "";
+  String equipment="";
   void decrementCount() {
     setState(() {
       remainingCount--;
@@ -55,10 +58,14 @@ class _ExerciseDetailsPageState extends State<ExerciseDetailsPage> {
     Exercise? exercise = await controller.getExercise(widget.id);
     if (exercise != null) {
       setState(() {
-        name = exercise.name;
-        description = exercise.instructions;
+        name = exercise!.name;
+        instruction = exercise.instructions;
+        target = exercise.target;
         List<String> muscleGroups = exercise.secondaryMuscles;
-        target = muscleGroups.join(', ');
+        secondaryMuscles = muscleGroups.join(', ');
+        url = exercise.gifUrl;
+        equipment=exercise.equipment;
+        bodyPart=exercise.bodyPart;
       });
     }
   }
@@ -68,71 +75,154 @@ class _ExerciseDetailsPageState extends State<ExerciseDetailsPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xFF2C2A2A),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(top: 10, left: 16, bottom: 10),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: custom_widget.WorkoutTitletWidget(name, Colors.white),
+      appBar: AppBar(
+        backgroundColor: Color(0xFF2C2A2A),
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.close, color: (Color(0xFF0dbab4))),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top:10, left: 16, bottom: 10),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: custom_widget.WorkoutTitletWidget(name, Colors.white),
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Container(
-              height: 200,
-              width: MediaQuery.of(context).size.width,
-              child: Image.asset('images/jumpingJacks.jpg'),
+            Padding(
+              padding: EdgeInsets.all(16.0), // Adjust padding as needed
+              child: Container(
+                height: 200, // Set the height of the image
+                width: 600, // Set the width of the image
+                child: url.isNotEmpty
+                    ? Image.network(url)
+                    : Text("No image available", style: TextStyle(color: Colors.white)),
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 10, left: 16, bottom: 10, right: 16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: custom_widget.WorkoutTitletWidget(
-                    "Duration",
-                    Color(0xFF0dbab4),
-                  ),
+            Padding(
+              padding: EdgeInsets.only(top: 10, left: 16),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: custom_widget.WorkoutTitletWidget("INSTRUCTIONS", Color(0xFF0dbab4)),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16.0), // Adjust padding as needed
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Color(0xFF2C2A2A),
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: Colors.grey),
+
                 ),
-                custom_widget.WorkoutTitletWidget(
-                  widget.duration.toString(),
-                  Color(0xFF0dbab4),
+                child: Column(
+                  children: instruction.map((instr) =>
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: custom_widget.WorkoutTexttWidget(instr, 18),
+                        ),
+                      )
+                  ).toList(),
                 ),
-              ],
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 10, left: 16, bottom: 10),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: custom_widget.WorkoutTitletWidget("Description", Color(0xFF0dbab4)),
+
+            Padding(
+              padding: EdgeInsets.only(top: 10, left: 16),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: custom_widget.WorkoutTitletWidget("BODY PART", Color(0xFF0dbab4)),
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 16, bottom: 10),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: description.isNotEmpty
-                  ? custom_widget.WorkoutTexttWidget(description[0], 14)
-                  : custom_widget.WorkoutTexttWidget("No description available.", 14),
+
+            Padding(
+              padding: EdgeInsets.only(left: 16, bottom: 10),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: custom_widget.WorkoutTexttWidget(bodyPart.toUpperCase(), 18),
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 10, left: 16),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: custom_widget.WorkoutTitletWidget("TARGETED MUSCLES", Color(0xFF0dbab4)),
+            const Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20),
+              child: Divider(
+                color: Colors.grey,
+                thickness: 1.0,
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 16, bottom: 90),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: custom_widget.WorkoutTexttWidget(target.isNotEmpty ? target : "No targeted muscles available.", 14),
+            Padding(
+              padding: EdgeInsets.only(top: 10, left: 16),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: custom_widget.WorkoutTitletWidget("TARGETED MUSCLE", Color(0xFF0dbab4)),
+              ),
             ),
-          ),
+            Padding(
+              padding: EdgeInsets.only(left: 16, bottom: 10),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: custom_widget.WorkoutTexttWidget(target.toUpperCase(), 18),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20),
+              child: Divider(
+                color: Colors.grey,
+                thickness: 1.0,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 10, left: 16),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: custom_widget.WorkoutTitletWidget("SECONDARY MUSCLES", Color(0xFF0dbab4)),
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.only(left: 16, bottom: 10),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: custom_widget.WorkoutTexttWidget(secondaryMuscles.toUpperCase(), 18),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20),
+              child: Divider(
+                color: Colors.grey,
+                thickness: 1.0,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 10, left: 16),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: custom_widget.WorkoutTitletWidget("EQUIPMENT USED", Color(0xFF0dbab4)),
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.only(left: 16, bottom: 10),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: custom_widget.WorkoutTexttWidget(equipment.toUpperCase(), 18),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20),
+              child: Divider(
+                color: Colors.grey,
+                thickness: 1.0,
+              ),
+            ),
           Divider(),
           Padding(
             padding: EdgeInsets.only(left: 16, right: 14),
@@ -170,6 +260,7 @@ class _ExerciseDetailsPageState extends State<ExerciseDetailsPage> {
           ),
         ],
       ),
+    ),
     );
   }
 }
