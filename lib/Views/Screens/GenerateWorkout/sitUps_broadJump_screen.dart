@@ -12,18 +12,22 @@ import '../../../Services/tensorflow_service.dart';
 import 'diastolic_systolic_screen.dart';
 
 class SitupsBroadjumpScreen extends StatefulWidget {
+
   const SitupsBroadjumpScreen({Key? key}) : super(key: key);
+
 
   @override
   State<SitupsBroadjumpScreen> createState() => _SitupsBroadjumpScreen();
 }
 
 class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
+  TensorFlowService predictTensor=TensorFlowService();
   late TextEditingController selectedSitUp = TextEditingController();
   late TextEditingController selectedBroadJump= TextEditingController();
   @override
   void initState() {
     super.initState();
+
     // Initialize text controllers or perform other setup if needed
   }
 
@@ -146,10 +150,9 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
                     metrics?.sitUpCount=double.parse(selectedSitUp.text);
                     metrics?.broadJumpCm=double.parse(selectedBroadJump.text);
                     bodyMetricsController.updateBodyMetrics(user.bodyMetrics, metrics!);
-
                   });
                   double age=calculateAge(metrics!.birthDate);
-                    TensorFlowService predictTensor=TensorFlowService();
+
                     int x= await predictTensor.predict(age:age,gender:metrics!.gender,
                     height :metrics.height,
                     weight:metrics.weight,

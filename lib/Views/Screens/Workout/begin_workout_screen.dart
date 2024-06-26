@@ -20,7 +20,8 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
   late Timer _timer;
   Duration _duration = Duration.zero;
   bool _isRunning = true;
- List<int> remainingSets = WorkoutPagee.exercises.map((exercise) => exercise['sets'] as int).toList();
+  List<int> remainingSets = WorkoutPagee.exercises.map((exercise) => int.parse(exercise['sets'])).toList();
+
 
   @override
   void initState() {
@@ -228,7 +229,7 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
     return WorkoutPagee.exerciseslog.map((exercise) {
       return ExercisePerformed(
         name: exercise['name'],
-        setsCompleted: exercise['sets'],
+        setsCompleted: int.parse(exercise['sets']),
       );
     }).toList();
   }

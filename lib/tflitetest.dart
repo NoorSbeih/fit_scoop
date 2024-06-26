@@ -15,12 +15,10 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 class PredictionPage extends StatefulWidget {
   @override
   _PredictionPageState createState() => _PredictionPageState();
 }
-
 class _PredictionPageState extends State<PredictionPage> {
   final _formKey = GlobalKey<FormState>();
   final _ageController = TextEditingController();

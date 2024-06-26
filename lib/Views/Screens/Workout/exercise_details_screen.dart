@@ -33,14 +33,15 @@ class _ExerciseDetailsPageState extends State<ExerciseDetailsPage> {
     setState(() {
       remainingCount--;
       int index = WorkoutPagee.exercises.indexWhere((exercise) => exercise['id'] == widget.id);
-      WorkoutPagee.exercises[index]['sets'] = remainingCount;
-      widget.onRemainingCountChanged(remainingCount);
-      if (remainingCount <= 0) {
-        Navigator.of(context).pop();
+      if (index != -1) {
+        WorkoutPagee.exercises[index]['sets'] = remainingCount;
+        widget.onRemainingCountChanged(remainingCount);
+        if (remainingCount <= 0) {
+          Navigator.of(context).pop();
+        }
       }
     });
   }
-
 
   @override
   void initState() {
@@ -61,6 +62,7 @@ class _ExerciseDetailsPageState extends State<ExerciseDetailsPage> {
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,9 +79,9 @@ class _ExerciseDetailsPageState extends State<ExerciseDetailsPage> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(16.0), // Adjust padding as needed
+            padding: EdgeInsets.all(16.0),
             child: Container(
-              height: 200, // Set the height of the image
+              height: 200,
               width: MediaQuery.of(context).size.width,
               child: Image.asset('images/jumpingJacks.jpg'),
             ),
@@ -92,7 +94,7 @@ class _ExerciseDetailsPageState extends State<ExerciseDetailsPage> {
                   child: custom_widget.WorkoutTitletWidget(
                     "Duration",
                     Color(0xFF0dbab4),
-                  ), // Text on the left
+                  ),
                 ),
                 custom_widget.WorkoutTitletWidget(
                   widget.duration.toString(),
@@ -112,7 +114,9 @@ class _ExerciseDetailsPageState extends State<ExerciseDetailsPage> {
             padding: EdgeInsets.only(left: 16, bottom: 10),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: custom_widget.WorkoutTexttWidget(description[0], 14),
+              child: description.isNotEmpty
+                  ? custom_widget.WorkoutTexttWidget(description[0], 14)
+                  : custom_widget.WorkoutTexttWidget("No description available.", 14),
             ),
           ),
           Padding(
@@ -126,16 +130,16 @@ class _ExerciseDetailsPageState extends State<ExerciseDetailsPage> {
             padding: EdgeInsets.only(left: 16, bottom: 90),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: custom_widget.WorkoutTexttWidget(target, 14),
+              child: custom_widget.WorkoutTexttWidget(target.isNotEmpty ? target : "No targeted muscles available.", 14),
             ),
           ),
-          Divider(), // Divider at the end
+          Divider(),
           Padding(
-            padding: EdgeInsets.only(left: 16, right: 14), // Add some space between the divider and text
+            padding: EdgeInsets.only(left: 16, right: 14),
             child: Row(
               children: [
                 Expanded(
-                  child: custom_widget.WorkoutTexttWidget("Sets Remaining: $remainingCount", 20), // Text on the left
+                  child: custom_widget.WorkoutTexttWidget("Sets Remaining: $remainingCount", 20),
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -147,7 +151,7 @@ class _ExerciseDetailsPageState extends State<ExerciseDetailsPage> {
                     shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                           (Set<MaterialState> states) {
                         return RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0), // Border radius
+                          borderRadius: BorderRadius.circular(10.0),
                         );
                       },
                     ),
@@ -169,4 +173,3 @@ class _ExerciseDetailsPageState extends State<ExerciseDetailsPage> {
     );
   }
 }
-
