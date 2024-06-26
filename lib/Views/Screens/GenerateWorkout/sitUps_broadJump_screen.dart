@@ -164,7 +164,7 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
                     print("predictttt");
                     print(x);
                   metrics.performanceLevel=x;
-                   bodyMetricsController.updateBodyMetrics(user.bodyMetrics, metrics!);
+                  bodyMetricsController.updateBodyMetrics(user.bodyMetrics, metrics!);
 
                 }
 
