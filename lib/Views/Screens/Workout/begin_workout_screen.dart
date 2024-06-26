@@ -3,7 +3,10 @@ import 'dart:async';
 import 'package:fit_scoop/Controllers/body_metrics_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
+import '../../../Controllers/exercise_controller.dart';
 import '../../../Controllers/workout_log_controller.dart';
+import '../../../Models/bodyPart.dart';
+import '../../../Models/exercise_model.dart';
 import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_log.dart';
@@ -21,11 +24,12 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
   Duration _duration = Duration.zero;
   bool _isRunning = true;
   List<int> remainingSets = WorkoutPagee.exercises.map((exercise) => int.parse(exercise['sets'])).toList();
-
+  List<BodyPart> parts = [];
 
   @override
   void initState() {
     super.initState();
+    fetchBodyParts();
     _startTimer();
   }
   void updateRemainingSets(int index, int newCount) {
@@ -34,6 +38,49 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
       print(remainingSets[index]);
     });
   }
+
+  Future<void> fetchBodyParts() async {
+    try {
+      ExerciseController controller = ExerciseController();
+      List<BodyPart> equipments = await controller.getAllBoyImages();
+      setState(() {
+        parts = equipments;
+      });
+
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+  }
+
+
+
+
+  Future<String> getImageUrl(Map<String, dynamic> exercise) async {
+    String id = exercise['id'];
+    ExerciseController controller=new ExerciseController() ;
+    Exercise? exersice=await controller.getExercise(id);
+    String? bodyPart = exersice?.bodyPart;
+    String? target = exersice?.target;
+    print("ffffffffffffffffff");
+    print(bodyPart);
+    print(target);
+
+    for (int i = 0; i < parts.length; i++) {
+      if (parts[i].name == bodyPart) {
+        print("ffjjfjf");
+        print(parts[i].imageUrl);
+        return parts[i].imageUrl;
+
+      }
+      if (parts[i].name != bodyPart && parts[i].name == target) {
+        print("cfff");
+        print(parts[i].imageUrl);
+        return parts[i].imageUrl;
+      }
+    }
+    return "";
+  }
+
 
   void _startTimer() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
@@ -190,6 +237,7 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
             weight: weight.toString(),
             id: id,
             duration: 45,
+            imageUrl:getImageUrl(exercise),
             remainingSets: remainingSets[index],
             onRemainingCountChanged: (int newCount) {
               updateRemainingSets(index, newCount);

@@ -10,6 +10,7 @@ class BeginWorkoutCardWidget extends StatelessWidget {
   final String id;
   final int duration;
   final int remainingSets;
+  Future<String> imageUrl;
   final ValueChanged<int> onRemainingCountChanged;
 
   BeginWorkoutCardWidget({
@@ -19,7 +20,9 @@ class BeginWorkoutCardWidget extends StatelessWidget {
     required this.weight,
     required this.id,
     required this.duration,
+    required this.imageUrl,
     required this.remainingSets,
+
     required this.onRemainingCountChanged
   }) : super(key: key);
 
@@ -69,10 +72,24 @@ class BeginWorkoutCardWidget extends StatelessWidget {
                 margin: EdgeInsets.all(8),
                 height: double.infinity,
                 width: 80,
-                color: Colors.grey,
-                child: const Icon(
-                  Icons.photo,
-                  color: Colors.white,
+                child: FutureBuilder<String>(
+                  future: imageUrl,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator(); // Placeholder while loading
+                    } else if (snapshot.hasError) {
+                      return Icon(Icons.error); // Show error icon if there is an error
+                    } else if (snapshot.hasData) {
+                      return Image.asset(
+                        snapshot.data!,
+                        width: 148,
+                        height: 128,
+                        fit: BoxFit.cover,
+                      );
+                    } else {
+                      return Icon(Icons.photo); // Placeholder if no data
+                    }
+                  },
                 ),
               ),
               Expanded(
