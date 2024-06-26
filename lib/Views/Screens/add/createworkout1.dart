@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 import 'package:fit_scoop/Views/Widgets/exercises_card_widget.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../../Controllers/exercise_controller.dart';
+import '../../../Models/bodyPart.dart';
+import '../../../Models/exercise_model.dart';
 import '../../Widgets/drawer_widget.dart';
 import 'addExercise.dart';
 import 'createworkout2.dart';
@@ -21,10 +24,11 @@ class _createWorkout1 extends State<createWorkout1> {
   String emailErrorText = '';
 
   String errorText = '';
-
+  List<BodyPart> parts=[];
   @override
   void initState() {
     super.initState();
+    fetchBodyParts();
   }
 
   void handleExerciseAdded() {
@@ -38,6 +42,49 @@ class _createWorkout1 extends State<createWorkout1> {
       retrieveAddedExercise(addExercise.exercises);
     });
   }
+
+  Future<void> fetchBodyParts() async {
+    try {
+      ExerciseController controller = ExerciseController();
+      List<BodyPart> equipments = await controller.getAllBoyImages();
+      setState(() {
+        parts = equipments;
+      });
+
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+  }
+
+
+  Future<String> getImageUrl(Map<String, dynamic> exercise) async {
+    String id = exercise['id'];
+    ExerciseController controller=new ExerciseController() ;
+    Exercise? exersice=await controller.getExercise(id);
+    String? bodyPart = exersice?.bodyPart;
+    String? target = exersice?.target;
+    print("ffffffffffffffffff");
+    print(bodyPart);
+    print(target);
+
+    for (int i = 0; i < parts.length; i++) {
+      if (parts[i].name == bodyPart) {
+        print("ffjjfjf");
+        print(parts[i].imageUrl);
+        return parts[i].imageUrl;
+
+      }
+      if (parts[i].name != bodyPart && parts[i].name == target) {
+        print("cfff");
+        print(parts[i].imageUrl);
+        return parts[i].imageUrl;
+      }
+    }
+    return "";
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -212,7 +259,8 @@ class _createWorkout1 extends State<createWorkout1> {
               weight.toString(),
               context,
               id,
-              0,
+                0,
+                getImageUrl(exercise),
               onDelete: () {
                 deleteExercise(id);
               },

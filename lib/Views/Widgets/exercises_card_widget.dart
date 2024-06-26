@@ -185,7 +185,7 @@ class exercises_card {
     );
   }
   static Widget AfterAddingExerciseCardWidget(
-      String name, String sets, String weight,BuildContext context,String id,int duration, {required Null Function() onDelete}) {
+      String name, String sets, String weight,BuildContext context,String id,int duration,Future<String> imageUrl, {required Null Function() onDelete}) {
     return SizedBox(
       height: 107,
       child: Card(
@@ -201,10 +201,24 @@ class exercises_card {
               margin: EdgeInsets.all(8),
               height: double.infinity,
               width: 80,
-              color: Colors.grey, // Placeholder color for the image
-              child: const Icon(
-                Icons.photo, // Placeholder icon for the image
-                color: Colors.white,
+              child: FutureBuilder<String>(
+                future: imageUrl,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator(); // Placeholder while loading
+                  } else if (snapshot.hasError) {
+                    return Icon(Icons.error); // Show error icon if there is an error
+                  } else if (snapshot.hasData) {
+                    return Image.asset(
+                      snapshot.data!,
+                      width: 148,
+                      height: 128,
+                      fit: BoxFit.cover,
+                    );
+                  } else {
+                    return Icon(Icons.photo); // Placeholder if no data
+                  }
+                },
               ),
             ),
             Expanded(
@@ -300,7 +314,7 @@ class exercises_card {
   static Widget CurrentWorkoutCardWidget(
       String name, String sets, String weight,BuildContext context,String id, Future<String> imageUrl) {
     return SizedBox(
-      height: 110,
+      height: 120,
       child: Card(
         margin: const EdgeInsets.only(left: 20, right: 20, top: 15),
         color: Color(0xFF2C2A2A),
