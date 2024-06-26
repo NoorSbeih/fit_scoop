@@ -5,9 +5,12 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rating_summary/rating_summary.dart';
 import 'package:fit_scoop/Views/Widgets/exercises_card_widget.dart';
+import '../../../Controllers/exercise_controller.dart';
 import '../../../Controllers/review_controller.dart';
 import '../../../Controllers/user_controller.dart';
 import '../../../Controllers/workout_controller.dart';
+import '../../../Models/bodyPart.dart';
+import '../../../Models/exercise_model.dart';
 import '../../../Models/review_model.dart';
 import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
@@ -26,17 +29,61 @@ class CommunityWorkoutDetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<CommunityWorkoutDetailPage> {
   List<Review>? _reviews = [];
+  List<BodyPart> parts = [];
 
   @override
   void initState() {
     super.initState();
     fetchReviews();
+    fetchBodyParts();
   }
+
+  Future<void> fetchBodyParts() async {
+    try {
+      ExerciseController controller = ExerciseController();
+      List<BodyPart> equipments = await controller.getAllBoyImages();
+      setState(() {
+        parts = equipments;
+      });
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+  }
+
+  Future<String> getImageUrl(Map<String, dynamic> exercise) async {
+    String id = exercise['id'];
+    ExerciseController controller=new ExerciseController() ;
+    Exercise? exersice=await controller.getExercise(id);
+    String? bodyPart = exersice?.bodyPart;
+    String? target = exersice?.target;
+    print("ffffffffffffffffff");
+    print(bodyPart);
+    print(target);
+
+    for (int i = 0; i < parts.length; i++) {
+      if (parts[i].name == bodyPart) {
+        print("ffjjfjf");
+        print(parts[i].imageUrl);
+        return parts[i].imageUrl;
+
+      }
+      if (parts[i].name != bodyPart && parts[i].name == target) {
+        print("cfff");
+        print(parts[i].imageUrl);
+        return parts[i].imageUrl;
+      }
+    }
+    return "";
+  }
+
+
+
 
   void fetchReviews() async {
     try {
       ReviewController controller = ReviewController();
-      List<Review> reviews = await controller.getReviewsByWorkoutId(widget.workout.id);
+      List<Review> reviews = await controller.getReviewsByWorkoutId(
+          widget.workout.id);
       double totalRating = 0;
       int totalReviews = reviews.length;
       int counterFiveStars = 0;
@@ -122,7 +169,8 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage> {
             children: <Widget>[
               Text(
                 widget.workout.name,
-                style: const TextStyle(color: Colors.white, fontSize: 25, fontFamily: 'BebasNeue'),
+                style: const TextStyle(
+                    color: Colors.white, fontSize: 25, fontFamily: 'BebasNeue'),
               ),
               SizedBox(height: 5),
               Container(
@@ -143,7 +191,9 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage> {
                 children: <Widget>[
                   const Text(
                     'INTENSITY ',
-                    style: TextStyle(fontSize: 25, color: Color(0xFF0dbab4), fontFamily: 'BebasNeue'),
+                    style: TextStyle(fontSize: 25,
+                        color: Color(0xFF0dbab4),
+                        fontFamily: 'BebasNeue'),
                   ),
                   RatingBar.builder(
                     initialRating: widget.workout.intensity == 'Beginner'
@@ -156,7 +206,8 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage> {
                     direction: Axis.horizontal,
                     itemCount: 3,
                     itemSize: 24.0,
-                    itemBuilder: (context, _) => const Icon(
+                    itemBuilder: (context, _) =>
+                    const Icon(
                       Icons.star,
                       color: Color(0xFF0dbab4),
                     ),
@@ -175,7 +226,9 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage> {
               SizedBox(height: 5),
               const Text(
                 'DESCRIPTION',
-                style: TextStyle(fontSize: 25, color: Color(0xFF0dbab4), fontFamily: 'BebasNeue'),
+                style: TextStyle(fontSize: 25,
+                    color: Color(0xFF0dbab4),
+                    fontFamily: 'BebasNeue'),
               ),
               SizedBox(height: 0),
               Text(
@@ -189,7 +242,9 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage> {
               ),
               const Text(
                 "RATINGS AND REVIEWS",
-                style: TextStyle(fontSize: 25, color: Color(0xFF0dbab4), fontFamily: 'BebasNeue'),
+                style: TextStyle(fontSize: 25,
+                    color: Color(0xFF0dbab4),
+                    fontFamily: 'BebasNeue'),
               ),
               if (_reviews != null && _reviews!.isNotEmpty) ...[
                 RatingSummary(
@@ -201,24 +256,33 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage> {
                   color: _ratingSummaryData['color'] ?? Colors.white,
                   counterFiveStars: _ratingSummaryData['counterFiveStars'] ?? 0,
                   counterFourStars: _ratingSummaryData['counterFourStars'] ?? 0,
-                  counterThreeStars: _ratingSummaryData['counterThreeStars'] ?? 0,
+                  counterThreeStars: _ratingSummaryData['counterThreeStars'] ??
+                      0,
                   counterTwoStars: _ratingSummaryData['counterTwoStars'] ?? 0,
                   counterOneStars: _ratingSummaryData['counterOneStars'] ?? 0,
-                  labelCounterOneStarsStyle: const TextStyle(color: Colors.white),
-                  labelCounterTwoStarsStyle: const TextStyle(color: Colors.white),
-                  labelCounterThreeStarsStyle: const TextStyle(color: Colors.white),
-                  labelCounterFourStarsStyle: const TextStyle(color: Colors.white),
-                  labelCounterFiveStarsStyle: const TextStyle(color: Colors.white),
+                  labelCounterOneStarsStyle: const TextStyle(
+                      color: Colors.white),
+                  labelCounterTwoStarsStyle: const TextStyle(
+                      color: Colors.white),
+                  labelCounterThreeStarsStyle: const TextStyle(
+                      color: Colors.white),
+                  labelCounterFourStarsStyle: const TextStyle(
+                      color: Colors.white),
+                  labelCounterFiveStarsStyle: const TextStyle(
+                      color: Colors.white),
                   labelStyle: const TextStyle(color: Colors.white),
                   averageStyle: const TextStyle(
-                      color: Colors.white, fontSize: 75, fontFamily: 'BebasNeue'),
+                      color: Colors.white,
+                      fontSize: 75,
+                      fontFamily: 'BebasNeue'),
                 ),
-              ] else ...[
-                const Text(
-                  'No reviews available.',
-                  style: TextStyle(fontSize: 22, color: Colors.white),
-                ),
-              ],
+              ] else
+                ...[
+                  const Text(
+                    'No reviews available.',
+                    style: TextStyle(fontSize: 22, color: Colors.white),
+                  ),
+                ],
               SizedBox(height: 15.0),
               const Divider(
                 color: Colors.grey,
@@ -229,13 +293,16 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => selectDayForLibraryy(workout: widget.workout),
+                      builder: (context) =>
+                          selectDayForLibraryy(workout: widget.workout),
                     ),
                   );
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0dbab4)),
-                  fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color(0xFF0dbab4)),
+                  fixedSize: MaterialStateProperty.all<Size>(
+                      const Size(350, 50)),
                   shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                         (Set<MaterialState> states) {
                       return RoundedRectangleBorder(
@@ -255,37 +322,32 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage> {
       ),
     );
   }
-}
 
-Widget buildExerciseCards(exercises) {
-  return ListView.builder(
-    itemCount: exercises.length,
-    itemBuilder: (context, index) {
-      Map<String, dynamic> exercise = exercises[index];
-      String id = exercise['id'];
-      final name = exercise['name'];
-      final sets = exercise['sets'];
-      final weight = exercise['weight'];
-      if (name != null && sets != null && weight != null) {
-        return exercises_card.CurrentWorkoutCardWidget(
-          name.toString(),
-          sets.toString(),
-          weight.toString(),
-          context,
-          id,
-          0,
-        );
-      } else {
-        return exercises_card.CurrentWorkoutCardWidget(
-          "",
-          "",
-          "",
-          context,
-          "",
-          0,
-        );
-      }
-    },
-  );
-}
 
+  Widget buildExerciseCards(exercises) {
+    return ListView.builder(
+      itemCount: exercises.length,
+      itemBuilder: (context, index) {
+        Map<String, dynamic> exercise = exercises[index];
+        String id = exercise['id'];
+        final name = exercise['name'];
+        final sets = exercise['sets'];
+        final weight = exercise['weight'];
+        if (name != null && sets != null && weight != null) {
+          return exercises_card.CurrentWorkoutCardWidget(
+              name.toString(),
+              sets.toString(),
+              weight.toString(),
+              context,
+              id,
+              getImageUrl(exercise)
+          );
+        } else {
+          return Center(child: Text('No exercises found.'));
+        }
+      },
+    );
+  }
+
+
+}

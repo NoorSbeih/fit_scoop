@@ -4,9 +4,12 @@ import 'package:fit_scoop/Views/Screens/Equipments/equipment_sceen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_scoop/Models/user_model.dart';
+import '../../../Controllers/exercise_controller.dart';
 import '../../../Controllers/workout_controller.dart';
 import 'package:fit_scoop/Views/Widgets/exercises_card_widget.dart';
 import 'package:fit_scoop/Views/Widgets/workout_widget.dart';
+import '../../../Models/bodyPart.dart';
+import '../../../Models/exercise_model.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_model.dart';
 import '../../Widgets/drawer_widget.dart';
@@ -51,11 +54,57 @@ class _WorkoutPageState extends State<WorkoutPagee> {
   int duration = 0;
   late User_model user;
   bool isLoading = true;
+  List<BodyPart> parts=[];
 
   @override
   void initState() {
     super.initState();
+    fetchBodyParts();
     fetchData();
+
+  }
+
+
+  Future<void> fetchBodyParts() async {
+    try {
+      ExerciseController controller = ExerciseController();
+      List<BodyPart> equipments = await controller.getAllBoyImages();
+      setState(() {
+        parts = equipments;
+      });
+
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+  }
+
+
+
+
+  Future<String> getImageUrl(Map<String, dynamic> exercise) async {
+    String id = exercise['id'];
+    ExerciseController controller=new ExerciseController() ;
+    Exercise? exersice=await controller.getExercise(id);
+    String? bodyPart = exersice?.bodyPart;
+    String? target = exersice?.target;
+    print("ffffffffffffffffff");
+    print(bodyPart);
+    print(target);
+
+    for (int i = 0; i < parts.length; i++) {
+      if (parts[i].name == bodyPart) {
+        print("ffjjfjf");
+        print(parts[i].imageUrl);
+        return parts[i].imageUrl;
+
+      }
+      if (parts[i].name != bodyPart && parts[i].name == target) {
+        print("cfff");
+        print(parts[i].imageUrl);
+        return parts[i].imageUrl;
+      }
+    }
+    return "";
   }
 
   void fetchData() async {
@@ -243,19 +292,18 @@ class _WorkoutPageState extends State<WorkoutPagee> {
             weight.toString(),
             context,
             id,
-            duration,
+            getImageUrl(exercise)
           );
-        } else {
-          return SizedBox();
+        }else {
+          return Center(child: Text('No exercises found.'));
         }
       },
     );
   }
 
+
   Future<Workout?> Calculate(List<String> workoutSchedule) async {
     int currentDayOfWeek = DateTime.now().weekday;
-  print(getDayOfWeek(currentDayOfWeek));
-  print("elianananana");
     WorkoutPagee.currentWorkoutId = workoutSchedule[getDayOfWeek(currentDayOfWeek)];
     WorkoutController controller = WorkoutController();
     return controller.getWorkout(WorkoutPagee.currentWorkoutId);
