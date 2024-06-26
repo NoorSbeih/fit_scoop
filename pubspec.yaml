@@ -154,7 +154,8 @@ flutter:
         - images/bodyMuscles/lowerLegs.JPG
         - images/bodyMuscles/lowerArms.JPG
         - images/bodyMuscles/upperLegs.JPG
-        - images/bodyMuscles/cardio.png
+        - images/bodyMuscles/upperArms.JPG
+        - images/bodyMuscles/cardio.JPG
         - assets/model.tflite
         - assets/bodyPerformance_model.tflite
         - images/pen.png
