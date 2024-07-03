@@ -116,7 +116,7 @@ class _CustomPageViewState extends State<CustomPageView> {
                    RegisterPage1(),
                    RegisterPage2(),
                    RegisterPage3(),
-                   CustomPageView.Gender == 'Male' ? RegisterPage4M() : RegisterPage4F(),
+                //   CustomPageView.Gender == 'Male' ? RegisterPage4M() : RegisterPage4F(),
                    RegisterPage5(),
                    RegisterPage6(
                  onEquipmentSelected: (selectedEquipmentIds) {
@@ -136,7 +136,7 @@ class _CustomPageViewState extends State<CustomPageView> {
                 if (currentPageIndex == 0  && !isDataFilled_Page1()) {
                    showError(context);
                        }
-                else if (currentPageIndex >= 5 ) {
+                else if (currentPageIndex >= 4 ) {
                  // if(!RegisterPage6.daysSelected.isEmpty){
                    finishRegistration(context);
                 //}
@@ -146,7 +146,7 @@ class _CustomPageViewState extends State<CustomPageView> {
 
                 }
 
-                else if (currentPageIndex == 3 && CustomPageView.Gender.compareTo("Male")==0) {
+               /* else if (currentPageIndex == 3 && CustomPageView.Gender.compareTo("Male")==0) {
 
                   if ( RegisterPage4M.selectedGoal.isEmpty) {
                     showError(context);
@@ -162,14 +162,13 @@ class _CustomPageViewState extends State<CustomPageView> {
                     CustomPageView.Goal=RegisterPage4F.selectedGoal;
                     nextPage(context);
                   }
-                }
-                else if (currentPageIndex == 4 && RegisterPage5.typeOfPlace.isEmpty) {
+                }*/
+                else if (currentPageIndex == 3 && RegisterPage5.typeOfPlace.isEmpty) {
                     showError(context);
                 }
 
-                else if (currentPageIndex == 5 && selectedEquipmentIds.isEmpty) {
+                else if (currentPageIndex == 4 && selectedEquipmentIds.isEmpty) {
                    showError(context);
-                    finishRegistration(context);
                   }
                 else  {
                   nextPage(context);
