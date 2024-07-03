@@ -128,7 +128,7 @@ class _addExercise extends State<addExercise>
           children: [
             FutureBuilder<List<Exercise>>(
               future:
-                  controller.getExercisesByStartingLetter(letter.toLowerCase()),
+              controller.getExercisesByStartingLetter(letter.toLowerCase()),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -164,15 +164,15 @@ class _addExercise extends State<addExercise>
 
   Widget muscleGroupTabContent() {
     List<String> mainMuscles = [
-      'Waist',
-      'Back',
-      'Chest',
-      'Upper arms',
-      'Upper legs',
-      'Shoulders',
-      'Lower arms',
-      'Cardio',
-      'Lower legs'
+      'waist',
+      'back',
+      'chest',
+      'upper arms',
+      'upper legs',
+      'shoulders',
+      'lower arms',
+      'cardio',
+      'lower legs'
     ];
     ExerciseController controller = new ExerciseController();
     return ListView(
@@ -215,4 +215,3 @@ class _addExercise extends State<addExercise>
     );
   }
 }
-
