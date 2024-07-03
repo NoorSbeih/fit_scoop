@@ -19,7 +19,6 @@ class _DiastolicSystolicScreen extends State<DiastolicSystolicScreen> {
   @override
   void initState() {
     super.initState();
-    // Initialize text controllers or perform other setup if needed
   }
 
   @override
@@ -38,7 +37,6 @@ class _DiastolicSystolicScreen extends State<DiastolicSystolicScreen> {
                   Navigator.of(context).pop(); // Close the page
                 },
               ),
-         // To balance the space taken by IconButton
             ],
           ),
         ),
@@ -124,21 +122,20 @@ class _DiastolicSystolicScreen extends State<DiastolicSystolicScreen> {
             SizedBox(height: 50),
             ElevatedButton(
               onPressed: () {
-                //  AddWorkoutForADay()
-               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                    SitupsBroadjumpScreen(),
-                  ),
-                );
-
+                if (selectedDiastolic.text.isNotEmpty && selectedSystolic.text.isNotEmpty) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SitupsBroadjumpScreen(),
+                    ),
+                  );
+                }
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
                     const Color(0xFF0dbab4)), // Change color to blue
                 fixedSize:
-                MaterialStateProperty.all<Size>(   const Size(190, 50)),
+                MaterialStateProperty.all<Size>(const Size(190, 50)),
                 shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                       (Set<MaterialState> states) {
                     return RoundedRectangleBorder(
@@ -153,6 +150,7 @@ class _DiastolicSystolicScreen extends State<DiastolicSystolicScreen> {
                 style: TextStyle(fontSize: 22, color: Colors.white),
               ),
             ),
+
           ],
         ),
       ),

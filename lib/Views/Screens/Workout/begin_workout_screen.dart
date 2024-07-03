@@ -10,6 +10,7 @@ import '../../../Models/exercise_model.dart';
 import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_log.dart';
+import '../../Widgets/BeginWorkoutCardWidget2.dart';
 import '../main_page_screen.dart';
 import 'begin_workout_exersices_screen.dart';
 import 'current_workout_screen.dart';
@@ -25,13 +26,22 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
   bool _isRunning = true;
   List<int> remainingSets = WorkoutPagee.exercises.map((exercise) => int.parse(exercise['sets'])).toList();
   List<BodyPart> parts = [];
-
+  Map<String, String> cachedImageUrls = {}; // Cache for fetched image URLs
   @override
   void initState() {
     super.initState();
     fetchBodyParts();
+    preloadImages();
     _startTimer();
+
   }
+
+  void preloadImages() async {
+    for (var exercise in WorkoutPagee.exercises) {
+      await getImageUrl(exercise);
+    }
+  }
+
   void updateRemainingSets(int index, int newCount) {
     setState(() {
       remainingSets[index] = newCount;
@@ -53,32 +63,25 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
   }
 
 
+  Future<String> getImageUrl(Map<String, dynamic> exerciseData) async {
+    String id = exerciseData['id'];
+    if (cachedImageUrls.containsKey(id)) {
+      return cachedImageUrls[id]!;
+    }
 
+    ExerciseController controller = ExerciseController();
+    Exercise? fetchedExercise = await controller.getExercise(id);
+    String? bodyPart = fetchedExercise?.bodyPart;
+    String? target = fetchedExercise?.target;
 
-  Future<String> getImageUrl(Map<String, dynamic> exercise) async {
-    String id = exercise['id'];
-    ExerciseController controller=new ExerciseController() ;
-    Exercise? exersice=await controller.getExercise(id);
-    String? bodyPart = exersice?.bodyPart;
-    String? target = exersice?.target;
-    print("ffffffffffffffffff");
-    print(bodyPart);
-    print(target);
-
+    // Assuming parts is populated correctly in fetchBodyParts
     for (int i = 0; i < parts.length; i++) {
-      if (parts[i].name == bodyPart) {
-        print("ffjjfjf");
-        print(parts[i].imageUrl);
-        return parts[i].imageUrl;
-
-      }
-      if (parts[i].name != bodyPart && parts[i].name == target) {
-        print("cfff");
-        print(parts[i].imageUrl);
+      if (parts[i].name == bodyPart || parts[i].name == target) {
+        cachedImageUrls[id] = parts[i].imageUrl;
         return parts[i].imageUrl;
       }
     }
-    return "";
+    return ""; // Return a default value if no image URL is found
   }
 
 
@@ -284,3 +287,30 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
 
 
 }
+
+
+// Future<String> getImageUrl(Map<String, dynamic> exercise) async {
+//   String id = exercise['id'];
+//   ExerciseController controller=new ExerciseController() ;
+//   Exercise? exersice=await controller.getExercise(id);
+//   String? bodyPart = exersice?.bodyPart;
+//   String? target = exersice?.target;
+//   print("ffffffffffffffffff");
+//   print(bodyPart);
+//   print(target);
+//
+//   for (int i = 0; i < parts.length; i++) {
+//     if (parts[i].name == bodyPart) {
+//       print("ffjjfjf");
+//       print(parts[i].imageUrl);
+//       return parts[i].imageUrl;
+//
+//     }
+//     if (parts[i].name != bodyPart && parts[i].name == target) {
+//       print("cfff");
+//       print(parts[i].imageUrl);
+//       return parts[i].imageUrl;
+//     }
+//   }
+//   return "";
+// }

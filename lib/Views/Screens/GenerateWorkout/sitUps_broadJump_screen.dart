@@ -133,38 +133,42 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
             SizedBox(height: 50),
             ElevatedButton(
               onPressed: () async {
-                UserSingleton userSingleton = UserSingleton.getInstance();
-                User_model user = userSingleton.getUser();
-                String? bodyMetricId = user.bodyMetrics;
-                print( user.bodyMetrics);
-                print(user.name);
+                  if(selectedSitUp.text.isNotEmpty && selectedBroadJump.text.isNotEmpty){
 
-                BodyMetrics? metrics;
-                if (bodyMetricId != null) {
-                  BodyMetricsController bodyMetricsController = BodyMetricsController();
-                  metrics = await bodyMetricsController.fetchBodyMetrics(
-                      user.bodyMetrics);
-                  setState(()  {
-                    metrics?.diastolic=DiastolicSystolicScreen.diastolic;
-                    metrics?.systolic=DiastolicSystolicScreen.systolic;
-                    metrics?.sitUpCount=double.parse(selectedSitUp.text);
-                    metrics?.broadJumpCm=double.parse(selectedBroadJump.text);
-                  });
-                  double age=calculateAge(metrics!.birthDate);
+                    UserSingleton userSingleton = UserSingleton.getInstance();
+                    User_model user = userSingleton.getUser();
+                    String? bodyMetricId = user.bodyMetrics;
+                    print( user.bodyMetrics);
+                    print(user.name);
 
-                    int x= await predictTensor.predict(age:age,gender:metrics!.gender,
-                    height :metrics.height,
-                    weight:metrics.weight,
-                        bodyFat: metrics.bodyFat,
-                        diastolic :DiastolicSystolicScreen.diastolic,
-                        systolic:DiastolicSystolicScreen.systolic,
-                        sitUps:double.parse(selectedSitUp.text),
-                    broadJump:double.parse(selectedBroadJump.text)
-                    );
-                    print("predictttt");
-                    print(x);
-                  metrics.performanceLevel=x;
-                  bodyMetricsController.updateBodyMetrics(user.bodyMetrics, metrics!);
+                    BodyMetrics? metrics;
+                    if (bodyMetricId != null) {
+                      BodyMetricsController bodyMetricsController = BodyMetricsController();
+                      metrics = await bodyMetricsController.fetchBodyMetrics(
+                          user.bodyMetrics);
+                      setState(()  {
+                        metrics?.diastolic=DiastolicSystolicScreen.diastolic;
+                        metrics?.systolic=DiastolicSystolicScreen.systolic;
+                        metrics?.sitUpCount=double.parse(selectedSitUp.text);
+                        metrics?.broadJumpCm=double.parse(selectedBroadJump.text);
+                      });
+                      double age=calculateAge(metrics!.birthDate);
+
+                      int x= await predictTensor.predict(age:age,gender:metrics!.gender,
+                          height :metrics.height,
+                          weight:metrics.weight,
+                          bodyFat: metrics.bodyFat,
+                          diastolic :DiastolicSystolicScreen.diastolic,
+                          systolic:DiastolicSystolicScreen.systolic,
+                          sitUps:double.parse(selectedSitUp.text),
+                          broadJump:double.parse(selectedBroadJump.text)
+                      );
+                      print("predictttt");
+                      print(x);
+                      metrics.performanceLevel=x;
+                      bodyMetricsController.updateBodyMetrics(user.bodyMetrics, metrics!);
+                  }
+
 
                 }
 

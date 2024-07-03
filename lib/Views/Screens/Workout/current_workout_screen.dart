@@ -93,10 +93,8 @@ class _WorkoutPageState extends State<WorkoutPagee> {
 
     for (int i = 0; i < parts.length; i++) {
       if (parts[i].name == bodyPart) {
-        print("ffjjfjf");
         print(parts[i].imageUrl);
         return parts[i].imageUrl;
-
       }
       if (parts[i].name != bodyPart && parts[i].name == target) {
         print("cfff");
