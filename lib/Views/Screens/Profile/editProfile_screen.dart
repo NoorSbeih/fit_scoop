@@ -28,7 +28,6 @@ class _EditProfile extends State<EditProfile> {
   TextEditingController bioController = TextEditingController();
   Uint8List? image;
   String? imageUrl;
-  String? gender;
   BodyMetrics? bodyMetrics;
   late String initialName;
   late String initialBio;
@@ -50,10 +49,6 @@ class _EditProfile extends State<EditProfile> {
     controller.text = widget.user.name;
     bioController.text = widget.user.bio ?? '';
     getImageUrl();
-
-    getGender().then((_) {
-      initialGender = gender;
-    });
     initialName = widget.user.name;
     initialBio = widget.user.bio ?? '';
     initialImageUrl = widget.user.imageLink;
@@ -67,18 +62,6 @@ class _EditProfile extends State<EditProfile> {
   }
 
 
-  Future<void> getGender() async {
-    if (widget.user?.bodyMetrics != null) {
-      BodyMetricsController controller = BodyMetricsController();
-      bodyMetrics = await controller.fetchBodyMetrics(widget.user!.bodyMetrics);
-      setState(() {
-        gender = bodyMetrics?.gender;
-      });
-    } else {
-      print("User's bodyMetrics ID is null");
-    }
-  }
-
 
   void saveProfile() async {
     UserController controller = UserController();
@@ -86,54 +69,34 @@ class _EditProfile extends State<EditProfile> {
 
     bool isNameChanged = initialName != this.controller.text;
     bool isBioChanged = initialBio != bioController.text;
-    bool isGenderChanged = initialGender != gender;
     bool isImageChanged = image != null;
 
     if (isNameChanged) {
-      print("kkk");
       widget.user.name = this.controller.text;
       await controller.updateProfile(widget.user);
       hasChanges = true;
     }
     if (isBioChanged) {
-      print("kkk1");
       widget.user.bio = bioController.text;
       await controller.updateProfile(widget.user);
       hasChanges = true;
     }
-    if (isGenderChanged) {
-      print("kkk2");
-      if (widget.user.bodyMetrics != null) {
-        if (bodyMetrics != null) {
-          bodyMetrics?.gender = gender!;
-          String? x = widget.user.bodyMetrics;
-          await controller2.updateBodyMetrics(x!, bodyMetrics!);
-          hasChanges = true;
-        } else {
-          // Handle the case where bodyMetrics is null
-          print("bodyMetrics is null, cannot update gender");
-        }
-      } else {
-        // Handle the case where user's bodyMetrics ID is null
-        print("User's bodyMetrics ID is null, cannot update gender");
-      }
-    }
+
 
     if (isImageChanged) {
-      print("kkk3");
       await controller.updateProfileImage(image!, widget.user.id);
       hasChanges = true;
     }
 
-    if (isNameChanged || isGenderChanged || isBioChanged || isImageChanged) {
-      showAlertDialog('Profile updated successfully', Colors.green);
+
+    if (isNameChanged || isBioChanged || isImageChanged) {
+      showAlertDialog('Profile updated successfully');
       hasChanges = false;
       initialName = this.controller.text;
       initialBio = bioController.text;
-      initialGender = gender;
       initialImageUrl = widget.user.imageLink;
     } else {
-      showAlertDialog('No changes detected', Colors.grey);
+      showAlertDialog('No changes detected');
     }
   }
 
@@ -143,6 +106,7 @@ class _EditProfile extends State<EditProfile> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Color(0xFF2C2A2A),
           title: Text('Discard changes?'),
           content: Text('You have unsaved changes. Do you really want to discard them?'),
           actions: <Widget>[
@@ -164,7 +128,7 @@ class _EditProfile extends State<EditProfile> {
     ) ?? false; // In case the dialog is dismissed by other means (e.g., back button)
   }
 
-  void showAlertDialog(String message, Color color) {
+  void showAlertDialog(String message) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -173,7 +137,7 @@ class _EditProfile extends State<EditProfile> {
             return true;
           },
         child: AlertDialog(
-          backgroundColor: color,
+          backgroundColor: Color(0xFF2C2A2A),
           title: const Text(
             'Profile Update',
             style: TextStyle(color: Colors.white),
@@ -189,11 +153,13 @@ class _EditProfile extends State<EditProfile> {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-
-                //Navigator.popUntil(context, (route) => route.settings.name == '/ProfilePage');
-
-
-               // Navigator.popUntil(context, ModalRoute.withName('ProfilePage'));
+                Navigator.of(
+                    context,
+                    rootNavigator:true)
+                    .pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                      (Route<dynamic> route) => false,
+                );
               },
 
             ),
@@ -207,9 +173,8 @@ class _EditProfile extends State<EditProfile> {
   Future<bool> _onWillPop() async {
     bool isNameChanged = initialName != this.controller.text;
     bool isBioChanged = initialBio != bioController.text;
-    bool isGenderChanged = initialGender != gender;
     bool isImageChanged = image != null;
-    bool hasChanges = isNameChanged || isBioChanged || isGenderChanged || isImageChanged;
+    bool hasChanges = isNameChanged || isBioChanged  || isImageChanged;
     if (hasChanges) {
       bool discard = await showDiscardChangesDialog(context);
       return discard;
@@ -309,49 +274,6 @@ class _EditProfile extends State<EditProfile> {
                         fontFamily: 'BebasNeue'),
                   ),
                   const SizedBox(height: 10.0),
-                  // const Text(
-                  //   'GENDER',
-                  //   style: TextStyle(
-                  //       color: Color(0xFF0dbab4),
-                  //       fontSize: 30,
-                  //       fontFamily: 'BebasNeue'),
-                  // ),
-                  // Row(
-                  //   children: [
-                  //     Radio<String>(
-                  //       value: 'Male',
-                  //       groupValue: gender,
-                  //       activeColor: Color(0xFF0dbab4),
-                  //       onChanged: (value) {
-                  //         setState(() {
-                  //           gender = value;
-                  //         });
-                  //       },
-                  //     ),
-                  //     const Text(
-                  //       'Male',
-                  //       style: TextStyle(color: Colors.white,
-                  //           fontFamily: 'BebasNeue',
-                  //           fontSize: 20),
-                  //     ),
-                  //     Radio<String>(
-                  //       value: 'Female',
-                  //       groupValue: gender,
-                  //       activeColor: Color(0xFF0dbab4),
-                  //       onChanged: (value) {
-                  //         setState(() {
-                  //           gender = value;
-                  //         });
-                  //       },
-                  //     ),
-                  //     const Text(
-                  //       'Female',
-                  //       style: TextStyle(color: Colors.white,
-                  //           fontFamily: 'BebasNeue',
-                  //           fontSize: 20),
-                  //     ),
-                  //   ],
-                  // ),
                   SizedBox(height: 10.0),
                   const Text(
                     'BIO',
@@ -360,8 +282,9 @@ class _EditProfile extends State<EditProfile> {
                         color: Color(0xFF0dbab4),
                         fontFamily: 'BebasNeue'),
                   ),
-
                   Container(
+                    height: 300,
+                    width:380,
                     padding: EdgeInsets.only(top: 10, left: 20.0, right: 20),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.white),
@@ -377,7 +300,7 @@ class _EditProfile extends State<EditProfile> {
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                           ),
-                          style: TextStyle(fontSize: 15, color: Colors.white),
+                          style: TextStyle(fontSize: 20, color: Colors.white),
                         ),
                       ],
                     ),
@@ -399,10 +322,10 @@ class _EditProfile extends State<EditProfile> {
                       ),
                     ),
                     child: const Text(
-                      'Save changes',
+                      'SAVE CHANGES',
                       style: TextStyle(
                         fontSize: 20,
-                        color: Color(0xFF2C2A2A),
+                        color: Colors.white,
                       ),
                     ),
                   ),

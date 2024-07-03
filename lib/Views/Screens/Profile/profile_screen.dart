@@ -127,8 +127,8 @@ class _profileState extends State<ProfilePage> {
                                 fontFamily: 'BebasNeue'),
                           ),
                           SizedBox(
-                            height: 25,
-                            width: 25,
+                            height: 30,
+                            width: 30,
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.push(
@@ -174,37 +174,40 @@ class _profileState extends State<ProfilePage> {
             ),
             SizedBox(height: 20.0),
             Container(
-              height: 200,
+              height: 220,
               width:380,
               padding: EdgeInsets.only(top: 10, left: 20.0, right: 20),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
                 borderRadius: BorderRadius.circular(10.0),
               ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'BIO',
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: Color(0xFF0dbab4),
-                        fontFamily: 'BebasNeue',
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: SelectableText(
-                        _controller.text,
-                        style: const TextStyle(
-                          fontSize: 15,
-                          color: Colors.white,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'BIO',
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: Color(0xFF0dbab4),
+                          fontFamily: 'BebasNeue',
                         ),
-                        maxLines: 5,
                       ),
-                    ),
-                  ],
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 5.0),
+                        child: SelectableText(
+                          _controller.text,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                          ),
+                          maxLines: 5,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+
             ),
             SizedBox(height: 20.0),
             InkWell(
@@ -355,15 +358,6 @@ class _profileState extends State<ProfilePage> {
                         color: Color(0xFF0dbab4),
                       ),
                     ),
-                    // Expanded(child: Container()),
-                    // Text(
-                    //   '${user.followedUserIds.length}',
-                    //   style: const TextStyle(
-                    //     fontSize: 30.0,
-                    //     fontFamily: 'BebasNeue',
-                    //     color: Colors.white,
-                    //   ),
-                    // ),
 
                     Expanded(child: Container()),
                     ValueListenableBuilder<int>(

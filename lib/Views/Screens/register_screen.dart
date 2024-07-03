@@ -276,8 +276,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                    } catch (e) {
                       print('Error initializing SharedPreferences: $e');
-                        }
-
+                    }
 
                         print('Register button pressed');
                       }
