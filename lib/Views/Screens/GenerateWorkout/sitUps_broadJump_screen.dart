@@ -9,6 +9,9 @@ import '../../../Models/body_metrics_model.dart';
 import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Services/tensorflow_service.dart';
+import '../Registration pages/Female_goals_screen.dart';
+import '../Registration pages/Male_goals_screen.dart';
+import '../Registration pages/page_view.screen.dart';
 import 'diastolic_systolic_screen.dart';
 
 class SitupsBroadjumpScreen extends StatefulWidget {
@@ -167,10 +170,26 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
                       print(x);
                       metrics.performanceLevel=x;
                       bodyMetricsController.updateBodyMetrics(user.bodyMetrics, metrics!);
+                      if(metrics.gender.compareTo("Male")==0){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>  RegisterPage4M(),
+                          ),
+                        );
+                      }else{
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>  RegisterPage4F(),
+                          ),
+                        );
+
+                      }
                   }
 
-
                 }
+
 
               },
               style: ButtonStyle(
@@ -188,7 +207,7 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
                 ),
               ),
               child: const Text(
-                'FINISH',
+                'NEXT',
                 style: TextStyle(fontSize: 22, color: Colors.white),
               ),
             ),
