@@ -144,7 +144,7 @@ class _SchedulePageScreenState extends State<SchedulePageScreen> {
                               padding: const EdgeInsets.only(left: 10.0,top:6,bottom:6),
                               child: Text(
                                 daysOfWeek[index],
-                                style: TextStyle(fontSize: 18, color: Color(0xFF0dbab4), fontWeight: FontWeight.bold),
+                                style: TextStyle(fontSize: 25, color: Color(0xFF0dbab4), fontWeight: FontWeight.bold),
                               ),
                             ),
                             if (workoutSchedule[index] == null)
@@ -152,7 +152,7 @@ class _SchedulePageScreenState extends State<SchedulePageScreen> {
                                 padding: EdgeInsets.only(left: 10.0),
                                 child: Text(
                                   '- NO WORKOUT',
-                                  style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
                                 ),
                               ),
                           ],

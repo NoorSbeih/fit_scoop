@@ -152,15 +152,14 @@ class _EditProfile extends State<EditProfile> {
                 'OK',
                 style: TextStyle(color: Colors.white),
               ),
-              onPressed: () {
-                Navigator.of(
-                    context,
-                    rootNavigator:true)
-                    .pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => ProfilePage()),
-                      (Route<dynamic> route) => false,
-                );
-              },
+          onPressed: () {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                  builder: (context) => HomePage(initialIndex: 4)),
+              // Set initialIndex to 1 for ProfilePage
+                  (Route<dynamic> route) => false,
+            );
+          },
 
             ),
           ],
@@ -287,7 +286,7 @@ class _EditProfile extends State<EditProfile> {
                     width:380,
                     padding: EdgeInsets.only(top: 10, left: 20.0, right: 20),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white),
+                      border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Column(

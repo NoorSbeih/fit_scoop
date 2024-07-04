@@ -72,7 +72,7 @@ class _ReviewsScreen extends State<reviewsScreen> {
             child: Text(
               '${widget.reviews.length} REVIEWS',
               style: const TextStyle(
-                fontSize: 20,
+                fontSize: 25,
                 color: Color(0xFF0dbab4),
                 fontFamily: 'BebasNeue',
               ),

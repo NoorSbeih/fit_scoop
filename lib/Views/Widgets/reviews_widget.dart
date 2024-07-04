@@ -25,7 +25,7 @@ class ReviewsWidget {
                         workout.name,
                         style: const TextStyle(
                           color: Color(0xFF0dbab4),
-                          fontSize: 15,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Montserrat',
                         ),
@@ -35,7 +35,7 @@ class ReviewsWidget {
                         'Created by: ${creator.name}',
                         style: const TextStyle(
                           color: Colors.grey,
-                          fontSize: 14,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'BebasNeue',
                         ),

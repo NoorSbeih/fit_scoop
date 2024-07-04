@@ -6,6 +6,7 @@ import '../../../Controllers/review_controller.dart';
 import '../../../Models/review_model.dart';
 import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
+import '../main_page_screen.dart';
 
 class RateWorkoutPage extends StatefulWidget {
   final Workout workout;
@@ -40,35 +41,52 @@ class _RateWorkoutPageState extends State<RateWorkoutPage> {
     }
   }
 
-  void showAlertDialog(String message, Color color) {
+  void showAlertDialog(String message) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: color,
-          title: const Text(
-            'Review submit',
-            style: TextStyle(color: Colors.white),
-          ),
-          content: Text(
-            message,
-            style: TextStyle(color: Colors.white),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text(
-                'OK',
-                style: TextStyle(color: Colors.white),
+        return Center(
+          child: Container(
+            width: MediaQuery.of(context).size.width * 1.5, // Set width as 80% of screen width
+            height: MediaQuery.of(context).size.height * 0.5, // Set height as 40% of screen height
+            child: AlertDialog(
+              backgroundColor: Color(0xFF2C2A2A),
+              title: const Text(
+                'Review submit',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                    color: Colors.white),
               ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              content: Text(
+                message,
+                style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.white),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => HomePage(initialIndex: 1)),
+                      // Set initialIndex to 1 for ProfilePage
+                          (Route<dynamic> route) => false,
+                    );
+                  },
+                ),
+              ],
             ),
-          ],
+          ),
         );
       },
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -107,11 +125,34 @@ class _RateWorkoutPageState extends State<RateWorkoutPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Rate:',
-                      style: TextStyle(
-                          color: Color(0xFF0dbab4),
-                          fontSize: 25,
-                          fontFamily: 'BebasNeue')),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 0.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: RichText(
+                        textAlign: TextAlign.left,
+                        text: const TextSpan(
+                          text: "RATE:",
+                          style: TextStyle(
+                              color: Color(0xFF0dbab4),
+                              fontSize: 30.0,
+                              fontFamily: 'BebasNeue'
+                          ),
+                          children: [
+                            TextSpan(
+                              text: ' *',
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 20.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+
                   RatingBar.builder(
                     direction: Axis.horizontal,
                     itemCount: 5,
@@ -140,13 +181,41 @@ class _RateWorkoutPageState extends State<RateWorkoutPage> {
                 thickness: 1.0,
               ),
               SizedBox(height: 20.0),
-              const Text('Body:',
-                  style: TextStyle(
-                      color: Color(0xFF0dbab4),
-                      fontSize: 25,
-                      fontFamily: 'BebasNeue')),
+
+              Padding(
+                padding: const EdgeInsets.only(left: 0.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: RichText(
+                    textAlign: TextAlign.left,
+                    text: const TextSpan(
+                      text: "Body:",
+                      style: TextStyle(
+                        color: Color(0xFF0dbab4),
+                        fontSize: 30.0,
+                          fontFamily: 'BebasNeue'
+                      ),
+                      children: [
+                        TextSpan(
+                          text: ' *',
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+
+
+
               SizedBox(height: 10.0),
               Container(
+                height: 400,
+                width:380,
                 padding: EdgeInsets.only(top: 10, left: 20.0, right: 20),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
@@ -161,10 +230,10 @@ class _RateWorkoutPageState extends State<RateWorkoutPage> {
                       maxLines: 10,
                       decoration: const InputDecoration(
                         hintText: 'Add a review..',
-                        hintStyle: TextStyle(fontSize: 15, color: Colors.grey),
+                        hintStyle: TextStyle(fontSize: 20, color: Colors.grey),
                         border: InputBorder.none,
                       ),
-                      style: TextStyle(fontSize: 15, color: Colors.grey),
+                      style: TextStyle(fontSize: 20, color: Colors.grey),
                     ),
                   ],
                 ),
@@ -175,11 +244,7 @@ class _RateWorkoutPageState extends State<RateWorkoutPage> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      if (_rating == 0.0 || _reviewController.text.isEmpty) {
-                        showAlertDialog(
-                            'Please rate the workout and add a review',
-                            Colors.red);
-                      } else {
+                      if (_rating != 0.0 && !_reviewController.text.isEmpty) {
                         ReviewController controller = ReviewController();
                         Review review = Review(
                           workoutId: widget.workout.id,
@@ -191,12 +256,19 @@ class _RateWorkoutPageState extends State<RateWorkoutPage> {
 
                         controller.addReview(review);
                         showAlertDialog(
-                            'Your review was sent successfully', Colors.green);
+                            'Your review was sent successfully');
+
+                        // Navigator.of(context).pushAndRemoveUntil(
+                        //   MaterialPageRoute(
+                        //       builder: (context) => HomePage(initialIndex: 1)),
+                        //   // Set initialIndex to 1 for ProfilePage
+                        //       (Route<dynamic> route) => false,
+                        // );
                       }
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0dbab4)),
-                      fixedSize: MaterialStateProperty.all<Size>(const Size(340, 50)),
+                      fixedSize: MaterialStateProperty.all<Size>(const Size(365, 50)),
                       shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                             (Set<MaterialState> states) {
                           return RoundedRectangleBorder(
@@ -206,7 +278,7 @@ class _RateWorkoutPageState extends State<RateWorkoutPage> {
                       ),
                     ),
                     child: const Text(
-                      'Submit',
+                      'SUBMIT',
                       style: TextStyle(
                         fontSize: 20,
                         color: Colors.white
@@ -222,3 +294,6 @@ class _RateWorkoutPageState extends State<RateWorkoutPage> {
     );
   }
 }
+
+
+

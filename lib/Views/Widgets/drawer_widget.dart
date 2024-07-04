@@ -92,12 +92,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     child: Center(
                       child: ListTile(
                         leading:
-                            Icon(Icons.fitness_center, color: Colors.white),
+                            Icon(Icons.fitness_center, color: Color(0xFF2C2A2A)),
                         title: const Text(
                           'GENERATE WORKOUT',
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
+                            color: Color(0xFF2C2A2A),
+                            fontSize: 25,
                             fontFamily: 'BebasNeue',
                           ),
                         ),

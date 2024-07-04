@@ -105,7 +105,7 @@ class _createWorkout2 extends State<createWorkout2> {
               padding: EdgeInsets.only(top: 15, bottom: 15),
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white),
+                  border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: Padding(

@@ -112,7 +112,7 @@ class _FollowersScreen extends State<FollowersPage> {
             child: Text(
               '${followers.length} Followings',
               style: const TextStyle(
-                fontSize: 20,
+                fontSize: 25,
                 color: Color(0xFF0dbab4),
                 fontFamily: 'BebasNeue',
               ),

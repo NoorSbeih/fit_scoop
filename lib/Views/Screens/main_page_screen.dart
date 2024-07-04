@@ -9,8 +9,10 @@ import 'library/library_screen.dart';
 
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
 
+  final int initialIndex;
+
+  HomePage({Key? key, this.initialIndex = 0}) : super(key: key);
 
 
   @override
@@ -18,7 +20,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int selectedPage = 0;
+  late int selectedPage;
 
   final List<Widget> _pageOptions = [
     WorkoutPage(),
@@ -27,6 +29,12 @@ class _HomePageState extends State<HomePage> {
     LibraryPage(),
     ProfilePage(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    selectedPage = widget.initialIndex;
+  }
 
   @override
   Widget build(BuildContext context) {
