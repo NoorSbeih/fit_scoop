@@ -58,7 +58,7 @@ class _profileState extends State<ProfileUser> {
       ReviewController controller2=ReviewController();
       reviews = await controller2.getReviewsByUserId(widget.user.id);
       setState(() {
-        num = '${publicWorkouts.length} workouts|${widget.user.followedUserIds.length} followers';
+        num = '${publicWorkouts.length} workouts|${widget.user.followersUserIds.length} followers';
       });
 
     } catch (e) {
@@ -83,9 +83,11 @@ class _profileState extends State<ProfileUser> {
     if (isFollowing) {
       currentUser.followedUserIds.remove(widget.user.id);
       await UserController().unfollowUser(currentUser.id, widget.user.id);
+      await UserController().removeFollowing(currentUser.id, widget.user.id);
     } else {
       currentUser.followedUserIds.add(widget.user.id);
       await UserController().followUser(currentUser.id, widget.user.id);
+      await UserController().addFollowing(currentUser.id, widget.user.id);
     }
     setState(() {
       isFollowing = !isFollowing;
