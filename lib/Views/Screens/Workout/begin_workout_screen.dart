@@ -45,7 +45,7 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
   void updateRemainingSets(int index, int newCount) {
     setState(() {
       remainingSets[index] = newCount;
-      print(remainingSets[index]);
+      //print(remainingSets[index]);
     });
   }
 
@@ -58,7 +58,7 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
       });
 
     } catch (e) {
-      print('Error fetching data: $e');
+      //print('Error fetching data: $e');
     }
   }
 
@@ -295,20 +295,20 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
 //   Exercise? exersice=await controller.getExercise(id);
 //   String? bodyPart = exersice?.bodyPart;
 //   String? target = exersice?.target;
-//   print("ffffffffffffffffff");
-//   print(bodyPart);
-//   print(target);
+//   //print("ffffffffffffffffff");
+//   //print(bodyPart);
+//   //print(target);
 //
 //   for (int i = 0; i < parts.length; i++) {
 //     if (parts[i].name == bodyPart) {
-//       print("ffjjfjf");
-//       print(parts[i].imageUrl);
+//       //print("ffjjfjf");
+//       //print(parts[i].imageUrl);
 //       return parts[i].imageUrl;
 //
 //     }
 //     if (parts[i].name != bodyPart && parts[i].name == target) {
-//       print("cfff");
-//       print(parts[i].imageUrl);
+//       //print("cfff");
+//       //print(parts[i].imageUrl);
 //       return parts[i].imageUrl;
 //     }
 //   }

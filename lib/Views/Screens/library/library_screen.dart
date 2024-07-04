@@ -88,10 +88,10 @@ class _LibraryScreen extends State<LibraryScreen>
           filteredWorkouts= workouts;
         });
       } else {
-        print('User or user ID is null.');
+        //print('User or user ID is null.');
       }
     } catch (e) {
-      print('Error getting workouts by user ID: $e');
+      //print('Error getting workouts by user ID: $e');
       throw e;
     }
   }
@@ -99,7 +99,7 @@ class _LibraryScreen extends State<LibraryScreen>
 
   Future<List<Workout>> SavedWorkout() async {
     try {
-      print("Fffff");
+      //print("Fffff");
       UserSingleton userSingleton = UserSingleton.getInstance();
       User_model user = userSingleton.getUser();
 
@@ -115,11 +115,11 @@ class _LibraryScreen extends State<LibraryScreen>
 
         return savedWorkouts;
       } else {
-        print('User or user ID is null.');
+        //print('User or user ID is null.');
         return [];
       }
     } catch (e) {
-      print('Error getting workouts by user ID: $e');
+      //print('Error getting workouts by user ID: $e');
       throw e;
     }
   }
@@ -283,7 +283,7 @@ class _LibraryScreen extends State<LibraryScreen>
                       onChanged: (query) {
                         setState(() {
                           _searchQuery = query;
-                          print(_searchQuery);
+                          //print(_searchQuery);
                         });
                         filtersavedWorkouts(query);
                       },

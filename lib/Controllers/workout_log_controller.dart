@@ -9,7 +9,7 @@ class WorkoutLogController {
     try {
       await _workoutLogService.addWorkoutLog(workoutLog);
     } catch (e) {
-      print('Error adding workout log: $e');
+      //print('Error adding workout log: $e');
     }
   }
 
@@ -17,7 +17,7 @@ class WorkoutLogController {
     try {
       return await _workoutLogService.getWorkoutLog(id);
     } catch (e) {
-      print('Error fetching workout log: $e');
+      //print('Error fetching workout log: $e');
     }
     return null;
   }
@@ -26,7 +26,7 @@ class WorkoutLogController {
     try {
       return await _workoutLogService.getWorkoutLogsByUserId(userId);
     } catch (e) {
-      print('Error fetching workout logs: $e');
+      //print('Error fetching workout logs: $e');
       return [];
     }
   }
@@ -35,7 +35,7 @@ class WorkoutLogController {
     try {
       await _workoutLogService.updateWorkoutLog(workoutLog);
     } catch (e) {
-      print('Error updating workout log: $e');
+      //print('Error updating workout log: $e');
     }
   }
 
@@ -43,7 +43,7 @@ class WorkoutLogController {
     try {
       await _workoutLogService.deleteWorkoutLog(id);
     } catch (e) {
-      print('Error deleting workout log: $e');
+      //print('Error deleting workout log: $e');
     }
   }
 }

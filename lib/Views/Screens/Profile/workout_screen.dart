@@ -58,8 +58,8 @@ class _WorkoutScreen extends State<WorkoutProfile> {
         []; // Create a new list to store the workouts
         for (int i = 0; i < ids.length; i++) {
           Workout? workout = await controller.getWorkout(ids[i]);
-          print("ffff");
-          print(workout?.id);
+          //print("ffff");
+          //print(workout?.id);
           // Check if the workout already exists in savedWorkouts
           if (!widget.user.savedWorkoutIds.contains(workout?.id.toString())) {
             newSavedWorkouts.add(workout!);
@@ -69,11 +69,11 @@ class _WorkoutScreen extends State<WorkoutProfile> {
 
         return savedWorkouts;
       } else {
-        print('User or user ID is null.');
+        //print('User or user ID is null.');
         return [];
       }
     } catch (e) {
-      print('Error getting workouts by user ID: $e');
+      //print('Error getting workouts by user ID: $e');
       throw e;
     }
   }

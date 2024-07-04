@@ -16,7 +16,7 @@ class AuthController {
       return await _authenticationService.signUpWithEmail(email, password);
     } catch (error) {
       // Handle registration errors
-      print("Error registering: $error");
+      //print("Error registering: $error");
       return null;
     }
   }
@@ -28,7 +28,7 @@ class AuthController {
       return await _authenticationService.signInWithEmailAndPassword(email, password);
     } catch (error) {
       // Handle login errors
-      print("Error logging in: $error");
+      //print("Error logging in: $error");
       return null;
     }
   }
@@ -40,7 +40,7 @@ class AuthController {
       await _authenticationService.signUpWithGoogle(context, mounted);
     } catch (error) {
       // Handle login errors
-      print("Error logging in with Google: $error");
+      //print("Error logging in with Google: $error");
     }
   }
 
@@ -51,7 +51,7 @@ class AuthController {
       await _authenticationService.signOut();
     } catch (error) {
       // Handle logout errors
-      print("Error logging out: $error");
+      //print("Error logging out: $error");
     }
   }
 

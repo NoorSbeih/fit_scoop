@@ -138,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
               child: GestureDetector(
                 onTap: () {
                   // Add your navigation logic here
-                  print("Forgot Password tapped");
+                  //print("Forgot Password tapped");
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => ResetPasswordPage()),
@@ -158,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
               child: ElevatedButton(
                   onPressed: () async {
                     await refreshIdToken();
-                    print('Sign in button pressed');
+                    //print('Sign in button pressed');
                     String email = _emailController.text.trim();
                     String password = _passwordController.text.trim();
 
@@ -189,7 +189,7 @@ class _LoginPageState extends State<LoginPage> {
                       loginController.signInWithEmailAndPassword(email, password).then((user) async {
                         if (user != null) {
                           if (await loginController.getUserBodyMetric() == null) {
-                            print("empty");
+                            //print("empty");
                           } else {
                             Navigator.push(
                               context,
@@ -197,7 +197,7 @@ class _LoginPageState extends State<LoginPage> {
                             );
                           }
                         } else {
-                          print('User authentication failed.');
+                          //print('User authentication failed.');
                           setState(() {
                             if (user == null) {
                               emailErrorText = 'Email not found';
@@ -264,7 +264,7 @@ class _LoginPageState extends State<LoginPage> {
               padding:const EdgeInsets.only(left:8,right:8,bottom:10),
               child:ElevatedButton(
                 onPressed: () {
-                  print('Register button pressed');
+                  //print('Register button pressed');
                 },
 
                 style: ButtonStyle(
@@ -301,7 +301,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.only(left:8,right:8),
               child: ElevatedButton(
                 onPressed: () async {
-                  print("SIGN IN WITH GOOGLE");
+                  //print("SIGN IN WITH GOOGLE");
                   AuthenticationService auth= AuthenticationService();
                   auth.signUpWithGoogle(context, mounted);
 

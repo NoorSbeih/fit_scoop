@@ -19,11 +19,11 @@ class BodyMetricsService {
 
       User_model user = User_model.fromMap(data!);
       UserSingleton.getInstance().setUser(user);
-      print("Makakakakaka");
-      print(user.bodyMetrics);
+      //print("Makakakakaka");
+      //print(user.bodyMetrics);
 
     } catch (e) {
-      print('Error adding body metrics: $e');
+      //print('Error adding body metrics: $e');
       throw e;
     }
   }
@@ -32,7 +32,7 @@ class BodyMetricsService {
     try {
       await _bodyMetricsRef.doc(id).update(bodyMetrics.toMap());
     } catch (e) {
-      print('Error updating body metrics: $e');
+      //print('Error updating body metrics: $e');
       throw e;
     }
   }
@@ -40,24 +40,24 @@ class BodyMetricsService {
     try {
       var snapshot = await _bodyMetricsRef.doc(id).get();
       if (snapshot.exists) {
-        print("Document exists: ${snapshot.data()}");
+        //print("Document exists: ${snapshot.data()}");
         var data = snapshot.data();
         if (data != null) {
           BodyMetrics? bb= BodyMetrics.fromMap(data as Map<String, dynamic>);
           for(int i=0;i<bb.workoutSchedule.length;++i){
-            print("hi");
-            print(bb.workoutSchedule[i]);
+            //print("hi");
+            //print(bb.workoutSchedule[i]);
           }
           return BodyMetrics.fromMap(data as Map<String, dynamic>);
         } else {
-          print("Document data is null");
+          //print("Document data is null");
         }
       } else {
-        print("Document with ID $id does not exist");
+        //print("Document with ID $id does not exist");
       }
       return null; // Body metrics not found or data is null
     } catch (e) {
-      print('Error getting body metrics: $e');
+      //print('Error getting body metrics: $e');
       throw e;
     }
   }
@@ -75,12 +75,12 @@ class BodyMetricsService {
   //         'CurrentDay': currentday,
   //       });
   //
-  //       print('Current day updated successfully.');
+  //       //print('Current day updated successfully.');
   //     } else {
-  //       print('Body metrics not found.');
+  //       //print('Body metrics not found.');
   //     }
   //   } catch (e) {
-  //     print('Error updating current day: $e');
+  //     //print('Error updating current day: $e');
   //     throw e;
   //   }
   // }
@@ -91,7 +91,7 @@ class BodyMetricsService {
     try {
       await _bodyMetricsRef.doc(id).delete();
     } catch (e) {
-      print('Error deleting body metrics: $e');
+      //print('Error deleting body metrics: $e');
       throw e;
     }
   }

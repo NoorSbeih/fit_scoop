@@ -58,9 +58,9 @@ class Workout {
 
       await workoutController.updateWorkout(updatedWorkout);
 
-      print(updatedWorkout.numberOfSaves);
+      //print(updatedWorkout.numberOfSaves);
     } catch (e) {
-      print('Error updating numberOfSaves: $e');
+      //print('Error updating numberOfSaves: $e');
       throw e;
     }
   }
@@ -123,12 +123,12 @@ List<Map<String, dynamic>> parseExercises(dynamic exercises) {
           if (item is Map<String, dynamic>) {
             parsedExercises.add(item);
           } else {
-            print('Invalid exercise format: $item');
+            //print('Invalid exercise format: $item');
           }
         }
       }
     } catch (e) {
-      print('Error parsing exercises: $e');
+      //print('Error parsing exercises: $e');
     }
   }
 

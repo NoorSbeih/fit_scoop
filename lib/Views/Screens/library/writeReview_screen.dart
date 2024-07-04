@@ -36,7 +36,7 @@ class _RateWorkoutPageState extends State<RateWorkoutPage> {
         user = userr;
       });
     } catch (e) {
-      print('Error getting workouts by user ID: $e');
+      //print('Error getting workouts by user ID: $e');
       throw e;
     }
   }

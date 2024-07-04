@@ -74,7 +74,7 @@ class _CustomPageViewState extends State<CustomPageView> {
   void nextPage(BuildContext context) {
     if (currentPageIndex < 5) {
         currentPageIndex = controller.page!.round();
-        print(currentPageIndex);
+        //print(currentPageIndex);
 
         controller.nextPage(
           duration: Duration(milliseconds: 300),
@@ -132,7 +132,7 @@ class _CustomPageViewState extends State<CustomPageView> {
              ElevatedButton(
 
               onPressed: () {
-                print(currentPageIndex);
+                //print(currentPageIndex);
                 if (currentPageIndex == 0  && !isDataFilled_Page1()) {
                    showError(context);
                        }
@@ -229,7 +229,7 @@ class _CustomPageViewState extends State<CustomPageView> {
         MaterialPageRoute(builder: (context) => HomePage()),
       );
     }).catchError((error) {
-      print('Error navigating to HomePage: $error');
+      //print('Error navigating to HomePage: $error');
     });
   }
 

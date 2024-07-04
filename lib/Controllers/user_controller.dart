@@ -17,7 +17,7 @@ class UserController {
     try {
       return await _userService.getUser(id);
     } catch (e) {
-      print('Error getting workout: $e');
+      //print('Error getting workout: $e');
       throw e;
     }
   }
@@ -27,7 +27,7 @@ class UserController {
       // Update user profile in Firestore
       await _userService.updateUser(user);
     } catch (e) {
-      print('Error updating user profile: $e');
+      //print('Error updating user profile: $e');
       throw e;
     }
   }
@@ -37,7 +37,7 @@ class UserController {
       // Follow user with UserService
       await _userService.followUser(currentUserId, followUserId);
     } catch (e) {
-      print('Error following user: $e');
+      //print('Error following user: $e');
       throw e;
     }
   }
@@ -47,7 +47,7 @@ class UserController {
       // Unfollow user with UserService
       await _userService.unfollowUser(currentUserId, unfollowUserId);
     } catch (e) {
-      print('Error unfollowing user: $e');
+      //print('Error unfollowing user: $e');
       throw e;
     }
   }
@@ -57,7 +57,7 @@ class UserController {
       // Save workout to user's savedWorkoutIds
       await _userService.saveWorkout(userId, workoutId);
     } catch (e) {
-      print('Error saving workout: $e');
+      //print('Error saving workout: $e');
       throw e;
     }
   }
@@ -67,7 +67,7 @@ class UserController {
       // Unsave workout from user's savedWorkoutIds
       await _userService.unsaveWorkout(userId, workoutId);
     } catch (e) {
-      print('Error unsaving workout: $e');
+      //print('Error unsaving workout: $e');
       throw e;
     }
   }
@@ -78,12 +78,12 @@ class UserController {
       if (imageUrl != null) {
         // Update user document with the image URL
         // Here you would typically call a method in your user repository or service to update the user document
-        print('Image uploaded successfully. Image URL: $imageUrl');
+        //print('Image uploaded successfully. Image URL: $imageUrl');
       } else {
-        print('Error uploading image');
+        //print('Error uploading image');
       }
     } catch (e) {
-      print('Error updating profile image: $e');
+      //print('Error updating profile image: $e');
     }
   }
   Future<List<Workout>> getSavedWorkouts(String userId) async { //from userservices
@@ -92,7 +92,7 @@ class UserController {
       List<Workout> savedWorkouts = await _userService.getSavedWorkouts(userId);
       return savedWorkouts;
     } catch (e) {
-      print('Error getting saved workouts: $e');
+      //print('Error getting saved workouts: $e');
       throw e;
     }
   }
@@ -103,7 +103,7 @@ class UserController {
       List<User_model> savedWorkouts = await _userService.getAllUsers();
       return savedWorkouts;
     } catch (e) {
-      print('Error getting saved workouts: $e');
+      //print('Error getting saved workouts: $e');
       throw e;
     }
   }
@@ -115,7 +115,7 @@ class UserController {
       List<String> savedEquipments = await _userService.getSavedEquipments(userId);
       return savedEquipments;
     } catch (e) {
-      print('Error getting saved workouts: $e');
+      //print('Error getting saved workouts: $e');
       throw e;
     }
   }
@@ -126,7 +126,7 @@ class UserController {
       // Save workout to user's savedWorkoutIds
       await _userService.saveEquipments(userId, equipmentsID);
     } catch (e) {
-      print('Error saving workout: $e');
+      //print('Error saving workout: $e');
       throw e;
     }
   }
@@ -139,7 +139,7 @@ class UserController {
       // Save workout to user's savedWorkoutIds
       await _userService.removeEquipments(userId, equipmentsID);
     } catch (e) {
-      print('Error saving workout: $e');
+      //print('Error saving workout: $e');
       throw e;
     }
   }

@@ -14,7 +14,7 @@ class TensorFlowService {
       _interpreter = await Interpreter.fromAsset('assets/bodyPerformance_model.tflite');
       _isModelLoaded = true;
     } catch (e) {
-      print('Failed to load model: $e');
+      //print('Failed to load model: $e');
     }
   }
 
@@ -80,7 +80,7 @@ class TensorFlowService {
 
       return predictedClass;
     } catch (e) {
-      print('Error during prediction: $e');
+      //print('Error during prediction: $e');
       return -2;
     }
   }

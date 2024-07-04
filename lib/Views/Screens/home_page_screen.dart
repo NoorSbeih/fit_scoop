@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding:const EdgeInsets.all(15),
                 child:ElevatedButton(
                   onPressed: () {
-                    print('Sign up');
+                    //print('Sign up');
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => Register()), // Replace SecondPage() with the desired page widget
@@ -75,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child:ElevatedButton(
                   onPressed: () {
                     // Corrected function body
-                    print('Sign in');
+                    //print('Sign in');
 
                     Navigator.push(
                       context,

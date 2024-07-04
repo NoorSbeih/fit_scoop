@@ -24,7 +24,7 @@ class AuthenticationService {
 
       return result.user;
     } catch (e) {
-      print(e.toString());
+      //print(e.toString());
       return null;
     }
   }
@@ -43,7 +43,7 @@ class AuthenticationService {
 
       return userCredential.user;
     } catch (error) {
-      print("Error signing in: $error");
+      //print("Error signing in: $error");
       return null;
     }
   }
@@ -84,9 +84,9 @@ class AuthenticationService {
       model.User_model usermodel = model.User_model(id: user.uid, name: user.displayName.toString(), email: user.email.toString());
 
       await _userService.addUser(usermodel);
-      print('Data saved successfully!');
+      //print('Data saved successfully!');
     } catch (error) {
-      print('Error saving data: $error');
+      //print('Error saving data: $error');
     }
   }
 
@@ -96,7 +96,7 @@ class AuthenticationService {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('userUid', user.uid);
     } catch (error) {
-      print("Error persisting user: $error");
+      //print("Error persisting user: $error");
     }
   }
 
@@ -115,7 +115,7 @@ class AuthenticationService {
         return null;
       }
     } catch (error) {
-      print("Error retrieving user: $error");
+      //print("Error retrieving user: $error");
       return null;
     }
   }
@@ -129,7 +129,7 @@ class AuthenticationService {
 
       await _auth.signOut();
     } catch (error) {
-      print("Error signing out: $error");
+      //print("Error signing out: $error");
     }
   }
 

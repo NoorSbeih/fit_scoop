@@ -15,7 +15,7 @@ class ReviewService {
       review.id = newId;
       await _reviewsRef.doc(review.id).set(review.toMap());
     } catch (e) {
-      print('Error adding review: $e');
+      //print('Error adding review: $e');
       throw e;
     }
   }
@@ -25,7 +25,7 @@ class ReviewService {
     try {
       await _reviewsRef.doc(review.id).update(review.toMap());
     } catch (e) {
-      print('Error updating review: $e');
+      //print('Error updating review: $e');
       throw e;
     }
   }
@@ -39,7 +39,7 @@ class ReviewService {
       }
       return null; // Review not found
     } catch (e) {
-      print('Error getting review: $e');
+      //print('Error getting review: $e');
       throw e;
     }
   }
@@ -49,7 +49,7 @@ class ReviewService {
     try {
       await _reviewsRef.doc(id).delete();
     } catch (e) {
-      print('Error deleting review: $e');
+      //print('Error deleting review: $e');
       throw e;
     }
   }
@@ -61,7 +61,7 @@ class ReviewService {
       List<Review> reviews = snapshot.docs.map((doc) => Review.fromMap(doc.id, doc.data() as Map<String, dynamic>)).toList();
       return reviews;
     } catch (e) {
-      print('Error getting reviews by workout ID: $e');
+      //print('Error getting reviews by workout ID: $e');
       throw e;
     }
   }
@@ -72,7 +72,7 @@ class ReviewService {
       List<Review> reviews = snapshot.docs.map((doc) => Review.fromMap(doc.id, doc.data() as Map<String, dynamic>)).toList();
       return reviews;
     } catch (e) {
-      print('Error getting reviews by user ID: $e');
+      //print('Error getting reviews by user ID: $e');
       throw e;
     }
   }

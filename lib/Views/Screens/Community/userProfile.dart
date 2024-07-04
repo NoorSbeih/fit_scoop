@@ -62,7 +62,7 @@ class _profileState extends State<ProfileUser> {
       });
 
     } catch (e) {
-      print('Error fetching data: $e');
+      //print('Error fetching data: $e');
       // Handle error if needed
     }
   }

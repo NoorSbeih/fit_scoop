@@ -46,7 +46,7 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage> {
         parts = equipments;
       });
     } catch (e) {
-      print('Error fetching data: $e');
+      //print('Error fetching data: $e');
     }
   }
 
@@ -56,20 +56,20 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage> {
     Exercise? exersice=await controller.getExercise(id);
     String? bodyPart = exersice?.bodyPart;
     String? target = exersice?.target;
-    print("ffffffffffffffffff");
-    print(bodyPart);
-    print(target);
+    //print("ffffffffffffffffff");
+    //print(bodyPart);
+    //print(target);
 
     for (int i = 0; i < parts.length; i++) {
       if (parts[i].name == bodyPart) {
-        print("ffjjfjf");
-        print(parts[i].imageUrl);
+        //print("ffjjfjf");
+        //print(parts[i].imageUrl);
         return parts[i].imageUrl;
 
       }
       if (parts[i].name != bodyPart && parts[i].name == target) {
-        print("cfff");
-        print(parts[i].imageUrl);
+        //print("cfff");
+        //print(parts[i].imageUrl);
         return parts[i].imageUrl;
       }
     }
@@ -115,7 +115,7 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage> {
             break;
         }
       }
-      print('Total Reviews: $totalReviews, Total Rating: $totalRating');
+      //print('Total Reviews: $totalReviews, Total Rating: $totalRating');
 
       double averageRating = totalReviews > 0 ? totalRating / totalReviews : 0;
 
@@ -137,7 +137,7 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage> {
         });
       }
     } catch (e) {
-      print('Error getting workouts by user ID: $e');
+      //print('Error getting workouts by user ID: $e');
       throw e;
     }
   }
@@ -213,7 +213,7 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage> {
                     ),
                     ignoreGestures: true,
                     onRatingUpdate: (double value) {
-                      print(value);
+                      //print(value);
                     },
                   ),
                 ],

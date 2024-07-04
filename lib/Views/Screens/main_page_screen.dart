@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
             currentIndex: selectedPage,
             onTap: (int index) {
               setState(() {
-                print("Selected page: $index");
+                //print("Selected page: $index");
                 selectedPage = index;
               });
             },

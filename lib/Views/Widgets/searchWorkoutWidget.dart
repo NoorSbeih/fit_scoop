@@ -12,8 +12,8 @@
 //
 //
 //     bool isLiked=user.savedWorkoutIds.contains(workout.id);
-//     print("fhfhhf");
-//     print(isLiked);
+//     //print("fhfhhf");
+//     //print(isLiked);
 //
 //     int intensity = 0;
 //     if (workout.intensity == "Beginner") {
@@ -113,7 +113,7 @@
 //                           ),
 //                         ),
 //                         onRatingUpdate: (rating) {
-//                           print(rating);
+//                           //print(rating);
 //                         },
 //                       ),
 //                       Padding(
@@ -263,7 +263,7 @@ class _CommunitySearchWorkoutWidgetState extends State<CommunitySearchWorkoutWid
       ReviewController controller = ReviewController();
       reviews = await controller.getReviewsByWorkoutId(widget.workout.id);
     } catch (e) {
-      print('Error fetching data: $e');
+      //print('Error fetching data: $e');
       // Handle error if needed
     }
   }
@@ -393,7 +393,7 @@ class _CommunitySearchWorkoutWidgetState extends State<CommunitySearchWorkoutWid
                           ),
                         ),
                         onRatingUpdate: (rating) {
-                          print(rating);
+                          //print(rating);
                         },
                       ),
                       Padding(

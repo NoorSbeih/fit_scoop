@@ -52,7 +52,7 @@ class _createWorkout1 extends State<createWorkout1> {
         parts = equipments;
       });
     } catch (e) {
-      print('Error fetching data: $e');
+      //print('Error fetching data: $e');
     }
   }
 

@@ -44,11 +44,11 @@ class _profileState extends State<ProfilePage> {
      user = userSingleton.getUser();
       label = user.name;
 
-      print(num);
-      print(user.followedUserIds.toString());
+      //print(num);
+      //print(user.followedUserIds.toString());
       setState(() {
         _controller.text = user.bio ?? '';
-        print(user.bio);
+        //print(user.bio);
       });
 
       String? imageUrl = user.imageLink;
@@ -66,7 +66,7 @@ class _profileState extends State<ProfilePage> {
       });
 
     } catch (e) {
-      print('Error fetching data: $e');
+      //print('Error fetching data: $e');
       // Handle error if needed
     }
   }

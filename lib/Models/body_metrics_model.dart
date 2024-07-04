@@ -61,7 +61,7 @@ class BodyMetrics {
   }
 
   factory BodyMetrics.fromMap(Map<String, dynamic> map) {
-    print("Mapping data from Firestore: $map");
+    //print("Mapping data from Firestore: $map");
 
     List<String> workoutSchedule = (map['workoutSchedule'] as List<dynamic>?)
         ?.map((e) => e.toString())
@@ -75,7 +75,7 @@ class BodyMetrics {
       workoutSchedule = workoutSchedule.sublist(0, 7);
     }
 
-    print("Parsed workoutSchedule: $workoutSchedule");
+    //print("Parsed workoutSchedule: $workoutSchedule");
 
     return BodyMetrics(
       userId: map['userId'] ?? '',
@@ -123,7 +123,7 @@ List<List<String>> convert2(dynamic x) {
         return convert2(parsedList);
       }
     } catch (e) {
-      print('Error parsing workout schedule JSON: $e');
+      //print('Error parsing workout schedule JSON: $e');
     }
   }
   return [];

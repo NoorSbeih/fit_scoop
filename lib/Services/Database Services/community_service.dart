@@ -9,7 +9,7 @@ class CommunityService {
   Future<List<Review>> getRecentReviews(List<String> followedUserIds) async {
     if (followedUserIds.isEmpty) {
       // Return an empty list if there are no followed user IDs
-      print('No followed user IDs provided.');
+      //print('No followed user IDs provided.');
       return [];
     }
 
@@ -21,9 +21,9 @@ class CommunityService {
           .limit(10)
           .get();
 
-      print('Fetched Review Documents: ${querySnapshot.docs.length}');
+      //print('Fetched Review Documents: ${querySnapshot.docs.length}');
       querySnapshot.docs.forEach((doc) {
-        print('Review Document Data: ${doc.data()}');
+        //print('Review Document Data: ${doc.data()}');
       });
 
       List<Review> reviews = querySnapshot.docs.map((doc) {
@@ -32,7 +32,7 @@ class CommunityService {
 
       return reviews;
     } catch (e) {
-      print('Error fetching reviews: $e');
+      //print('Error fetching reviews: $e');
       return [];
     }
   }
@@ -41,7 +41,7 @@ class CommunityService {
   Future<List<Workout>> getRecentWorkouts(List<String> followedUserIds) async {
     if (followedUserIds.isEmpty) {
       // Return an empty list if there are no followed user IDs
-      print('No followed user IDs provided.');
+      //print('No followed user IDs provided.');
       return [];
     }
 
@@ -54,9 +54,9 @@ class CommunityService {
           .limit(10)
           .get();
 
-      print('Fetched: ${querySnapshot.docs.length}');
+      //print('Fetched: ${querySnapshot.docs.length}');
       querySnapshot.docs.forEach((doc) {
-        print('Workout Document Data: ${doc.data()}');
+        //print('Workout Document Data: ${doc.data()}');
       });
 
       List<Workout> workouts = querySnapshot.docs.map((doc) {
@@ -66,7 +66,7 @@ class CommunityService {
       // Return the mapped results
       return workouts;
     } catch (e) {
-      print('Error fetching workouts: $e');
+      //print('Error fetching workouts: $e');
       return [];
     }
   }

@@ -47,8 +47,8 @@ void _loadPreferences() async {
   selectedWeight.text = metrics.weight.toString();
 String? unitOfMeasure =metrics.unitOfMeasure;
 setState(() {
-  print("unit");
-  print(metrics.unitOfMeasure);
+  //print("unit");
+  //print(metrics.unitOfMeasure);
 _selectedValue = unitOfMeasure;
 });
 }

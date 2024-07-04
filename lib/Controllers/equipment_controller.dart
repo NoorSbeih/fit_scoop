@@ -16,7 +16,7 @@ class EquipmentController {
     try {
       return await _equipmentService.getAllEquipments();
     } catch (e) {
-      print('Error getting all equipments: $e');
+      //print('Error getting all equipments: $e');
       throw e;
     }
   }

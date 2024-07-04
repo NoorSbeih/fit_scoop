@@ -54,7 +54,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
     typeOfPlace = metrics.gymType;
     goal = metrics.fitnessGoal;
     gender = metrics.gender;
-    print(gender);
+    //print(gender);
     UserSingleton usersingleton = UserSingleton.getInstance();
     User_model user = usersingleton.getUser();
     equipments = user.savedEquipmentIds.length.toString();
@@ -376,7 +376,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   //     await sharedPreferences.clear();
                   //   } catch (e) {
                   //     // Handle error if needed
-                  //     print("Error clearing shared preferences: $e");
+                  //     //print("Error clearing shared preferences: $e");
                   //   }
                   //   Navigator.of(context).pushAndRemoveUntil(
                   //     MaterialPageRoute(builder: (context) => Login()),

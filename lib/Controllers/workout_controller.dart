@@ -12,7 +12,7 @@ class WorkoutController {
       // Add the workout to Firestore
       await _workoutService.createWorkout(workout);
     } catch (e) {
-      print('Error creating workout: $e');
+      //print('Error creating workout: $e');
       throw e;
     }
   }
@@ -22,7 +22,7 @@ class WorkoutController {
       // Update the workout in Firestore
       await _workoutService.updateWorkout(workout);
     } catch (e) {
-      print('Error updating workout: $e');
+      //print('Error updating workout: $e');
       throw e;
     }
   }
@@ -32,7 +32,7 @@ class WorkoutController {
       // Delete the workout from Firestore
       await _workoutService.deleteWorkout(id);
     } catch (e) {
-      print('Error deleting workout: $e');
+      //print('Error deleting workout: $e');
       throw e;
     }
   }
@@ -42,7 +42,7 @@ class WorkoutController {
 
       return await _workoutService.getWorkout(id);
     } catch (e) {
-      print('Error getting workout: $e');
+      //print('Error getting workout: $e');
       throw e;
     }
   }
@@ -51,7 +51,7 @@ class WorkoutController {
   //     // Get all workouts from Firestore
   //     return await _workoutService.getAllWorkouts();
   //   } catch (e) {
-  //     print('Error getting all workouts: $e');
+  //     //print('Error getting all workouts: $e');
   //     throw e;
   //   }
   // }
@@ -61,7 +61,7 @@ class WorkoutController {
       // Get all workouts from Firestore
       return await _workoutService.getAllWorkouts();
     } catch (e) {
-      print('Error getting all workouts: $e');
+      //print('Error getting all workouts: $e');
       throw e;
     }
   }
@@ -73,12 +73,12 @@ class WorkoutController {
 
       List<Workout> workouts = await _workoutService.getWorkoutsByUserId(userId);
       if (workouts.isEmpty) {
-        print('No workouts found for user ID: $userId');
+        //print('No workouts found for user ID: $userId');
       }
       return workouts;
     } catch (e) {
       // Handle error
-      print('Error getting workouts by user ID: $e');
+      //print('Error getting workouts by user ID: $e');
       throw e;
     }
   }

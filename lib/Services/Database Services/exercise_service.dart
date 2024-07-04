@@ -12,7 +12,7 @@ class ExerciseService {
     try {
       await _exercisesRef.doc(exercise.id).set(exercise.toMap());
     } catch (e) {
-      print('Error adding exercise: $e');
+      //print('Error adding exercise: $e');
       throw e;
     }
   }
@@ -22,7 +22,7 @@ class ExerciseService {
     try {
       await _exercisesRef.doc(exercise.id).update(exercise.toMap());
     } catch (e) {
-      print('Error updating exercise: $e');
+      //print('Error updating exercise: $e');
       throw e;
     }
   }
@@ -32,12 +32,12 @@ class ExerciseService {
     try {
       var snapshot = await _exercisesRef.doc(id).get();
       if (snapshot.exists && snapshot.data() != null) {
-        print("it is existttt");
+        //print("it is existttt");
         return Exercise.fromMap(id, snapshot.data() as Map<String, dynamic>);
       }
       return null; // Exercise not found
     } catch (e) {
-      print('Error getting exercise: $e');
+      //print('Error getting exercise: $e');
       throw e;
     }
   }
@@ -48,7 +48,7 @@ class ExerciseService {
       Exercise? exercise = await getExercise(id);
       return exercise?.name ?? '';
     } catch (e) {
-      print('Error getting exercise name: $e');
+      //print('Error getting exercise name: $e');
       throw e;
     }
   }
@@ -65,7 +65,7 @@ class ExerciseService {
       }).toList();
       return exercises;
     } catch (e) {
-      print('Error getting exercises: $e');
+      //print('Error getting exercises: $e');
       throw e;
     }
   }
@@ -74,7 +74,7 @@ class ExerciseService {
     try {
       await _exercisesRef.doc(id).delete();
     } catch (e) {
-      print('Error deleting exercise: $e');
+      //print('Error deleting exercise: $e');
       throw e;
     }
   }
@@ -91,7 +91,7 @@ class ExerciseService {
 
       return exercises;
     } catch (e) {
-      print('Error getting exercises by main muscle: $e');
+      //print('Error getting exercises by main muscle: $e');
       throw e;
     }
   }

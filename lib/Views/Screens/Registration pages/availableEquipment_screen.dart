@@ -71,7 +71,7 @@ class _EquipmentPageState extends State<RegisterPage6> with SingleTickerProvider
       });
       await loadSelectedEquipments(); // Load selected equipments after fetching
     } catch (e) {
-      print('Error fetching data: $e');
+      //print('Error fetching data: $e');
       setState(() {
         isLoading = false; // Data fetching complete, even on error
       });
