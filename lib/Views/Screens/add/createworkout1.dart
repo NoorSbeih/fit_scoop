@@ -24,7 +24,8 @@ class _createWorkout1 extends State<createWorkout1> {
   String emailErrorText = '';
 
   String errorText = '';
-  List<BodyPart> parts=[];
+  List<BodyPart> parts = [];
+
   @override
   void initState() {
     super.initState();
@@ -50,41 +51,28 @@ class _createWorkout1 extends State<createWorkout1> {
       setState(() {
         parts = equipments;
       });
-
     } catch (e) {
       print('Error fetching data: $e');
     }
   }
 
-
   Future<String> getImageUrl(Map<String, dynamic> exercise) async {
     String id = exercise['id'];
-    ExerciseController controller=new ExerciseController() ;
-    Exercise? exersice=await controller.getExercise(id);
+    ExerciseController controller = new ExerciseController();
+    Exercise? exersice = await controller.getExercise(id);
     String? bodyPart = exersice?.bodyPart;
     String? target = exersice?.target;
-    print("ffffffffffffffffff");
-    print(bodyPart);
-    print(target);
 
     for (int i = 0; i < parts.length; i++) {
       if (parts[i].name == bodyPart) {
-        print("ffjjfjf");
-        print(parts[i].imageUrl);
         return parts[i].imageUrl;
-
       }
       if (parts[i].name != bodyPart && parts[i].name == target) {
-        print("cfff");
-        print(parts[i].imageUrl);
         return parts[i].imageUrl;
       }
     }
     return "";
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +160,8 @@ class _createWorkout1 extends State<createWorkout1> {
                       errorText = 'Please choose exercises for the workout ';
                     });
                   }
-                  if(!createWorkout1.name.isEmpty && !addExercise.exercises.isEmpty) {
+                  if (!createWorkout1.name.isEmpty &&
+                      !addExercise.exercises.isEmpty) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -214,7 +203,6 @@ class _createWorkout1 extends State<createWorkout1> {
         onTap: () async {
           setState(() {
             createWorkout1.name = nameController.text;
-            print(createWorkout1.name);
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -259,8 +247,7 @@ class _createWorkout1 extends State<createWorkout1> {
               weight.toString(),
               context,
               id,
-                0,
-                getImageUrl(exercise),
+              getImageUrl(exercise),
               onDelete: () {
                 deleteExercise(id);
               },
@@ -274,7 +261,8 @@ class _createWorkout1 extends State<createWorkout1> {
   }
 
   void deleteExercise(String id) {
-    int index = addExercise.exercises.indexWhere((exercise) => exercise['id'] == id);
+    int index =
+    addExercise.exercises.indexWhere((exercise) => exercise['id'] == id);
     setState(() {
       addExercise.exercises.removeAt(index); // Remove the exercise from the list
     });

@@ -171,7 +171,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
           ),
         ],
         title: const Text(
-          'TODAY WORKOUT',
+          "TODAY'S WORKOUT",
           style: TextStyle(
             color: Colors.white, // Text color
             fontSize: 20, // Adjust font size as needed

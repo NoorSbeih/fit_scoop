@@ -21,6 +21,19 @@ class AddExercisePage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFF2C2A2A),
+      appBar: AppBar(
+        backgroundColor: Color(0xFF2C2A2A),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Color(0xFF0dbab4),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+            onExerciseAdded();
+          },
+        ),
+      ),
       body: addExercise(),
     );
   }
@@ -36,31 +49,22 @@ class addExercise extends StatefulWidget {
 class _addExercise extends State<addExercise>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  TextEditingController _searchController = TextEditingController();
-  String _searchQuery = "";
-  String imageUrl = "";
+  String imageUrl="";
 
-  List<BodyPart> parts = [];
+  List<BodyPart> parts=[];
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     fetchBodyParts();
-    _searchController.addListener(_onSearchChanged);
   }
 
   @override
   void dispose() {
     _tabController.dispose();
-    _searchController.dispose();
     super.dispose();
   }
 
-  void _onSearchChanged() {
-    setState(() {
-      _searchQuery = _searchController.text.toLowerCase();
-    });
-  }
 
   Future<void> fetchBodyParts() async {
     try {
@@ -69,17 +73,19 @@ class _addExercise extends State<addExercise>
       setState(() {
         parts = equipments;
       });
+
     } catch (e) {
       print('Error fetching data: $e');
     }
   }
 
-  String getImageUrl(Exercise exercise) {
-    for (int i = 0; i < parts.length; i++) {
-      if (parts[i].name == exercise.bodyPart) {
+  String getImageUrl(Exercise exercise)  {
+
+    for(int i =0;i<parts.length;i++){
+      if(parts[i].name==exercise.bodyPart){
         return parts[i].imageUrl;
       }
-      if (parts[i].name != exercise.bodyPart && parts[i].name == exercise.target) {
+      if(parts[i].name!=exercise.bodyPart && parts[i].name==exercise.target){
         return parts[i].imageUrl;
       }
     }
@@ -91,91 +97,56 @@ class _addExercise extends State<addExercise>
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFF2C2A2A),
-      appBar: AppBar(
-        backgroundColor: Color(0xFF2C2A2A),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Color(0xFF0dbab4),
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: TextField(
-          controller: _searchController,
-          decoration: InputDecoration(
-            hintText: 'SEARCH EXERSICES...',
-            hintStyle: TextStyle(color: Colors.white54),
-            border: InputBorder.none,
-          ),
-          style: TextStyle(color: Colors.white),
-        ),
-        bottom: TabBar(
-          controller: _tabController,
-          labelColor: Colors.white,
-          dividerColor: const Color(0xFF2C2A2A),
-          labelStyle: TextStyle(fontWeight: FontWeight.bold),
-          indicatorColor: const Color(0xFF0dbab4),
-          tabs: const [
-            Tab(text: 'ALPHABETICAL'),
-            Tab(text: 'MUSCLE GROUP'),
-          ],
-        ),
+      appBar: TabBar(
+        controller: _tabController,
+        labelColor: Colors.white,
+        dividerColor: const Color(0xFF2C2A2A),
+        labelStyle: TextStyle(fontWeight: FontWeight.bold),
+        indicatorColor: const Color(0xFF0dbab4),
+        tabs: const [
+          Tab(text: 'ALPHABETICAL'),
+          Tab(text: 'MUSCLE GROUP'),
+        ],
       ),
       body: TabBarView(
         controller: _tabController,
         children: [
           alphabeticalTabContent(),
-          muscleGroupTabContent(),
+          muscleGroupTabContent(), // Call the function here
         ],
       ),
     );
   }
 
   Widget alphabeticalTabContent() {
-    List<String> alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+   // List<String> alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
     ExerciseController controller = new ExerciseController();
-    return ListView(
-      children: alphabet.map((letter) {
-        return ExpansionTile(
-          title: custom_widget.customTextWidgetForExersiceCard(letter, 16),
-          children: [
-            FutureBuilder<List<Exercise>>(
-              future: controller.getExercisesByStartingLetter(letter.toLowerCase()),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                } else if (snapshot.hasData) {
-                  List<Exercise> filteredExercises = snapshot.data!.where((exercise) {
-                    return exercise.name.toLowerCase().contains(_searchQuery);
-                  }).toList();
+    return FutureBuilder<List<Exercise>>(
+      future: controller.getAllExersices(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (snapshot.hasData) {
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) {
+              Exercise exercise = snapshot.data![index];
 
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: filteredExercises.length,
-                    itemBuilder: (context, index) {
-                      Exercise exercise = filteredExercises[index];
-
-                      return exercises_card.addingExersiceWidget(
-                        exercise.name,
-                        exercise.id,
-                        getImageUrl(exercise),
-                        context,
-                      );
-                    },
-                  );
-                } else {
-                  return Center(child: Text('No exercises found.'));
-                }
-              },
-            ),
-          ],
-        );
-      }).toList(),
+              return exercises_card.addingExersiceWidget(
+                exercise.name,
+                exercise.id,
+                getImageUrl(exercise),
+                context,
+              );
+            },
+          );
+        } else {
+          return Center(child: Text('No exercises found.'));
+        }
+      },
     );
   }
 
@@ -205,17 +176,14 @@ class _addExercise extends State<addExercise>
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 } else if (snapshot.hasData) {
-                  List<Exercise> filteredExercises = snapshot.data!.where((exercise) {
-                    return exercise.name.toLowerCase().contains(_searchQuery);
-                  }).toList();
-
                   return ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: filteredExercises.length,
+                    itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
-                      Exercise exercise = filteredExercises[index];
+                      Exercise exercise = snapshot.data![index];
 
+                      getImageUrl(exercise);
                       return exercises_card.addingExersiceWidget(
                         exercise.name,
                         exercise.id,
