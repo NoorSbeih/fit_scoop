@@ -19,6 +19,15 @@ class ExerciseController {
       throw e;
     }
   }
+  Future<List<Exercise>> getAllExersices() async {
+    try {
+      // Add the exercise to the database using the ExerciseService
+     return await _exerciseService.getAllExercises();
+    } catch (e) {
+      print('Error adding exercise: $e');
+      throw e;
+    }
+  }
   Future<Exercise?> getExercise(String id) async {
     try {
       return await _exerciseService.getExercise(id);

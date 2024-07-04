@@ -185,7 +185,7 @@ class exercises_card {
     );
   }
   static Widget AfterAddingExerciseCardWidget(
-      String name, String sets, String weight,BuildContext context,String id,int duration,Future<String> imageUrl, {required Null Function() onDelete}) {
+      String name, String sets, String weight,BuildContext context,String id,Future<String> imageUrl, {required Null Function() onDelete}) {
     return SizedBox(
       height: 107,
       child: Card(
