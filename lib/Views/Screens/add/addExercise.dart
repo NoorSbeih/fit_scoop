@@ -141,11 +141,11 @@ class _addExercise extends State<addExercise> with SingleTickerProviderStateMixi
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(15.0),
           child: TextField(
             controller: searchController,
             decoration: InputDecoration(
-              hintText: 'Search exercises...',
+              hintText: 'SEARCH EXERCISES...',
               hintStyle: TextStyle(color: Colors.white),
               prefixIcon: Icon(Icons.search, color: Colors.white),
               enabledBorder: OutlineInputBorder(
