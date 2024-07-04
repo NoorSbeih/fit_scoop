@@ -52,6 +52,27 @@ class UserController {
     }
   }
 
+
+  Future<void> addFollowing(String currentUserId, String followUserId) async {
+    try {
+      // Follow user with UserService
+      await _userService.addFollowing(currentUserId, followUserId);
+    } catch (e) {
+      print('Error following user: $e');
+      throw e;
+    }
+  }
+
+  Future<void> removeFollowing(String currentUserId, String unfollowUserId) async {
+    try {
+      // Unfollow user with UserService
+      await _userService.removeFollowing(currentUserId, unfollowUserId);
+    } catch (e) {
+      print('Error unfollowing user: $e');
+      throw e;
+    }
+  }
+
   Future<void> saveWorkout(String userId, String? workoutId) async {
     try {
       // Save workout to user's savedWorkoutIds

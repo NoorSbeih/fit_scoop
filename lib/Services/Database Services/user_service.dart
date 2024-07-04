@@ -64,6 +64,32 @@ class UserService {
     }
   }
 
+
+
+
+  Future<void> addFollowing(String currentUserId, String followUserId) async {
+    try {
+      await _usersRef.doc(followUserId).update({
+        'followersUserIds': FieldValue.arrayUnion([currentUserId]),
+      });
+    } catch (e) {
+      print('Error following user: $e');
+      throw e;
+    }
+  }
+
+  Future<void> removeFollowing(String currentUserId, String followUserId) async {
+    try {
+      await _usersRef.doc(followUserId).update({
+        'followersUserIds': FieldValue.arrayRemove([currentUserId]),
+      });
+    } catch (e) {
+      print('Error following user: $e');
+      throw e;
+    }
+  }
+
+
   Future<void> unfollowUser(String currentUserId, String unfollowUserId) async {
     try {
       await _usersRef.doc(currentUserId).update({

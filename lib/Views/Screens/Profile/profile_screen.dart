@@ -27,6 +27,7 @@ class _profileState extends State<ProfilePage> {
   List<Review> reviews = [];
   late User_model user;
   late  ValueNotifier<int> followingsNotifier;
+    int followersNotifier=0;
   String? imageUrl;
   @override
   void initState() {
@@ -44,11 +45,12 @@ class _profileState extends State<ProfilePage> {
      user = userSingleton.getUser();
       label = user.name;
 
-      //print(num);
-      //print(user.followedUserIds.toString());
+
+      print(num);
+      print(user.followedUserIds.toString());
       setState(() {
         _controller.text = user.bio ?? '';
-        //print(user.bio);
+        print(user.bio);
       });
 
       String? imageUrl = user.imageLink;
@@ -62,11 +64,14 @@ class _profileState extends State<ProfilePage> {
       ReviewController controller2=ReviewController();
       reviews = await controller2.getReviewsByUserId(userId);
       setState(() {
-        num = '${workouts.length} workouts|${user.followedUserIds.length} followers';
+        int followersCount = user.followersUserIds?.length ?? 0;
+
+        num = '${workouts.length} workouts|${followersCount} followers';
+
       });
 
     } catch (e) {
-      //print('Error fetching data: $e');
+      print('Error fetching data: $e');
       // Handle error if needed
     }
   }
