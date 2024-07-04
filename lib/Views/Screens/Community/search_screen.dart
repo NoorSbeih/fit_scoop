@@ -72,7 +72,9 @@ class _searchPage extends State<SearchPage>
       for (Workout workout in workouts) {
         String creatorId = workout.creatorId;
         if (workoutForUsers.containsKey(creatorId)) {
-          workoutForUsers[creatorId]!.add(workout);
+          if(workout.isPrivate==false) {
+            workoutForUsers[creatorId]!.add(workout);
+          }
         }
       }
 

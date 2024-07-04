@@ -64,9 +64,9 @@ class _createWorkout2 extends State<createWorkout2> {
                         itemPadding: EdgeInsets.all(0),
                         itemSize: 35.0,
                         itemBuilder: (context, _) => Transform.scale(
-                          scale: 0.7,
+                          scale: 0.9,
                           child: const Icon(
-                            Icons.star,
+                            Icons.electric_bolt,
                             color: Color(0xFF0dbab4),
                           ),
                         ),

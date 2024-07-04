@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../Models/workout_model.dart';
 import '../Screens/library/workout_detail_screen.dart';
@@ -44,11 +45,19 @@ class workout_widget {
                     itemPadding: EdgeInsets.all(0),
                     itemSize: 26.0,
                     itemBuilder: (context, _) => Transform.scale(
-                      scale: 0.7,
+                      scale: 0.9,
                       child: const Icon(
-                        Icons.star,
+                        Icons.electric_bolt,
                         color: Color(0xFF0dbab4),
                       ),
+
+                      // child: SvgPicture.asset(
+                      //     'images/lightning.svg',
+                      //   color: Color(0xFF0dbab4),
+                      //   // You can adjust the size of the SVG image using width and height properties
+                      //   width: 24,
+                      //   height: 24,
+                      // ),
                     ),
                     ignoreGestures: true,
                     onRatingUpdate: (rating) {

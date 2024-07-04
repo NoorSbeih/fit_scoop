@@ -97,9 +97,9 @@ class communityWorkoutWidget {
                         itemPadding: const EdgeInsets.all(0),
                         itemSize: 26.0,
                         itemBuilder: (context, _) => Transform.scale(
-                          scale: 0.7,
+                          scale: 0.9,
                           child: const Icon(
-                            Icons.star,
+                            Icons.electric_bolt,
                             color: Color(0xFF0dbab4),
                           ),
                         ),

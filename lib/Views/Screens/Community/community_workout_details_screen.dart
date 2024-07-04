@@ -207,10 +207,10 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage> {
                     itemCount: 3,
                     itemSize: 24.0,
                     itemBuilder: (context, _) =>
-                    const Icon(
-                      Icons.star,
-                      color: Color(0xFF0dbab4),
-                    ),
+                     const Icon(
+                    Icons.electric_bolt,
+                    color: Color(0xFF0dbab4),
+                  ),
                     ignoreGestures: true,
                     onRatingUpdate: (double value) {
                       print(value);

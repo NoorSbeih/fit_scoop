@@ -271,82 +271,82 @@ class _CustomDrawerState extends State<CustomDrawer> {
               ],
             ),
           ),
-          ListTile(
-            title: const Text(
-              'PREFERENCES',
-              style: TextStyle(
-                  color: Colors.grey, fontSize: 20, fontFamily: 'BebasNeue'),
-            ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 10),
-
-                GestureDetector(
-                  onTap: () {
-                    if (gender == "Female") {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => femaleGoalsUpdate(
-                            onUpdateGoal: (goal) {
-                              setState(() {
-                                metrics.fitnessGoal = goal;
-                                goal = metrics.fitnessGoal;
-                              });
-                            },
-                          ),
-                        ),
-                      );
-                    } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => maleGoalsUpdate(
-                            onUpdateGoal: (goal) {
-                              setState(() {
-                                metrics.fitnessGoal = goal;
-                                goal = metrics.fitnessGoal;
-                              });
-                            },
-                          ),
-                        ),
-                      );
-                    }
-                  },
-                  child: CustomUnderlineText(
-                    text: 'Goal: ${goal}',
-                    fontSize: 20,
-                    textColor: Colors.white,
-                    underlineColor: Colors.grey,
-                    underlinePadding: 2.0,
-                    underlineThickness: 2.0,
-                  ),
-                ),
-
-                SizedBox(height: 10),
-                // CustomUnderlineText(
-                //   text: 'Training Days: ${metrics.workoutSchedule
-                //       .length} Selected',
-                //   fontSize: 20,
-                //   textColor: Colors.white,
-                //   underlineColor: Colors.grey,
-                //   underlinePadding: 2.0,
-                //   underlineThickness: 2.0,
-                // ),
-
-                // SizedBox(height: 10),
-                // CustomUnderlineText(
-                //   text: 'UNIT OF MEASURE:${metrics.unitOfMeasure}',
-                //   fontSize: 20,
-                //   textColor: Colors.white,
-                //   underlineColor: Colors.grey,
-                //   underlinePadding: 2.0,
-                //   underlineThickness: 2.0,
-                // ),
-              ],
-            ),
-          ),
+          // ListTile(
+          //   title: const Text(
+          //     'PREFERENCES',
+          //     style: TextStyle(
+          //         color: Colors.grey, fontSize: 20, fontFamily: 'BebasNeue'),
+          //   ),
+          //   subtitle: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       SizedBox(height: 10),
+          //
+          //       GestureDetector(
+          //         onTap: () {
+          //           if (gender == "Female") {
+          //             Navigator.push(
+          //               context,
+          //               MaterialPageRoute(
+          //                 builder: (context) => femaleGoalsUpdate(
+          //                   onUpdateGoal: (goal) {
+          //                     setState(() {
+          //                       metrics.fitnessGoal = goal;
+          //                       goal = metrics.fitnessGoal;
+          //                     });
+          //                   },
+          //                 ),
+          //               ),
+          //             );
+          //           } else {
+          //             Navigator.push(
+          //               context,
+          //               MaterialPageRoute(
+          //                 builder: (context) => maleGoalsUpdate(
+          //                   onUpdateGoal: (goal) {
+          //                     setState(() {
+          //                       metrics.fitnessGoal = goal;
+          //                       goal = metrics.fitnessGoal;
+          //                     });
+          //                   },
+          //                 ),
+          //               ),
+          //             );
+          //           }
+          //         },
+          //         child: CustomUnderlineText(
+          //           text: 'Goal: ${goal}',
+          //           fontSize: 20,
+          //           textColor: Colors.white,
+          //           underlineColor: Colors.grey,
+          //           underlinePadding: 2.0,
+          //           underlineThickness: 2.0,
+          //         ),
+          //       ),
+          //
+          //       SizedBox(height: 10),
+          //       // CustomUnderlineText(
+          //       //   text: 'Training Days: ${metrics.workoutSchedule
+          //       //       .length} Selected',
+          //       //   fontSize: 20,
+          //       //   textColor: Colors.white,
+          //       //   underlineColor: Colors.grey,
+          //       //   underlinePadding: 2.0,
+          //       //   underlineThickness: 2.0,
+          //       // ),
+          //
+          //       // SizedBox(height: 10),
+          //       // CustomUnderlineText(
+          //       //   text: 'UNIT OF MEASURE:${metrics.unitOfMeasure}',
+          //       //   fontSize: 20,
+          //       //   textColor: Colors.white,
+          //       //   underlineColor: Colors.grey,
+          //       //   underlinePadding: 2.0,
+          //       //   underlineThickness: 2.0,
+          //       // ),
+          //     ],
+          //   ),
+          // ),
           Center(
             child: Container(
               margin: EdgeInsets.symmetric(vertical: 20),

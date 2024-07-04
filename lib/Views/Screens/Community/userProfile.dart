@@ -42,8 +42,6 @@ class _profileState extends State<ProfileUser> {
 
   void fetchData() async {
     try {
-      // UserSingleton userSingleton = UserSingleton.getInstance();
-      // user = userSingleton.getUser();
       setState(() {
         _controller.text = widget.user.bio ?? '';
 
@@ -51,7 +49,6 @@ class _profileState extends State<ProfileUser> {
 
       WorkoutController controller = WorkoutController();
       workouts = await controller.getWorkoutsByUserId(widget.user.id);
-
       publicWorkouts = workouts.where((workout) => !workout.isPrivate).toList();
 
 
@@ -70,7 +67,6 @@ class _profileState extends State<ProfileUser> {
   void checkIfFollowing() {
     UserSingleton userSingleton = UserSingleton.getInstance();
     User_model currentUser = userSingleton.getUser();
-
     setState(() {
       isFollowing = currentUser.followedUserIds.contains(widget.user.id);
     });
@@ -81,13 +77,25 @@ class _profileState extends State<ProfileUser> {
     User_model currentUser = userSingleton.getUser();
 
     if (isFollowing) {
-      currentUser.followedUserIds.remove(widget.user.id);
+
       await UserController().unfollowUser(currentUser.id, widget.user.id);
       await UserController().removeFollowing(currentUser.id, widget.user.id);
+      currentUser.followedUserIds.remove(widget.user.id);
+      setState(() {
+
+        widget.user.followersUserIds?.remove(currentUser.id);
+      num = '${publicWorkouts.length} workouts|${widget.user.followersUserIds.length} followers';
+      });
     } else {
       currentUser.followedUserIds.add(widget.user.id);
       await UserController().followUser(currentUser.id, widget.user.id);
       await UserController().addFollowing(currentUser.id, widget.user.id);
+
+      setState(() {
+        widget.user.followersUserIds?.add(currentUser.id);
+        num = '${publicWorkouts.length} workouts|${widget.user.followersUserIds.length} followers';
+      });
+
     }
     setState(() {
       isFollowing = !isFollowing;

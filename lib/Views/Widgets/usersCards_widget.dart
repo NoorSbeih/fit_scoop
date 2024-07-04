@@ -60,7 +60,7 @@ class UsersCardsWidget {
                                     fontFamily: 'BebasNeue'),
                               ),
                               Text(
-                                '${num} workouts | ${user.followedUserIds.length} followers',
+                                '${num} workouts | ${user.followersUserIds.length} followers',
                                 style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 20,
