@@ -171,9 +171,9 @@ class _CommunitySearchWorkoutWidgetState extends State<CommunitySearchWorkoutWid
                         itemPadding: const EdgeInsets.all(0),
                         itemSize: 26.0,
                         itemBuilder: (context, _) => Transform.scale(
-                          scale: 0.9,
+                          scale: 0.7,
                           child: const Icon(
-                            Icons.electric_bolt,
+                            Icons.star,
                             color: Color(0xFF0dbab4),
                           ),
                         ),

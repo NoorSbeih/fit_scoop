@@ -1,20 +1,103 @@
-import 'package:fit_scoop/Models/user_model.dart';
-import 'package:fit_scoop/Models/user_singleton.dart';
-import 'package:fit_scoop/Views/Screens/add/createworkout1.dart';
-import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
-import 'package:fit_scoop/Views/Widgets/workout_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:fit_scoop/Controllers/exercise_controller.dart';
+import 'package:fit_scoop/Models/bodyPart.dart';
+import 'package:fit_scoop/Models/exercise_model.dart';
 import 'package:fit_scoop/Views/Widgets/exercises_card_widget.dart';
-import '../../../Controllers/exercise_controller.dart';
-import '../../../Controllers/workout_controller.dart';
-import '../../../Models/bodyPart.dart';
-import '../../../Models/exercise_model.dart';
-import '../../../Models/workout_model.dart';
+import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
+
+import 'createworkout1.dart';
 
 class AddExercisePage extends StatelessWidget {
   final OnExerciseAddedCallback onExerciseAdded;
 
   AddExercisePage({required this.onExerciseAdded});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: const Color(0xFF2C2A2A),
+
+      body: addExercise(),
+    );
+  }
+}
+
+class addExercise extends StatefulWidget {
+  static final List<Map<String, dynamic>> exercises = [];
+
+  @override
+  _addExercise createState() => _addExercise();
+}
+
+class _addExercise extends State<addExercise> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  List<BodyPart> parts = [];
+  List<Exercise> allExercises = [];
+  List<Exercise> filteredExercises = [];
+
+  TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+    fetchBodyParts();
+    fetchAllExercises();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  Future<void> fetchBodyParts() async {
+    try {
+      ExerciseController controller = ExerciseController();
+      List<BodyPart> equipments = await controller.getAllBoyImages();
+      setState(() {
+        parts = equipments;
+      });
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+  }
+
+  Future<void> fetchAllExercises() async {
+    try {
+      ExerciseController controller = ExerciseController();
+      List<Exercise> allExercisesData = await controller.getAllExersices();
+      setState(() {
+        allExercises = allExercisesData;
+        filteredExercises = allExercisesData;
+      });
+    } catch (e) {
+      print('Error fetching exercises: $e');
+    }
+  }
+
+  String getImageUrl(Exercise exercise) {
+    for (int i = 0; i < parts.length; i++) {
+      if (parts[i].name == exercise.bodyPart) {
+        return parts[i].imageUrl;
+      }
+      if (parts[i].name != exercise.bodyPart && parts[i].name == exercise.target) {
+        return parts[i].imageUrl;
+      }
+    }
+    return "";
+  }
+
+  void filterExercises(String query) {
+    List<Exercise> filteredList = allExercises.where((exercise) {
+      return exercise.name.toLowerCase().contains(query.toLowerCase());
+    }).toList();
+    setState(() {
+      filteredExercises = filteredList;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,111 +113,61 @@ class AddExercisePage extends StatelessWidget {
           ),
           onPressed: () {
             Navigator.pop(context);
-            onExerciseAdded();
           },
         ),
-      ),
-      body: addExercise(),
-    );
-  }
-}
-
-class addExercise extends StatefulWidget {
-  static final List<Map<String, dynamic>> exercises = [];
-
-  @override
-  _addExercise createState() => _addExercise();
-}
-
-class _addExercise extends State<addExercise>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-  String imageUrl="";
-
-  List<BodyPart> parts=[];
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-    fetchBodyParts();
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-
-  Future<void> fetchBodyParts() async {
-    try {
-      ExerciseController controller = ExerciseController();
-      List<BodyPart> equipments = await controller.getAllBoyImages();
-      setState(() {
-        parts = equipments;
-      });
-
-    } catch (e) {
-      print('Error fetching data: $e');
-    }
-  }
-
-  String getImageUrl(Exercise exercise)  {
-
-    for(int i =0;i<parts.length;i++){
-      if(parts[i].name==exercise.bodyPart){
-        return parts[i].imageUrl;
-      }
-      if(parts[i].name!=exercise.bodyPart && parts[i].name==exercise.target){
-        return parts[i].imageUrl;
-      }
-    }
-    return "";
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: const Color(0xFF2C2A2A),
-      appBar: TabBar(
-        controller: _tabController,
-        labelColor: Colors.white,
-        dividerColor: const Color(0xFF2C2A2A),
-        labelStyle: TextStyle(fontWeight: FontWeight.bold),
-        indicatorColor: const Color(0xFF0dbab4),
-        tabs: const [
-          Tab(text: 'ALPHABETICAL'),
-          Tab(text: 'MUSCLE GROUP'),
-        ],
+        bottom: TabBar(
+          controller: _tabController,
+          labelColor: Colors.white,
+          dividerColor: const Color(0xFF2C2A2A),
+          labelStyle: TextStyle(fontWeight: FontWeight.bold),
+          indicatorColor: const Color(0xFF0dbab4),
+          tabs: const [
+            Tab(text: 'ALPHABETICAL'),
+            Tab(text: 'MUSCLE GROUP'),
+          ],
+        ),
       ),
       body: TabBarView(
         controller: _tabController,
         children: [
           alphabeticalTabContent(),
-          muscleGroupTabContent(), // Call the function here
+          muscleGroupTabContent(),
         ],
       ),
     );
   }
 
   Widget alphabeticalTabContent() {
-   // List<String> alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-    ExerciseController controller = new ExerciseController();
-    return FutureBuilder<List<Exercise>>(
-      future: controller.getAllExersices(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (snapshot.hasData) {
-          return ListView.builder(
-            shrinkWrap: true,
-            itemCount: snapshot.data!.length,
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: TextField(
+            controller: searchController,
+            decoration: InputDecoration(
+              hintText: 'SEARCH EXERCISES...',
+              hintStyle: TextStyle(color: Colors.white),
+              prefixIcon: Icon(Icons.search, color: Colors.white),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onChanged: (value) {
+              filterExercises(value);
+            },
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: filteredExercises.length,
             itemBuilder: (context, index) {
-              Exercise exercise = snapshot.data![index];
-
+              Exercise exercise = filteredExercises[index];
               return exercises_card.addingExersiceWidget(
                 exercise.name,
                 exercise.id,
@@ -142,11 +175,9 @@ class _addExercise extends State<addExercise>
                 context,
               );
             },
-          );
-        } else {
-          return Center(child: Text('No exercises found.'));
-        }
-      },
+          ),
+        ),
+      ],
     );
   }
 
@@ -182,7 +213,6 @@ class _addExercise extends State<addExercise>
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       Exercise exercise = snapshot.data![index];
-
                       getImageUrl(exercise);
                       return exercises_card.addingExersiceWidget(
                         exercise.name,

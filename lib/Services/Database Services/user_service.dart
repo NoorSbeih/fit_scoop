@@ -17,7 +17,7 @@ class UserService {
     try {
       await _usersRef.doc(user.id).set(user.toMap());
     } catch (e) {
-      print('Error adding user: $e');
+      //print('Error adding user: $e');
       throw e;
     }
   }
@@ -26,7 +26,7 @@ class UserService {
     try {
       await _usersRef.doc(user.id).update(user.toMap());
     } catch (e) {
-      print('Error updating user: $e');
+      //print('Error updating user: $e');
       throw e;
     }
   }
@@ -39,7 +39,7 @@ class UserService {
       }
       return null;
     } catch (e) {
-      print('Error getting user: $e');
+      //print('Error getting user: $e');
       throw e;
     }
   }
@@ -48,7 +48,7 @@ class UserService {
     try {
       await _usersRef.doc(id).delete();
     } catch (e) {
-      print('Error deleting user: $e');
+      //print('Error deleting user: $e');
       throw e;
     }
   }
@@ -59,7 +59,7 @@ class UserService {
         'followedUserIds': FieldValue.arrayUnion([followUserId]),
       });
     } catch (e) {
-      print('Error following user: $e');
+      //print('Error following user: $e');
       throw e;
     }
   }
@@ -96,7 +96,7 @@ class UserService {
         'followedUserIds': FieldValue.arrayRemove([unfollowUserId]),
       });
     } catch (e) {
-      print('Error unfollowing user: $e');
+      //print('Error unfollowing user: $e');
       throw e;
     }
   }
@@ -107,7 +107,7 @@ class UserService {
         'savedWorkoutIds': FieldValue.arrayUnion([workoutId]),
       });
     } catch (e) {
-      print('Error saving workout: $e');
+      //print('Error saving workout: $e');
       throw e;
     }
   }
@@ -118,7 +118,7 @@ class UserService {
         'savedWorkoutIds': FieldValue.arrayRemove([workoutId]),
       });
     } catch (e) {
-      print('Error unsaving workout: $e');
+      //print('Error unsaving workout: $e');
       throw e;
     }
   }
@@ -131,7 +131,7 @@ class UserService {
       String imageUrl = await taskSnapshot.ref.getDownloadURL();
       return imageUrl; // Return the image URL
     } catch (e) {
-      print('Error uploading image: $e');
+      //print('Error uploading image: $e');
       return null; // Return null if there's an error
     }
   }
@@ -145,7 +145,7 @@ class UserService {
       });
       return imageUrl; // Return the image URL
     } catch (e) {
-      print('Error saving image: $e');
+      //print('Error saving image: $e');
       return null;
     }
   }
@@ -183,10 +183,10 @@ class UserService {
       List<model.User_model> users = querySnapshot.docs.map((doc) {
         return model.User_model.fromMap(doc.data() as Map<String, dynamic>);
       }).toList();
-      print(users);
+      //print(users);
       return users;
     } catch (e) {
-      print('Error getting all users: $e');
+      //print('Error getting all users: $e');
       throw e;
     }
   }
@@ -212,7 +212,7 @@ class UserService {
         'savedEquipmentIds': FieldValue.arrayUnion(equipmentIds),
       });
     } catch (e) {
-      print('Error saving exercises: $e');
+      //print('Error saving exercises: $e');
       throw e;
     }
   }
@@ -221,9 +221,9 @@ class UserService {
       await _usersRef.doc(userId).update({
         'savedEquipmentIds': FieldValue.arrayRemove(equipmentIdsToRemove),
       });
-      print('Removing equipment IDs: $equipmentIdsToRemove');
+      //print('Removing equipment IDs: $equipmentIdsToRemove');
     } catch (e) {
-      print('Error removing equipment: $e');
+      //print('Error removing equipment: $e');
       throw e;
     }
   }

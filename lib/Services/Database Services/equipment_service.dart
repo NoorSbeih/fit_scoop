@@ -19,7 +19,7 @@ class EquipmentService {
       }).toList();
       return equipments;
     } catch (e) {
-      print('Error getting all equipments: $e');
+      //print('Error getting all equipments: $e');
       throw e;
     }
   }

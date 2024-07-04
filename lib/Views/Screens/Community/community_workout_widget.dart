@@ -104,7 +104,7 @@ class communityWorkoutWidget {
                           ),
                         ),
                         onRatingUpdate: (rating) {
-                          print(rating);
+                          //print(rating);
                         },
                       ),
                       Padding(
@@ -174,7 +174,7 @@ class communityWorkoutWidget {
                       color: isLike ? Color(0xFF0dbab4) : Colors.white,
                     ),
                     onPressed: () async {
-                      print(isLike);
+                      //print(isLike);
                       onLikedChanged(!isLike);
                     },
                   ),

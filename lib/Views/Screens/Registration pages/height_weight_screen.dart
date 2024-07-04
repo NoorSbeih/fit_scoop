@@ -204,7 +204,7 @@ class _RegisterPageState extends State<RegisterPage2> {
       switch (field) {
         case 'ft':
           RegisterPage2.feet = value;
-          print(RegisterPage2.feet);
+          //print(RegisterPage2.feet);
           break;
           case 'cm':
           RegisterPage2.cm = value;

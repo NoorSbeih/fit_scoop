@@ -10,7 +10,7 @@ class ReviewController {
 
       await _reviewService.addReview(review);
     } catch (e) {
-      print('Error adding review: $e');
+      //print('Error adding review: $e');
       throw e;
     }
   }
@@ -20,7 +20,7 @@ class ReviewController {
       // Update review in the database using the ReviewService
       await _reviewService.updateReview(review);
     } catch (e) {
-      print('Error updating review: $e');
+      //print('Error updating review: $e');
       throw e;
     }
   }
@@ -30,7 +30,7 @@ class ReviewController {
       // Delete review from the database using the ReviewService
       await _reviewService.deleteReview(id);
     } catch (e) {
-      print('Error deleting review: $e');
+      //print('Error deleting review: $e');
       throw e;
     }
   }
@@ -39,7 +39,7 @@ class ReviewController {
       // Get reviews for the specific workout ID from the database using the ReviewService
       return await _reviewService.getReviewsByWorkoutId(workoutId);
     } catch (e) {
-      print('Error getting reviews for workout ID $workoutId: $e');
+      //print('Error getting reviews for workout ID $workoutId: $e');
       throw e;
     }
   }
@@ -48,7 +48,7 @@ class ReviewController {
       // Get reviews for the specific user ID from the database using the ReviewService
       return await _reviewService.getReviewsByUserId(userId);
     } catch (e) {
-      print('Error getting reviews for user ID $userId: $e');
+      //print('Error getting reviews for user ID $userId: $e');
       rethrow;
     }
   }

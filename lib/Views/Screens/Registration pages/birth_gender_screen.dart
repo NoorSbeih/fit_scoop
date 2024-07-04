@@ -64,7 +64,7 @@ class _RegisterPageState extends State<RegisterPage1> {
         _dateController.text = RegisterPage1.formateddate;
       });
     } else {
-      print("Date selection canceled");
+      //print("Date selection canceled");
     }
   }
 

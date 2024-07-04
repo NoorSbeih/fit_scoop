@@ -128,8 +128,8 @@ class _selectDayForLibrary extends State<selectDayForLibraryy> {
                 UserSingleton userSingleton = UserSingleton.getInstance();
                 User_model user = userSingleton.getUser();
                 String? bodyMetricId = user.bodyMetrics;
-                print( user.bodyMetrics);
-                print(user.name);
+                //print( user.bodyMetrics);
+                //print(user.name);
 
                 BodyMetrics? metrics;
                 if (bodyMetricId != null) {

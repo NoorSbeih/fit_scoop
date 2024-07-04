@@ -61,7 +61,7 @@ class workout_widget {
                     ),
                     ignoreGestures: true,
                     onRatingUpdate: (rating) {
-                      print(rating);
+                      //print(rating);
                     },
                   ),
                   Padding(

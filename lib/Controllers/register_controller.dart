@@ -22,7 +22,7 @@ class RegisterController {
         model.User_model usermodel = model.User_model(id: userId, name: name, email: email);
 
         await _userService.addUser(usermodel);
-        print('Data saved successfully!');
+        //print('Data saved successfully!');
       } else {
         throw 'User sign up failed'; // Throw an error if user is null
       }
@@ -40,7 +40,7 @@ class RegisterController {
         Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
 
         if (data == null) {
-          print('No data available for user_id: $user_id');
+          //print('No data available for user_id: $user_id');
           return null;
         }
         User_model user = User_model.fromMap(data);
@@ -48,14 +48,14 @@ class RegisterController {
         final String? bodyMetrics = data['bodyMetrics'];
 
         if (bodyMetrics == null) {
-          print('No bodyMetrics available for user_id: $user_id');
+          //print('No bodyMetrics available for user_id: $user_id');
           return null;
         }
         BodyMetricsController controller = BodyMetricsController();
         BodyMetrics? bodyMetricss = await controller.fetchBodyMetrics(bodyMetrics);
 
         if (bodyMetricss == null) {
-          print('Failed to fetch bodyMetrics for user_id: $user_id');
+          //print('Failed to fetch bodyMetrics for user_id: $user_id');
           return null;
         }
 
@@ -63,11 +63,11 @@ class RegisterController {
         return bodyMetrics;
 
       } else {
-        print('Document with ID $user_id does not exist');
+        //print('Document with ID $user_id does not exist');
         return null;
       }
     } catch (error) {
-      print('Error fetching user data: $error');
+      //print('Error fetching user data: $error');
       return null;
     }
   }

@@ -16,13 +16,13 @@ void main() async {
     final response = await http.get(url, headers: headers);
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      print(data);
+      //print(data);
     } else {
-      print('Request failed with status: ${response.statusCode}.');
-      print('Response body: ${response.body}');
+      //print('Request failed with status: ${response.statusCode}.');
+      //print('Response body: ${response.body}');
     }
   } catch (error) {
-    print('Error: $error');
+    //print('Error: $error');
   }
 }
 

@@ -64,7 +64,7 @@ class _FollowersScreen extends State<FollowersPage> {
         followers = fetchedFollowers;
       });
     } catch (e) {
-      print('Error getting followers: $e');
+      //print('Error getting followers: $e');
     } finally {
       setState(() {
         isLoading = false;

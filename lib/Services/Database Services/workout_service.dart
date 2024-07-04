@@ -18,9 +18,9 @@ class WorkoutService {
       // Step 4: Set the workout data to the document with the correct ID
       await docRef.set(workout.toMap());
 
-      print('Workout added with ID: $newId');
+      //print('Workout added with ID: $newId');
     } catch (e) {
-      print('Error creating workout: $e');
+      //print('Error creating workout: $e');
       throw e;
     }
   }
@@ -30,7 +30,7 @@ class WorkoutService {
     try {
       await _workoutsRef.doc(workout.id).update(workout.toMap());
     } catch (e) {
-      print('Error updating workout: $e');
+      //print('Error updating workout: $e');
       throw e;
     }
   }
@@ -40,7 +40,7 @@ class WorkoutService {
   //     var querySnapshot = await _workoutsRef.get();
   //     return querySnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
   //   } catch (e) {
-  //     print('Error getting all workouts: $e');
+  //     //print('Error getting all workouts: $e');
   //     throw e;
   //   }
   // }
@@ -52,7 +52,7 @@ class WorkoutService {
           .map((doc) => Workout.fromMap(doc.id, doc.data() as Map<String, dynamic>))
           .toList();
     } catch (e) {
-      print('Error getting all workouts: $e');
+      //print('Error getting all workouts: $e');
       throw e;
     }
   }
@@ -63,7 +63,7 @@ class WorkoutService {
           .map((doc) => Workout.fromMap(doc.id, doc.data() as Map<String, dynamic>))
           .toList();
     } catch (e) {
-      print('Error getting workouts by user ID: $e');
+      //print('Error getting workouts by user ID: $e');
       throw e;
     }
   }
@@ -75,12 +75,12 @@ class WorkoutService {
       if (snapshot.exists && snapshot.data() != null) {
         return Workout.fromMap(id!, snapshot.data() as Map<String, dynamic>);
       } else {
-        print('Workout with ID $id does not exist or snapshot data is null.');
+        //print('Workout with ID $id does not exist or snapshot data is null.');
 
       }
     } catch (e, stackTrace) {
-      print('Error getting workout: $e');
-      print('Stack Trace: $stackTrace');
+      //print('Error getting workout: $e');
+      //print('Stack Trace: $stackTrace');
       throw e;
     }
     return null;
@@ -91,7 +91,7 @@ class WorkoutService {
     try {
       await _workoutsRef.doc(id).delete();
     } catch (e) {
-      print('Error deleting workout: $e');
+      //print('Error deleting workout: $e');
       throw e;
     }
   }

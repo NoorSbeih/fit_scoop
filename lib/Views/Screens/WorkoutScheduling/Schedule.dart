@@ -59,14 +59,14 @@ class _SchedulePageScreenState extends State<SchedulePageScreen> {
 
         if (metrics?.workoutSchedule != null) {
           workoutIds = metrics!.workoutSchedule;
-          print("Fetched workout IDs: $workoutIds"); // Debug print
+          //print("Fetched workout IDs: $workoutIds"); // Debug //print
           fetchWorkouts(workoutIds);
         }
       } else {
-        print('User or user ID is null.');
+        //print('User or user ID is null.');
       }
     } catch (e) {
-      print('Error getting workouts by user ID: $e');
+      //print('Error getting workouts by user ID: $e');
       throw e;
     }
   }
@@ -74,10 +74,10 @@ class _SchedulePageScreenState extends State<SchedulePageScreen> {
   Future<void> fetchWorkouts(List<String> workoutIds) async {
     try {
       for (int i = 0; i < workoutIds.length; i++) {
-        print("Processing workout ID: ${workoutIds[i]}"); // Debug print
+        //print("Processing workout ID: ${workoutIds[i]}"); // Debug //print
         if (workoutIds[i].compareTo("No workout") != 0) {
           Workout? workout = await controller.getWorkout(workoutIds[i]);
-          print("Fetched workout: ${workout?.name}"); // Debug print
+          //print("Fetched workout: ${workout?.name}"); // Debug //print
           setState(() {
             workoutSchedule[i] = workout;
           });
@@ -88,7 +88,7 @@ class _SchedulePageScreenState extends State<SchedulePageScreen> {
         }
       }
     } catch (e) {
-      print('Error fetching workout details: $e');
+      //print('Error fetching workout details: $e');
     }
   }
 

@@ -13,29 +13,29 @@ class BodyPartService {
         var doc = querySnapshot.docs.first;
         var data = doc.data() as Map<String, dynamic>;
         if (data.containsKey('imageUrl')) {
-          print(data['imageUrl'] as String);
+          //print(data['imageUrl'] as String);
           return data['imageUrl'] as String;
 
         }
       }
       return null; // Image URL not found
     } catch (e) {
-      print('Error getting imageUrl: $e');
+      //print('Error getting imageUrl: $e');
       throw e;
     }
   }
 
   Future<List<BodyPart>> getAllImages() async {
     try {
-      print("hshshshsh");
+      //print("hshshshsh");
       QuerySnapshot querySnapshot = await _exercisesRef.get();
       List<BodyPart> equipments = querySnapshot.docs.map((doc) {
         return BodyPart.fromMap(doc.data() as Map<String, dynamic>);
       }).toList();
-      print(equipments);
+      //print(equipments);
       return equipments;
     } catch (e) {
-      print('Error getting all bodyParts: $e');
+      //print('Error getting all bodyParts: $e');
       throw e;
     }
   }

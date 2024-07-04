@@ -275,10 +275,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       );
 
                    } catch (e) {
-                      print('Error initializing SharedPreferences: $e');
+                      //print('Error initializing SharedPreferences: $e');
                     }
 
-                        print('Register button pressed');
+                        //print('Register button pressed');
                       }
 
 Navigator.push(
@@ -343,7 +343,7 @@ Navigator.push(
               padding:const EdgeInsets.only(left:8,right:8,bottom:10),
               child:ElevatedButton(
                 onPressed: () {
-                  print('Register button pressed');
+                  //print('Register button pressed');
                 },
 
                 style: ButtonStyle(
@@ -381,7 +381,7 @@ Navigator.push(
               child:ElevatedButton(
                 onPressed: () {
                   // Corrected function body
-                  print('Register button pressed');
+                  //print('Register button pressed');
 
                   AuthenticationService auth= AuthenticationService();
                   auth.signUpWithGoogle(context, mounted);

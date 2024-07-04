@@ -27,14 +27,14 @@ class LoginController {
       return user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        //print('No user found for that email.');
         return null;
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided.');
+        //print('Wrong password provided.');
         return null;
       }
     } catch (e) {
-      print('An error occurred: $e');
+      //print('An error occurred: $e');
       return null;
     }
     return null;
@@ -50,16 +50,16 @@ class LoginController {
         UserSingleton.getInstance().setUser(user);
         final String? bodyMetrics = data?['bodyMetrics'];
         BodyMetricsController controller = BodyMetricsController();
-        print(UserSingleton.getInstance().getUser().id);
+        //print(UserSingleton.getInstance().getUser().id);
         BodyMetrics? bodyMetricss = await controller.fetchBodyMetrics(UserSingleton.getInstance().getUser().bodyMetrics);
         BodyMetricsSingleton.getInstance().setBodyMetrics(bodyMetricss!);
         return bodyMetrics;
       } else {
-        print('No data available for user_id: $user_id');
+        //print('No data available for user_id: $user_id');
         return null;
       }
     } catch (error) {
-      print('Error fetching user data: $error');
+      //print('Error fetching user data: $error');
       return null;
     }
   }
@@ -73,9 +73,9 @@ Future<void> refreshIdToken() async {
     try {
       String? idToken = await user.getIdToken(true);
       // Use the new ID token for authentication
-      print('Refreshed ID token: $idToken');
+      //print('Refreshed ID token: $idToken');
     } catch (e) {
-      print('Error refreshing ID token: $e');
+      //print('Error refreshing ID token: $e');
     }
   }
 }

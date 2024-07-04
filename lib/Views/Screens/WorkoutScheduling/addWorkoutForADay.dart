@@ -167,10 +167,10 @@ class _AddWorkoutForADayState extends State<AddWorkoutForADayy> {
 
                 WorkoutController workoutController = WorkoutController();
                 await workoutController.createWorkout(workout);
-
+                addExercise.exercises.clear();
                 String? bodyMetricId = user.bodyMetrics;
-                print( user.bodyMetrics);
-                print(user.name);
+                //print( user.bodyMetrics);
+                //print(user.name);
 
                 BodyMetrics? metrics;
                 if (bodyMetricId != null) {
@@ -182,7 +182,7 @@ class _AddWorkoutForADayState extends State<AddWorkoutForADayy> {
                     bodyMetricsController.updateBodyMetrics(user.bodyMetrics, metrics!);
                   });
                 }
-                // Navigate to the home page
+
                 Navigator.of(context).pop();
                 Navigator.push(
                   context,

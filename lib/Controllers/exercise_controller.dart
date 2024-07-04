@@ -15,7 +15,7 @@ class ExerciseController {
       // Add the exercise to the database using the ExerciseService
       await _exerciseService.addExercise(exercise);
     } catch (e) {
-      print('Error adding exercise: $e');
+      //print('Error adding exercise: $e');
       throw e;
     }
   }
@@ -24,7 +24,7 @@ class ExerciseController {
       // Add the exercise to the database using the ExerciseService
      return await _exerciseService.getAllExercises();
     } catch (e) {
-      print('Error adding exercise: $e');
+      //print('Error adding exercise: $e');
       throw e;
     }
   }
@@ -32,7 +32,7 @@ class ExerciseController {
     try {
       return await _exerciseService.getExercise(id);
     } catch (e) {
-      print('Error getting workout: $e');
+      //print('Error getting workout: $e');
       throw e;
     }
   }
@@ -41,7 +41,7 @@ class ExerciseController {
     try {
       return await _exerciseService.getExerciseName(id);
     } catch (e) {
-      print('Error getting exercise name: $e');
+      //print('Error getting exercise name: $e');
       throw e;
     }
   }
@@ -51,7 +51,7 @@ class ExerciseController {
       // Update the exercise in the database using the ExerciseService
       await _exerciseService.updateExercise(exercise);
     } catch (e) {
-      print('Error updating exercise: $e');
+      //print('Error updating exercise: $e');
       throw e;
     }
   }
@@ -66,7 +66,7 @@ class ExerciseController {
       // Delete the exercise from the database using the ExerciseService
       await _exerciseService.deleteExercise(id);
     } catch (e) {
-      print('Error deleting exercise: $e');
+      //print('Error deleting exercise: $e');
       throw e;
     }
   }
@@ -75,7 +75,7 @@ class ExerciseController {
     try {
       return await _exerciseService.getExercisesByMainMuscle(mainMuscle);
     } catch (e) {
-      print('Error getting exercises by main muscle: $e');
+      //print('Error getting exercises by main muscle: $e');
       throw e;
     }
   }
@@ -85,7 +85,7 @@ class ExerciseController {
     try {
       return await _bodyPartService.getImage(name);
     } catch (e) {
-      print('Error getting body part image: $e');
+      //print('Error getting body part image: $e');
       throw e;
     }
   }
@@ -94,7 +94,7 @@ class ExerciseController {
     try {
       return await _bodyPartService.getAllImages();
     } catch (e) {
-      print('Error getting body part image: $e');
+      //print('Error getting body part image: $e');
       throw e;
     }
   }

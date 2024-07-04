@@ -49,9 +49,9 @@ class _EquipmentPageState extends State<EquipmentPage>
   //     User_model user = userSingleton.getUser();
   //     try {
   //       selectedEquipmentsForUser= await userController.getSavedEquipments(user.id);
-  //       print(selectedEquipmentsForUser);
+  //       //print(selectedEquipmentsForUser);
   //     } catch (e) {
-  //       print('Error getting equipments: $e');
+  //       //print('Error getting equipments: $e');
   //     }
   //
   //   }
@@ -62,7 +62,7 @@ class _EquipmentPageState extends State<EquipmentPage>
     User_model user = userSingleton.getUser();
     try {
       selectedEquipmentsForUser = await userController.getSavedEquipments(user.id);
-      print(selectedEquipmentsForUser);
+      //print(selectedEquipmentsForUser);
 
        setState(() {
          for (int i = 0; i < equipmentTypes.length; i++) {
@@ -70,7 +70,7 @@ class _EquipmentPageState extends State<EquipmentPage>
          }
        });
     } catch (e) {
-      print('Error getting equipments: $e');
+      //print('Error getting equipments: $e');
     }
   }
 
@@ -89,7 +89,7 @@ class _EquipmentPageState extends State<EquipmentPage>
       });
       fetchEquipmentsForUser();
     } catch (e) {
-      print('Error fetching data: $e');
+      //print('Error fetching data: $e');
       setState(() {
         isLoading = false; // Data fetching complete, even on error
       });
@@ -112,7 +112,7 @@ class _EquipmentPageState extends State<EquipmentPage>
     User_model user = userSingleton.getUser();
     List<String> allSelectedEquipmentIds = selectedEquipmentIdsByTab.values.expand((ids) => ids).toList();
     user.savedEquipmentIds=allSelectedEquipmentIds;
-    print('Selected Equipment IDs: $allSelectedEquipmentIds');
+    //print('Selected Equipment IDs: $allSelectedEquipmentIds');
     try {
       // Remove deselected equipment from the database
       List<String> previouslySelectedEquipmentIds = selectedEquipmentsForUser;
@@ -121,9 +121,9 @@ class _EquipmentPageState extends State<EquipmentPage>
       userController.saveEquipments(user.id, allSelectedEquipmentIds);
 
       widget.onUpdateEquipments(allSelectedEquipmentIds.length.toString());
-      print('Equipments saved successfully');
+      //print('Equipments saved successfully');
     } catch (e) {
-      print('Error saving equipments: $e');
+      //print('Error saving equipments: $e');
     }
   }
 
