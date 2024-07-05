@@ -168,8 +168,8 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
                           sitUps:double.parse(selectedSitUp.text),
                           broadJump:double.parse(selectedBroadJump.text)
                       );
-                      //print("predictttt");
-                      //print(x);
+                      print("predictttt");
+                      print(x);
                       metrics.performanceLevel=x;
                       bodyMetricsController.updateBodyMetrics(user.bodyMetrics, metrics!);
                       if(metrics.gender.compareTo("Male")==0){

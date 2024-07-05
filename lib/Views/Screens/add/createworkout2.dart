@@ -22,6 +22,7 @@ class _createWorkout2 extends State<createWorkout2> {
 
   @override
   void initState() {
+
     super.initState();
   }
 
@@ -34,7 +35,7 @@ class _createWorkout2 extends State<createWorkout2> {
         backgroundColor: Color(0xFF2C2A2A),
         title: const Text(
           'CREATE WORKOUT',
-          style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'BebasNeue'),
+          style: TextStyle(color: Colors.white, fontSize: 25, fontFamily: 'BebasNeue'),
         ),
         iconTheme: IconThemeData(color: Color(0xFF0dbab4)),
       ),
@@ -49,8 +50,8 @@ class _createWorkout2 extends State<createWorkout2> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'Select Workout Intensity',
-                    style: TextStyle(fontSize: 20, color: Colors.white, fontFamily: 'BebasNeue'),
+                    'Workout Intensity',
+                    style: TextStyle(fontSize: 24, color: Color(0xFF0dbab4), fontFamily: 'BebasNeue'),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,8 +99,8 @@ class _createWorkout2 extends State<createWorkout2> {
             ),
             SizedBox(height: 16.0),
             const Text(
-              'Add a Description:',
-              style: TextStyle(fontSize: 20, color: Colors.white, fontFamily: 'BebasNeue'),
+              'Description',
+              style: TextStyle(fontSize: 25, color: Color(0xFF0dbab4), fontFamily: 'BebasNeue'),
             ),
             Padding(
               padding: EdgeInsets.only(top: 15, bottom: 15),
@@ -141,7 +142,7 @@ class _createWorkout2 extends State<createWorkout2> {
             SwitchListTile(
               title: const Text(
                 'Private Workout',
-                style: TextStyle(fontSize: 20, color: Colors.white, fontFamily: 'BebasNeue'),
+                style: TextStyle(fontSize: 25, color: Color(0xFF0dbab4), fontFamily: 'BebasNeue'),
               ),
               value: createWorkout2.isPrivate,
               onChanged: (value) {
@@ -190,7 +191,7 @@ class _createWorkout2 extends State<createWorkout2> {
                         'Finish',
                         style: TextStyle(
                           fontSize: 20,
-                          color: Colors.white
+                          color: Color(0xFF2C2A2A)
                         ),
                       ),
                     ),

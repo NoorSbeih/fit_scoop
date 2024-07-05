@@ -1,11 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:fit_scoop/Controllers/exercise_controller.dart';
-import 'package:fit_scoop/Models/bodyPart.dart';
-import 'package:fit_scoop/Models/exercise_model.dart';
-import 'package:fit_scoop/Views/Widgets/exercises_card_widget.dart';
+import 'package:fit_scoop/Models/user_model.dart';
+import 'package:fit_scoop/Models/user_singleton.dart';
+import 'package:fit_scoop/Views/Screens/add/createworkout1.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
-
-import 'createworkout1.dart';
+import 'package:fit_scoop/Views/Widgets/workout_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:fit_scoop/Views/Widgets/exercises_card_widget.dart';
+import '../../../Controllers/exercise_controller.dart';
+import '../../../Controllers/workout_controller.dart';
+import '../../../Models/bodyPart.dart';
+import '../../../Models/exercise_model.dart';
+import '../../../Models/workout_model.dart';
 
 class AddExercisePage extends StatelessWidget {
   final OnExerciseAddedCallback onExerciseAdded;
@@ -17,7 +21,19 @@ class AddExercisePage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFF2C2A2A),
-
+      appBar: AppBar(
+        backgroundColor: Color(0xFF2C2A2A),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Color(0xFF0dbab4),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+            onExerciseAdded();
+          },
+        ),
+      ),
       body: addExercise(),
     );
   }
@@ -32,6 +48,7 @@ class addExercise extends StatefulWidget {
 
 class _addExercise extends State<addExercise> with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  String imageUrl = "";
   List<BodyPart> parts = [];
   List<Exercise> allExercises = [];
   List<Exercise> filteredExercises = [];
@@ -44,11 +61,15 @@ class _addExercise extends State<addExercise> with SingleTickerProviderStateMixi
     _tabController = TabController(length: 2, vsync: this);
     fetchBodyParts();
     fetchAllExercises();
+    searchController.addListener(() {
+      filterExercises(searchController.text);
+    });
   }
 
   @override
   void dispose() {
     _tabController.dispose();
+    searchController.dispose();
     super.dispose();
   }
 
@@ -98,34 +119,21 @@ class _addExercise extends State<addExercise> with SingleTickerProviderStateMixi
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFF2C2A2A),
-      appBar: AppBar(
-        backgroundColor: Color(0xFF2C2A2A),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Color(0xFF0dbab4),
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        bottom: TabBar(
-          controller: _tabController,
-          labelColor: Colors.white,
-          dividerColor: const Color(0xFF2C2A2A),
-          labelStyle: TextStyle(fontWeight: FontWeight.bold),
-          indicatorColor: const Color(0xFF0dbab4),
-          tabs: const [
-            Tab(text: 'ALPHABETICAL'),
-            Tab(text: 'MUSCLE GROUP'),
-          ],
-        ),
+      appBar: TabBar(
+        controller: _tabController,
+        labelColor: Colors.white,
+        dividerColor: const Color(0xFF2C2A2A),
+        labelStyle: TextStyle(fontWeight: FontWeight.bold),
+        indicatorColor: const Color(0xFF0dbab4),
+        tabs: const [
+          Tab(text: 'ALPHABETICAL'),
+          Tab(text: 'MUSCLE GROUP'),
+        ],
       ),
       body: TabBarView(
         controller: _tabController,
@@ -145,7 +153,7 @@ class _addExercise extends State<addExercise> with SingleTickerProviderStateMixi
           child: TextField(
             controller: searchController,
             decoration: InputDecoration(
-              hintText: 'SEARCH EXERCISES...',
+              hintText: 'Search...',
               hintStyle: TextStyle(color: Colors.white),
               prefixIcon: Icon(Icons.search, color: Colors.white),
               enabledBorder: OutlineInputBorder(
@@ -157,9 +165,6 @@ class _addExercise extends State<addExercise> with SingleTickerProviderStateMixi
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            onChanged: (value) {
-              filterExercises(value);
-            },
             style: TextStyle(color: Colors.white),
           ),
         ),
@@ -233,3 +238,4 @@ class _addExercise extends State<addExercise> with SingleTickerProviderStateMixi
     );
   }
 }
+
