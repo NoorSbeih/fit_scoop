@@ -243,7 +243,7 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildNumberPicker(80, "", 25, 80, 120, selectedSitUp),
+        _buildNumberPicker(10, "", 5, 60, 80, selectedSitUp),
       ],
     );
   }
@@ -252,7 +252,7 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildNumberPicker(80, "cm", 25, 80, 120, selectedBroadJump),
+        _buildNumberPicker(100, "cm", 90, 400, 80, selectedBroadJump),
       ],
     );
   }

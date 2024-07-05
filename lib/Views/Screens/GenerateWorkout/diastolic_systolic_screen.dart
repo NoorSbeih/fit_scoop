@@ -181,7 +181,7 @@ class _DiastolicSystolicScreen extends State<DiastolicSystolicScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildNumberPicker(80, "mm Hg", 80, 120, 80, selectedDiastolic,0),
+        _buildNumberPicker(80, "mm Hg", 60, 120, 80, selectedDiastolic,0),
       ],
     );
   }
@@ -190,7 +190,7 @@ class _DiastolicSystolicScreen extends State<DiastolicSystolicScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildNumberPicker(120, "mm Hg", 80, 120, 80, selectedSystolic,1),
+        _buildNumberPicker(120, "mm Hg", 90, 190, 80, selectedSystolic,1),
       ],
     );
   }
