@@ -1,4 +1,5 @@
 import 'package:fit_scoop/Controllers/body_metrics_controller.dart';
+import 'package:fit_scoop/Controllers/workout_log_controller.dart';
 import 'package:fit_scoop/Models/body_metrics_model.dart';
 import 'package:fit_scoop/Views/Screens/Equipments/equipment_sceen.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,6 +12,7 @@ import 'package:fit_scoop/Views/Widgets/workout_widget.dart';
 import '../../../Models/bodyPart.dart';
 import '../../../Models/exercise_model.dart';
 import '../../../Models/user_singleton.dart';
+import '../../../Models/workout_log.dart';
 import '../../../Models/workout_model.dart';
 import '../../Widgets/drawer_widget.dart';
 import '../WorkoutScheduling/Schedule.dart';
@@ -49,6 +51,7 @@ class WorkoutPagee extends StatefulWidget {
 
 class _WorkoutPageState extends State<WorkoutPagee> {
   Workout? currentWorkout;
+  WorkoutLog? log;
   int intensity = 0;
   String name = "";
   int duration = 0;
@@ -115,7 +118,12 @@ class _WorkoutPageState extends State<WorkoutPagee> {
         BodyMetrics? metrics = await controller.fetchBodyMetrics(bodyMetricId);
         if (metrics != null) {
           // int currentDayIndex = metrics.CurrentDay;
+          WorkoutLogController logController=WorkoutLogController();
+
           currentWorkout = await Calculate(metrics.workoutSchedule);
+          log= await logController.getWorkoutLogByWorkoutId(currentWorkout!.id);
+          print(currentWorkout?.id);
+          print("log");
           setState(() {
             WorkoutPagee.exercises = currentWorkout?.exercises ?? [];
             WorkoutPagee.copyExercisesToLog();
@@ -183,7 +191,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
       drawer: CustomDrawer(),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
-          : currentWorkout != null
+          : currentWorkout != null &&  log==null
           ? buildWorkoutContent()
           : buildNoWorkoutContent(),
     );

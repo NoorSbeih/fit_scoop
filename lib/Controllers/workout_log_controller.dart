@@ -13,9 +13,17 @@ class WorkoutLogController {
     }
   }
 
-  Future<WorkoutLog?> getWorkoutLog(String id) async {
+  Future<WorkoutLog?> getWorkoutLog(String? id) async {
     try {
       return await _workoutLogService.getWorkoutLog(id);
+    } catch (e) {
+      //print('Error fetching workout log: $e');
+    }
+    return null;
+  }
+  Future<WorkoutLog?>getWorkoutLogByWorkoutId(String? workoutId) async {
+    try {
+      return await _workoutLogService.getWorkoutLogByWorkoutId(workoutId);
     } catch (e) {
       //print('Error fetching workout log: $e');
     }

@@ -16,7 +16,7 @@ class WorkoutLogService {
   }
 
   // Fetch a workout log by id
-  Future<WorkoutLog?> getWorkoutLog(String id) async {
+  Future<WorkoutLog?> getWorkoutLog(String? id) async {
     try {
       DocumentSnapshot doc = await _firestore.collection(_collection).doc(id).get();
       if (doc.exists) {
@@ -41,6 +41,23 @@ class WorkoutLogService {
       throw Exception('Error fetching workout logs: $e');
     }
   }
+  Future<WorkoutLog?> getWorkoutLogByWorkoutId(String? workoutId) async {
+    try {
+      QuerySnapshot querySnapshot = await _firestore.collection(_collection)
+          .where('workoutId', isEqualTo: workoutId)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        var doc = querySnapshot.docs.first;
+        return WorkoutLog.fromMap(doc.id, doc.data() as Map<String, dynamic>);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw Exception('Error fetching workout log: $e');
+    }
+  }
+
 
   // Update an existing workout log
   Future<void> updateWorkoutLog(WorkoutLog workoutLog) async {
