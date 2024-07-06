@@ -116,9 +116,11 @@ class ExerciseService {
 
     Future<List<Exercise>> getExercisesByAvailableEquipments(List<String> equipments) async {
     try {
-      equipments.add("body weight");
+
+      //equipments.add("body weight");
+      List<String> tempEquipment = equipments + ["body weight"];
       List<Exercise> exercises=[];
-      for (String equipment in equipments) {
+      for (String equipment in tempEquipment ) {
         QuerySnapshot querySnapshot = await _exercisesRef
             .where('equipment', isEqualTo: equipment)
             .get();
@@ -130,6 +132,7 @@ class ExerciseService {
 
       }
       print(exercises);
+      //equipments.remove("body weight");
       return exercises;
     } catch (e) {
       //print('Error getting exercises by available equipments: $e');
