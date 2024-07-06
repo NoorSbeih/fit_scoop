@@ -1,33 +1,33 @@
+import 'package:fit_scoop/Views/Widgets/card_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
-import 'package:fit_scoop/Views/Widgets/card_widget.dart';
 
 import '../../../Controllers/body_metrics_controller.dart';
 import '../../../Models/body_metrics_model.dart';
 import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
 import '../WorkoutScheduling/Schedule.dart';
-
+import 'Male_goals_screen.dart';
 class Page4 extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: RegisterPage4M(),
+    return  MaterialApp(
+      home: RegisterPage4F(),
     );
   }
 }
 
-class RegisterPage4M extends StatefulWidget {
+
+class RegisterPage4F extends StatefulWidget {
   static String selectedGoal = '';
-
-  const RegisterPage4M({Key? key}) : super(key: key);
-
+  const RegisterPage4F({Key? key}) : super(key: key);
   @override
-  State<RegisterPage4M> createState() => _RegisterPageState();
+  State<RegisterPage4F> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage4M> {
+class _RegisterPageState extends State<RegisterPage4F> {
   BodyMetrics? metrics;
 
   @override
@@ -51,6 +51,7 @@ class _RegisterPageState extends State<RegisterPage4M> {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       home: Scaffold(
         backgroundColor: const Color(0xFF2C2A2A),
@@ -91,7 +92,8 @@ class _RegisterPageState extends State<RegisterPage4M> {
             ElevatedButton(
               onPressed: () async {
                 if (metrics != null) {
-                  metrics!.fitnessGoal = RegisterPage4M.selectedGoal;
+                  metrics!.fitnessGoal = RegisterPage4F.selectedGoal;
+
                   BodyMetricsController bodyMetricsController =
                   BodyMetricsController();
                   UserSingleton userSingleton = UserSingleton.getInstance();
@@ -111,7 +113,7 @@ class _RegisterPageState extends State<RegisterPage4M> {
                 backgroundColor:
                 MaterialStateProperty.all<Color>(const Color(0xFF0dbab4)),
                 fixedSize:
-                MaterialStateProperty.all<Size>(const Size(190, 50)),
+                MaterialStateProperty.all<Size>(const Size(300, 50)),
                 shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                       (Set<MaterialState> states) {
                     return RoundedRectangleBorder(
@@ -122,7 +124,7 @@ class _RegisterPageState extends State<RegisterPage4M> {
               ),
               child: const Text(
                 'FINISH',
-                style: TextStyle(fontSize: 22, color: Colors.white),
+                style: TextStyle(fontSize: 22, color: Color(0xFF2C2A2A)),
               ),
             ),
           ],
@@ -135,26 +137,24 @@ class _RegisterPageState extends State<RegisterPage4M> {
     List<Widget> widgets = [];
 
     widgets.add(_buildCardWidget(
-      "Bodybuilding",
-      "Focus on increasing overall muscle mass and decreasing body fat percentage.",
+  "Toning/Shaping",
+  "Focus on improving muscle definition and achieving a more sculpted appearance.",
       performanceLevel >= 0,
     ));
     widgets.add(_buildCardWidget(
-      "Strength Training",
-      "Focus on increasing muscle strength and lifting heavy weights.",
+  "Muscle Gain","Focus on progressive resistance training, and adequate rest for effective muscle gain.",
       performanceLevel == 0 || performanceLevel == 1 || performanceLevel == 2,
     ));
     widgets.add(_buildCardWidget(
-      "Powerlifting",
-      "Specialized training that focuses on extremely heavy weights and low amount of reps.",
-      performanceLevel == 0|| performanceLevel == 1 ,
+    "Strength Training","Focus on increasing muscle strength and lifting heavy weights.",
+      performanceLevel == 0|| performanceLevel == 1|| performanceLevel == 2 ,
     ));
 
     return widgets;
   }
 
   Widget _buildCardWidget(String title, String description, bool isEnabled) {
-    String selectedGoal = RegisterPage4M.selectedGoal;
+    String selectedGoal = RegisterPage4F.selectedGoal;
     bool isSelected = title == selectedGoal;
 
 
@@ -162,16 +162,16 @@ class _RegisterPageState extends State<RegisterPage4M> {
       onTap: isEnabled
           ? () {
         setState(() {
-          RegisterPage4M.selectedGoal = title;
+          RegisterPage4F.selectedGoal = title;
         });
       }
           : null,
       child: Card(
-        color: isEnabled ? Color(0xFF2C2A2A) : Colors.grey[600],
+        color: isEnabled ? Color(0xFF2C2A2A) : Colors.grey[350],
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5.0),
           side: BorderSide(
-            color: isSelected ? Colors.blue : Colors.transparent,
+            color: isSelected ? Color(0xFF0dbab4) : Colors.white,
             width: 2.0,
           ),
         ),
@@ -202,4 +202,7 @@ class _RegisterPageState extends State<RegisterPage4M> {
       ),
     );
   }
+
+
 }
+
