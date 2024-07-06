@@ -78,21 +78,63 @@ class ExerciseService {
       throw e;
     }
   }
-  Future<List<Exercise>> getExercisesByMainMuscle(String mainMuscle) async {
+  Future<List<Exercise>> getExercisesByMainMuscle(String mainMuscle,List<String> equipments) async {
+
+      try {
+        List<Exercise> exercises = [];
+
+        // Fetch exercises based on the equipment
+        for (String equipment in equipments) {
+          QuerySnapshot equipmentSnapshot = await _exercisesRef
+              .where('equipment', isEqualTo: equipment)
+              .get();
+
+          List<Exercise> equipmentExercises = equipmentSnapshot.docs
+              .map((doc) => Exercise.fromMap(doc.id, doc.data() as Map<String, dynamic>))
+              .toList();
+
+          exercises.addAll(equipmentExercises);
+        }
+
+        // Remove duplicates by converting to a set and back to a list
+        exercises = exercises.toSet().toList();
+
+        // Filter exercises based on the main muscle
+        List<Exercise> filteredExercises = exercises.where((exercise) =>
+        exercise.bodyPart == mainMuscle
+        ).toList();
+
+        print('Found ${filteredExercises.length} exercises based on equipment and muscle');
+
+        return filteredExercises;
+      } catch (e) {
+
+        print('Error getting exercises by available equipments and muscle: $e');
+        throw Exception('Error getting exercises by available equipments and muscle: $e');
+      }
+    }
+
+    Future<List<Exercise>> getExercisesByAvailableEquipments(List<String> equipments) async {
     try {
-      QuerySnapshot querySnapshot = await _exercisesRef
-          .where('bodyPart', isEqualTo: mainMuscle)
-          .get();
+      equipments.add("body weight");
+      List<Exercise> exercises=[];
+      for (String equipment in equipments) {
+        QuerySnapshot querySnapshot = await _exercisesRef
+            .where('equipment', isEqualTo: equipment)
+            .get();
+        List<Exercise> ex = querySnapshot.docs
+            .map((doc) =>
+            Exercise.fromMap(doc.id, doc.data() as Map<String, dynamic>))
+            .toList();
+         exercises.addAll(ex);
 
-      List<Exercise> exercises = querySnapshot.docs
-          .map((doc) =>
-          Exercise.fromMap(doc.id, doc.data() as Map<String, dynamic>))
-          .toList();
-
+      }
+      print(exercises);
       return exercises;
     } catch (e) {
-      //print('Error getting exercises by main muscle: $e');
-      throw e;
+      //print('Error getting exercises by available equipments: $e');
+      throw Exception('Error getting exercises by available equipments: $e');
     }
   }
+
 }
