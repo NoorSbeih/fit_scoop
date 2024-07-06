@@ -9,8 +9,8 @@ import '../../../Models/body_metrics_model.dart';
 import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Services/tensorflow_service.dart';
-import '../Registration pages/Female_goals_screen.dart';
-import '../Registration pages/Male_goals_screen.dart';
+import 'Female_goals_screen.dart';
+import 'Male_goals_screen.dart';
 import '../Registration pages/page_view.screen.dart';
 import 'diastolic_systolic_screen.dart';
 

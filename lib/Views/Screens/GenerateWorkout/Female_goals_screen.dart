@@ -110,7 +110,7 @@ class _RegisterPageState extends State<RegisterPage4F> {
                 backgroundColor:
                 MaterialStateProperty.all<Color>(const Color(0xFF0dbab4)),
                 fixedSize:
-                MaterialStateProperty.all<Size>(const Size(190, 50)),
+                MaterialStateProperty.all<Size>(const Size(300, 50)),
                 shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                       (Set<MaterialState> states) {
                     return RoundedRectangleBorder(
@@ -121,7 +121,7 @@ class _RegisterPageState extends State<RegisterPage4F> {
               ),
               child: const Text(
                 'FINISH',
-                style: TextStyle(fontSize: 22, color: Colors.white),
+                style: TextStyle(fontSize: 22, color: Color(0xFF2C2A2A)),
               ),
             ),
           ],
@@ -164,11 +164,11 @@ class _RegisterPageState extends State<RegisterPage4F> {
       }
           : null,
       child: Card(
-        color: isEnabled ? Color(0xFF2C2A2A) : Colors.grey[600],
+        color: isEnabled ? Color(0xFF2C2A2A) : Colors.grey[350],
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5.0),
           side: BorderSide(
-            color: isSelected ? Colors.blue : Colors.transparent,
+            color: isSelected ? Color(0xFF0dbab4) : Colors.white,
             width: 2.0,
           ),
         ),

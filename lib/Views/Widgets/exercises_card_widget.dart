@@ -1,6 +1,3 @@
-
-
-
 import 'package:fit_scoop/Views/Screens/add/addExercise.dart';
 import 'package:fit_scoop/Views/Screens/Workout/exercise_details_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,16 +7,14 @@ import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 import '../Screens/Workout/adding_exercise_details_screen.dart';
 
 class exercises_card {
-
-
   static Widget addingExersiceWidget(
-      String name,
-      String id,
-      String imageUrl,
-      BuildContext context,
-      ) {
-  TextEditingController setsController = TextEditingController();
-  TextEditingController weightController = TextEditingController();
+    String name,
+    String id,
+    String imageUrl,
+    BuildContext context,
+  ) {
+    TextEditingController setsController = TextEditingController();
+    TextEditingController weightController = TextEditingController();
 
     return GestureDetector(
       onTap: () {
@@ -35,7 +30,17 @@ class exercises_card {
                   children: [
                     Row(
                       children: [
-                        custom_widget.customTextWidgetForExersiceCard("Sets", 17), // Change color here
+                        custom_widget.customTextWidgetForExersiceCard(
+                            "Sets", 17),
+                        RichText(
+                          text: const TextSpan(
+                            text: ' *',
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 20.0,
+                            ),
+                          ),
+                        ),
                         const SizedBox(width: 20),
                         Expanded(
                           child: TextField(
@@ -43,7 +48,8 @@ class exercises_card {
                             style: TextStyle(color: Colors.white),
                             decoration: const InputDecoration(
                               border: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.transparent),
+                                borderSide:
+                                    BorderSide(color: Colors.transparent),
                               ),
                               focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
@@ -56,7 +62,18 @@ class exercises_card {
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        custom_widget.customTextWidgetForExersiceCard("Reps", 17), // Change color here
+                        custom_widget.customTextWidgetForExersiceCard(
+                            "Reps", 17), // Change color here
+
+                        RichText(
+                          text: const TextSpan(
+                            text: ' *',
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 20.0,
+                            ),
+                          ),
+                        ),
                         const SizedBox(width: 20),
                         Expanded(
                           child: TextField(
@@ -64,7 +81,8 @@ class exercises_card {
                             style: const TextStyle(color: Colors.white),
                             decoration: const InputDecoration(
                               border: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.transparent),
+                                borderSide:
+                                    BorderSide(color: Colors.transparent),
                               ),
                               focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
@@ -81,19 +99,28 @@ class exercises_card {
               actions: [
                 TextButton(
                   onPressed: () {
-                    Map<String, dynamic> exercise = {
-                      'name':name,
-                      'id': id,
-                      'sets': setsController.text,
-                      'weight': weightController.text,
-                    };
+              if (setsController.text.isNotEmpty && weightController.text.isNotEmpty) {
+                Map<String, dynamic> exercise = {
+                  'name': name,
+                  'id': id,
+                  'sets': setsController.text,
+                  'weight': weightController.text,
+                };
+                addExercise.exercises.add(exercise);
+                Navigator.pop(context);
+              }
+                  },
+                  child: custom_widget.customTextWidgetForExersiceCard(
+                      "Add", 15),
+                ),
 
-                    addExercise.exercises.add(exercise);
-                    Navigator.pop(context);
+                TextButton(
+                  onPressed: () {
+                      Navigator.pop(context);
 
                   },
-
-                  child: custom_widget.customTextWidgetForExersiceCard("Confirm", 15),
+                  child: custom_widget.customTextWidgetForExersiceCard(
+                      "Cancel", 15),
                 ),
               ],
             );
@@ -115,10 +142,6 @@ class exercises_card {
                 height: double.infinity,
                 width: 80,
                 color: Colors.grey, // Placeholder color for the image
-                // child: const Icon(
-                //   Icons.photo, // Placeholder icon for the image
-                //   color: Colors.white,
-                // ),
 
                 child: Image.asset(
                   imageUrl,
@@ -153,13 +176,15 @@ class exercises_card {
                     context: context,
                     isScrollControlled: true,
                     shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(25)),
                     ),
                     builder: (BuildContext context) {
                       return Container(
                         height: MediaQuery.of(context).size.height * 0.89,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(25)),
                           border: Border.all(
                             width: 2.0, // Border width
                           ),
@@ -168,7 +193,6 @@ class exercises_card {
                       );
                     },
                   );
-
                 },
                 child: Container(
                   margin: EdgeInsets.all(16),
@@ -184,8 +208,10 @@ class exercises_card {
       ),
     );
   }
-  static Widget AfterAddingExerciseCardWidget(
-      String name, String sets, String weight,BuildContext context,String id,Future<String> imageUrl, {required Null Function() onDelete}) {
+
+  static Widget AfterAddingExerciseCardWidget(String name, String sets,
+      String weight, BuildContext context, String id, Future<String> imageUrl,
+      {required Null Function() onDelete}) {
     return SizedBox(
       height: 107,
       child: Card(
@@ -207,7 +233,8 @@ class exercises_card {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator(); // Placeholder while loading
                   } else if (snapshot.hasError) {
-                    return Icon(Icons.error); // Show error icon if there is an error
+                    return Icon(
+                        Icons.error); // Show error icon if there is an error
                   } else if (snapshot.hasData) {
                     return Image.asset(
                       snapshot.data!,
@@ -253,66 +280,66 @@ class exercises_card {
                 ],
               ),
             ),
-      Column(
-        children: [
-            GestureDetector(
-              onTap: () {
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-                  ),
-                  builder: (BuildContext context) {
-                    return Container(
-                      height: MediaQuery.of(context).size.height * 0.89,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-                        border: Border.all(
-                          width: 2.0, // Border width
-                        ),
+            Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(25)),
                       ),
-                      child: AddingExerciseDetailsPage(id: id,),
+                      builder: (BuildContext context) {
+                        return Container(
+                          height: MediaQuery.of(context).size.height * 0.89,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.vertical(top: Radius.circular(25)),
+                            border: Border.all(
+                              width: 2.0, // Border width
+                            ),
+                          ),
+                          child: AddingExerciseDetailsPage(
+                            id: id,
+                          ),
+                        );
+                      },
                     );
                   },
-                );
-
-              },
-              child: Container(
-                margin: EdgeInsets.only(left: 16, right: 16, top: 16),
-                child: const Icon(
-                  Icons.more_horiz_outlined,
-                  color: Color(0xFF0dbab4),
+                  child: Container(
+                    margin: EdgeInsets.only(left: 16, right: 16, top: 16),
+                    child: const Icon(
+                      Icons.more_horiz_outlined,
+                      color: Color(0xFF0dbab4),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            GestureDetector(
-                onTap: () {
-                  if (onDelete != null) {
-                    onDelete();
-                  }
-              },
-              child: const Padding(
-                padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                child: Icon(
-                  Icons.delete_outline,
-                  color: Color(0xFF0dbab4),
+                GestureDetector(
+                  onTap: () {
+                    if (onDelete != null) {
+                      onDelete();
+                    }
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                    child: Icon(
+                      Icons.delete_outline,
+                      color: Color(0xFF0dbab4),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-    ],
-      ),
           ],
-
         ),
       ),
-
     );
-
   }
 
-  static Widget CurrentWorkoutCardWidget(
-      String name, String sets, String weight,BuildContext context,String id, Future<String> imageUrl) {
+  static Widget CurrentWorkoutCardWidget(String name, String sets,
+      String weight, BuildContext context, String id, Future<String> imageUrl) {
     return SizedBox(
       height: 120,
       child: Card(
@@ -334,7 +361,8 @@ class exercises_card {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator(); // Placeholder while loading
                   } else if (snapshot.hasError) {
-                    return Icon(Icons.error); // Show error icon if there is an error
+                    return Icon(
+                        Icons.error); // Show error icon if there is an error
                   } else if (snapshot.hasData) {
                     return Image.asset(
                       snapshot.data!,
@@ -386,22 +414,25 @@ class exercises_card {
                   context: context,
                   isScrollControlled: true,
                   shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(25)),
                   ),
                   builder: (BuildContext context) {
                     return Container(
                       height: MediaQuery.of(context).size.height * 0.89,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(25)),
                         border: Border.all(
                           width: 2.0, // Border width
                         ),
                       ),
-                      child: AddingExerciseDetailsPage(id: id,),
+                      child: AddingExerciseDetailsPage(
+                        id: id,
+                      ),
                     );
                   },
                 );
-
               },
               child: Container(
                 margin: EdgeInsets.all(16),
@@ -414,14 +445,6 @@ class exercises_card {
           ],
         ),
       ),
-
     );
-
   }
-
-
-
-
-
-
 }
