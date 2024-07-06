@@ -16,6 +16,7 @@ import '../../../Models/workout_log.dart';
 import '../../../Models/workout_model.dart';
 import '../../Widgets/drawer_widget.dart';
 import '../WorkoutScheduling/Schedule.dart';
+import '../login_screen.dart';
 import '../main_page_screen.dart';
 import 'begin_workout_screen.dart';
 
@@ -51,6 +52,7 @@ class WorkoutPagee extends StatefulWidget {
 
 class _WorkoutPageState extends State<WorkoutPagee> {
   Workout? currentWorkout;
+
   WorkoutLog? log;
   bool? isSame;
   int intensity = 0;
@@ -62,52 +64,13 @@ class _WorkoutPageState extends State<WorkoutPagee> {
 
   @override
   void initState() {
-    super.initState();
-    fetchBodyParts();
+    super.initState();;
     fetchData();
 
   }
 
 
-  Future<void> fetchBodyParts() async {
-    try {
-      ExerciseController controller = ExerciseController();
-      List<BodyPart> equipments = await controller.getAllBoyImages();
-      setState(() {
-        parts = equipments;
-      });
 
-    } catch (e) {
-      //print('Error fetching data: $e');
-    }
-  }
-
-
-
-
-  Future<String> getImageUrl(Map<String, dynamic> exercise) async {
-    String id = exercise['id'];
-    ExerciseController controller=new ExerciseController() ;
-    Exercise? exersice=await controller.getExercise(id);
-    String? bodyPart = exersice?.bodyPart;
-    String? target = exersice?.target;
-    //print("ffffffffffffffffff");
-    //print(bodyPart);
-    //print(target);
-
-    for (int i = 0; i < parts.length; i++) {
-      if (parts[i].name == bodyPart) {
-        //print(parts[i].imageUrl);
-        return parts[i].imageUrl;
-      }
-      if (parts[i].name != bodyPart && parts[i].name == target) {
-        //print("cfff");
-        //print(parts[i].imageUrl);
-        return parts[i].imageUrl;
-      }
-    }
-    return "";
-  }
 
   void fetchData() async {
     try {
@@ -317,6 +280,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
         final name = exercise['name'];
         final sets = exercise['sets'];
         final weight = exercise['weight'];
+        final imageUrl = exercise['imageUrl'];
         if (name != null && sets != null && weight != null) {
           return exercises_card.CurrentWorkoutCardWidget(
             name.toString(),
@@ -324,7 +288,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
             weight.toString(),
             context,
             id,
-            getImageUrl(exercise)
+              imageUrl.toString()
           );
         }else {
           return Center(child: Text('No exercises found.'));

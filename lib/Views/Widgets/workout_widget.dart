@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../Controllers/exercise_controller.dart';
+import '../../Models/exercise_model.dart';
 import '../../Models/workout_model.dart';
 import '../Screens/library/workout_detail_screen.dart';
+import '../Screens/login_screen.dart';
 
 class workout_widget {
+ static List<String> imageUrl = [];
   static Widget customcardWidget(Workout workout,isSelected, BuildContext context,Function(Workout, bool) updateSavedWorkouts) {
 
     int intensity = 0;
@@ -137,6 +141,7 @@ class workout_widget {
     );
   }
 }
+
 void showCustomDialog(BuildContext context, Workout workout, Function(Workout, bool) updateSavedWorkouts) {
   showGeneralDialog(
     context: context,

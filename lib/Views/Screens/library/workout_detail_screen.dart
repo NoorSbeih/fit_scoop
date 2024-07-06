@@ -19,10 +19,10 @@ import 'package:fit_scoop/Views/Widgets/exercises_card_widget.dart';
 import '../Community/reviewsScreen.dart';
 import '../WorkoutScheduling/addWorkoutForADay.dart';
 import '../WorkoutScheduling/selectDayForLibrary.dart';
+import '../login_screen.dart';
 
 class DetailPage extends StatefulWidget {
   final Workout workout;
-
   final Function(Workout, bool) updateSavedWorkouts;
 
   const DetailPage(
@@ -40,14 +40,12 @@ class _DetailPageState extends State<DetailPage> {
   List<Review> reviews = [];
   int numberOfSaves = 0;
   int no = 0;
-  List<BodyPart> parts=[];
 
   @override
   void initState() {
     super.initState();
     SavedWorkout();
     fetchReviews();
-    fetchBodyParts();
     numberOfSaves = widget.workout.numberOfSaves;
     no = numberOfSaves;
   }
@@ -60,7 +58,7 @@ class _DetailPageState extends State<DetailPage> {
       if (user != null && user.id != null) {
         UserController controller = UserController();
         List<Workout> newSavedWorkouts =
-            await controller.getSavedWorkouts(user.id);
+        await controller.getSavedWorkouts(user.id);
         savedWorkouts = newSavedWorkouts;
         //print(newSavedWorkouts.first.id);
         setState(() {
@@ -79,46 +77,6 @@ class _DetailPageState extends State<DetailPage> {
     }
   }
 
-  Future<void> fetchBodyParts() async {
-    try {
-      ExerciseController controller = ExerciseController();
-      List<BodyPart> equipments = await controller.getAllBoyImages();
-      setState(() {
-        parts = equipments;
-      });
-
-    } catch (e) {
-      //print('Error fetching data: $e');
-    }
-  }
-
-  Future<String> getImageUrl(Map<String, dynamic> exercise) async {
-    String id = exercise['id'];
-    ExerciseController controller=new ExerciseController() ;
-    Exercise? exersice=await controller.getExercise(id);
-    String? bodyPart = exersice?.bodyPart;
-    String? target = exersice?.target;
-    //print("ffffffffffffffffff");
-    //print(bodyPart);
-    //print(target);
-
-    for (int i = 0; i < parts.length; i++) {
-      if (parts[i].name == bodyPart) {
-        //print("ffjjfjf");
-        //print(parts[i].imageUrl);
-        return parts[i].imageUrl;
-
-      }
-      if (parts[i].name != bodyPart && parts[i].name == target) {
-        //print("cfff");
-        //print(parts[i].imageUrl);
-        return parts[i].imageUrl;
-      }
-    }
-    return "";
-  }
-
-
 
   bool liked(String? id) {
     for (int i = 0; i < savedWorkouts.length; i++) {
@@ -131,10 +89,10 @@ class _DetailPageState extends State<DetailPage> {
 
   void fetchReviews() async {
     try {
+      // await getImageUrl( widget.workout.exercises);
       ReviewController controller = ReviewController();
-
-     reviews =
-          await controller.getReviewsByWorkoutId(widget.workout.id);
+      reviews =
+      await controller.getReviewsByWorkoutId(widget.workout.id);
 
       if (!reviews.isEmpty) {
         double totalRating = 0;
@@ -171,7 +129,7 @@ class _DetailPageState extends State<DetailPage> {
         //print('Total Reviews: $totalReviews, Total Rating: $totalRating');
 
         double averageRating =
-            totalReviews > 0 ? totalRating / totalReviews : 0;
+        totalReviews > 0 ? totalRating / totalReviews : 0;
 
         if (averageRating != "Null" && totalReviews != "Null") {
           setState(() {
@@ -222,7 +180,7 @@ class _DetailPageState extends State<DetailPage> {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                 "Workout Details",
+                  "Workout Details",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -289,9 +247,9 @@ class _DetailPageState extends State<DetailPage> {
                             }
                           });
 
-                        UserSingleton userSingleton =
-                            UserSingleton.getInstance();
-                        User_model user = userSingleton.getUser();
+                          UserSingleton userSingleton =
+                          UserSingleton.getInstance();
+                          User_model user = userSingleton.getUser();
 
                           if (user != null && user.id != null) {
                             String userId = user.id;
@@ -317,24 +275,27 @@ class _DetailPageState extends State<DetailPage> {
                         ),
                         color: Colors.white,
                         onPressed: () async {
-
-
                           showModalBottomSheet(
                             context: context,
                             isScrollControlled: true,
                             shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(25)),
                             ),
                             builder: (BuildContext context) {
                               return Container(
-                                height: MediaQuery.of(context).size.height * 0.95,
+                                height: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .height * 0.95,
                                 decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
+                                  borderRadius: const BorderRadius.vertical(
+                                      top: Radius.circular(25)),
                                   border: Border.all(
                                     width: 2.0,
                                   ),
                                 ),
-                                child:   RateWorkoutPage(workout: widget.workout),
+                                child: RateWorkoutPage(workout: widget.workout),
                               );
                             },
                           );
@@ -351,18 +312,24 @@ class _DetailPageState extends State<DetailPage> {
                             context: context,
                             isScrollControlled: true,
                             shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(25)),
                             ),
                             builder: (BuildContext context) {
                               return Container(
-                                height: MediaQuery.of(context).size.height * 0.95,
+                                height: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .height * 0.95,
                                 decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
+                                  borderRadius: const BorderRadius.vertical(
+                                      top: Radius.circular(25)),
                                   border: Border.all(
                                     width: 2.0,
                                   ),
                                 ),
-                                child: reviewsScreen(workout: widget.workout, reviews: reviews),
+                                child: reviewsScreen(
+                                    workout: widget.workout, reviews: reviews),
                               );
                             },
                           );
@@ -396,14 +363,15 @@ class _DetailPageState extends State<DetailPage> {
                     initialRating: widget.workout.intensity == 'Beginner'
                         ? 1
                         : widget.workout.intensity == 'Intermediate'
-                            ? 2
-                            : widget.workout.intensity == 'Advanced'
-                                ? 3
-                                : 0,
+                        ? 2
+                        : widget.workout.intensity == 'Advanced'
+                        ? 3
+                        : 0,
                     direction: Axis.horizontal,
                     itemCount: 3,
                     itemSize: 24.0,
-                    itemBuilder: (context, _) => const Icon(
+                    itemBuilder: (context, _) =>
+                    const Icon(
                       Icons.electric_bolt,
                       color: Color(0xFF0dbab4),
                     ),
@@ -457,15 +425,15 @@ class _DetailPageState extends State<DetailPage> {
                   counterOneStars: _ratingSummaryData['counterOneStars'],
                   color: _ratingSummaryData['color'],
                   labelCounterOneStarsStyle:
-                      const TextStyle(color: Colors.white),
+                  const TextStyle(color: Colors.white),
                   labelCounterTwoStarsStyle:
-                      const TextStyle(color: Colors.white),
+                  const TextStyle(color: Colors.white),
                   labelCounterThreeStarsStyle:
-                      const TextStyle(color: Colors.white),
+                  const TextStyle(color: Colors.white),
                   labelCounterFourStarsStyle:
-                      const TextStyle(color: Colors.white),
+                  const TextStyle(color: Colors.white),
                   labelCounterFiveStarsStyle:
-                      const TextStyle(color: Colors.white),
+                  const TextStyle(color: Colors.white),
                   labelStyle: const TextStyle(color: Colors.white),
                   averageStyle: const TextStyle(
                       color: Colors.white,
@@ -473,12 +441,13 @@ class _DetailPageState extends State<DetailPage> {
                       fontFamily: 'BebasNeue'),
                 ),
                 // Add any other widgets you want to display when reviews are present
-              ] else ...[
-                const Text(
-                  'No reviews available.',
-                  style: TextStyle(fontSize: 22, color: Colors.white),
-                ),
-              ],
+              ] else
+                ...[
+                  const Text(
+                    'No reviews available.',
+                    style: TextStyle(fontSize: 22, color: Colors.white),
+                  ),
+                ],
               SizedBox(height: 15.0),
               const Divider(
                 color: Colors.grey,
@@ -492,15 +461,15 @@ class _DetailPageState extends State<DetailPage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          selectDayForLibraryy(workout :widget.workout),
+                          selectDayForLibraryy(workout: widget.workout),
                     ),
                   );
-
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
                       const Color(0xFF0dbab4)),
-                  fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
+                  fixedSize: MaterialStateProperty.all<Size>(
+                      const Size(350, 50)),
                   shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                         (Set<MaterialState> states) {
                       return RoundedRectangleBorder(
@@ -520,29 +489,30 @@ class _DetailPageState extends State<DetailPage> {
       ),
     );
   }
+  Widget buildExerciseCards(exercises) {
 
-Widget buildExerciseCards(exercises) {
-  return ListView.builder(
-    itemCount: exercises.length,
-    itemBuilder: (context, index) {
-      Map<String, dynamic> exercise = exercises[index];
-      String id = exercise['id'];
-      final name = exercise['name'];
-      final sets = exercise['sets'];
-      final weight = exercise['weight'];
-      if (name != null && sets != null && weight != null) {
-        return exercises_card.CurrentWorkoutCardWidget(
-          name.toString(),
-          sets.toString(),
-          weight.toString(),
-          context,
-          id,
-            getImageUrl(exercise)
-        );
-      } else {
-        return SizedBox(); // Placeholder widget, replace it with your preferred widget
-      }
-    },
-  );
-}
+    return ListView.builder(
+      itemCount: exercises.length,
+      itemBuilder: (context, index) {
+        Map<String, dynamic> exercise = exercises[index];
+        String id = exercise['id'];
+        final name = exercise['name'];
+        final sets = exercise['sets'];
+        final weight = exercise['weight'];
+        final imageUrl = exercise['imageUrl'];
+        if (name != null && sets != null && weight != null && imageUrl.length>0) {
+          return exercises_card.CurrentWorkoutCardWidget(
+              name.toString(),
+              sets.toString(),
+              weight.toString(),
+              context,
+              id,
+              imageUrl.toString()
+          );
+        } else {
+          return SizedBox(); // Placeholder widget, replace it with your preferred widget
+        }
+      },
+    );
+  }
 }

@@ -76,6 +76,8 @@ class Workout {
         'name':exercise['name'],
         'sets': exercise['sets'],
         'weight': exercise['weight'],
+        'imageUrl':exercise['imageUrl']
+
       }).toList(),
       'duration': duration,
       'intensity': intensity,

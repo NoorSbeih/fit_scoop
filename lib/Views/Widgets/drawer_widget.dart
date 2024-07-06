@@ -6,6 +6,7 @@ import 'package:fit_scoop/Models/user_singleton.dart';
 import 'package:fit_scoop/Views/Screens/Equipments/equipment_sceen.dart';
 import 'package:fit_scoop/Views/Screens/Update/femaleGoalsUpdate.dart';
 import 'package:fit_scoop/Views/Screens/Update/goalsUpdate.dart';
+import 'package:fit_scoop/Views/Screens/add/addExercise.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,7 +38,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
   logut() async {
   AuthController controller=AuthController();
-
+  addExercise.exercises.clear();
   await controller.logout(context);
   Navigator.of(
     context,

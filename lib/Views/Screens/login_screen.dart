@@ -5,8 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../Controllers/exercise_controller.dart';
 import '../../Controllers/login_controller.dart';
 
+import '../../Models/bodyPart.dart';
 import '../../Models/user_singleton.dart';
 import '../../Services/authentication_service.dart';
 import '../../Services/email.dart';
@@ -33,9 +35,10 @@ class Login extends StatelessWidget {
 
 
 class LoginPage extends StatefulWidget {
+
   const LoginPage({super.key, required this.title});
   final String title;
-
+  static List<BodyPart> parts=[];
 
 
   @override
@@ -49,10 +52,27 @@ class _LoginPageState extends State<LoginPage> {
   String _passwordErrorText = '';
   bool passwordVisible=false;
 
+
   @override
   void initState() {
     super.initState();
     passwordVisible=false;
+    fetchBodyParts();
+  }
+
+
+
+  Future<void> fetchBodyParts() async {
+    try {
+      ExerciseController controller = ExerciseController();
+      List<BodyPart> equipments = await controller.getAllBoyImages();
+      setState(() {
+        LoginPage.parts = equipments;
+      });
+
+    } catch (e) {
+      //print('Error fetching data: $e');
+    }
   }
 
 
@@ -191,6 +211,9 @@ class _LoginPageState extends State<LoginPage> {
                           if (await loginController.getUserBodyMetric() == null) {
                             //print("empty");
                           } else {
+
+
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => HomePage()), // Replace HomePage() with the desired page widget
@@ -363,3 +386,5 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
+

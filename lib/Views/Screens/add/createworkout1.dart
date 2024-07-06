@@ -22,25 +22,27 @@ class createWorkout1 extends StatefulWidget {
 class _createWorkout1 extends State<createWorkout1> {
   TextEditingController nameController = new TextEditingController();
   String emailErrorText = '';
-
   String errorText = '';
   List<BodyPart> parts = [];
+  Map<String, String> exerciseImageUrls = {};
+  bool imagesLoading = true; // Track if images are still loading
 
   @override
   void initState() {
     super.initState();
     fetchBodyParts();
+    prefetchImageUrls(); // Pre-fetch image URLs when initializing
   }
 
   void handleExerciseAdded() {
     setState(() {
-      retrieveAddedExercise(addExercise.exercises);
+      prefetchImageUrls(); // Pre-fetch image URLs when exercises are added
     });
   }
 
   Future<void> _handleRefresh() async {
     setState(() {
-      retrieveAddedExercise(addExercise.exercises);
+      prefetchImageUrls(); // Pre-fetch image URLs on refresh
     });
   }
 
@@ -52,26 +54,100 @@ class _createWorkout1 extends State<createWorkout1> {
         parts = equipments;
       });
     } catch (e) {
-      //print('Error fetching data: $e');
+      // Handle error
     }
   }
 
-  Future<String> getImageUrl(Map<String, dynamic> exercise) async {
-    String id = exercise['id'];
-    ExerciseController controller = new ExerciseController();
-    Exercise? exersice = await controller.getExercise(id);
-    String? bodyPart = exersice?.bodyPart;
-    String? target = exersice?.target;
+  Future<void> prefetchImageUrls() async {
+    try {
+      List<Future<String>> futures = []; // Explicitly typed as List<Future<String>>
 
-    for (int i = 0; i < parts.length; i++) {
-      if (parts[i].name == bodyPart) {
-        return parts[i].imageUrl;
+      for (var exercise in addExercise.exercises) {
+        String id = exercise['id'];
+        futures.add(getImageUrl(id));
       }
-      if (parts[i].name != bodyPart && parts[i].name == target) {
-        return parts[i].imageUrl;
+
+      List<String> imageUrls = await Future.wait(futures);
+
+      for (int i = 0; i < addExercise.exercises.length; i++) {
+        String id = addExercise.exercises[i]['id'];
+        exerciseImageUrls[id] = imageUrls[i];
+      }
+
+      // Update UI to reflect that images are no longer loading
+      setState(() {
+        imagesLoading = false;
+      });
+    } catch (e) {
+      // Handle error
+      print('Error fetching image URLs: $e');
+    }
+  }
+
+
+  Future<String> getImageUrl(String id) async {
+    ExerciseController controller = ExerciseController();
+    Exercise? exerciseDetail = await controller.getExercise(id);
+    String? bodyPart = exerciseDetail?.bodyPart;
+    String? target = exerciseDetail?.target;
+
+    // Find image URL based on body part or target
+    for (var part in parts) {
+      if (part.name == bodyPart || part.name == target) {
+        return part.imageUrl;
       }
     }
-    return "";
+    return ""; // Return empty string if no matching image found
+  }
+  // Future<void> prefetchImageUrls() async {
+  //   for (var exercise in addExercise.exercises) {
+  //     String id = exercise['id'];
+  //     String imageUrl = await getImageUrl(exercise);
+  //     setState(() {
+  //       exerciseImageUrls[id] = imageUrl;
+  //       print(exerciseImageUrls[id]);
+  //     });
+  //   }
+  //   setState(() {
+  //     imagesLoading = false; // Set loading to false after images are fetched
+  //   });
+  // }
+  //
+  // Future<String> getImageUrl(Map<String, dynamic> exercise) async {
+  //   String id = exercise['id'];
+  //   ExerciseController controller = ExerciseController();
+  //   Exercise? exersice = await controller.getExercise(id);
+  //   String? bodyPart = exersice?.bodyPart;
+  //   String? target = exersice?.target;
+  //
+  //   for (int i = 0; i < parts.length; i++) {
+  //     if (parts[i].name == bodyPart) {
+  //       return parts[i].imageUrl;
+  //     }
+  //     if (parts[i].name != bodyPart && parts[i].name == target) {
+  //       return parts[i].imageUrl;
+  //     }
+  //   }
+  //   return "";
+  // }
+
+  Future<void> fetchExerciseImages() async {
+    ExerciseController controller = ExerciseController();
+    for (var exercise in addExercise.exercises) {
+      String id = exercise['id'];
+      Exercise? exerciseDetail = await controller.getExercise(id);
+      String? bodyPart = exerciseDetail?.bodyPart;
+      String? target = exerciseDetail?.target;
+
+      for (var part in parts) {
+        if (part.name == bodyPart || part.name == target) {
+          setState(() {
+            exerciseImageUrls[id] = part.imageUrl;
+          });
+          break;
+        }
+      }
+    }
   }
 
   @override
@@ -129,7 +205,10 @@ class _createWorkout1 extends State<createWorkout1> {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 5),
-                child: addExercise.exercises.isEmpty
+                child: imagesLoading
+                    ? Center(
+                    child: CircularProgressIndicator()) // Show loading indicator
+                    : addExercise.exercises.isEmpty
                     ? Center(
                   child: Text(
                     errorText,
@@ -162,6 +241,7 @@ class _createWorkout1 extends State<createWorkout1> {
                   }
                   if (!createWorkout1.name.isEmpty &&
                       !addExercise.exercises.isEmpty) {
+                    await fetchExerciseImages(); // Fetch exercise images before navigating
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -172,7 +252,8 @@ class _createWorkout1 extends State<createWorkout1> {
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
                       const Color(0xFF0dbab4)),
-                  fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
+                  fixedSize: MaterialStateProperty.all<Size>(
+                      const Size(350, 50)),
                   shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                         (Set<MaterialState> states) {
                       return RoundedRectangleBorder(
@@ -241,13 +322,14 @@ class _createWorkout1 extends State<createWorkout1> {
           final sets = exercise['sets'];
           final weight = exercise['weight'];
           if (name != null && sets != null && weight != null) {
+            String imageUrl = exerciseImageUrls[id] ?? ''; // Ensure imageUrl is not null
             return exercises_card.AfterAddingExerciseCardWidget(
               name.toString(),
               sets.toString(),
               weight.toString(),
               context,
               id,
-              getImageUrl(exercise),
+              imageUrl, // Use pre-fetched image URL
               onDelete: () {
                 deleteExercise(id);
               },
@@ -262,7 +344,8 @@ class _createWorkout1 extends State<createWorkout1> {
     int index =
     addExercise.exercises.indexWhere((exercise) => exercise['id'] == id);
     setState(() {
-      addExercise.exercises.removeAt(index); // Remove the exercise from the list
+      addExercise.exercises.removeAt(
+          index); // Remove the exercise from the list
     });
   }
 }

@@ -4,7 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 
+import '../../Controllers/exercise_controller.dart';
+import '../../Models/exercise_model.dart';
 import '../Screens/Workout/adding_exercise_details_screen.dart';
+import '../Screens/login_screen.dart';
 
 class exercises_card {
   static Widget addingExersiceWidget(
@@ -98,17 +101,32 @@ class exercises_card {
               ),
               actions: [
                 TextButton(
-                  onPressed: () {
-              if (setsController.text.isNotEmpty && weightController.text.isNotEmpty) {
-                Map<String, dynamic> exercise = {
-                  'name': name,
-                  'id': id,
-                  'sets': setsController.text,
-                  'weight': weightController.text,
-                };
-                addExercise.exercises.add(exercise);
-                Navigator.pop(context);
-              }
+                  onPressed: () async {
+                    ExerciseController controller = ExerciseController();
+                    Exercise? exercise = await controller.getExercise(id);
+                    String? bodyPart = exercise?.bodyPart;
+                    String? target = exercise?.target;
+                    String imageUrl = "";
+
+                    for (int i = 0; i < LoginPage.parts.length; i++) {
+                      if (LoginPage.parts[i].name == bodyPart ||
+                          LoginPage.parts[i].name == target) {
+                        imageUrl = LoginPage.parts[i].imageUrl;
+                        break; // exit loop when match is found
+                      }
+                    }
+
+                    if (setsController.text.isNotEmpty && weightController.text.isNotEmpty) {
+                      Map<String, dynamic> exercise = {
+                        'name': name,
+                        'id': id,
+                        'sets': setsController.text,
+                        'weight': weightController.text,
+                        'imageUrl': imageUrl
+                      };
+                      addExercise.exercises.add(exercise);
+                      Navigator.pop(context); // Close the dialog after adding exercise
+                    }
                   },
                   child: custom_widget.customTextWidgetForExersiceCard(
                       "Add", 15),
@@ -210,7 +228,7 @@ class exercises_card {
   }
 
   static Widget AfterAddingExerciseCardWidget(String name, String sets,
-      String weight, BuildContext context, String id, Future<String> imageUrl,
+      String weight, BuildContext context, String id, String imageUrl,
       {required Null Function() onDelete}) {
     return SizedBox(
       height: 107,
@@ -227,27 +245,33 @@ class exercises_card {
               margin: EdgeInsets.all(8),
               height: double.infinity,
               width: 80,
-              child: FutureBuilder<String>(
-                future: imageUrl,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator(); // Placeholder while loading
-                  } else if (snapshot.hasError) {
-                    return Icon(
-                        Icons.error); // Show error icon if there is an error
-                  } else if (snapshot.hasData) {
-                    return Image.asset(
-                      snapshot.data!,
-                      width: 148,
-                      height: 128,
-                      fit: BoxFit.cover,
-                    );
-                  } else {
-                    return Icon(Icons.photo); // Placeholder if no data
-                  }
-                },
+                child:Image.asset(
+                 imageUrl,
+                    width: 148,
+                    height: 128,
+                    fit: BoxFit.cover,
+                  ),
+            //  child: FutureBuilder<String>(
+              //future:imageUrl,
+                // builder: (context, snapshot) {
+                //   if (snapshot.connectionState == ConnectionState.waiting) {
+                //     return CircularProgressIndicator(); // Placeholder while loading
+                //   } else if (snapshot.hasError) {
+                //     return const Icon(
+                //         Icons.error); // Show error icon if there is an error
+                //   } else if (snapshot.hasData) {
+                //     return Image.asset(
+                //       snapshot.data!,
+                //       width: 148,
+                //       height: 128,
+                //       fit: BoxFit.cover,
+                //     );
+                //   } else {
+                //     return Icon(Icons.photo); // Placeholder if no data
+                //   }
+                // },
               ),
-            ),
+           // ),
             Expanded(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -339,7 +363,7 @@ class exercises_card {
   }
 
   static Widget CurrentWorkoutCardWidget(String name, String sets,
-      String weight, BuildContext context, String id, Future<String> imageUrl) {
+      String weight, BuildContext context, String id,String imageUrl) {
     return SizedBox(
       height: 120,
       child: Card(
@@ -355,26 +379,12 @@ class exercises_card {
               margin: EdgeInsets.all(8),
               height: double.infinity,
               width: 80,
-              child: FutureBuilder<String>(
-                future: imageUrl,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator(); // Placeholder while loading
-                  } else if (snapshot.hasError) {
-                    return Icon(
-                        Icons.error); // Show error icon if there is an error
-                  } else if (snapshot.hasData) {
-                    return Image.asset(
-                      snapshot.data!,
-                      width: 148,
-                      height: 128,
-                      fit: BoxFit.cover,
-                    );
-                  } else {
-                    return Icon(Icons.photo); // Placeholder if no data
-                  }
-                },
-              ),
+          child:Image.asset(
+            imageUrl,
+            width: 148,
+            height: 128,
+            fit: BoxFit.cover,
+          ),
             ),
             Expanded(
               child: Column(

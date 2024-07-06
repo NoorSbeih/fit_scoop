@@ -16,6 +16,7 @@ import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_model.dart';
 import '../WorkoutScheduling/selectDayForLibrary.dart';
+import '../login_screen.dart';
 
 
 class CommunityWorkoutDetailPage extends StatefulWidget {
@@ -29,54 +30,15 @@ class CommunityWorkoutDetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<CommunityWorkoutDetailPage> {
   List<Review>? _reviews = [];
-  List<BodyPart> parts = [];
+
 
   @override
   void initState() {
     super.initState();
     fetchReviews();
-    fetchBodyParts();
+
+
   }
-
-  Future<void> fetchBodyParts() async {
-    try {
-      ExerciseController controller = ExerciseController();
-      List<BodyPart> equipments = await controller.getAllBoyImages();
-      setState(() {
-        parts = equipments;
-      });
-    } catch (e) {
-      //print('Error fetching data: $e');
-    }
-  }
-
-  Future<String> getImageUrl(Map<String, dynamic> exercise) async {
-    String id = exercise['id'];
-    ExerciseController controller=new ExerciseController() ;
-    Exercise? exersice=await controller.getExercise(id);
-    String? bodyPart = exersice?.bodyPart;
-    String? target = exersice?.target;
-    //print("ffffffffffffffffff");
-    //print(bodyPart);
-    //print(target);
-
-    for (int i = 0; i < parts.length; i++) {
-      if (parts[i].name == bodyPart) {
-        //print("ffjjfjf");
-        //print(parts[i].imageUrl);
-        return parts[i].imageUrl;
-
-      }
-      if (parts[i].name != bodyPart && parts[i].name == target) {
-        //print("cfff");
-        //print(parts[i].imageUrl);
-        return parts[i].imageUrl;
-      }
-    }
-    return "";
-  }
-
-
 
 
   void fetchReviews() async {
@@ -325,6 +287,7 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage> {
 
 
   Widget buildExerciseCards(exercises) {
+
     return ListView.builder(
       itemCount: exercises.length,
       itemBuilder: (context, index) {
@@ -333,6 +296,7 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage> {
         final name = exercise['name'];
         final sets = exercise['sets'];
         final weight = exercise['weight'];
+        final imageUrl = exercise['imageUrl'];
         if (name != null && sets != null && weight != null) {
           return exercises_card.CurrentWorkoutCardWidget(
               name.toString(),
@@ -340,7 +304,8 @@ class _DetailPageState extends State<CommunityWorkoutDetailPage> {
               weight.toString(),
               context,
               id,
-              getImageUrl(exercise)
+              imageUrl.toString()
+
           );
         } else {
           return Center(child: Text('No exercises found.'));
