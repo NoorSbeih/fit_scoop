@@ -71,15 +71,23 @@ class ExerciseController {
     }
   }
   //a method to get all exercises by main muscle
-  Future<List<Exercise>> getExercisesByMainMuscle(String mainMuscle) async {
+  Future<List<Exercise>> getExercisesByAvailableEquipments(List<String> equipments) async {
     try {
-      return await _exerciseService.getExercisesByMainMuscle(mainMuscle);
+      return await _exerciseService.getExercisesByAvailableEquipments(equipments);
     } catch (e) {
       //print('Error getting exercises by main muscle: $e');
       throw e;
     }
   }
 
+  Future<List<Exercise>> getExercisesByMainMuscle(String mainMuscle,List<String> equipments) async {
+    try {
+      return await _exerciseService.getExercisesByMainMuscle(mainMuscle, equipments);
+    } catch (e) {
+      //print('Error getting exercises by main muscle: $e');
+      throw e;
+    }
+  }
 
   Future<String?> getBodyImage(String name) async {
     try {

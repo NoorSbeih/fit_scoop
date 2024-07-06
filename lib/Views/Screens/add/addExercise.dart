@@ -50,6 +50,8 @@ class _addExercise extends State<addExercise> with SingleTickerProviderStateMixi
   late TabController _tabController;
   String imageUrl = "";
   List<BodyPart> parts = [];
+  UserSingleton userSingleton = UserSingleton.getInstance();
+
   List<Exercise> allExercises = [];
   List<Exercise> filteredExercises = [];
 
@@ -88,7 +90,7 @@ class _addExercise extends State<addExercise> with SingleTickerProviderStateMixi
   Future<void> fetchAllExercises() async {
     try {
       ExerciseController controller = ExerciseController();
-      List<Exercise> allExercisesData = await controller.getAllExersices();
+      List<Exercise> allExercisesData = await controller.getExercisesByAvailableEquipments(userSingleton.getUser().savedEquipmentIds);
       setState(() {
         allExercises = allExercisesData;
         filteredExercises = allExercisesData;
@@ -205,7 +207,7 @@ class _addExercise extends State<addExercise> with SingleTickerProviderStateMixi
           title: custom_widget.customTextWidgetForExersiceCard(mainMuscle, 16),
           children: [
             FutureBuilder<List<Exercise>>(
-              future: controller.getExercisesByMainMuscle(mainMuscle),
+              future: controller.getExercisesByMainMuscle(mainMuscle,userSingleton.getUser().savedEquipmentIds),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());

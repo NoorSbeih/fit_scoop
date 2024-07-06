@@ -195,9 +195,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
     body: isLoading
     ? Center(child: CircularProgressIndicator())
         : currentWorkout != null
-    ? (log != null && isSame==true
-    ? buildFinishWorkoutContent()
-        : buildWorkoutContent())
+    ? buildWorkoutContent()
     : buildNoWorkoutContent(),
     );
   }
@@ -375,6 +373,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
 }
 bool isSameDate(DateTime timeTakenDate ) {
   DateTime currentDate = DateTime.now();
+
   return timeTakenDate.year == currentDate.year &&
       timeTakenDate.month == currentDate.month &&
       timeTakenDate.day == currentDate.day;
