@@ -54,7 +54,7 @@ class _RegisterPageState extends State<RegisterPage5> {
 
 
                   custom_widget.customTextWidget(
-                      "Choose what type of place you go to in order to exercise", 15),
+                      "Select the type of gym you prefer to exercise in.", 18),
 
                 ), // Add padding from the bottom only
 

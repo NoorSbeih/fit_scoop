@@ -61,7 +61,7 @@ class _selectDayForLibrary extends State<selectDayForLibraryy> {
             padding: const EdgeInsets.only(bottom: 20.0, left: 16, right: 16),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: custom_widget.customTextWidget("Assign the new workout For Specific Day", 15),
+              child: custom_widget.customTextWidget("Assign the new workout For Specific Day", 18),
             ),
           ),
 

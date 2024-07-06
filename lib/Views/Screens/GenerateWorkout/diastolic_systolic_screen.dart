@@ -56,7 +56,7 @@ class _DiastolicSystolicScreen extends State<DiastolicSystolicScreen> {
                 alignment: Alignment.centerLeft,
                 child: custom_widget.customTextWidget(
                   "Entering your systolic and diastolic blood pressure is essential for generating the best workouts and ensuring they are safe and effective for your heart health.",
-                  15,
+                  18,
                 ),
               ),
             ),
@@ -229,7 +229,7 @@ class _DiastolicSystolicScreen extends State<DiastolicSystolicScreen> {
             );
           },
         ),
-        custom_widget.customTextWidget(text, 15),
+        custom_widget.customTextWidget(text, 18),
       ],
     );
   }

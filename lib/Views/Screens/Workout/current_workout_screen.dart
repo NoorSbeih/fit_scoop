@@ -215,7 +215,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
               'BEGIN WORKOUT',
               style: TextStyle(
                 fontSize: 20,
-                color: Colors.white,
+                color: Color(0xFF2C2A2A),
               ),
             ),
           ),

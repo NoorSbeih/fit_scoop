@@ -84,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage4F> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: custom_widget.customTextWidget(
-                    "What is Your Main Goal for Joining FitScoop?", 15),
+                    "What is Your Main Goal for Joining FitScoop?", 18),
               ),
             ),
             if (metrics != null) ..._buildGoalCards(metrics!.performanceLevel),

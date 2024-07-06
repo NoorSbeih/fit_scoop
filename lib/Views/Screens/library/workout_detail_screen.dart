@@ -480,7 +480,7 @@ class _DetailPageState extends State<DetailPage> {
                 ),
                 child: const Text(
                   'ADD TO SCHEDULE',
-                  style: TextStyle(fontSize: 20, color: Colors.white),
+                  style: TextStyle(fontSize: 20, color:Color(0xFF2C2A2A)),
                 ),
               ),
             ],

@@ -57,7 +57,7 @@ class _RegisterPageState extends State<maleGoalsUpdate> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: custom_widget.customTextWidget(
-                      "What is Your Main Goal for Joining FitScoop?", 15),
+                      "What is Your Main Goal for Joining FitScoop?", 18),
 
                 ), // Add padding from the bottom only
 

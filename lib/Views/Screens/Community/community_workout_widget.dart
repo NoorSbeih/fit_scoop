@@ -33,9 +33,9 @@ class communityWorkoutWidget {
         Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-
-          Row(
-            children: [
+          Expanded(
+            child: Row(
+              children: [
                 Stack(
                   children: [
                     user.imageLink != null
@@ -56,17 +56,26 @@ class communityWorkoutWidget {
                     ),
                   ],
                 ),
-              SizedBox(width: 5), // Add spacing between icon and text
-              Text(
-                '${user.name} has posted new a workout',
-                style: const TextStyle(
-                  color: Color(0xFF0dbab4),
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Montserrat',
+                SizedBox(width: 5),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${user.name} has posted a new workout',
+                        style: const TextStyle(
+                          color: Color(0xFF0dbab4),
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Montserrat',
+                        ),
+                        maxLines: null, // Allow text to wrap onto new lines
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Text(
             time,
@@ -79,7 +88,7 @@ class communityWorkoutWidget {
           ),
         ],
       ),
-      SizedBox(height: 10), // Add some spacing
+        SizedBox(height: 10), // Add some spacing
       Padding(
               padding: const EdgeInsets.all(0.0),
               child: Row(

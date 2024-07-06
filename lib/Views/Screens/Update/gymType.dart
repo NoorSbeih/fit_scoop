@@ -51,7 +51,7 @@ class _gymTypeState extends State<GymType> {
                 padding: const EdgeInsets.only(left:16,top:10,bottom: 10),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: custom_widget.startTextWidget(""),
+                  child: custom_widget.startTextWidget("GYM Type"),
                 ),
 
               ),
@@ -62,7 +62,7 @@ class _gymTypeState extends State<GymType> {
                   alignment: Alignment.centerLeft,
                   child:
                   custom_widget.customTextWidget(
-                      "Choose what type of place you go to in order to exercise", 15),
+                      "Select the type of gym you prefer to exercise in.", 18),
 
                 ), // Add padding from the bottom only
 

@@ -286,7 +286,7 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
             );
           },
         ),
-        custom_widget.customTextWidget(text, 15),
+        custom_widget.customTextWidget(text, 18),
       ],
     );
   }

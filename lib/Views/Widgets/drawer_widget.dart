@@ -8,6 +8,7 @@ import 'package:fit_scoop/Views/Screens/Update/femaleGoalsUpdate.dart';
 import 'package:fit_scoop/Views/Screens/Update/goalsUpdate.dart';
 import 'package:fit_scoop/Views/Screens/add/addExercise.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Controllers/authentication_controller.dart';
@@ -16,6 +17,7 @@ import '../Screens/Registration pages/body_fat_screen.dart';
 import '../Screens/Update/bodyFatUpdate.dart';
 import '../Screens/Update/gymType.dart';
 import '../Screens/Update/maleGoalsUpdate.dart';
+import '../Screens/Update/unitOfMeasureUpdate.dart';
 import '../Screens/Update/weight_HeightUpdate.dart';
 import '../Screens/login_screen.dart';
 
@@ -37,17 +39,17 @@ class _CustomDrawerState extends State<CustomDrawer> {
   }
 
   logut() async {
-  AuthController controller=AuthController();
-  addExercise.exercises.clear();
-  await controller.logout(context);
-  Navigator.of(
-    context,
-    rootNavigator:true)
-        .pushAndRemoveUntil(
-    MaterialPageRoute(builder: (context) => Login()),
-        (Route<dynamic> route) => false,
-  );
+    AuthController controller = AuthController();
+    addExercise.exercises.clear();
+    await controller.logout(context);
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.clear();
+    Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => Login()),
+      (Route<dynamic> route) => false,
+    );
   }
+
   @override
   Widget build(BuildContext context) {
     BodyMetricsSingleton singleton = BodyMetricsSingleton.getInstance();
@@ -66,66 +68,34 @@ class _CustomDrawerState extends State<CustomDrawer> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
+          Container(
+            height: 200.0,
+            padding: EdgeInsets.only(top: 50),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'FitScoop',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontFamily: 'BebasNeue',
+                Flexible(
+                  child: SvgPicture.asset(
+                    'images/FITscoop2.svg',
+                    color: Color(0xFF0dbab4),
+                    fit: BoxFit.fitWidth,
                   ),
                 ),
-                Center(
-                  child: Container(
-                    margin: EdgeInsets.symmetric(vertical: 20),
-                    width: 250,
-                    // Set the width of the Container
-                    height: 50,
-                    // Set the height of the Container
-                    decoration: BoxDecoration(
-                      color: Color(0xFF0dbab4),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.red, width: 0),
-                    ),
-                    child: Center(
-                      child: ListTile(
-                        leading:
-                            Icon(Icons.fitness_center, color: Color(0xFF2C2A2A)),
-                        title: const Text(
-                          'GENERATE WORKOUT',
-                          style: TextStyle(
-                            color: Color(0xFF2C2A2A),
-                            fontSize: 25,
-                            fontFamily: 'BebasNeue',
-                          ),
-                        ),
-                        onTap: () async {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    DiastolicSystolicScreen()),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                )
               ],
             ),
           ),
+
           ListTile(
+
             title: const Text(
               'GYM EQUIPMENT',
               style: TextStyle(
-                  color: Colors.grey, fontSize: 20, fontFamily: 'BebasNeue'),
+                  color: Colors.grey, fontSize: 25, fontFamily: 'BebasNeue'),
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 10),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -143,14 +113,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   },
                   child: CustomUnderlineText(
                     text: 'AVAILABLE EQUIPMENT: ${equipments} SELECTED',
-                    fontSize: 20,
+                    fontSize: 22,
                     textColor: Colors.white,
                     underlineColor: Colors.grey,
                     underlinePadding: 2.0,
                     underlineThickness: 2.0,
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
                     // Navigate to a new page when the text is tapped
@@ -170,7 +140,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   },
                   child: CustomUnderlineText(
                     text: 'GYM TYPE: ${typeOfPlace}',
-                    fontSize: 20,
+                    fontSize: 22,
                     textColor: Colors.white,
                     underlineColor: Colors.grey,
                     underlinePadding: 2.0,
@@ -184,12 +154,38 @@ class _CustomDrawerState extends State<CustomDrawer> {
             title: const Text(
               'BODY METRICS',
               style: TextStyle(
-                  color: Colors.grey, fontSize: 20, fontFamily: 'BebasNeue'),
+                  color: Colors.grey, fontSize: 25, fontFamily: 'BebasNeue'),
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 10),
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to a new page when the text is tapped
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UnitOfMeasure(
+                          onUpdateUnit: (unit) {
+                            setState(() {
+                              metrics.unitOfMeasure = unit;
+                            });
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                  child: CustomUnderlineText(
+                    text: 'UNIT OF MEASURE:${metrics.unitOfMeasure}',
+                    fontSize: 22,
+                    textColor: Colors.white,
+                    underlineColor: Colors.grey,
+                    underlinePadding: 2.0,
+                    underlineThickness: 2.0,
+                  ),
+                ),
+                SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
                     // Navigate to a new page when the text is tapped
@@ -209,14 +205,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   },
                   child: CustomUnderlineText(
                     text: 'Weight: ${metrics.weight.toStringAsFixed(2)}',
-                    fontSize: 20,
+                    fontSize: 22,
                     textColor: Colors.white,
                     underlineColor: Colors.grey,
                     underlinePadding: 2.0,
                     underlineThickness: 2.0,
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
                     // Navigate to a new page when the text is tapped
@@ -236,14 +232,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   },
                   child: CustomUnderlineText(
                     text: 'Height: ${metrics.height.toStringAsFixed(2)}',
-                    fontSize: 20,
+                    fontSize: 22,
                     textColor: Colors.white,
                     underlineColor: Colors.grey,
                     underlinePadding: 2.0,
                     underlineThickness: 2.0,
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -262,7 +258,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   child: CustomUnderlineText(
                     text:
                         'BODY FAT PERCENTAGE: ${metrics.bodyFat.toStringAsFixed(2)}',
-                    fontSize: 20,
+                    fontSize: 22,
                     textColor: Colors.white,
                     underlineColor: Colors.grey,
                     underlinePadding: 2.0,
@@ -272,86 +268,42 @@ class _CustomDrawerState extends State<CustomDrawer> {
               ],
             ),
           ),
-          // ListTile(
-          //   title: const Text(
-          //     'PREFERENCES',
-          //     style: TextStyle(
-          //         color: Colors.grey, fontSize: 20, fontFamily: 'BebasNeue'),
-          //   ),
-          //   subtitle: Column(
-          //     crossAxisAlignment: CrossAxisAlignment.start,
-          //     children: [
-          //       SizedBox(height: 10),
-          //
-          //       GestureDetector(
-          //         onTap: () {
-          //           if (gender == "Female") {
-          //             Navigator.push(
-          //               context,
-          //               MaterialPageRoute(
-          //                 builder: (context) => femaleGoalsUpdate(
-          //                   onUpdateGoal: (goal) {
-          //                     setState(() {
-          //                       metrics.fitnessGoal = goal;
-          //                       goal = metrics.fitnessGoal;
-          //                     });
-          //                   },
-          //                 ),
-          //               ),
-          //             );
-          //           } else {
-          //             Navigator.push(
-          //               context,
-          //               MaterialPageRoute(
-          //                 builder: (context) => maleGoalsUpdate(
-          //                   onUpdateGoal: (goal) {
-          //                     setState(() {
-          //                       metrics.fitnessGoal = goal;
-          //                       goal = metrics.fitnessGoal;
-          //                     });
-          //                   },
-          //                 ),
-          //               ),
-          //             );
-          //           }
-          //         },
-          //         child: CustomUnderlineText(
-          //           text: 'Goal: ${goal}',
-          //           fontSize: 20,
-          //           textColor: Colors.white,
-          //           underlineColor: Colors.grey,
-          //           underlinePadding: 2.0,
-          //           underlineThickness: 2.0,
-          //         ),
-          //       ),
-          //
-          //       SizedBox(height: 10),
-          //       // CustomUnderlineText(
-          //       //   text: 'Training Days: ${metrics.workoutSchedule
-          //       //       .length} Selected',
-          //       //   fontSize: 20,
-          //       //   textColor: Colors.white,
-          //       //   underlineColor: Colors.grey,
-          //       //   underlinePadding: 2.0,
-          //       //   underlineThickness: 2.0,
-          //       // ),
-          //
-          //       // SizedBox(height: 10),
-          //       // CustomUnderlineText(
-          //       //   text: 'UNIT OF MEASURE:${metrics.unitOfMeasure}',
-          //       //   fontSize: 20,
-          //       //   textColor: Colors.white,
-          //       //   underlineColor: Colors.grey,
-          //       //   underlinePadding: 2.0,
-          //       //   underlineThickness: 2.0,
-          //       // ),
-          //     ],
-          //   ),
-          // ),
           Center(
             child: Container(
-              margin: EdgeInsets.symmetric(vertical: 20),
-              width: 200,
+              margin: EdgeInsets.symmetric(vertical: 5),
+              width: 250,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Color(0xFF0dbab4),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.red, width: 0),
+              ),
+              child: Center(
+                child: ListTile(
+                  leading: Icon(Icons.fitness_center, color: Color(0xFF2C2A2A)),
+                  title: const Text(
+                    'GENERATE WORKOUT',
+                    style: TextStyle(
+                      color: Color(0xFF2C2A2A),
+                      fontSize: 25,
+                      fontFamily: 'BebasNeue',
+                    ),
+                  ),
+                  onTap: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => DiastolicSystolicScreen()),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              margin: EdgeInsets.symmetric(vertical: 5),
+              width: 250,
               // Set the width of the Container
               height: 50,
               // Set the height of the Container
@@ -371,19 +323,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       fontFamily: 'BebasNeue',
                     ),
                   ),
-                  // onTap: () async {
-                  //   try {
-                  //     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-                  //     await sharedPreferences.clear();
-                  //   } catch (e) {
-                  //     // Handle error if needed
-                  //     //print("Error clearing shared preferences: $e");
-                  //   }
-                  //   Navigator.of(context).pushAndRemoveUntil(
-                  //     MaterialPageRoute(builder: (context) => Login()),
-                  //         (Route<dynamic> route) => false,
-                  //   );
-                  // },
                   onTap: () async {
                     logut();
                   },

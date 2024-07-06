@@ -151,7 +151,7 @@ class _EquipmentPageState extends State<EquipmentPage>
             child: ElevatedButton(
               onPressed: saveSelectedEquipment,
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white, backgroundColor: Color(0xFF0dbab4),
+                foregroundColor: Color(0xFF2C2A2A), backgroundColor: Color(0xFF0dbab4),
               ),
               child: Text('Save'),
             ),
