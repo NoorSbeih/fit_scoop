@@ -294,7 +294,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
           ),
           SizedBox(height: 10),
           Text(
-            'Finished Your Workout for Today',
+            "You've finished your workout for Today",
             style: TextStyle(
               fontSize: 18,
               color: Colors.white,
