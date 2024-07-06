@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_scoop/Models/user_model.dart';
 
 import '../Models/body_metrics_model.dart';
 import '../Services/Database Services/body_metrics_service.dart';
@@ -14,6 +16,15 @@ class BodyMetricsController {
     } catch (e) {
       //print('Error adding body metrics: $e');
       throw e;
+    }
+  }
+  Future<void> generateWorkoutSchedule(BodyMetrics bodyMetrics, User_model user) async {
+    try {
+      // Update workout schedule in the database using the BodyMetricsService
+      await _bodyMetricsService.updateWorkoutSchedule(bodyMetrics.userId,user.bodyMetrics,bodyMetrics.gender,bodyMetrics.performanceLevel,bodyMetrics.fitnessGoal);
+    } catch (e) {
+      //print('Error updating workout schedule: $e');
+      rethrow;
     }
   }
 

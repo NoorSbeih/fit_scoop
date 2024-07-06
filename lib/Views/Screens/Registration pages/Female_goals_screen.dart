@@ -1,29 +1,28 @@
-
+import 'package:fit_scoop/Views/Widgets/card_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
-import 'package:fit_scoop/Views/Widgets/card_widget.dart';
 
 import '../../../Controllers/body_metrics_controller.dart';
 import '../../../Models/body_metrics_model.dart';
 import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
 import '../WorkoutScheduling/Schedule.dart';
-
+import 'Male_goals_screen.dart';
 class Page4 extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return  MaterialApp(
       home: RegisterPage4F(),
     );
   }
 }
 
+
 class RegisterPage4F extends StatefulWidget {
   static String selectedGoal = '';
-
   const RegisterPage4F({Key? key}) : super(key: key);
-
   @override
   State<RegisterPage4F> createState() => _RegisterPageState();
 }
@@ -52,6 +51,7 @@ class _RegisterPageState extends State<RegisterPage4F> {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       home: Scaffold(
         backgroundColor: const Color(0xFF2C2A2A),
@@ -93,9 +93,12 @@ class _RegisterPageState extends State<RegisterPage4F> {
               onPressed: () async {
                 if (metrics != null) {
                   metrics!.fitnessGoal = RegisterPage4F.selectedGoal;
+
                   BodyMetricsController bodyMetricsController =
                   BodyMetricsController();
                   UserSingleton userSingleton = UserSingleton.getInstance();
+                  User_model user = userSingleton.getUser();
+                  await bodyMetricsController.generateWorkoutSchedule(metrics!,user);
                   bodyMetricsController.updateBodyMetrics(
                       userSingleton.getUser().bodyMetrics!, metrics!);
                   Navigator.push(
@@ -199,4 +202,7 @@ class _RegisterPageState extends State<RegisterPage4F> {
       ),
     );
   }
+
+
 }
+
