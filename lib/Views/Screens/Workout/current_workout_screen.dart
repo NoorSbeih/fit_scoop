@@ -52,6 +52,7 @@ class WorkoutPagee extends StatefulWidget {
 class _WorkoutPageState extends State<WorkoutPagee> {
   Workout? currentWorkout;
   WorkoutLog? log;
+  bool? isSame;
   int intensity = 0;
   String name = "";
   int duration = 0;
@@ -122,8 +123,10 @@ class _WorkoutPageState extends State<WorkoutPagee> {
 
           currentWorkout = await Calculate(metrics.workoutSchedule);
           log= await logController.getWorkoutLogByWorkoutId(currentWorkout!.id);
+          isSame=isSameDate(log!.time);
           print(currentWorkout?.id);
           print("log");
+          print(isSame);
           setState(() {
             WorkoutPagee.exercises = currentWorkout?.exercises ?? [];
             WorkoutPagee.copyExercisesToLog();
@@ -192,7 +195,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
     body: isLoading
     ? Center(child: CircularProgressIndicator())
         : currentWorkout != null
-    ? (log != null
+    ? (log != null && isSame==true
     ? buildFinishWorkoutContent()
         : buildWorkoutContent())
     : buildNoWorkoutContent(),
@@ -370,3 +373,10 @@ class _WorkoutPageState extends State<WorkoutPagee> {
     return 0;
   }
 }
+bool isSameDate(DateTime timeTakenDate ) {
+  DateTime currentDate = DateTime.now();
+  return timeTakenDate.year == currentDate.year &&
+      timeTakenDate.month == currentDate.month &&
+      timeTakenDate.day == currentDate.day;
+}
+
