@@ -188,12 +188,14 @@ class _WorkoutPageState extends State<WorkoutPagee> {
         ),
         centerTitle: true,
       ),
-      drawer: CustomDrawer(),
-      body: isLoading
-          ? Center(child: CircularProgressIndicator())
-          : currentWorkout != null &&  log==null
-          ? buildWorkoutContent()
-          : buildNoWorkoutContent(),
+    drawer: CustomDrawer(),
+    body: isLoading
+    ? Center(child: CircularProgressIndicator())
+        : currentWorkout != null
+    ? (log != null
+    ? buildFinishWorkoutContent()
+        : buildWorkoutContent())
+    : buildNoWorkoutContent(),
     );
   }
 
@@ -272,6 +274,27 @@ class _WorkoutPageState extends State<WorkoutPagee> {
           SizedBox(height: 10),
           Text(
             'No Workout for Today',
+            style: TextStyle(
+              fontSize: 18,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }  Widget buildFinishWorkoutContent() {
+    return const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.fitness_center,
+            size: 80,
+            color: Colors.grey,
+          ),
+          SizedBox(height: 10),
+          Text(
+            'Finished Your Workout for Today',
             style: TextStyle(
               fontSize: 18,
               color: Colors.white,
