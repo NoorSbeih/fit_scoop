@@ -1,6 +1,7 @@
 // services/database_services/body_metrics_service.dart
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fit_scoop/Services/Database%20Services/workout_schedule_service.dart';
 import 'package:fit_scoop/Views/Screens/Workout/current_workout_screen.dart';
 import '../../Models/body_metrics_model.dart';
 import '../../Models/user_model.dart';
@@ -27,7 +28,31 @@ class BodyMetricsService {
       throw e;
     }
   }
+  Future<void> updateWorkoutSchedule(String userId, String? metricsId, String gender, int? bodyLevel, String fitnessGoal) async {
+    // if 0 then A, if 1 then B, if 2 then C, if 3 then D
+    String bodyLevelString = '';
+    switch (bodyLevel) {
+      case 0:
+        bodyLevelString = 'A';
+        break;
+      case 1:
+        bodyLevelString = 'B';
+        break;
+      case 2:
+        bodyLevelString = 'C';
+        break;
+      case 3:
+        bodyLevelString = 'D';
+        break;
+    }
+    List<String> workoutSchedule = generateWorkoutSchedule(gender, bodyLevelString, fitnessGoal);
+    BodyMetrics? bodyMetrics = await getBodyMetrics(metricsId);
 
+    if (bodyMetrics != null) {
+      bodyMetrics.workoutSchedule = workoutSchedule;
+      await updateBodyMetrics(metricsId, bodyMetrics);
+    }
+  }
   Future<void> updateBodyMetrics(String? id,BodyMetrics bodyMetrics) async {
     try {
       await _bodyMetricsRef.doc(id).update(bodyMetrics.toMap());
@@ -60,6 +85,7 @@ class BodyMetricsService {
       //print('Error getting body metrics: $e');
       throw e;
     }
+
   }
   // Future<void> updateCurrentDay(String id) async {
   //   try {

@@ -252,8 +252,6 @@ class _createWorkout1 extends State<createWorkout1> {
                 deleteExercise(id);
               },
             );
-          } else {
-            return SizedBox(); // Placeholder widget, replace it with your preferred widget
           }
         },
       ),
