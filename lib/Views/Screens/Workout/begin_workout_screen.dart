@@ -193,7 +193,35 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
             padding: const EdgeInsets.only(top:20,left: 16.0, right: 16,bottom: 20),
             child: ElevatedButton(
               onPressed: () async {
-                addWorkoutLogs();
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+
+                    return AlertDialog(
+                      backgroundColor: Color(0xFF2C2A2A), // S
+                      content:  custom_widget.customTextWidget("Are you sure you want to end workout?", 18),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            addWorkoutLogs();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => HomePage()), // Replace SecondPage() with the desired page widget
+                            );
+                          },
+                          child: custom_widget.customTextWidget("YES", 18),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(false); // Pop the dialog and return false
+                          },
+                          child: custom_widget.customTextWidget("NO", 18),
+                        ),
+                      ],
+                    );
+                  },
+                );
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFA52A2A)),

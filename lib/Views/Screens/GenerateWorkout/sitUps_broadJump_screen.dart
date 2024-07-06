@@ -168,8 +168,8 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
                           sitUps:double.parse(selectedSitUp.text),
                           broadJump:double.parse(selectedBroadJump.text)
                       );
-                      //print("predictttt");
-                      //print(x);
+                      print("predictttt");
+                      print(x);
                       metrics.performanceLevel=x;
                       bodyMetricsController.updateBodyMetrics(user.bodyMetrics, metrics!);
                       if(metrics.gender.compareTo("Male")==0){
@@ -243,7 +243,7 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildNumberPicker(80, "", 25, 80, 120, selectedSitUp),
+        _buildNumberPicker(10, "", 5, 60, 80, selectedSitUp),
       ],
     );
   }
@@ -252,7 +252,7 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildNumberPicker(80, "cm", 25, 80, 120, selectedBroadJump),
+        _buildNumberPicker(100, "cm", 90, 400, 80, selectedBroadJump),
       ],
     );
   }

@@ -182,10 +182,10 @@ class _createWorkout1 extends State<createWorkout1> {
                   ),
                 ),
                 child: const Text(
-                  'Next',
+                  'NEXT',
                   style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
+                    fontSize: 22,
+                    color: Color(0xFF2C2A2A),
                   ),
                 ),
               ),

@@ -56,7 +56,7 @@ class exercises_card {
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        custom_widget.customTextWidgetForExersiceCard("Weight", 17), // Change color here
+                        custom_widget.customTextWidgetForExersiceCard("Reps", 17), // Change color here
                         const SizedBox(width: 20),
                         Expanded(
                           child: TextField(
