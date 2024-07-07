@@ -81,19 +81,18 @@ class ExerciseService {
   Future<List<Exercise>> getExercisesByMainMuscle(String mainMuscle,List<String> equipments) async {
 
       try {
-        List<Exercise> exercises = [];
-
-        // Fetch exercises based on the equipment
-        for (String equipment in equipments) {
-          QuerySnapshot equipmentSnapshot = await _exercisesRef
+        List<String> tempEquipment = equipments + ["body weight"];
+        List<Exercise> exercises=[];
+        for (String equipment in tempEquipment ) {
+          QuerySnapshot querySnapshot = await _exercisesRef
               .where('equipment', isEqualTo: equipment)
               .get();
-
-          List<Exercise> equipmentExercises = equipmentSnapshot.docs
-              .map((doc) => Exercise.fromMap(doc.id, doc.data() as Map<String, dynamic>))
+          List<Exercise> ex = querySnapshot.docs
+              .map((doc) =>
+              Exercise.fromMap(doc.id, doc.data() as Map<String, dynamic>))
               .toList();
+          exercises.addAll(ex);
 
-          exercises.addAll(equipmentExercises);
         }
 
         // Remove duplicates by converting to a set and back to a list
