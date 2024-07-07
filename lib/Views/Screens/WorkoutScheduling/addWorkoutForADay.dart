@@ -156,7 +156,6 @@ class _AddWorkoutForADayState extends State<AddWorkoutForADayy> {
                   name: createWorkout1.name,
                   description: createWorkout2.descriptionController.text,
                   exercises: addExercise.exercises,
-                  duration: 12,
                   intensity: createWorkout2.label,
                   creatorId: user.id,
                   numberOfSaves: 0,
