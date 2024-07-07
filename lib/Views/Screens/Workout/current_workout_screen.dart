@@ -52,7 +52,7 @@ class WorkoutPagee extends StatefulWidget {
 
 class _WorkoutPageState extends State<WorkoutPagee> {
   Workout? currentWorkout;
-
+  bool checkingLog=false;
   WorkoutLog? log;
   int intensity = 0;
   String name = "";
@@ -67,8 +67,6 @@ class _WorkoutPageState extends State<WorkoutPagee> {
     fetchData();
 
   }
-
-
 
 
   void fetchData() async {
@@ -87,6 +85,9 @@ class _WorkoutPageState extends State<WorkoutPagee> {
           log= await logController.getWorkoutLogByWorkoutId(currentWorkout!.id);
           print(currentWorkout?.id);
           print("log");
+
+
+
           setState(() {
             WorkoutPagee.exercises = currentWorkout?.exercises ?? [];
             WorkoutPagee.copyExercisesToLog();
@@ -155,7 +156,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
     body: isLoading
     ? Center(child: CircularProgressIndicator())
         : currentWorkout != null
-    ? (log != null
+    ? ((log!=null && checkTime(log!.time)==true)
     ? buildFinishWorkoutContent()
         : buildWorkoutContent())
     : buildNoWorkoutContent(),
@@ -333,4 +334,16 @@ class _WorkoutPageState extends State<WorkoutPagee> {
     }
     return 0;
   }
+  bool checkTime(DateTime timeTaken) {
+
+    DateTime now = DateTime.now();
+
+    bool isSameDay = (timeTaken.year == now.year &&
+        timeTaken.month == now.month &&
+        timeTaken.day == now.day);
+
+    print(isSameDay);
+    return isSameDay;
+  }
+
 }
