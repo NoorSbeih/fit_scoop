@@ -1,22 +1,16 @@
-import 'package:fit_scoop/Controllers/user_controller.dart';
+
 import 'package:fit_scoop/Models/bodyMetricsSingleton.dart';
 import 'package:fit_scoop/Models/body_metrics_model.dart';
 import 'package:fit_scoop/Models/user_model.dart';
 import 'package:fit_scoop/Models/user_singleton.dart';
 import 'package:fit_scoop/Views/Screens/Equipments/equipment_sceen.dart';
-import 'package:fit_scoop/Views/Screens/Update/femaleGoalsUpdate.dart';
-import 'package:fit_scoop/Views/Screens/Update/goalsUpdate.dart';
 import 'package:fit_scoop/Views/Screens/add/addExercise.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../Controllers/authentication_controller.dart';
 import '../Screens/GenerateWorkout/diastolic_systolic_screen.dart';
-import '../Screens/Registration pages/body_fat_screen.dart';
 import '../Screens/Update/bodyFatUpdate.dart';
 import '../Screens/Update/gymType.dart';
-import '../Screens/Update/maleGoalsUpdate.dart';
 import '../Screens/Update/unitOfMeasureUpdate.dart';
 import '../Screens/Update/weight_HeightUpdate.dart';
 import '../Screens/login_screen.dart';
@@ -70,23 +64,67 @@ class _CustomDrawerState extends State<CustomDrawer> {
         children: <Widget>[
           Container(
             height: 200.0,
-            padding: EdgeInsets.only(top: 50),
+            padding: const EdgeInsets.only(
+              top: 50,
+              left: 20,
+              right: 20,
+
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Flexible(
-                  child: SvgPicture.asset(
-                    'images/FITscoop2.svg',
-                    color: Color(0xFF0dbab4),
+                  child: Image.asset(
+                    'images/FITscoop2.png',
+                    height: 1000, // Adjust the height as needed
+                    width: 1000,
                     fit: BoxFit.fitWidth,
                   ),
                 ),
+                const Divider( // Add a Divider below the image
+                  color: Colors.grey,
+                  thickness: 2,
+                  height: 20,
+                ),
+
               ],
             ),
           ),
+          Center(
+            child: Container(
+              margin: EdgeInsets.symmetric(vertical: 5),
+              width: 275,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Color(0xFF0dbab4),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.red, width: 0),
+              ),
+              child: Center(
+                child: ListTile(
+                  leading: Icon(Icons.fitness_center, color: Color(0xFF2C2A2A)),
+                  title: const Text(
+                    'GENERATE WORKOUT',
+                    style: TextStyle(
+                      color: Color(0xFF2C2A2A),
+                      fontSize: 25,
+                      fontFamily: 'BebasNeue',
+                    ),
+                  ),
+                  onTap: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => DiastolicSystolicScreen()),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 15),
 
           ListTile(
-
             title: const Text(
               'GYM EQUIPMENT',
               style: TextStyle(
@@ -95,7 +133,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 10),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -147,6 +184,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     underlineThickness: 2.0,
                   ),
                 ),
+                SizedBox(height: 10),
               ],
             ),
           ),
@@ -159,33 +197,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 10),
-                GestureDetector(
-                  onTap: () {
-                    // Navigate to a new page when the text is tapped
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UnitOfMeasure(
-                          onUpdateUnit: (unit) {
-                            setState(() {
-                              metrics.unitOfMeasure = unit;
-                            });
-                          },
-                        ),
-                      ),
-                    );
-                  },
-                  child: CustomUnderlineText(
-                    text: 'UNIT OF MEASURE:${metrics.unitOfMeasure}',
-                    fontSize: 22,
-                    textColor: Colors.white,
-                    underlineColor: Colors.grey,
-                    underlinePadding: 2.0,
-                    underlineThickness: 2.0,
-                  ),
-                ),
-                SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
                     // Navigate to a new page when the text is tapped
@@ -265,45 +276,51 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     underlineThickness: 2.0,
                   ),
                 ),
+                SizedBox(height: 10),
+              ],
+            ),
+          ),
+          ListTile(
+            title: const Text(
+              'PREFERENCES',
+              style: TextStyle(
+                  color: Colors.grey, fontSize: 25, fontFamily: 'BebasNeue'),
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to a new page when the text is tapped
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UnitOfMeasure(
+                          onUpdateUnit: (unit) {
+                            setState(() {
+                              metrics.unitOfMeasure = unit;
+                            });
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                  child: CustomUnderlineText(
+                    text: 'UNIT OF MEASURE:${metrics.unitOfMeasure}',
+                    fontSize: 22,
+                    textColor: Colors.white,
+                    underlineColor: Colors.grey,
+                    underlinePadding: 2.0,
+                    underlineThickness: 2.0,
+                  ),
+                ),
               ],
             ),
           ),
           Center(
             child: Container(
-              margin: EdgeInsets.symmetric(vertical: 5),
-              width: 250,
-              height: 50,
-              decoration: BoxDecoration(
-                color: Color(0xFF0dbab4),
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.red, width: 0),
-              ),
-              child: Center(
-                child: ListTile(
-                  leading: Icon(Icons.fitness_center, color: Color(0xFF2C2A2A)),
-                  title: const Text(
-                    'GENERATE WORKOUT',
-                    style: TextStyle(
-                      color: Color(0xFF2C2A2A),
-                      fontSize: 25,
-                      fontFamily: 'BebasNeue',
-                    ),
-                  ),
-                  onTap: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => DiastolicSystolicScreen()),
-                    );
-                  },
-                ),
-              ),
-            ),
-          ),
-          Center(
-            child: Container(
-              margin: EdgeInsets.symmetric(vertical: 5),
-              width: 250,
+              margin: EdgeInsets.only(top: 60),
+              width: 275,
               // Set the width of the Container
               height: 50,
               // Set the height of the Container
@@ -318,6 +335,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   title: const Text(
                     'Log Out',
                     style: TextStyle(
+
                       color: Colors.black,
                       fontSize: 25,
                       fontFamily: 'BebasNeue',

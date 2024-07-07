@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'login_screen.dart';
 import 'register_screen.dart';
 
@@ -20,18 +19,21 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: deviceWidth(context) * 0.5),
+          SizedBox(height: deviceWidth(context) * 1.4),
           Padding(
-            padding: EdgeInsets.only(left: deviceWidth(context) * 0.004),
-              child:SvgPicture.asset(
-                'images/FITscoop2.svg',
-                color: Color(0xFF0dbab4),
-                height: deviceHeight(context) * 0.5, // Adjust the height as needed
-                //fit: BoxFit.fitWidth,
+            padding: EdgeInsets.only(
+              left: deviceWidth(context) * 0.05,
+              right: deviceWidth(context) * 0.05,
+            ),
+              child:Image.asset(
+                'images/FITscoop2.png',
+                height: deviceHeight(context) * 0.2, // Adjust the height as needed
+                width: deviceWidth(context) * 0.8, // Adjust the width as needed
+                fit: BoxFit.fitWidth,
               ),
           ),
           Padding(
-            padding: EdgeInsets.only(left: deviceWidth(context) * 0.08),
+            padding: EdgeInsets.only(left: deviceWidth(context) * 0.05),
             child: const Text(
               "Your Daily Dose of Fitness",
               style: TextStyle(
@@ -41,11 +43,15 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           ),
-          const SizedBox(height: 60),
+          const SizedBox(height: 40),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.all(15),
+                padding:EdgeInsets.only(
+
+                  right: deviceWidth(context) * 0.08,
+                ),
                 child: ElevatedButton(
                   onPressed: () {
                     //print('Sign up');
@@ -59,6 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
                         const Color(0xFF00DBAB4)), // Change color to blue
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0), // Adjust border radius here
+                      ),
+                    ),
                     fixedSize:
                         MaterialStateProperty.all<Size>(const Size(150, 60)),
                   ),
@@ -72,7 +83,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: EdgeInsets.only(
+
+                  left: deviceWidth(context) * 0.08
+                ),
                 child: ElevatedButton(
                   onPressed: () {
                     // Corrected function body
@@ -85,15 +99,20 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color(0xFF00DBAB4)), // Change color to blue
+                        const Color(0xFF2C2A2A)), // Change color to blue
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0), // Adjust border radius here
+                      ),
+                    ),
                     fixedSize:
                         MaterialStateProperty.all<Size>(const Size(150, 60)),
                   ),
                   child: const Text(
-                    'Sign in',
+                    'Sign in >',
                     style: TextStyle(
                       fontSize: 20,
-                      color: Color(0xFF2C2A2A),
+                      color: Color(0xFFFFFFFF),
                     ),
                   ),
                 ),
