@@ -30,17 +30,10 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
   @override
   void initState() {
     super.initState();
-    fetchBodyParts();
-    preloadImages();
     _startTimer();
 
   }
 
-  void preloadImages() async {
-    for (var exercise in WorkoutPagee.exercises) {
-      await getImageUrl(exercise);
-    }
-  }
 
   void updateRemainingSets(int index, int newCount) {
     setState(() {
@@ -49,40 +42,6 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
     });
   }
 
-  Future<void> fetchBodyParts() async {
-    try {
-      ExerciseController controller = ExerciseController();
-      List<BodyPart> equipments = await controller.getAllBoyImages();
-      setState(() {
-        parts = equipments;
-      });
-
-    } catch (e) {
-      //print('Error fetching data: $e');
-    }
-  }
-
-
-  Future<String> getImageUrl(Map<String, dynamic> exerciseData) async {
-    String id = exerciseData['id'];
-    if (cachedImageUrls.containsKey(id)) {
-      return cachedImageUrls[id]!;
-    }
-
-    ExerciseController controller = ExerciseController();
-    Exercise? fetchedExercise = await controller.getExercise(id);
-    String? bodyPart = fetchedExercise?.bodyPart;
-    String? target = fetchedExercise?.target;
-
-    // Assuming parts is populated correctly in fetchBodyParts
-    for (int i = 0; i < parts.length; i++) {
-      if (parts[i].name == bodyPart || parts[i].name == target) {
-        cachedImageUrls[id] = parts[i].imageUrl;
-        return parts[i].imageUrl;
-      }
-    }
-    return ""; // Return a default value if no image URL is found
-  }
 
 
   void _startTimer() {
@@ -259,7 +218,7 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
         final name = exercise['name'];
         final sets = exercise['sets'];
         final weight = exercise['weight'];
-
+        final imageUrl = exercise['imageUrl'];
 
         if (name != null && sets != null && weight != null) {
           return BeginWorkoutCardWidget(
@@ -268,7 +227,7 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
             weight: weight.toString(),
             id: id,
             duration: 45,
-            imageUrl:getImageUrl(exercise),
+            imageUrl:imageUrl.toString(),
             remainingSets: remainingSets[index],
             onRemainingCountChanged: (int newCount) {
               updateRemainingSets(index, newCount);
