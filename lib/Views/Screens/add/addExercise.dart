@@ -133,15 +133,16 @@ class _addExercise extends State<addExercise> with SingleTickerProviderStateMixi
         labelStyle: TextStyle(fontWeight: FontWeight.bold),
         indicatorColor: const Color(0xFF0dbab4),
         tabs: const [
-          Tab(text: 'ALPHABETICAL'),
           Tab(text: 'MUSCLE GROUP'),
+          Tab(text: 'ALPHABETICAL')
         ],
       ),
       body: TabBarView(
         controller: _tabController,
         children: [
-          alphabeticalTabContent(),
           muscleGroupTabContent(),
+          alphabeticalTabContent(),
+
         ],
       ),
     );
