@@ -13,6 +13,7 @@ import '../Screens/Update/bodyFatUpdate.dart';
 import '../Screens/Update/gymType.dart';
 import '../Screens/Update/unitOfMeasureUpdate.dart';
 import '../Screens/Update/weight_HeightUpdate.dart';
+import '../Screens/home_page_screen.dart';
 import '../Screens/login_screen.dart';
 
 class CustomDrawer extends StatefulWidget {
@@ -39,7 +40,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.clear();
     Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => Login()),
+      MaterialPageRoute(builder: (context) => MyHomePage(title: '',)),
       (Route<dynamic> route) => false,
     );
   }
@@ -204,6 +205,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => Weight_HeightUpdate(
+                          initialWeight: metrics.weight,
+                          initialHeight: metrics.height,
                           onUpdateWeightHeight: (weight, height) {
                             setState(() {
                               metrics.weight = weight;
@@ -231,6 +234,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => Weight_HeightUpdate(
+                          initialWeight: metrics.weight,
+                          initialHeight: metrics.height,
                           onUpdateWeightHeight: (weight, height) {
                             setState(() {
                               metrics.weight = weight;

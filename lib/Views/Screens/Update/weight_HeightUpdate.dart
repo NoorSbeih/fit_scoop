@@ -21,10 +21,16 @@ class Weight_HeightUpdate extends StatefulWidget {
   static double weightresult = 0;
   static String textResultHeight = "";
   static String textResultWeight = "";
+  final double initialWeight;
+  final double initialHeight;
 
   final Function(double, double) onUpdateWeightHeight;
 
-  Weight_HeightUpdate({Key? key, required this.onUpdateWeightHeight})
+  Weight_HeightUpdate({Key? key,
+    required this.initialWeight,
+    required this.initialHeight,
+    required this.onUpdateWeightHeight,
+  })
       : super(key: key);
 
   @override
@@ -44,6 +50,8 @@ class _Weight_HeightUpdate extends State<Weight_HeightUpdate> {
   void _loadPreferences() async {
     BodyMetricsSingleton singleton = BodyMetricsSingleton.getInstance();
     BodyMetrics metrics = singleton.getMetrices();
+    Weight_HeightUpdate.heightresult = widget.initialHeight;
+    Weight_HeightUpdate.weightresult = widget.initialWeight;
     selectedHeight.text = metrics.height.toString();
     selectedWeight.text = metrics.weight.toString();
     String? unitOfMeasure = metrics.unitOfMeasure;

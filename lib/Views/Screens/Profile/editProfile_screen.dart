@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fit_scoop/Controllers/user_controller.dart';
 import 'package:fit_scoop/Views/Screens/Profile/profile_screen.dart';
 
@@ -60,13 +61,19 @@ class _EditProfile extends State<EditProfile> {
       this.imageUrl = imageUrl;
     });
   }
+  Future<String> uploadImageToStorage(Uint8List image) async {
+    String userId = widget.user.id; // Use the user's ID or any unique identifier
+    Reference ref = FirebaseStorage.instance.ref().child('userImages').child(userId);
+    UploadTask uploadTask = ref.putData(image);
+    TaskSnapshot snap = await uploadTask;
+    String downloadUrl = await snap.ref.getDownloadURL();
+    return downloadUrl;
+  }
 
 
 
   void saveProfile() async {
     UserController controller = UserController();
-    BodyMetricsController controller2 = BodyMetricsController();
-
     bool isNameChanged = initialName != this.controller.text;
     bool isBioChanged = initialBio != bioController.text;
     bool isImageChanged = image != null;
@@ -84,6 +91,8 @@ class _EditProfile extends State<EditProfile> {
 
 
     if (isImageChanged) {
+      String imageUrl = await uploadImageToStorage(image!);
+      widget.user.imageLink = imageUrl;
       await controller.updateProfileImage(image!, widget.user.id);
       hasChanges = true;
     }

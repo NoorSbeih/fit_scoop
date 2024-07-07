@@ -97,9 +97,8 @@ class UserController {
     try {
       String? imageUrl = await _userService.saveData(image, userId);
       if (imageUrl != null) {
-        // Update user document with the image URL
-        // Here you would typically call a method in your user repository or service to update the user document
-        //print('Image uploaded successfully. Image URL: $imageUrl');
+
+        print('Image uploaded successfully. Image URL: $imageUrl');
       } else {
         //print('Error uploading image');
       }
