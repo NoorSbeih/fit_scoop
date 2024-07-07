@@ -197,7 +197,7 @@ class _CommunitySearchWorkoutWidgetState extends State<CommunitySearchWorkoutWid
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              '${widget.workout.duration} MINS | ${widget.workout.exercises.length} EXERCISES',
+                              ' ${widget.workout.exercises.length} EXERCISES',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,

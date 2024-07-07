@@ -93,7 +93,6 @@ class _WorkoutPageState extends State<WorkoutPagee> {
             WorkoutPagee.copyExercisesToLog();
             intensity = checkIntensity(currentWorkout?.intensity ?? '');
             name = currentWorkout?.name ?? '';
-            duration = currentWorkout?.duration ?? 0;
             isLoading = false;
           });
         } else {

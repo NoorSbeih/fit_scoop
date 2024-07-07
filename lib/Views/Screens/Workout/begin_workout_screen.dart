@@ -226,7 +226,6 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
             sets: sets.toString(),
             weight: weight.toString(),
             id: id,
-            duration: 45,
             imageUrl:imageUrl.toString(),
             remainingSets: remainingSets[index],
             onRemainingCountChanged: (int newCount) {
@@ -248,7 +247,6 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
           userId: user.id,
           workoutId: WorkoutPagee.currentWorkoutId,
           time: DateTime.now(),
-          duration: Duration(minutes: 60),
           exercisesPerformed: getPerformedExercises()
 
       );

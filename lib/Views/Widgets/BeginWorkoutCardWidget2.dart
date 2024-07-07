@@ -8,7 +8,6 @@ class BeginWorkoutCardWidget2 extends StatelessWidget {
   final String sets;
   final String weight;
   final String id;
-  final int duration;
   final int remainingSets;
   String imageUrl;
   final ValueChanged<int> onRemainingCountChanged;
@@ -19,7 +18,6 @@ class BeginWorkoutCardWidget2 extends StatelessWidget {
     required this.sets,
     required this.weight,
     required this.id,
-    required this.duration,
     required this.imageUrl,
     required this.remainingSets,
 
@@ -45,7 +43,6 @@ class BeginWorkoutCardWidget2 extends StatelessWidget {
           child: ExerciseDetailsPage(
             id: id,
             sets: sets,
-            duration: duration,
             onRemainingCountChanged: onRemainingCountChanged,
           ),
         );

@@ -12,7 +12,6 @@ class Workout {
   final String name;
   final String description;
   final List<Map<String,dynamic>> exercises;
-  final int duration;
   final String intensity;
   final String creatorId;
    int numberOfSaves;
@@ -27,7 +26,6 @@ class Workout {
     required this.name,
     required this.description,
     required this.exercises,
-    required this.duration,
     required this.intensity,
     required this.creatorId,
     required this.numberOfSaves,
@@ -47,7 +45,6 @@ class Workout {
         name: name,
         description: description,
         exercises: exercises,
-        duration: duration,
         intensity: intensity,
         creatorId: creatorId,
         numberOfSaves: newNumberOfSaves,
@@ -79,7 +76,6 @@ class Workout {
         'imageUrl':exercise['imageUrl']
 
       }).toList(),
-      'duration': duration,
       'intensity': intensity,
       'creatorId': creatorId,
       'numberOfSaves': numberOfSaves,
@@ -96,7 +92,6 @@ class Workout {
       name: map['name'],
       description: map['description'],
       exercises: parseExercises(map['exercises']),
-      duration: map['duration'],
       intensity: map['intensity'],
       creatorId: map['creatorId'],
       numberOfSaves: map['numberOfSaves'],

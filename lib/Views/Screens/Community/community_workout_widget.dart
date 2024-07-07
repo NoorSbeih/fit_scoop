@@ -132,7 +132,7 @@ class communityWorkoutWidget {
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              '${workout.duration} MINS | ${workout.exercises.length} EXERCISES',
+                              '${workout.exercises.length} EXERCISES',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,

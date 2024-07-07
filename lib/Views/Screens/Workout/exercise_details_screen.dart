@@ -8,14 +8,12 @@ import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 class ExerciseDetailsPage extends StatefulWidget {
   final String id;
   final String sets;
-  final int duration;
   final ValueChanged<int> onRemainingCountChanged;
 
   const ExerciseDetailsPage({
     Key? key,
     required this.id,
     required this.sets,
-    required this.duration,
     required this.onRemainingCountChanged,
   }) : super(key: key);
 
