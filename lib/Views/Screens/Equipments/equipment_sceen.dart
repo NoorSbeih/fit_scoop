@@ -119,8 +119,10 @@ class _EquipmentPageState extends State<EquipmentPage>
       List<String> deselectedEquipmentIds = previouslySelectedEquipmentIds.where((id) => !allSelectedEquipmentIds.contains(id)).toList();
       userController.unsaveEquipments(user.id, deselectedEquipmentIds);
       userController.saveEquipments(user.id, allSelectedEquipmentIds);
-
       widget.onUpdateEquipments(allSelectedEquipmentIds.length.toString());
+      Navigator.pop(context);
+
+
       //print('Equipments saved successfully');
     } catch (e) {
       //print('Error saving equipments: $e');

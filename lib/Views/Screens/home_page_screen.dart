@@ -19,7 +19,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: deviceWidth(context) * 1.4),
+          SizedBox(height: deviceWidth(context) * 1.2),
           Padding(
             padding: EdgeInsets.only(
               left: deviceWidth(context) * 0.05,

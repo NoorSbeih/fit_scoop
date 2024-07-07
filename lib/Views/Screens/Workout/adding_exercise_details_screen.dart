@@ -83,7 +83,7 @@ class _AddingExerciseDetailsPageState extends State<AddingExerciseDetailsPage> {
             Padding(
               padding: EdgeInsets.all(16.0), // Adjust padding as needed
               child: Container(
-                height: 200, // Set the height of the image
+                height: 300, // Set the height of the image
                 width: 600, // Set the width of the image
                 child: url.isNotEmpty
                     ? Image.network(url)
