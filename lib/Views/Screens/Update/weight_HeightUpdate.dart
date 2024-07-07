@@ -49,7 +49,7 @@ class _Weight_HeightUpdate extends State<Weight_HeightUpdate> {
     String? unitOfMeasure = metrics.unitOfMeasure;
     setState(() {
       //print("unit");
-      //print(metrics.unitOfMeasure);
+      print(metrics.unitOfMeasure);
       _selectedValue = unitOfMeasure;
     });
   }
@@ -80,7 +80,7 @@ class _Weight_HeightUpdate extends State<Weight_HeightUpdate> {
               alignment: Alignment.centerLeft,
               child: update_widget.customTextWidget(
                   "Entering your weight and height is essential for determining the bet workouts as well as tracking your progress.",
-                  15),
+                  17),
             ), // Add padding from the bottom only
           ),
           Padding(
@@ -109,7 +109,7 @@ class _Weight_HeightUpdate extends State<Weight_HeightUpdate> {
               )),
           Padding(
             padding: EdgeInsets.all(15),
-            child: _selectedValue == 'Imperial'
+            child: _selectedValue == 'imperial'
                 ? _buildImperialPicker(context)
                 : _buildMetricPicker(context),
           ),
@@ -140,7 +140,7 @@ class _Weight_HeightUpdate extends State<Weight_HeightUpdate> {
               )),
           Padding(
             padding: EdgeInsets.all(15),
-            child: _selectedValue == 'Imperial'
+            child: _selectedValue == 'imperial'
                 ? _buildImperialWeightPicker(context)
                 : _buildMetricWeightPicker(context),
           ),

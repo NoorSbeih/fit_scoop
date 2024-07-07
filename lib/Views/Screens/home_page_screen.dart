@@ -19,7 +19,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: deviceWidth(context) * 1.4),
+          SizedBox(height: deviceWidth(context) * 1.2),
           Padding(
             padding: EdgeInsets.only(
               left: deviceWidth(context) * 0.05,
@@ -38,40 +38,100 @@ class _MyHomePageState extends State<MyHomePage> {
               "Your Daily Dose of Fitness",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 22,
+                fontSize: 24,
                 fontFamily: 'BebasNeues',
               ),
             ),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 30),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: <Widget>[
+          //     Padding(
+          //       padding:EdgeInsets.only(
+          //
+          //         right: deviceWidth(context) * 0.08,
+          //       ),
+          //       child: ElevatedButton(
+          //         onPressed: () {
+          //           //print('Sign up');
+          //           Navigator.push(
+          //             context,
+          //             MaterialPageRoute(
+          //                 builder: (context) =>
+          //                     Register()), // Replace SecondPage() with the desired page widget
+          //           );
+          //         },
+          //         style: ButtonStyle(
+          //           backgroundColor: MaterialStateProperty.all<Color>(
+          //               const Color(0xFF0dbab4)), // Change color to blue
+          //           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          //             RoundedRectangleBorder(
+          //               borderRadius: BorderRadius.circular(10.0), // Adjust border radius here
+          //             ),
+          //           ),
+          //           fixedSize:
+          //               MaterialStateProperty.all<Size>(const Size(150, 60)),
+          //         ),
+          //         child: const Text(
+          //           'Sign up',
+          //           style: TextStyle(
+          //             fontSize: 20,
+          //             color: Color(0xFF2C2A2A),
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //     Padding(
+          //       padding: EdgeInsets.only(
+          //
+          //         left: deviceWidth(context) * 0.08
+          //       ),
+          //       child: ElevatedButton(
+          //         onPressed: () {
+          //
+          //           Navigator.push(
+          //             context,
+          //             MaterialPageRoute(builder: (context) => Login()),
+          //           );
+          //         },
+          //         style: ButtonStyle(
+          //           backgroundColor: MaterialStateProperty.all<Color>(
+          //               const Color(0xFF0dbab4)), // Change color to blue
+          //           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          //             RoundedRectangleBorder(
+          //             borderRadius: BorderRadius.circular(10.0), // Adjust border radius here
+          //             ),
+          //           ),
+          //           fixedSize:
+          //               MaterialStateProperty.all<Size>(const Size(150, 60)),
+          //         ),
+          //         child: const Text(
+          //           'Sign in >',
+          //           style: TextStyle(
+          //             fontSize: 20,
+          //             color: Color(0xFF2C2A2A),
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding:EdgeInsets.only(
-
-                  right: deviceWidth(context) * 0.08,
-                ),
+                padding: const EdgeInsets.only(left:20,right:5),
                 child: ElevatedButton(
                   onPressed: () {
-                    //print('Sign up');
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              Register()), // Replace SecondPage() with the desired page widget
+                      MaterialPageRoute(builder: (context) => Register()),
                     );
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color(0xFF00DBAB4)), // Change color to blue
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0), // Adjust border radius here
-                      ),
-                    ),
-                    fixedSize:
-                        MaterialStateProperty.all<Size>(const Size(150, 60)),
+                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF00DBAB4)),
+                    fixedSize: MaterialStateProperty.all<Size>(const Size(150, 60)),
                   ),
                   child: const Text(
                     'Sign up',
@@ -83,36 +143,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(
-
-                  left: deviceWidth(context) * 0.08
-                ),
+                padding: const EdgeInsets.all(10.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    // Corrected function body
-                    //print('Sign in');
-
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => Login()),
                     );
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color(0xFF2C2A2A)), // Change color to blue
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0), // Adjust border radius here
-                      ),
-                    ),
-                    fixedSize:
-                        MaterialStateProperty.all<Size>(const Size(150, 60)),
+                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF00DBAB4)),
+                    fixedSize: MaterialStateProperty.all<Size>(const Size(150, 60)),
                   ),
                   child: const Text(
-                    'Sign in >',
+                    'Sign in',
                     style: TextStyle(
                       fontSize: 20,
-                      color: Color(0xFFFFFFFF),
+                      color: Color(0xFF2C2A2A),
                     ),
                   ),
                 ),

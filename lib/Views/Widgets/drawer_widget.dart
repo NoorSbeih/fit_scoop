@@ -122,7 +122,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               ),
             ),
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 10),
 
           ListTile(
             title: const Text(
@@ -319,7 +319,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ),
           Center(
             child: Container(
-              margin: EdgeInsets.only(top: 60),
+              margin: EdgeInsets.only(top: 2),
               width: 275,
               // Set the width of the Container
               height: 50,

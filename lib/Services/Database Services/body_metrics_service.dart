@@ -14,7 +14,7 @@ class BodyMetricsService {
     try {
       DocumentReference documentRef = await _bodyMetricsRef.add(bodyMetrics.toMap());
       String documentId = documentRef.id;
-     await _usersRef.doc(bodyMetrics.userId).update({'bodyMetrics':documentId});
+      await _usersRef.doc(bodyMetrics.userId).update({'bodyMetrics':documentId});
       DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('users').doc(bodyMetrics.userId).get();
       Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
 
