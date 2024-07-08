@@ -31,6 +31,19 @@ class RegisterController {
       throw 'Error saving data: $error'; // Throw the error to propagate it up
     }
   }
+
+
+  Future<void> storeGoogleRegisterData(User user, String name) async {
+    try {
+      userId = user.uid; // Get the newly created user ID
+      model.User_model usermodel = model.User_model(id: userId, name: name, email: user.email!);
+
+      await _userService.addUser(usermodel);
+    } catch (error) {
+      throw 'Error saving data: $error'; // Throw the error to propagate it up
+    }
+  }
+
   Future<String?> getUserBodyMetric(String user_id) async {
     try {
       CollectionReference users = FirebaseFirestore.instance.collection('users');

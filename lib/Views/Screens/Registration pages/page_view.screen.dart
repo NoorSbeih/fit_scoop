@@ -196,6 +196,8 @@ class _CustomPageViewState extends State<CustomPageView> {
     UserController userController= UserController();
 
     userController.saveEquipments(RegisterController.userId, selectedEquipmentIds);
+    print("djjdjdjd");
+    print(RegisterController.userId);
     BodyMetricsController _bodyMetricController=new BodyMetricsController();
     String id=RegisterController.userId;
     String dateString = RegisterPage1.formateddate;

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_scoop/Controllers/register_controller.dart';
 import 'package:fit_scoop/Views/Screens/Registration%20pages/page_view.screen.dart';
 import 'package:fit_scoop/Views/Screens/login_screen.dart';
@@ -362,15 +363,20 @@ class _RegisterPageState extends State<RegisterPage> {
             Padding(
               padding: const EdgeInsets.only(left: 8, right: 8),
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   AuthenticationService auth = AuthenticationService();
-                  auth.signUpWithGoogle(context, mounted);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            CustomPageView()), // Replace SecondPage() with the desired page widget
-                  );
+                  User? user=  await auth.signUpWithGoogle(context, mounted);
+                  if (user != null) {
+                    RegisterController register = RegisterController();
+                    register.storeGoogleRegisterData(
+                        user, user.displayName ?? 'User');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              CustomPageView()), // Replace SecondPage() with the desired page widget
+                    );
+                  }
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(

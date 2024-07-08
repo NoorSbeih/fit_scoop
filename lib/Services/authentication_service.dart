@@ -8,6 +8,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Models/user_model.dart' as model;
+import '../Views/Screens/main_page_screen.dart';
 import 'Database Services/user_service.dart';
 
 class AuthenticationService {
@@ -50,34 +51,32 @@ class AuthenticationService {
 
 
 
-  Future<void> signUpWithGoogle(BuildContext context, bool mounted) async {
-    final googleSignIn = GoogleSignIn();
-    final googleUser = await googleSignIn.signIn();
-    if (googleUser == null) return;
 
-    final googleAuth = await googleUser.authentication;
-
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-
+  Future<User?> signUpWithGoogle(BuildContext context, bool mounted) async {
     try {
-      final authResult = await FirebaseAuth.instance.signInWithCredential(credential);
-
-      if (authResult.additionalUserInfo!.isNewUser) {
-        await saveUserDataToDatabase(authResult.user!);
+      final googleSignIn = GoogleSignIn();
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      if (googleUser == null) {
+        // The user canceled the sign-in
+        return null;
       }
 
-      // Save user authentication state
-      await _persistUser(authResult.user!);
+      final GoogleSignInAuthentication googleAuth =
+      await googleUser.authentication;
 
-      // Show success message
-    } catch (e) {
-      // Handle errors
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final UserCredential userCredential =
+      await _auth.signInWithCredential(credential);
+      return userCredential.user;
+    } catch (error) {
+      print('Error signing in with Google: $error');
+      return null;
     }
   }
-
   Future<void> saveUserDataToDatabase(User user) async {
     try {
       final UserService _userService = UserService();
@@ -120,6 +119,32 @@ class AuthenticationService {
     }
   }
 
+  // Sign in with Google
+  Future<User?> signInWithGoogle(BuildContext context) async {
+    try {
+      final googleSignIn = GoogleSignIn();
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      if (googleUser != null) {
+        final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+        final UserCredential userCredential =
+        await _auth.signInWithCredential(credential);
+        return userCredential.user;
+        // Navigate to the desired page after sign in
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+      }
+    } catch (e) {
+      // Handle sign in errors
+      print('Error signing in with Google: $e');
+    }
+  }
 
   // Sign Out
   Future<void> signOut() async {

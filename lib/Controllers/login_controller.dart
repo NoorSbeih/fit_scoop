@@ -63,6 +63,31 @@ class LoginController {
       return null;
     }
   }
+
+
+  Future<String?> getUserBodyMetricGmail(String id) async {
+    try {
+      CollectionReference users = FirebaseFirestore.instance.collection('users');
+      DocumentSnapshot snapshot = await users.doc(id).get();
+      if (snapshot.exists) {
+        Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+        User_model user = User_model.fromMap(data!);
+        UserSingleton.getInstance().setUser(user);
+        final String? bodyMetrics = data?['bodyMetrics'];
+        BodyMetricsController controller = BodyMetricsController();
+        //print(UserSingleton.getInstance().getUser().id);
+        BodyMetrics? bodyMetricss = await controller.fetchBodyMetrics(UserSingleton.getInstance().getUser().bodyMetrics);
+        BodyMetricsSingleton.getInstance().setBodyMetrics(bodyMetricss!);
+        return bodyMetrics;
+      } else {
+        //print('No data available for user_id: $user_id');
+        return null;
+      }
+    } catch (error) {
+      //print('Error fetching user data: $error');
+      return null;
+    }
+  }
 }
 
 

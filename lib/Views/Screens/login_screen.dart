@@ -1,9 +1,10 @@
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_scoop/Views/Screens/register_screen.dart';
 import 'package:fit_scoop/Views/Screens/reset_password.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../Controllers/exercise_controller.dart';
 import '../../Controllers/login_controller.dart';
@@ -15,10 +16,8 @@ import '../../Services/email.dart';
 import 'main_page_screen.dart';
 import 'Workout/current_workout_screen.dart';
 
-
 class Login extends StatelessWidget {
   const Login({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +32,11 @@ class Login extends StatelessWidget {
   }
 }
 
-
 class LoginPage extends StatefulWidget {
-
   const LoginPage({super.key, required this.title});
-  final String title;
-  static List<BodyPart> parts=[];
 
+  final String title;
+  static List<BodyPart> parts = [];
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -50,17 +47,14 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   String emailErrorText = '';
   String _passwordErrorText = '';
-  bool passwordVisible=false;
-
+  bool passwordVisible = false;
 
   @override
   void initState() {
     super.initState();
-    passwordVisible=false;
+    passwordVisible = false;
     fetchBodyParts();
   }
-
-
 
   Future<void> fetchBodyParts() async {
     try {
@@ -69,12 +63,10 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         LoginPage.parts = equipments;
       });
-
     } catch (e) {
       //print('Error fetching data: $e');
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Padding(
-              padding:const EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: 8,
                 left: 15,
                 right: 15,
@@ -131,36 +123,38 @@ class _LoginPageState extends State<LoginPage> {
                 },
               ),
             ),
-
             Padding(
-              padding:const EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: 8,
                 left: 15,
                 right: 15,
                 bottom: 8,
               ),
-              child:TextField(
+              child: TextField(
                 obscureText: !passwordVisible,
-                decoration:  InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Password',
-                  labelStyle: TextStyle(color:Colors.white, fontSize: 14),
-                  errorText: _passwordErrorText.isNotEmpty ? _passwordErrorText : null,
+                  labelStyle: TextStyle(color: Colors.white, fontSize: 14),
+                  errorText:
+                      _passwordErrorText.isNotEmpty ? _passwordErrorText : null,
                   suffixIcon: IconButton(
-                  icon: Icon(passwordVisible? Icons.visibility: Icons.visibility_off),
-                  onPressed: () {
-                   setState(() {
-                   passwordVisible = !passwordVisible;
-                   });
-                   },
+                    icon: Icon(passwordVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off),
+                    onPressed: () {
+                      setState(() {
+                        passwordVisible = !passwordVisible;
+                      });
+                    },
                   ),
-    ),
+                ),
                 style: const TextStyle(color: Colors.white),
                 controller: _passwordController,
                 onChanged: (_) {
                   setState(() {
-                 _passwordErrorText = '';
-      });
-    },
+                    _passwordErrorText = '';
+                  });
+                },
               ),
             ),
             Align(
@@ -171,7 +165,8 @@ class _LoginPageState extends State<LoginPage> {
                   //print("Forgot Password tapped");
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ResetPasswordPage()),
+                    MaterialPageRoute(
+                        builder: (context) => ResetPasswordPage()),
                   );
                 },
                 child: const Padding(
@@ -186,66 +181,72 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: ElevatedButton(
-                  onPressed: () async {
-                    await refreshIdToken();
-                    //print('Sign in button pressed');
-                    String email = _emailController.text.trim();
-                    String password = _passwordController.text.trim();
+                onPressed: () async {
+                  await refreshIdToken();
+                  //print('Sign in button pressed');
+                  String email = _emailController.text.trim();
+                  String password = _passwordController.text.trim();
 
-                    if (password.isEmpty ||  email.isEmpty) {
-                      if (password.isEmpty) {
-                        setState(() {
-                          _passwordErrorText = 'Please enter your password';
-                        });
-                      }
-                      if(email.isEmpty){
-                        setState(() {
-                          emailErrorText = 'Please enter your email';
-                        });
-                      }
-                    }
-
-                    EmailValidator eV=new EmailValidator();
-                    if (eV.validateEmail(email)!="") {
+                  if (password.isEmpty || email.isEmpty) {
+                    if (password.isEmpty) {
                       setState(() {
-                        emailErrorText =eV.validateEmail(email);
+                        _passwordErrorText = 'Please enter your password';
                       });
-                      return;
                     }
+                    if (email.isEmpty) {
+                      setState(() {
+                        emailErrorText = 'Please enter your email';
+                      });
+                    }
+                  }
 
-                    if (eV.validateEmail(email) == "" && !password.isEmpty) {
-                      LoginController loginController = LoginController();
-                      loginController.signInWithEmailAndPassword(email, password).then((user) async {
-                        if (user != null) {
-                          if (await loginController.getUserBodyMetric() == null) {
-                            //print("empty");
-                          } else {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => HomePage()), // Replace HomePage() with the desired page widget
-                            );
-                          }
+                  EmailValidator eV = new EmailValidator();
+                  if (eV.validateEmail(email) != "") {
+                    setState(() {
+                      emailErrorText = eV.validateEmail(email);
+                    });
+                    return;
+                  }
+
+                  if (eV.validateEmail(email) == "" && !password.isEmpty) {
+                    LoginController loginController = LoginController();
+                    loginController
+                        .signInWithEmailAndPassword(email, password)
+                        .then((user) async {
+                      if (user != null) {
+                        if (await loginController.getUserBodyMetric() == null) {
+                          //print("empty");
                         } else {
-                          //print('User authentication failed.');
-                          setState(() {
-                            if (user == null) {
-                              emailErrorText = 'Email not found';
-                            } else {
-                              _passwordErrorText = 'Incorrect password';
-                            }
-                          });
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    HomePage()), // Replace HomePage() with the desired page widget
+                          );
                         }
-                      });
-                    }
-                  },
+                      } else {
+                        //print('User authentication failed.');
+                        setState(() {
+                          if (user == null) {
+                            emailErrorText = 'Email not found';
+                          } else {
+                            _passwordErrorText = 'Incorrect password';
+                          }
+                        });
+                      }
+                    });
+                  }
+                },
                 style: ButtonStyle(
-                  backgroundColor:
-                  MaterialStateProperty.all<Color>(const Color(0xFF00DBAB4)),
-                  fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color(0xFF00DBAB4)),
+                  fixedSize:
+                      MaterialStateProperty.all<Size>(const Size(350, 50)),
                   shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
-                        (Set<MaterialState> states) {
+                    (Set<MaterialState> states) {
                       return RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0), // Border radius
+                        borderRadius:
+                            BorderRadius.circular(10.0), // Border radius
                       );
                     },
                   ),
@@ -259,9 +260,9 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-
-            const Padding(padding:EdgeInsets.all(8.0),
-                child:Row(
+            const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Row(
                   children: [
                     Expanded(
                       child: Divider(
@@ -286,49 +287,49 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ],
-                )
-
-            ),
-       
+                )),
             Padding(
-              padding: const EdgeInsets.only(left:8,right:8),
+              padding: const EdgeInsets.only(left: 8, right: 8),
               child: ElevatedButton(
                 onPressed: () async {
-                  //print("SIGN IN WITH GOOGLE");
-                  AuthenticationService auth= AuthenticationService();
-                  auth.signUpWithGoogle(context, mounted);
+
+                   await _signInWithGoogle(context);
 
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
+                  fixedSize:
+                      MaterialStateProperty.all<Size>(const Size(350, 50)),
                   shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
-                        (Set<MaterialState> states) {
+                    (Set<MaterialState> states) {
                       return RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0), // Border radius
+                        borderRadius:
+                            BorderRadius.circular(10.0), // Border radius
                       );
                     },
                   ),
                 ),
-                child:  Row(
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SvgPicture.asset(
                       'images/icons8-google.svg',
                       width: 24,
                       height: 24,
-                    ), // Add your icon here
-                    const SizedBox(width: 8), // Adjust the spacing between the icon and text
-                    const Text('Sign up with GOOGLE',
-                      style:
-                      TextStyle(
+                    ),
+                    // Add your icon here
+                    const SizedBox(width: 8),
+                    // Adjust the spacing between the icon and text
+                    const Text(
+                      'Sign up with GOOGLE',
+                      style: TextStyle(
                         fontSize: 18,
-                        color:Color(0xFF2C2A2A),
-
-                      ),),
+                        color: Color(0xFF2C2A2A),
+                      ),
+                    ),
                   ],
                 ),
-
               ),
             ),
             GestureDetector(
@@ -338,8 +339,6 @@ class _LoginPageState extends State<LoginPage> {
                   MaterialPageRoute(builder: (context) => Register()),
                 );
               },
-
-
               child: const Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Text(
@@ -348,13 +347,53 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-
-
           ],
         ),
       ),
     );
   }
 }
+Future<void> _signInWithGoogle(BuildContext context) async {
+  try {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+    if (googleUser == null) {
+      // User canceled the sign-in process
+      return;
+    }
 
+    final GoogleSignInAuthentication googleAuth =
+    await googleUser.authentication;
 
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    final UserCredential userCredential =
+    await FirebaseAuth.instance.signInWithCredential(credential);
+    final User? user = userCredential.user;
+    if (user != null) {
+        LoginController loginController = LoginController();
+
+        if (await loginController.getUserBodyMetricGmail(user.uid) == null) {
+          print("kxxdidij");
+        } else {
+          print("Ffff");
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    HomePage()), // Replace HomePage() with the desired page widget
+          );
+        }
+    } else {
+      // Handle sign-in failure
+      InfoBox.show(context, 'error', 'Failed to sign in with Google');
+    }
+  } catch (e) {
+    // Handle sign-in errors
+    print('Error signing in with Google: $e');
+    InfoBox.show(context, 'error', 'Failed to sign in with Google');
+  }
+}
