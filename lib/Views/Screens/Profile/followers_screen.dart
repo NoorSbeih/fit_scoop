@@ -91,7 +91,7 @@ class _FollowersScreen extends State<FollowersPage> {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  Text("${widget.user.name}'s Followings").data ?? "",
+                  Text("${widget.user.name}'s Following").data ?? "",
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -110,7 +110,7 @@ class _FollowersScreen extends State<FollowersPage> {
           Padding(
             padding: const EdgeInsets.only(left: 20.0, top: 30),
             child: Text(
-              '${followers.length} Followings',
+              '${followers.length} Following',
               style: const TextStyle(
                 fontSize: 25,
                 color: Color(0xFF0dbab4),

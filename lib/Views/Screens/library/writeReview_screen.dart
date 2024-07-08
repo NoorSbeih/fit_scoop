@@ -281,7 +281,7 @@ class _RateWorkoutPageState extends State<RateWorkoutPage> {
                       'SUBMIT',
                       style: TextStyle(
                         fontSize: 20,
-                        color: Colors.white
+                        color: Color(0xFF2C2A2A)
                       ),
                     ),
                   ),

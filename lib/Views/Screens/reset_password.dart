@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_scoop/Views/Screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../Services/email.dart';
@@ -41,14 +42,29 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFF2C2A2A),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF2C2A2A),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: const Color(0xFF00DBAB4),
+
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => Login()),
+                  (Route<dynamic> route) => false,
+            );
+          },
+        ),
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(top: 50,left:16.0,right:16.0,
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          //mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Center(
               child: Text(
-                'Reset Password',
+                'Account Recovery',
                 style: TextStyle(
                   color: Colors.white,
                     fontSize: 25,
@@ -127,7 +143,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 ),
               ),
               child: const Text('Reset Password',
-                style: TextStyle(color: Colors.black)),
+                style: TextStyle(fontSize: 20,color: Color(0xFF2C2A2A))),
             ),
           ],
         ),

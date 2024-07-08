@@ -45,7 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String nameErrorText = '';
   String passwordErrorText = '';
   bool passwordVisible=false;
-  String? _selectedUnitMeasure="imperial";
+  String? _selectedUnitMeasure="metric";
 
 
   @override
@@ -91,10 +91,15 @@ class _RegisterPageState extends State<RegisterPage> {
 
 
             Padding(
-              padding:EdgeInsets.all(8),
+              padding:const EdgeInsets.only(
+                  top: 8,
+                  left: 15,
+                  right: 15,
+                  bottom: 8,
+              ),
               child: TextField(
                 decoration:  InputDecoration(
-                    labelText: 'Full Name',
+                    labelText: 'Username',
                     labelStyle: TextStyle(color:Colors.white,fontSize: 14),
                     errorText: nameErrorText.isNotEmpty ? nameErrorText : null,
                 ),
@@ -108,7 +113,12 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
              Padding(
-              padding: EdgeInsets.all(8.0),
+               padding:const EdgeInsets.only(
+                 top: 8,
+                 left: 15,
+                 right: 15,
+                 bottom: 8,
+               ),
               child:TextField(
                 decoration:  InputDecoration(
                   labelText: 'Email',
@@ -125,7 +135,12 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
              Padding(
-              padding: const EdgeInsets.only(bottom: 25,left: 8),
+               padding:const EdgeInsets.only(
+                 top: 8,
+                 left: 15,
+                 right: 15,
+                 bottom: 8,
+               ),
               child:TextField(
                 obscureText: true,
                 decoration:  InputDecoration(
@@ -151,7 +166,11 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             const Padding(
-              padding: EdgeInsets.only(left: 8.0),
+              padding:EdgeInsets.only(
+                top: 20,
+                left: 15,
+                right: 15,
+              ),
               child: Align(
                 alignment: Alignment.centerLeft,
                  child: Text(
@@ -169,11 +188,13 @@ class _RegisterPageState extends State<RegisterPage> {
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding(padding: EdgeInsets.only(top: 10.0),
+                Padding(padding: const EdgeInsets.only(top: 10.0,
+                  left: 5,
+                ),
                child: Row(
                   children: [
                     Radio(
-                      value: "imperial",
+                      value: "metric",
                       groupValue:  _selectedUnitMeasure,
                       onChanged: (value) {
                         setState(() {
@@ -192,14 +213,14 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     ),
 
-                    const Text('Imperial', style: TextStyle(
+                    const Text('Metric', style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                       fontFamily: 'Roboto',
                     ),),
                     const SizedBox(width: 20), // Adjust as needed for spacing
                     Radio(
-                      value:"metric",
+                      value:"imperial",
                       groupValue:  _selectedUnitMeasure,
                       onChanged: (value) {
                         setState(() {
@@ -217,7 +238,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     ),
 
-                    const Text('Metric', style: TextStyle(
+                    const Text('Imperial', style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                       fontFamily: 'Roboto',
@@ -339,43 +360,7 @@ Navigator.push(
             )
 
             ),
-            Padding(
-              padding:const EdgeInsets.only(left:8,right:8,bottom:10),
-              child:ElevatedButton(
-                onPressed: () {
-                  //print('Register button pressed');
-                },
 
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0316FF6)), // Change color to blue
-                  fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
-                  shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
-                        (Set<MaterialState> states) {
-                      return RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0), // Border radius
-                      );
-                    },
-                  ),
-                ),
-                child: const Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.facebook, // Add your icon here
-                      color: Colors.white, // Color of the icon
-                    ),
-                    SizedBox(width: 8), // Adjust the spacing between the icon and text
-                    Text('Sign up with facebook',
-                      style:
-                      TextStyle(
-                        fontSize: 18,
-                        color:Colors.white,
-                      ),),
-                  ],
-                ),
-
-              ),
-            ),
             Padding(
               padding:const EdgeInsets.only(left:8,right:8),
               child:ElevatedButton(

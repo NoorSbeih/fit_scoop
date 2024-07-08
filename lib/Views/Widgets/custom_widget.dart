@@ -13,7 +13,7 @@ class custom_widget {
         color: Colors.white, // Change color to blue
         fontSize: fontSize, // Set font size to 18
         // Make text bold
-        fontFamily: 'Montserrat', // Specify font family (optional)
+        fontFamily: 'BebasNeue', // Specify font family (optional)
       ),
     );
   }
@@ -24,7 +24,7 @@ class custom_widget {
   color: Colors.white,
   fontSize: fontSize,
   fontWeight: FontWeight.bold,
-  fontFamily: 'Montserrat',
+  fontFamily: 'BebasNeue',
     ),
     );
   }

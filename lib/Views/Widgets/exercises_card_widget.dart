@@ -292,7 +292,7 @@ class exercises_card {
                   Padding(
                     padding: EdgeInsets.only(left: 7, bottom: 10, top: 1),
                     child: Text(
-                      sets + " | " + weight,
+                      "$sets SETS | $weight REPS",
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14,
@@ -397,16 +397,16 @@ class exercises_card {
                       name,
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'Montserrat',
+                        fontFamily: 'BebasNeue',
                       ),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 7, bottom: 10, top: 1),
+                    padding: EdgeInsets.only(left: 7, bottom: 10, top: 15),
                     child: Text(
-                      sets + " | " + weight,
+                      sets + " SETS | " + weight + " REPS",
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14,

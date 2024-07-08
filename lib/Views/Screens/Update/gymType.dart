@@ -51,7 +51,7 @@ class _gymTypeState extends State<GymType> {
                 padding: const EdgeInsets.only(left:16,top:10,bottom: 10),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: custom_widget.startTextWidget("GYM Type"),
+                  child: custom_widget.startTextWidget("Gym Type"),
                 ),
 
               ),

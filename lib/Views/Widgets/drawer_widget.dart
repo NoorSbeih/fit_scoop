@@ -99,7 +99,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               decoration: BoxDecoration(
                 color: Color(0xFF0dbab4),
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.red, width: 0),
+                // border: Border.all(color: Colors.red, width: 0),
               ),
               child: Center(
                 child: ListTile(

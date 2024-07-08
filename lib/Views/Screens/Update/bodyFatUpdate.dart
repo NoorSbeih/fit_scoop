@@ -75,7 +75,7 @@ class _bodyfatUpdateState extends State<BodyfatUpdate> {
                 alignment: Alignment.centerLeft,
                 child: custom_widget.customTextWidget(
                     "Your body fat percentage helps us accurately determine your body type and give you the most fitting workout schedule.",
-                    15),
+                    18),
               )),
           Padding(
             padding: const EdgeInsets.only(left: 23.0),
@@ -93,19 +93,19 @@ class _bodyfatUpdateState extends State<BodyfatUpdate> {
             ),
           ),
 
-          Padding(
-            padding: const EdgeInsets.only(top: 25),
-            child: Align(
-              alignment: Alignment.center,
-              child:
-              Image.asset(
-                imagePaths[getBodyType(currentValue)]!,
-                fit: BoxFit.contain,
-                width: 250, // Adjust width as needed
-                height: 250, // Adjust height as needed
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(top: 25),
+          //   child: Align(
+          //     alignment: Alignment.center,
+          //     child:
+          //     Image.asset(
+          //       imagePaths[getBodyType(currentValue)]!,
+          //       fit: BoxFit.contain,
+          //       width: 250, // Adjust width as needed
+          //       height: 250, // Adjust height as needed
+          //     ),
+          //   ),
+          // ),
           Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child: Align(

@@ -110,7 +110,12 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding:const EdgeInsets.only(
+                top: 8,
+                left: 15,
+                right: 15,
+                bottom: 8,
+              ),
               child: TextField(
                 decoration: InputDecoration(
                   labelText: 'Email',
@@ -128,7 +133,12 @@ class _LoginPageState extends State<LoginPage> {
             ),
 
             Padding(
-              padding: const EdgeInsets.only(bottom: 25,left: 8),
+              padding:const EdgeInsets.only(
+                top: 8,
+                left: 15,
+                right: 15,
+                bottom: 8,
+              ),
               child:TextField(
                 obscureText: !passwordVisible,
                 decoration:  InputDecoration(
@@ -283,43 +293,7 @@ class _LoginPageState extends State<LoginPage> {
                 )
 
             ),
-            Padding(
-              padding:const EdgeInsets.only(left:8,right:8,bottom:10),
-              child:ElevatedButton(
-                onPressed: () {
-                  //print('Register button pressed');
-                },
-
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF0316FF6)), // Change color to blue
-                  fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
-                  shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
-                        (Set<MaterialState> states) {
-                      return RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0), // Border radius
-                      );
-                    },
-                  ),
-                ),
-                child: const Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.facebook, // Add your icon here
-                      color: Colors.white, // Color of the icon
-                    ),
-                    SizedBox(width: 8), // Adjust the spacing between the icon and text
-                    Text('Sign up with facebook',
-                      style:
-                      TextStyle(
-                        fontSize: 18,
-                        color:Colors.white,
-                      ),),
-                  ],
-                ),
-
-              ),
-            ),
+       
             Padding(
               padding: const EdgeInsets.only(left:8,right:8),
               child: ElevatedButton(

@@ -68,7 +68,7 @@ class _unitState extends State<UnitOfMeasure> {
               child: Row(
                 children: [
                   Radio(
-                    value: "imperial",
+                    value: "metric",
                     groupValue: _selectedUnitMeasure,
                     onChanged: (value) async {
                       setState(() {
@@ -87,7 +87,7 @@ class _unitState extends State<UnitOfMeasure> {
                   ),
 
                   const Text(
-                    'Imperial',
+                    'Metric',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 25,
@@ -96,7 +96,7 @@ class _unitState extends State<UnitOfMeasure> {
                   ),
                   const SizedBox(width: 20), // Adjust as needed for spacing
                   Radio(
-                    value: "metric",
+                    value: "imperial",
                     groupValue: _selectedUnitMeasure,
                     onChanged: (value) async {
                       setState(() {
@@ -115,7 +115,7 @@ class _unitState extends State<UnitOfMeasure> {
                   ),
 
                   const Text(
-                    'Metric',
+                    'Imperial',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 25,
@@ -125,7 +125,7 @@ class _unitState extends State<UnitOfMeasure> {
                 ],
               )),
 
-          SizedBox(height: 50),
+          SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               BodyMetricsSingleton singleton = BodyMetricsSingleton.getInstance();
