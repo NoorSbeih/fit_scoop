@@ -3,7 +3,7 @@ import 'login_screen.dart';
 import 'register_screen.dart';
 
 class MyHomePage extends StatefulWidget {
-   MyHomePage({super.key, required this.title});
+   const MyHomePage({super.key, required this.title});
 
   final String title;
 
@@ -15,7 +15,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF2C2A2A),
+      backgroundColor: const Color(0xFF2C2A2A),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -94,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Login()),
+                      MaterialPageRoute(builder: (context) => const Login()),
                     );
                   },
                   style: ButtonStyle(
