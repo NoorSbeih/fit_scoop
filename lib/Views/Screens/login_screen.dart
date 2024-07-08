@@ -213,7 +213,6 @@ class _LoginPageState extends State<LoginPage> {
                       return;
                     }
 
-
                     if (eV.validateEmail(email) == "" && !password.isEmpty) {
                       LoginController loginController = LoginController();
                       loginController.signInWithEmailAndPassword(email, password).then((user) async {
@@ -221,9 +220,6 @@ class _LoginPageState extends State<LoginPage> {
                           if (await loginController.getUserBodyMetric() == null) {
                             //print("empty");
                           } else {
-
-
-
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => HomePage()), // Replace HomePage() with the desired page widget

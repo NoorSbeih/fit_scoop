@@ -147,7 +147,7 @@ class _DiastolicSystolicScreen extends State<DiastolicSystolicScreen> {
               ),
               child: const Text(
                 'NEXT',
-                style: TextStyle(fontSize: 22, color: Colors.white),
+                style: TextStyle(fontSize: 22, color: Color(0xFF2C2A2A)),
               ),
             ),
 

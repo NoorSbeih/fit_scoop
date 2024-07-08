@@ -1,4 +1,3 @@
-
 import 'package:fit_scoop/Controllers/register_controller.dart';
 import 'package:fit_scoop/Views/Screens/Registration%20pages/page_view.screen.dart';
 import 'package:fit_scoop/Views/Screens/login_screen.dart';
@@ -12,13 +11,11 @@ import '../../Services/authentication_service.dart';
 import '../../Services/email.dart';
 
 class Register extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
@@ -27,11 +24,10 @@ class Register extends StatelessWidget {
   }
 }
 
-
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key, required this.title});
-  final String title;
 
+  final String title;
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -44,41 +40,41 @@ class _RegisterPageState extends State<RegisterPage> {
   String emailErrorText = '';
   String nameErrorText = '';
   String passwordErrorText = '';
-  bool passwordVisible=false;
-  String? _selectedUnitMeasure="metric";
-
+  bool passwordVisible = false;
+  String? _selectedUnitMeasure = "metric";
 
   @override
   void initState() {
     super.initState();
-    passwordVisible=false;
+    passwordVisible = false;
   }
-
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor:Color(0xFF2C2A2A),
+      backgroundColor: Color(0xFF2C2A2A),
       body: Container(
-       child: Column (
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Padding(
               padding: EdgeInsets.all(16.0),
-              child: Text("Join The Club ",style:
-              TextStyle(
-                color: Colors.white, // Change color to blue
-                fontSize: 25, // Set font size to 18
-                fontWeight: FontWeight.bold, // Make text bold
-                fontFamily: 'Roboto', // Specify font family (optional)
-              ),
+              child: Text(
+                "Join The Club ",
+                style: TextStyle(
+                  color: Colors.white, // Change color to blue
+                  fontSize: 25, // Set font size to 18
+                  fontWeight: FontWeight.bold, // Make text bold
+                  fontFamily: 'Roboto', // Specify font family (optional)
+                ),
               ),
             ),
-
-           Padding(
-              padding: EdgeInsets.only( bottom: deviceHeight(context) * 0.06,), // Add padding from the bottom only
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: deviceHeight(context) * 0.06,
+              ),
+              // Add padding from the bottom only
               child: const Text(
                 "The ultimate fitness application",
                 style: TextStyle(
@@ -88,20 +84,18 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
             ),
-
-
             Padding(
-              padding:const EdgeInsets.only(
-                  top: 8,
-                  left: 15,
-                  right: 15,
-                  bottom: 8,
+              padding: const EdgeInsets.only(
+                top: 8,
+                left: 15,
+                right: 15,
+                bottom: 8,
               ),
               child: TextField(
-                decoration:  InputDecoration(
-                    labelText: 'Username',
-                    labelStyle: TextStyle(color:Colors.white,fontSize: 14),
-                    errorText: nameErrorText.isNotEmpty ? nameErrorText : null,
+                decoration: InputDecoration(
+                  labelText: 'Username',
+                  labelStyle: TextStyle(color: Colors.white, fontSize: 14),
+                  errorText: nameErrorText.isNotEmpty ? nameErrorText : null,
                 ),
                 style: const TextStyle(color: Colors.white),
                 controller: _fullNameController,
@@ -112,15 +106,15 @@ class _RegisterPageState extends State<RegisterPage> {
                 },
               ),
             ),
-             Padding(
-               padding:const EdgeInsets.only(
-                 top: 8,
-                 left: 15,
-                 right: 15,
-                 bottom: 8,
-               ),
-              child:TextField(
-                decoration:  InputDecoration(
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 8,
+                left: 15,
+                right: 15,
+                bottom: 8,
+              ),
+              child: TextField(
+                decoration: InputDecoration(
                   labelText: 'Email',
                   labelStyle: TextStyle(color: Colors.white, fontSize: 14),
                   errorText: emailErrorText.isNotEmpty ? emailErrorText : null,
@@ -134,21 +128,24 @@ class _RegisterPageState extends State<RegisterPage> {
                 },
               ),
             ),
-             Padding(
-               padding:const EdgeInsets.only(
-                 top: 8,
-                 left: 15,
-                 right: 15,
-                 bottom: 8,
-               ),
-              child:TextField(
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 8,
+                left: 15,
+                right: 15,
+                bottom: 8,
+              ),
+              child: TextField(
                 obscureText: true,
-                decoration:  InputDecoration(
-                    labelText: 'Password',
-                    labelStyle: TextStyle(color:Colors.white, fontSize: 14),
-                  errorText: passwordErrorText.isNotEmpty ? passwordErrorText : null,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  labelStyle: TextStyle(color: Colors.white, fontSize: 14),
+                  errorText:
+                      passwordErrorText.isNotEmpty ? passwordErrorText : null,
                   suffixIcon: IconButton(
-                    icon: Icon(passwordVisible? Icons.visibility: Icons.visibility_off),
+                    icon: Icon(passwordVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off),
                     onPressed: () {
                       setState(() {
                         passwordVisible = !passwordVisible;
@@ -166,97 +163,107 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             const Padding(
-              padding:EdgeInsets.only(
+              padding: EdgeInsets.only(
                 top: 20,
                 left: 15,
                 right: 15,
               ),
               child: Align(
                 alignment: Alignment.centerLeft,
-                 child: Text(
-                    'Unit of Measure', // Add your hint text here
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontFamily: 'Roboto',
-                    ),
+                child: Text(
+                  'Unit of Measure', // Add your hint text here
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontFamily: 'Roboto',
                   ),
-
+                ),
               ),
-
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding(padding: const EdgeInsets.only(top: 10.0,
-                  left: 5,
-                ),
-               child: Row(
-                  children: [
-                    Radio(
-                      value: "metric",
-                      groupValue:  _selectedUnitMeasure,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedUnitMeasure= value!;
-                        });
-                      },
-               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-               fillColor: MaterialStateColor.resolveWith(
-                    (Set<MaterialState> states) {
-                  if (states.contains(MaterialState.selected)) {
-                    return Colors.white; // Change the selected color
-                  }
-                  return Colors.white; // Change the unselected color
-                },
-              ),
-
+                Padding(
+                    padding: const EdgeInsets.only(
+                      top: 10.0,
+                      left: 5,
                     ),
+                    child: Row(
+                      children: [
+                        Radio(
+                          value: "metric",
+                          groupValue: _selectedUnitMeasure,
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedUnitMeasure = value!;
+                            });
+                          },
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          fillColor: MaterialStateColor.resolveWith(
+                            (Set<MaterialState> states) {
+                              if (states.contains(MaterialState.selected)) {
+                                return Colors
+                                    .white; // Change the selected color
+                              }
+                              return Colors
+                                  .white; // Change the unselected color
+                            },
+                          ),
+                        ),
 
-                    const Text('Metric', style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontFamily: 'Roboto',
-                    ),),
-                    const SizedBox(width: 20), // Adjust as needed for spacing
-                    Radio(
-                      value:"imperial",
-                      groupValue:  _selectedUnitMeasure,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedUnitMeasure = value!;
-                        });
-                      },
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      fillColor: MaterialStateColor.resolveWith(
-                  (Set<MaterialState> states) {
-                  if (states.contains(MaterialState.selected)) {
-                  return Colors.white; // Change the selected color
-                  }
-                    return Colors.white;
-    },
-                    ),
-                    ),
+                        const Text(
+                          'Metric',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontFamily: 'Roboto',
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        // Adjust as needed for spacing
+                        Radio(
+                          value: "imperial",
+                          groupValue: _selectedUnitMeasure,
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedUnitMeasure = value!;
+                            });
+                          },
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          fillColor: MaterialStateColor.resolveWith(
+                            (Set<MaterialState> states) {
+                              if (states.contains(MaterialState.selected)) {
+                                return Colors
+                                    .white; // Change the selected color
+                              }
+                              return Colors.white;
+                            },
+                          ),
+                        ),
 
-                    const Text('Imperial', style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontFamily: 'Roboto',
-                    ),),
-                  ],
-                )
-                ),
+                        const Text(
+                          'Imperial',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontFamily: 'Roboto',
+                          ),
+                        ),
+                      ],
+                    )),
               ],
             ),
             Padding(
-              padding:const EdgeInsets.all(20.0),
-              child:ElevatedButton(
+              padding: const EdgeInsets.all(20.0),
+              child: ElevatedButton(
                 onPressed: () async {
-                  String fullName=_fullNameController.text;
-                  String email=_emailController.text;
-                  String password=_passwordController.text;
+                  String fullName = _fullNameController.text.trim();
+                  String email = _emailController.text.trim();
+                  String password = _passwordController.text.trim();
 
-                  if (password.isEmpty ||  email.isEmpty || fullName.isEmpty) {
+                  if (password.isEmpty || email.isEmpty || fullName.isEmpty) {
                     if (password.isEmpty) {
                       setState(() {
                         passwordErrorText = 'Please enter your password';
@@ -274,169 +281,156 @@ class _RegisterPageState extends State<RegisterPage> {
                     }
                   }
 
-                  EmailValidator eV=new EmailValidator();
-                  if (eV.validateEmail(email)!="") {
+                  EmailValidator eV = new EmailValidator();
+                  if (eV.validateEmail(email) != "") {
                     setState(() {
-                      emailErrorText =eV.validateEmail(email);
+                      emailErrorText = eV.validateEmail(email);
                     });
                     return;
                   }
 
-
-                   if(eV.validateEmail(email)=="" && !password.isEmpty && !fullName.isEmpty) {
+                  if (eV.validateEmail(email) == "" && !password.isEmpty && !fullName.isEmpty) {
                     try {
-                      SharedPreferences prefs =await SharedPreferences.getInstance() ;
-                       prefs.setString('unitOfMeasure', _selectedUnitMeasure!);
-                       RegisterController register=RegisterController();
-                       register.storeRegisterData(fullName, email, password);
-
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.setString('unitOfMeasure', _selectedUnitMeasure!);
+                      RegisterController register = RegisterController();
+                      register.storeRegisterData(fullName, email, password);
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                CustomPageView()), // Replace SecondPage() with the desired page widget
                       );
-
-                   } catch (e) {
+                    } catch (e) {
                       //print('Error initializing SharedPreferences: $e');
                     }
-
-                        //print('Register button pressed');
-                      }
-
-Navigator.push(
-  context,
-  MaterialPageRoute(builder: (context) => CustomPageView()), // Replace SecondPage() with the desired page widget
-);
-
+                  }
 
                 },
-
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF00DBAB4)), // Change color to blue
-                  fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color(0xFF00DBAB4)), // Change color to blue
+                  fixedSize:
+                      MaterialStateProperty.all<Size>(const Size(350, 50)),
                   shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
-                        (Set<MaterialState> states) {
+                    (Set<MaterialState> states) {
                       return RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0), // Border radius
+                        borderRadius:
+                            BorderRadius.circular(10.0), // Border radius
                       );
                     },
                   ),
                 ),
-
-                child: const Text('Join Us',
-                  style:
-                  TextStyle(
+                child: const Text(
+                  'Join Us',
+                  style: TextStyle(
                     fontSize: 20,
-                    color:Color(0xFF2C2A2A),
-
-                  ),),
+                    color: Color(0xFF2C2A2A),
+                  ),
+                ),
               ),
             ),
-            const Padding(padding:EdgeInsets.all(8.0),
-           child:Row(
-              children: [
-                Expanded(
-                  child: Divider(
-                    color: Colors.grey,
-                    thickness: 1.0,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Text(
-                    'OR',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 16.0,
+            const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        color: Colors.grey,
+                        thickness: 1.0,
+                      ),
                     ),
-                  ),
-                ),
-                Expanded(
-                  child: Divider(
-                    color: Colors.grey,
-                    thickness: 1.0,
-                  ),
-                ),
-              ],
-            )
-
-            ),
-
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Text(
+                        'OR',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Divider(
+                        color: Colors.grey,
+                        thickness: 1.0,
+                      ),
+                    ),
+                  ],
+                )),
             Padding(
-              padding:const EdgeInsets.only(left:8,right:8),
-              child:ElevatedButton(
+              padding: const EdgeInsets.only(left: 8, right: 8),
+              child: ElevatedButton(
                 onPressed: () {
-                  // Corrected function body
-                  //print('Register button pressed');
-
-                  AuthenticationService auth= AuthenticationService();
+                  AuthenticationService auth = AuthenticationService();
                   auth.signUpWithGoogle(context, mounted);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            CustomPageView()), // Replace SecondPage() with the desired page widget
+                  );
                 },
-
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFFFFFFF)), // Change color to blue
-                  fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color(0xFFFFFFFF)), // Change color to blue
+                  fixedSize:
+                      MaterialStateProperty.all<Size>(const Size(350, 50)),
                   shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
-                        (Set<MaterialState> states) {
+                    (Set<MaterialState> states) {
                       return RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0), // Border radius
+                        borderRadius:
+                            BorderRadius.circular(10.0), // Border radius
                       );
                     },
                   ),
                 ),
-                child:  Row(
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SvgPicture.asset(
                       'images/icons8-google.svg',
                       width: 24,
                       height: 24,
-                    ), // Add your icon here
-                    SizedBox(width: 8), // Adjust the spacing between the icon and text
-                    const Text('Sign up with GOOGLE',
-                      style:
-                      TextStyle(
+                    ),
+                    // Add your icon here
+                    SizedBox(width: 8),
+                    // Adjust the spacing between the icon and text
+                    const Text(
+                      'Sign up with GOOGLE',
+                      style: TextStyle(
                         fontSize: 18,
-                        color:Color(0xFF2C2A2A),
-
-                      ),),
-
+                        color: Color(0xFF2C2A2A),
+                      ),
+                    ),
                   ],
                 ),
-
               ),
             ),
-
-
-      GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-              MaterialPageRoute(builder: (context) => Login()),
-          );
-        },
-
-
-        child: const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Text(
-                "Have account? Sign in",
-                style: TextStyle(color: Colors.white),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Login()),
+                );
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(
+                  "Have account? Sign in",
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
-      ),
-
           ],
         ),
       ),
-
-     );
-
+    );
   }
-  double deviceHeight(BuildContext context) => MediaQuery.of(context).size.height;
+
+  double deviceHeight(BuildContext context) =>
+      MediaQuery.of(context).size.height;
 
   double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
 }
-
-
-
-

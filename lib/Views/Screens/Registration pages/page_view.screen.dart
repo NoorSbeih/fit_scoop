@@ -145,24 +145,6 @@ class _CustomPageViewState extends State<CustomPageView> {
                     showError(context);
 
                 }
-
-               /* else if (currentPageIndex == 3 && CustomPageView.Gender.compareTo("Male")==0) {
-
-                  if ( RegisterPage4M.selectedGoal.isEmpty) {
-                    showError(context);
-                  }else{
-                    CustomPageView.Goal=RegisterPage4M.selectedGoal;
-                    nextPage(context);
-                  }
-                }
-                else if (currentPageIndex == 3 && CustomPageView.Gender.compareTo("Female")==0) {
-                  if ( RegisterPage4F.selectedGoal.isEmpty) {
-                    showError(context);
-                  }else{
-                    CustomPageView.Goal=RegisterPage4F.selectedGoal;
-                    nextPage(context);
-                  }
-                }*/
                 else if (currentPageIndex == 3 && RegisterPage5.typeOfPlace.isEmpty) {
                     showError(context);
                 }
@@ -192,11 +174,11 @@ class _CustomPageViewState extends State<CustomPageView> {
 
 
                child:  Text(
-                 currentPageIndex < 5 ? 'Next' : 'Finish',
+                 currentPageIndex <4? 'Next' : 'Finish',
                  style:
                  const TextStyle(
                    fontSize: 20,
-                   color: Colors.white,
+                   color:Color(0xFF2C2A2A),
 
                  ),),
              ),
@@ -211,7 +193,6 @@ class _CustomPageViewState extends State<CustomPageView> {
 
   Future<void> finishRegistration(BuildContext context) async {
     List<String> workoutSchedule=[];
-    //Page6.saveSelectedEquipment();
     UserController userController= UserController();
 
     userController.saveEquipments(RegisterController.userId, selectedEquipmentIds);

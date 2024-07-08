@@ -21,4 +21,7 @@ class  BodyMetricsSingleton{
   BodyMetrics getMetrices() {
     return _mertics;
   }
+
+
+
 }

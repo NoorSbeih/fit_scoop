@@ -3,7 +3,7 @@ import 'login_screen.dart';
 import 'register_screen.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+   MyHomePage({super.key, required this.title});
 
   final String title;
 
