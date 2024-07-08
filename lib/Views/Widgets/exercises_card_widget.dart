@@ -404,7 +404,7 @@ class exercises_card {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 7, bottom: 10, top: 15),
+                    padding: EdgeInsets.only(left: 7, bottom: 10, top: 5),
                     child: Text(
                       sets + " SETS | " + weight + " REPS",
                       style: const TextStyle(

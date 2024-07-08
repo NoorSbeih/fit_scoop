@@ -35,7 +35,9 @@ class MyApp extends StatelessWidget {
           return await _onWillPop(context);
         },
     child: MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Fitscoop',
+
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
         useMaterial3: true,
