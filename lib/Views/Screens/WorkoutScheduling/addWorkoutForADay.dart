@@ -1,8 +1,8 @@
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
-import 'package:input_slider/input_slider.dart';
 
 import '../../../Controllers/body_metrics_controller.dart';
 import '../../../Controllers/workout_controller.dart';

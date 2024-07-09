@@ -27,7 +27,6 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
   bool _isRunning = true;
   List<int> remainingSets = WorkoutPagee.exercises.map((exercise) => int.parse(exercise['sets'])).toList();
   List<BodyPart> parts = [];
-  Map<String, String> cachedImageUrls = {}; // Cache for fetched image URLs
   @override
   void initState() {
     super.initState();

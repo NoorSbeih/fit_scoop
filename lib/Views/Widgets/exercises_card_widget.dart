@@ -231,7 +231,7 @@ class exercises_card {
       String weight, BuildContext context, String id, String imageUrl,
       {required Null Function() onDelete}) {
     return SizedBox(
-      height: 107,
+      height: 133,
       child: Card(
         margin: const EdgeInsets.only(left: 20, right: 20, top: 15),
         color: Color(0xFF2C2A2A),

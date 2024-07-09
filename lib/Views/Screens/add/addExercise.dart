@@ -48,7 +48,6 @@ class _addExerciseState extends State<addExercise> with SingleTickerProviderStat
   String imageUrl = "";
   List<BodyPart> parts = [];
   UserSingleton userSingleton = UserSingleton.getInstance();
-
   List<Exercise> allExercises = [];
   List<Exercise> filteredExercises = [];
   Timer? _debounce;

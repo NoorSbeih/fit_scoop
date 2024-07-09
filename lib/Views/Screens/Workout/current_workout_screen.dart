@@ -7,7 +7,6 @@ import 'package:fit_scoop/Models/user_model.dart';
 import '../../../Controllers/workout_controller.dart';
 import 'package:fit_scoop/Views/Widgets/exercises_card_widget.dart';
 import 'package:fit_scoop/Views/Widgets/workout_widget.dart';
-import '../../../Models/bodyPart.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_log.dart';
 import '../../../Models/workout_model.dart';
@@ -54,7 +53,6 @@ class _WorkoutPageState extends State<WorkoutPagee> {
   int duration = 0;
   late User_model user;
   bool isLoading = true;
-  List<BodyPart> parts=[];
 
   @override
   void initState() {
