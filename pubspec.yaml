@@ -170,8 +170,10 @@ flutter:
         - images/review.png
         - images/equipments/bosuBall.png
         - images/equipments/crossOver.png
+        - images/equipments/band.png
         - images/equipments/resistanceBand.png
         - images/equipments/assistedMachine.png
+        - images/equipments/roller.png
         - images/equipments/ellipticalMachine.png
         - images/equipments/leverageMachine.png
         - images/equipments/olympicBarbell.png

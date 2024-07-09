@@ -14,7 +14,7 @@ class ResetPasswordPage extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.deepPurple),
       ),
-      home: ResetPasswordForm(title: 'Reset Password'),
+      home: const ResetPasswordForm(title: 'Reset Password'),
     );
   }
 }
@@ -45,12 +45,12 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF2C2A2A),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           color: const Color(0xFF00DBAB4),
 
           onPressed: () {
             Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => Login()),
+              MaterialPageRoute(builder: (context) => const Login()),
                   (Route<dynamic> route) => false,
             );
           },
@@ -86,12 +86,12 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 ),
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             TextField(
               controller: _emailController,
               decoration:  InputDecoration(
                 labelText: 'Email',
-                labelStyle: TextStyle(color: Colors.white, fontSize: 18),
+                labelStyle: const TextStyle(color: Colors.white, fontSize: 18),
                 errorText: emailErrorText.isNotEmpty ? emailErrorText : null,
               ),
               style: const TextStyle(color: Colors.white),
@@ -101,12 +101,12 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 });
               },
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             ElevatedButton(
 
               onPressed: () async {
                 String email = _emailController.text.trim();
-                EmailValidator eV=new EmailValidator();
+                EmailValidator eV=EmailValidator();
                 if (eV.validateEmail(email)!="") {
                   setState(() {
                     emailErrorText =eV.validateEmail(email);
@@ -132,7 +132,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
               },
               style: ButtonStyle(
                 backgroundColor:
-                MaterialStateProperty.all<Color>(const Color(0xFF00DBAB4)),
+                MaterialStateProperty.all<Color>(const Color(0xff00dbab4)),
                 fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
                 shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                       (Set<MaterialState> states) {

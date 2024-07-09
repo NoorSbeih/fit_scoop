@@ -12,7 +12,7 @@ class HomePage extends StatefulWidget {
 
   final int initialIndex;
 
-  HomePage({Key? key, this.initialIndex = 0}) : super(key: key);
+  const HomePage({Key? key, this.initialIndex = 0}) : super(key: key);
 
 
   @override
@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
     WorkoutPage(),
     CommunityPage(),
     createWorkout1(),
-    LibraryPage(),
+    const LibraryPage(),
     ProfilePage(),
   ];
 
