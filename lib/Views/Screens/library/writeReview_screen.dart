@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:fit_scoop/Models/workout_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -41,52 +42,42 @@ class _RateWorkoutPageState extends State<RateWorkoutPage> {
     }
   }
 
-  void showAlertDialog(String message) {
-    showDialog(
+  void showAlertDialogSuccess(BuildContext context) {
+    AwesomeDialog(
       context: context,
-      builder: (BuildContext context) {
-        return Center(
-          child: Container(
-            width: MediaQuery.of(context).size.width * 1.5, // Set width as 80% of screen width
-            height: MediaQuery.of(context).size.height * 0.5, // Set height as 40% of screen height
-            child: AlertDialog(
-              backgroundColor: Color(0xFF2C2A2A),
-              title: const Text(
-                'Review submit',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                    color: Colors.white),
-              ),
-              content: Text(
-                message,
-                style: const TextStyle(
-                    fontSize: 20,
-                    color: Colors.white),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  child: const Text(
-                    'OK',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                          builder: (context) => HomePage(initialIndex: 1)),
-                      // Set initialIndex to 1 for ProfilePage
-                          (Route<dynamic> route) => false,
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
+      dialogBackgroundColor: const Color(0xFF2C2A2A),
+      dialogType: DialogType.success,
+      title: "Review submit",
+      titleTextStyle: const TextStyle(
+        fontFamily: 'Inter',
+        fontSize: 20,
+        color: Colors.white,
+      ),
+      desc: 'Your Review was sent successfully',
+      descTextStyle: const TextStyle(
+        fontFamily: 'Inter',
+        fontSize: 13,
+        color: Color(0xFFA1A1A1),
+      ),
+      // btnCancelText:'Dismiss',
+      btnOkText: 'Ok',
+      //btnCancelColor: const Color(0xFF383838),
+      btnOkColor: Color(0xFF0dbab4),
+      dialogBorderRadius: BorderRadius.circular(15),
+      buttonsBorderRadius: BorderRadius.circular(15),
+      dismissOnTouchOutside: true,
+      animType: AnimType.leftSlide,
+
+      btnOkOnPress: () {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (context) => HomePage(initialIndex: 1)),
+          // Set initialIndex to 1 for ProfilePage
+              (Route<dynamic> route) => false,
         );
       },
-    );
+    ).show();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -255,15 +246,7 @@ class _RateWorkoutPageState extends State<RateWorkoutPage> {
                         );
 
                         controller.addReview(review);
-                        showAlertDialog(
-                            'Your review was sent successfully');
-
-                        // Navigator.of(context).pushAndRemoveUntil(
-                        //   MaterialPageRoute(
-                        //       builder: (context) => HomePage(initialIndex: 1)),
-                        //   // Set initialIndex to 1 for ProfilePage
-                        //       (Route<dynamic> route) => false,
-                        // );
+                        showAlertDialogSuccess(context);
                       }
                     },
                     style: ButtonStyle(

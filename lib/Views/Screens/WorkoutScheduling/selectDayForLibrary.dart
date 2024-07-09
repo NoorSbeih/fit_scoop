@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
@@ -80,7 +81,7 @@ class _selectDayForLibrary extends State<selectDayForLibraryy> {
                 padding: const EdgeInsets.symmetric(vertical: 4.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    showConfirmationDialog(context, index);
+                    showConfirmationDialogg(context, index);
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
@@ -103,69 +104,65 @@ class _selectDayForLibrary extends State<selectDayForLibraryy> {
     );
   }
 
-  void showConfirmationDialog(BuildContext context, int index) {
-    showDialog(
+
+
+  void showConfirmationDialogg(BuildContext context, int index) {
+    AwesomeDialog(
       context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: custom_widget.customTextWidget('Confirm Day Selection',18),
-          backgroundColor: Color(0xFF2C2A2A),
-          content:  custom_widget.customTextWidget('Are you sure you want to select ${_daysOfWeek[index]}?',16),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child:  custom_widget.customTextWidget('No',16),
-            ),
-            TextButton(
-              onPressed: () async {
-                // Perform asynchronous work outside setState
-                for (int i = 0; i < selectDayForLibraryy.isSelected.length; i++) {
-                  selectDayForLibraryy.isSelected[i] = (i == index);
-                }
-
-                UserSingleton userSingleton = UserSingleton.getInstance();
-                User_model user = userSingleton.getUser();
-                String? bodyMetricId = user.bodyMetrics;
-                //print( user.bodyMetrics);
-                //print(user.name);
-
-                BodyMetrics? metrics;
-                if (bodyMetricId != null) {
-                  BodyMetricsController bodyMetricsController = BodyMetricsController();
-                  metrics = await bodyMetricsController.fetchBodyMetrics(
-                      user.bodyMetrics);
-                  setState(() {
-                    metrics?.workoutSchedule[index] =widget.workout.id!;
-                    bodyMetricsController.updateBodyMetrics(user.bodyMetrics, metrics!);
-                  });
-                }
-                // Navigate to the home page
-                Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomePage()),
-                );
-              },
-              child: custom_widget.customTextWidget('Yes', 16),
-            ),
-
-          ],
-        );
+      dialogBackgroundColor: const Color(0xFF2C2A2A),
+      dialogType: DialogType.question,
+      title: 'Confirm Day Selection',
+      titleTextStyle: const TextStyle(
+        fontFamily: 'Inter',
+        fontSize: 20,
+        color: Colors.white,
+      ),
+      desc: 'Are you sure you want to add workout in  ${_daysOfWeek[index]}?',
+      descTextStyle: const TextStyle(
+        fontFamily: 'Inter',
+        fontSize: 13,
+        color: Color(0xFFA1A1A1),
+      ),
+      btnCancelText: 'Dismiss',
+      btnOkText: 'Add',
+      btnCancelColor: const Color(0xFF383838),
+      btnOkColor: Color(0xFF0dbab4),
+      dialogBorderRadius: BorderRadius.circular(15),
+      buttonsBorderRadius: BorderRadius.circular(15),
+      dismissOnTouchOutside: true,
+      animType: AnimType.leftSlide,
+      btnCancelOnPress: () {
+        Navigator.of(context).pop();
       },
-    );
+      btnOkOnPress: () async {
+          for (int i = 0; i < selectDayForLibraryy.isSelected.length; i++) {
+            selectDayForLibraryy.isSelected[i] = (i == index);
+          }
+
+          UserSingleton userSingleton = UserSingleton.getInstance();
+          User_model user = userSingleton.getUser();
+          String? bodyMetricId = user.bodyMetrics;
+          //print( user.bodyMetrics);
+          //print(user.name);
+
+          BodyMetrics? metrics;
+          if (bodyMetricId != null) {
+            BodyMetricsController bodyMetricsController = BodyMetricsController();
+            metrics = await bodyMetricsController.fetchBodyMetrics(
+                user.bodyMetrics);
+            setState(() {
+              metrics?.workoutSchedule[index] =widget.workout.id!;
+              bodyMetricsController.updateBodyMetrics(user.bodyMetrics, metrics!);
+            });
+          }
+          // Navigate to the home page
+          Navigator.of(context).pop();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
+      },
+    ).show();
   }
 
-/* String _getSelectedDays() {
-    List<String> days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    List<String> selectedDays = [];
-    for (int i = 0; i < AddWorkoutForADayy.isSelected.length; i++) {
-      if (AddWorkoutForADayy.isSelected[i]) {
-        selectedDays.add(days[i]);
-      }
-    }
-    AddWorkoutForADayy.daysSelected = selectedDays.join(', ');
-    return selectedDays.join(', ');
-  }*/
 }

@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fit_scoop/Controllers/user_controller.dart';
 import 'package:fit_scoop/Views/Screens/Profile/profile_screen.dart';
@@ -43,6 +44,104 @@ class _EditProfile extends State<EditProfile> {
       image = img;
     });
   }
+
+
+
+
+
+
+
+
+
+
+  void showAlertDialogg(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogBackgroundColor: const Color(0xFF2C2A2A),
+      dialogType: DialogType.warning,
+      title: "Profile Update",
+      titleTextStyle: const TextStyle(
+        fontFamily: 'Inter',
+        fontSize: 20,
+        color: Colors.white,
+      ),
+      desc: 'No Changes Detected',
+      descTextStyle: const TextStyle(
+        fontFamily: 'Inter',
+        fontSize: 13,
+        color: Color(0xFFA1A1A1),
+      ),
+     // btnCancelText:'Dismiss',
+      btnOkText: 'Ok',
+      btnCancelColor: const Color(0xFF383838),
+      btnOkColor:  Colors.red,
+      dialogBorderRadius: BorderRadius.circular(15),
+      buttonsBorderRadius: BorderRadius.circular(15),
+      dismissOnTouchOutside: true,
+      animType: AnimType.leftSlide,
+
+      btnOkOnPress: () {
+
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (context) => HomePage(initialIndex: 4)),
+          // Set initialIndex to 1 for ProfilePage
+              (Route<dynamic> route) => false,
+        );
+      },
+    ).show();
+  }
+
+
+  void showAlertDialogSuccess(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogBackgroundColor: const Color(0xFF2C2A2A),
+      dialogType: DialogType.success,
+      title: "Profile Update",
+      titleTextStyle: const TextStyle(
+        fontFamily: 'Inter',
+        fontSize: 20,
+        color: Colors.white,
+      ),
+      desc: 'Profile Updated Successfully',
+      descTextStyle: const TextStyle(
+        fontFamily: 'Inter',
+        fontSize: 13,
+        color: Color(0xFFA1A1A1),
+      ),
+      // btnCancelText:'Dismiss',
+      btnOkText: 'Ok',
+      btnCancelColor: const Color(0xFF383838),
+      btnOkColor:  Color(0xFF0dbab4),
+      dialogBorderRadius: BorderRadius.circular(15),
+      buttonsBorderRadius: BorderRadius.circular(15),
+      dismissOnTouchOutside: true,
+      animType: AnimType.leftSlide,
+
+      btnOkOnPress: () {
+
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (context) => HomePage(initialIndex: 4)),
+          // Set initialIndex to 1 for ProfilePage
+              (Route<dynamic> route) => false,
+        );
+      },
+    ).show();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
 
   @override
   void initState() {
@@ -95,17 +194,19 @@ class _EditProfile extends State<EditProfile> {
       widget.user.imageLink = imageUrl;
       await controller.updateProfileImage(image!, widget.user.id);
       hasChanges = true;
+      showAlertDialogSuccess(context);
     }
 
 
     if (isNameChanged || isBioChanged || isImageChanged) {
-      showAlertDialog('Profile updated successfully');
+      showAlertDialogSuccess(context);
       hasChanges = false;
       initialName = this.controller.text;
       initialBio = bioController.text;
       initialImageUrl = widget.user.imageLink;
     } else {
-      showAlertDialog('No changes detected');
+      //showAlertDialog('No changes detected');
+      showAlertDialogg(context);
     }
   }
 
@@ -116,7 +217,7 @@ class _EditProfile extends State<EditProfile> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Color(0xFF2C2A2A),
-          title: Text('Discard changes?'),
+          title: const Text('Discard changes?'),
           content: Text('You have unsaved changes. Do you really want to discard them?'),
           actions: <Widget>[
             TextButton(
@@ -137,46 +238,46 @@ class _EditProfile extends State<EditProfile> {
     ) ?? false; // In case the dialog is dismissed by other means (e.g., back button)
   }
 
-  void showAlertDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return WillPopScope(
-          onWillPop: () async {
-            return true;
-          },
-        child: AlertDialog(
-          backgroundColor: Color(0xFF2C2A2A),
-          title: const Text(
-            'Profile Update',
-            style: TextStyle(color: Colors.white),
-          ),
-          content: Text(
-            message,
-            style: TextStyle(color: Colors.white),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text(
-                'OK',
-                style: TextStyle(color: Colors.white),
-              ),
-          onPressed: () {
-            Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(
-                  builder: (context) => HomePage(initialIndex: 4)),
-              // Set initialIndex to 1 for ProfilePage
-                  (Route<dynamic> route) => false,
-            );
-          },
-
-            ),
-          ],
-        ),
-        );
-      },
-    );
-  }
+  // void showAlertDialog(String message) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return WillPopScope(
+  //         onWillPop: () async {
+  //           return true;
+  //         },
+  //       child: AlertDialog(
+  //         backgroundColor: Color(0xFF2C2A2A),
+  //         title: const Text(
+  //           'Profile Update',
+  //           style: TextStyle(color: Colors.white),
+  //         ),
+  //         content: Text(
+  //           message,
+  //           style: TextStyle(color: Colors.white),
+  //         ),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             child: const Text(
+  //               'OK',
+  //               style: TextStyle(color: Colors.white),
+  //             ),
+  //         onPressed: () {
+  //           Navigator.of(context).pushAndRemoveUntil(
+  //             MaterialPageRoute(
+  //                 builder: (context) => HomePage(initialIndex: 4)),
+  //             // Set initialIndex to 1 for ProfilePage
+  //                 (Route<dynamic> route) => false,
+  //           );
+  //         },
+  //
+  //           ),
+  //         ],
+  //       ),
+  //       );
+  //     },
+  //   );
+  // }
 
   Future<bool> _onWillPop() async {
     bool isNameChanged = initialName != this.controller.text;

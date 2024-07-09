@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:fit_scoop/Controllers/body_metrics_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
@@ -33,6 +34,81 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
     _startTimer();
 
   }
+  void showConfirmationDialogg(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogBackgroundColor: const Color(0xFF2C2A2A),
+      dialogType: DialogType.question,
+      title: 'End Workout',
+      titleTextStyle: const TextStyle(
+        fontFamily: 'Inter',
+        fontSize: 20,
+        color: Colors.white,
+      ),
+      desc: 'Are you sure you want to end your workout?',
+      descTextStyle: const TextStyle(
+        fontFamily: 'Inter',
+        fontSize: 13,
+        color: Color(0xFFA1A1A1),
+      ),
+      btnCancelText: 'NO',
+      btnOkText: 'YES',
+      btnCancelColor: const Color(0xFF383838),
+      btnOkColor: Color(0xFF0dbab4),
+      dialogBorderRadius: BorderRadius.circular(15),
+      buttonsBorderRadius: BorderRadius.circular(15),
+      dismissOnTouchOutside: true,
+      animType: AnimType.leftSlide,
+      btnCancelOnPress: () {
+      },
+      btnOkOnPress: () async {
+        Navigator.of(context).pop();
+        addWorkoutLogs();
+      },
+    ).show();
+  }
+
+
+
+
+
+
+
+
+  void showConfirmationDialog(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogBackgroundColor: const Color(0xFF2C2A2A),
+      dialogType: DialogType.question,
+      title: 'End Workout',
+      titleTextStyle: const TextStyle(
+        fontFamily: 'Inter',
+        fontSize: 20,
+        color: Colors.white,
+      ),
+      desc: 'Are you sure you want to cancel your workout?',
+      descTextStyle: const TextStyle(
+        fontFamily: 'Inter',
+        fontSize: 13,
+        color: Color(0xFFA1A1A1),
+      ),
+      btnCancelText: 'NO',
+      btnOkText: 'YES',
+      btnCancelColor: const Color(0xFF383838),
+      btnOkColor: Color(0xFF0dbab4),
+      dialogBorderRadius: BorderRadius.circular(15),
+      buttonsBorderRadius: BorderRadius.circular(15),
+      dismissOnTouchOutside: true,
+      animType: AnimType.leftSlide,
+      btnCancelOnPress: () {
+      },
+      btnOkOnPress: () async {
+        Navigator.of(context).pop();
+
+      },
+    ).show();
+  }
+
 
 
   void updateRemainingSets(int index, int newCount) {
@@ -84,35 +160,37 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
         leading: IconButton(
           icon: const Icon(Icons.close_outlined, color: Color(0xFF0dbab4)),
           onPressed: () {
-            showDialog(
+            showConfirmationDialog(context);
 
-              context: context,
-              builder: (BuildContext context) {
-
-                return AlertDialog(
-                  backgroundColor: Color(0xFF2C2A2A), // S
-                  content:  custom_widget.customTextWidget("Are you sure you want to cancel?", 18),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomePage()), // Replace SecondPage() with the desired page widget
-                        );
-                      },
-                      child: custom_widget.customTextWidget("YES", 18),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop(false); // Pop the dialog and return false
-                      },
-                      child: custom_widget.customTextWidget("NO", 18),
-                    ),
-                  ],
-                );
-              },
-            );
+            // showDialog(
+            //
+            //   context: context,
+            //   builder: (BuildContext context) {
+            //
+            //     return AlertDialog(
+            //       backgroundColor: Color(0xFF2C2A2A), // S
+            //       content:  custom_widget.customTextWidget("Are you sure you want to cancel?", 18),
+            //       actions: <Widget>[
+            //         TextButton(
+            //           onPressed: () {
+            //             Navigator.of(context).pop();
+            //             Navigator.push(
+            //               context,
+            //               MaterialPageRoute(builder: (context) => HomePage()), // Replace SecondPage() with the desired page widget
+            //             );
+            //           },
+            //           child: custom_widget.customTextWidget("YES", 18),
+            //         ),
+            //         TextButton(
+            //           onPressed: () {
+            //             Navigator.of(context).pop(false); // Pop the dialog and return false
+            //           },
+            //           child: custom_widget.customTextWidget("NO", 18),
+            //         ),
+            //       ],
+            //     );
+            //   },
+            // );
 
 
           },
@@ -152,35 +230,37 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
             padding: const EdgeInsets.only(top:20,left: 16.0, right: 16,bottom: 20),
             child: ElevatedButton(
               onPressed: () async {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
+                // showDialog(
+                //   context: context,
+                //   builder: (BuildContext context) {
+                //
+                //     return AlertDialog(
+                //       backgroundColor: Color(0xFF2C2A2A), // S
+                //       content:  custom_widget.customTextWidget("Are you sure you want to end workout?", 18),
+                //       actions: <Widget>[
+                //         TextButton(
+                //           onPressed: () {
+                //             Navigator.of(context).pop();
+                //             addWorkoutLogs();
+                //             Navigator.push(
+                //               context,
+                //               MaterialPageRoute(builder: (context) => HomePage()), // Replace SecondPage() with the desired page widget
+                //             );
+                //           },
+                //           child: custom_widget.customTextWidget("YES", 18),
+                //         ),
+                //         TextButton(
+                //           onPressed: () {
+                //             Navigator.of(context).pop(false); // Pop the dialog and return false
+                //           },
+                //           child: custom_widget.customTextWidget("NO", 18),
+                //         ),
+                //       ],
+                //     );
+                //   },
+                // );
 
-                    return AlertDialog(
-                      backgroundColor: Color(0xFF2C2A2A), // S
-                      content:  custom_widget.customTextWidget("Are you sure you want to end workout?", 18),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            addWorkoutLogs();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => HomePage()), // Replace SecondPage() with the desired page widget
-                            );
-                          },
-                          child: custom_widget.customTextWidget("YES", 18),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop(false); // Pop the dialog and return false
-                          },
-                          child: custom_widget.customTextWidget("NO", 18),
-                        ),
-                      ],
-                    );
-                  },
-                );
+                showConfirmationDialogg(context);
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFA52A2A)),
@@ -251,8 +331,6 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
 
       );
       controller.addWorkoutLog(workoutLog);
-      // BodyMetricsController bodyController=new BodyMetricsController();
-      // await bodyController.updateCurrentDay(user.bodyMetrics);
 
       Navigator.push(
         context,
@@ -273,29 +351,3 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
 
 }
 
-
-// Future<String> getImageUrl(Map<String, dynamic> exercise) async {
-//   String id = exercise['id'];
-//   ExerciseController controller=new ExerciseController() ;
-//   Exercise? exersice=await controller.getExercise(id);
-//   String? bodyPart = exersice?.bodyPart;
-//   String? target = exersice?.target;
-//   //print("ffffffffffffffffff");
-//   //print(bodyPart);
-//   //print(target);
-//
-//   for (int i = 0; i < parts.length; i++) {
-//     if (parts[i].name == bodyPart) {
-//       //print("ffjjfjf");
-//       //print(parts[i].imageUrl);
-//       return parts[i].imageUrl;
-//
-//     }
-//     if (parts[i].name != bodyPart && parts[i].name == target) {
-//       //print("cfff");
-//       //print(parts[i].imageUrl);
-//       return parts[i].imageUrl;
-//     }
-//   }
-//   return "";
-// }

@@ -1,4 +1,5 @@
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:fit_scoop/Models/bodyMetricsSingleton.dart';
 import 'package:fit_scoop/Models/body_metrics_model.dart';
 import 'package:fit_scoop/Models/user_model.dart';
@@ -43,6 +44,41 @@ class _CustomDrawerState extends State<CustomDrawer> {
       MaterialPageRoute(builder: (context) => MyHomePage(title: '',)),
       (Route<dynamic> route) => false,
     );
+  }
+
+  void showAlertDialog(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogBackgroundColor: const Color(0xFF2C2A2A),
+      dialogType: DialogType.warning,
+      title: "Logout",
+      titleTextStyle: const TextStyle(
+        fontFamily: 'Inter',
+        fontSize: 20,
+        color: Colors.white,
+      ),
+      desc: 'Are you sure you want to logout?',
+      descTextStyle: const TextStyle(
+        fontFamily: 'Inter',
+        fontSize: 13,
+        color: Color(0xFFA1A1A1),
+      ),
+      btnCancelText:'Dismiss',
+      btnOkText: 'Proceed',
+      btnCancelColor: const Color(0xFF383838),
+      btnOkColor:  Colors.red,
+      dialogBorderRadius: BorderRadius.circular(15),
+      buttonsBorderRadius: BorderRadius.circular(15),
+      dismissOnTouchOutside: true,
+      animType: AnimType.leftSlide,
+      btnCancelOnPress: () {
+
+      },
+      btnOkOnPress: () {
+        logut();
+
+      },
+    ).show();
   }
 
   @override
@@ -347,7 +383,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     ),
                   ),
                   onTap: () async {
-                    logut();
+                    showAlertDialog(context);
                   },
                 ),
               ),
@@ -425,3 +461,4 @@ class CustomUnderlineText extends StatelessWidget {
     );
   }
 }
+
