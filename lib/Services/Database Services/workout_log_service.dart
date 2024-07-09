@@ -76,4 +76,22 @@ class WorkoutLogService {
       throw Exception('Error deleting workout log: $e');
     }
   }
+  Future<WorkoutLog?> getLatestWorkoutLogsByUserIdAndWorkoutId(String userId, String? workoutId) async {
+    try {
+      QuerySnapshot querySnapshot = await _firestore.collection(_collection)
+          .where('userId', isEqualTo: userId)
+          .where('workoutId', isEqualTo: workoutId)
+          .orderBy('timeTaken', descending: true)
+          .limit(1)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        var doc = querySnapshot.docs.first;
+        return WorkoutLog.fromMap(doc.id, doc.data() as Map<String, dynamic>);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw Exception('Error fetching workout logs: $e');
+    }
+  }
 }

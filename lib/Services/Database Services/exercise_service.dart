@@ -113,28 +113,25 @@ class ExerciseService {
       }
     }
 
-    Future<List<Exercise>> getExercisesByAvailableEquipments(List<String> equipments) async {
+  Future<List<Exercise>> getExercisesByAvailableEquipments(List<String> equipments) async {
     try {
+      List<String> tempEquipment = List.from(equipments)..add("body weight")..add('weighted');
+      List<Exercise> exercises = [];
 
-      //equipments.add("body weight");
-      List<String> tempEquipment = equipments + ["body weight"];
-      List<Exercise> exercises=[];
-      for (String equipment in tempEquipment ) {
+      for (String equipment in tempEquipment) {
         QuerySnapshot querySnapshot = await _exercisesRef
             .where('equipment', isEqualTo: equipment)
             .get();
-        List<Exercise> ex = querySnapshot.docs
-            .map((doc) =>
-            Exercise.fromMap(doc.id, doc.data() as Map<String, dynamic>))
-            .toList();
-         exercises.addAll(ex);
 
+        List<Exercise> ex = querySnapshot.docs
+            .map((doc) => Exercise.fromMap(doc.id, doc.data() as Map<String, dynamic>))
+            .toList();
+
+        exercises.addAll(ex);
       }
-      print(exercises);
-      //equipments.remove("body weight");
+
       return exercises;
     } catch (e) {
-      //print('Error getting exercises by available equipments: $e');
       throw Exception('Error getting exercises by available equipments: $e');
     }
   }

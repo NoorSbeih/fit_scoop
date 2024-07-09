@@ -1,15 +1,12 @@
-import 'package:fit_scoop/Models/user_model.dart';
+import 'dart:async';
 import 'package:fit_scoop/Models/user_singleton.dart';
 import 'package:fit_scoop/Views/Screens/add/createworkout1.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
-import 'package:fit_scoop/Views/Widgets/workout_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/exercises_card_widget.dart';
 import '../../../Controllers/exercise_controller.dart';
-import '../../../Controllers/workout_controller.dart';
 import '../../../Models/bodyPart.dart';
 import '../../../Models/exercise_model.dart';
-import '../../../Models/workout_model.dart';
 
 class AddExercisePage extends StatelessWidget {
   final OnExerciseAddedCallback onExerciseAdded;
@@ -43,10 +40,10 @@ class addExercise extends StatefulWidget {
   static final List<Map<String, dynamic>> exercises = [];
 
   @override
-  _addExercise createState() => _addExercise();
+  _addExerciseState createState() => _addExerciseState();
 }
 
-class _addExercise extends State<addExercise> with SingleTickerProviderStateMixin {
+class _addExerciseState extends State<addExercise> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   String imageUrl = "";
   List<BodyPart> parts = [];
@@ -54,6 +51,7 @@ class _addExercise extends State<addExercise> with SingleTickerProviderStateMixi
 
   List<Exercise> allExercises = [];
   List<Exercise> filteredExercises = [];
+  Timer? _debounce;
 
   TextEditingController searchController = TextEditingController();
 
@@ -63,15 +61,14 @@ class _addExercise extends State<addExercise> with SingleTickerProviderStateMixi
     _tabController = TabController(length: 2, vsync: this);
     fetchBodyParts();
     fetchAllExercises();
-    searchController.addListener(() {
-      filterExercises(searchController.text);
-    });
+    searchController.addListener(_onSearchChanged);
   }
 
   @override
   void dispose() {
     _tabController.dispose();
     searchController.dispose();
+    _debounce?.cancel();
     super.dispose();
   }
 
@@ -112,6 +109,13 @@ class _addExercise extends State<addExercise> with SingleTickerProviderStateMixi
     return "";
   }
 
+  void _onSearchChanged() {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 300), () {
+      filterExercises(searchController.text);
+    });
+  }
+
   void filterExercises(String query) {
     List<Exercise> filteredList = allExercises.where((exercise) {
       return exercise.name.toLowerCase().contains(query.toLowerCase());
@@ -142,7 +146,6 @@ class _addExercise extends State<addExercise> with SingleTickerProviderStateMixi
         children: [
           muscleGroupTabContent(),
           alphabeticalTabContent(),
-
         ],
       ),
     );
@@ -201,14 +204,14 @@ class _addExercise extends State<addExercise> with SingleTickerProviderStateMixi
       'cardio',
       'lower legs'
     ];
-    ExerciseController controller = new ExerciseController();
+    ExerciseController controller = ExerciseController();
     return ListView(
       children: mainMuscles.map((mainMuscle) {
         return ExpansionTile(
           title: custom_widget.customTextWidgetForExersiceCard(mainMuscle, 16),
           children: [
             FutureBuilder<List<Exercise>>(
-              future: controller.getExercisesByMainMuscle(mainMuscle,userSingleton.getUser().savedEquipmentIds),
+              future: controller.getExercisesByMainMuscle(mainMuscle, userSingleton.getUser().savedEquipmentIds),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -241,4 +244,3 @@ class _addExercise extends State<addExercise> with SingleTickerProviderStateMixi
     );
   }
 }
-

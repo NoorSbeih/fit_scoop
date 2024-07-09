@@ -29,6 +29,15 @@ class WorkoutLogController {
     }
     return null;
   }
+  Future<WorkoutLog?> getLatestWorkoutLogsByUserIdAndWorkoutId(String userId, String? workoutId) async {
+    try {
+      return await _workoutLogService.getLatestWorkoutLogsByUserIdAndWorkoutId(userId, workoutId!);
+    } catch (e) {
+      //print('Error fetching workout logs: $e');
+      return null;
+    }
+
+  }
 
   Future<List<WorkoutLog>> getWorkoutLogsByUserId(String userId) async {
     try {

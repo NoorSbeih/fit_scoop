@@ -1,6 +1,4 @@
 import 'package:fit_scoop/Views/Screens/add/addExercise.dart';
-import 'package:fit_scoop/Views/Screens/Workout/exercise_details_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 
@@ -159,13 +157,15 @@ class exercises_card {
               Container(
                 height: double.infinity,
                 width: 80,
-                color: Colors.grey, // Placeholder color for the image
+
+                 // Placeholder color for the image
 
                 child: Image.asset(
-                  imageUrl,
+                  //replace imageurl last 3 letters with png
+                  '${imageUrl.substring(0, imageUrl.length - 3)}png',
                   width: 148,
                   height: 128,
-                  fit: BoxFit.cover,
+                  //fit: BoxFit.cover,
                 ),
               ),
               Expanded(
@@ -246,7 +246,7 @@ class exercises_card {
               height: double.infinity,
               width: 80,
                 child:Image.asset(
-                 imageUrl,
+                  '${imageUrl.substring(0, imageUrl.length - 3)}png',
                     width: 148,
                     height: 128,
                     fit: BoxFit.cover,
@@ -342,10 +342,8 @@ class exercises_card {
                 ),
                 GestureDetector(
                   onTap: () {
-                    if (onDelete != null) {
-                      onDelete();
-                    }
-                  },
+                    onDelete();
+                                    },
                   child: const Padding(
                     padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
                     child: Icon(
@@ -380,7 +378,7 @@ class exercises_card {
               height: double.infinity,
               width: 80,
           child:Image.asset(
-            imageUrl,
+            '${imageUrl.substring(0, imageUrl.length - 3)}png',
             width: 148,
             height: 128,
             fit: BoxFit.cover,

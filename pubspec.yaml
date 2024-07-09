@@ -146,18 +146,10 @@ flutter:
         - images/rope.png
         - images/profile-circle-svgrepo-com.svg
         - images/write-svgrepo-com.svg
-        - images/bodyMuscles/abdominals.JPG
         - images/bodyMuscles/back.JPG
-        - images/bodyMuscles/biceps.JPG
-        - images/bodyMuscles/calves.JPG
         - images/bodyMuscles/chest.JPG
-        - images/bodyMuscles/glutes.JPG
-        - images/bodyMuscles/hamstrings.JPG
-        - images/bodyMuscles/hips.JPG
         - images/bodyMuscles/neck.JPG
-        - images/bodyMuscles/quadriceps.JPG
         - images/bodyMuscles/shoulders.JPG
-        - images/bodyMuscles/triceps.JPG
         - images/bodyMuscles/waist.JPG
         - images/bodyMuscles/lowerLegs.JPG
         - images/bodyMuscles/lowerArms.JPG
@@ -185,9 +177,20 @@ flutter:
         - images/equipments/tire.png
         - images/equipments/upperbodyErgometer.png
         - images/equipments/wheelRoller.jpg
+        - images/bodyMuscles/upperArms.png
         - images/lightning.svg
         - images/bicep.svg
         - images/FITscoop2.svg
+        - images/bodyMuscles/back.png
+        - images/bodyMuscles/cardio.png
+        - images/bodyMuscles/chest.png
+        - images/bodyMuscles/shoulders.png
+        - images/bodyMuscles/upperArms.png
+        - images/bodyMuscles/waist.png
+        - images/bodyMuscles/upperLegs.png
+        - images/bodyMuscles/lowerLegs.png
+        - images/bodyMuscles/neck.png
+        - images/bodyMuscles/lowerArms.png
     #   - images/a_dot_ham.jpeg
 
     # An image asset can refer to one or more resolution-specific "variants", see

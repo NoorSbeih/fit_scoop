@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'exercise_details_screen.dart';
@@ -9,11 +8,11 @@ class BeginWorkoutCardWidget extends StatelessWidget {
   final String weight;
   final String id;
   final int remainingSets;
-   String imageUrl;
+   final String imageUrl;
   final ValueChanged<int> onRemainingCountChanged;
 
-  BeginWorkoutCardWidget({
-    Key? key,
+  const BeginWorkoutCardWidget({
+    super.key,
     required this.name,
     required this.sets,
     required this.weight,
@@ -22,7 +21,7 @@ class BeginWorkoutCardWidget extends StatelessWidget {
     required this.remainingSets,
 
     required this.onRemainingCountChanged
-  }) : super(key: key);
+  });
 
   void onExerciseFinished(BuildContext context) {
     showModalBottomSheet(
@@ -35,7 +34,7 @@ class BeginWorkoutCardWidget extends StatelessWidget {
         return Container(
           height: MediaQuery.of(context).size.height * 0.89,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
             border: Border.all(
               width: 2.0,
             ),
@@ -56,7 +55,7 @@ class BeginWorkoutCardWidget extends StatelessWidget {
       height: 120,
       child: Card(
         margin: const EdgeInsets.only(left: 20, right: 20, top: 15),
-        color: Color(0xFF2C2A2A),
+        color: const Color(0xFF2C2A2A),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),
@@ -66,11 +65,11 @@ class BeginWorkoutCardWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                margin: EdgeInsets.all(8),
+                margin: const EdgeInsets.all(8),
                 height: double.infinity,
                 width: 80,
                 child:Image.asset(
-                  imageUrl,
+                  '${imageUrl.substring(0, imageUrl.length - 3)}png',
                   width: 148,
                   height: 128,
                   fit: BoxFit.cover,
@@ -94,7 +93,7 @@ class BeginWorkoutCardWidget extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 7, bottom: 10, top: 1),
+                      padding: const EdgeInsets.only(left: 7, bottom: 10, top: 1),
                       child: Text(
                         "$sets | $weight",
                         style: const TextStyle(
@@ -111,10 +110,10 @@ class BeginWorkoutCardWidget extends StatelessWidget {
               GestureDetector(
                 onTap: remainingSets > 0 ? () => onExerciseFinished(context) : null,
                 child: Container(
-                  margin: EdgeInsets.all(16),
+                  margin: const EdgeInsets.all(16),
                   child: Icon(
                     remainingSets == 0 ? Icons.check : Icons.more_horiz_outlined,
-                    color: remainingSets == 0 ? Colors.grey : Color(0xFF0dbab4),
+                    color: remainingSets == 0 ? Colors.grey : const Color(0xFF0dbab4),
                   ),
                 ),
               ),
