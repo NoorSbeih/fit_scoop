@@ -92,20 +92,6 @@ class _bodyfatUpdateState extends State<BodyfatUpdate> {
               ),
             ),
           ),
-
-          // Padding(
-          //   padding: const EdgeInsets.only(top: 25),
-          //   child: Align(
-          //     alignment: Alignment.center,
-          //     child:
-          //     Image.asset(
-          //       imagePaths[getBodyType(currentValue)]!,
-          //       fit: BoxFit.contain,
-          //       width: 250, // Adjust width as needed
-          //       height: 250, // Adjust height as needed
-          //     ),
-          //   ),
-          // ),
           Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child: Align(
@@ -131,6 +117,29 @@ class _bodyfatUpdateState extends State<BodyfatUpdate> {
                   },
                 ),
               ),
+            ),
+          ),
+
+          SizedBox(height: 100),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(
+                  const Color(0xFF0dbab4)), // Change color to blue
+              fixedSize: MaterialStateProperty.all<Size>(const Size(300, 50)),
+              shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
+                    (Set<MaterialState> states) {
+                  return RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0), // Border radius
+                  );
+                },
+              ),
+            ),
+            child: const Text(
+              'UPDATE',
+              style: TextStyle(fontSize: 20, color: Color(0xFF2C2A2A)),
             ),
           ),
         ],

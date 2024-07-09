@@ -91,6 +91,30 @@ class _gymTypeState extends State<GymType> {
               ),
 
 
+
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color(0xFF0dbab4)), // Change color to blue
+                  fixedSize: MaterialStateProperty.all<Size>(const Size(300, 50)),
+                  shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
+                        (Set<MaterialState> states) {
+                      return RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0), // Border radius
+                      );
+                    },
+                  ),
+                ),
+                child: const Text(
+                  'UPDATE',
+                  style: TextStyle(fontSize: 20, color: Color(0xFF2C2A2A)),
+                ),
+              ),
+
             ]
         )
     );
@@ -110,7 +134,6 @@ class _gymTypeState extends State<GymType> {
           User_model user = userSingleton.getUser();
           metrics.gymType=title;
           controller.updateBodyMetrics(user.bodyMetrics!,metrics);
-          Navigator.pop(context);
         });
 
       },

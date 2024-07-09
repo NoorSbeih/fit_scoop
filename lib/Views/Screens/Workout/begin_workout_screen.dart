@@ -263,7 +263,7 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
                 showConfirmationDialogg(context);
               },
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFA52A2A)),
+                backgroundColor: MaterialStateProperty.all<Color>( Colors.red),
                 fixedSize: MaterialStateProperty.all<Size>(const Size(350, 50)),
                 shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                       (Set<MaterialState> states) {

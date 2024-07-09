@@ -64,7 +64,7 @@ class _unitState extends State<UnitOfMeasure> {
             ), // Add padding from the bottom only
           ),
           Padding(
-              padding: const EdgeInsets.only(left: 5.0),
+              padding: const EdgeInsets.only(left: 5.0,top:20),
               child: Row(
                 children: [
                   Radio(
@@ -125,7 +125,7 @@ class _unitState extends State<UnitOfMeasure> {
                 ],
               )),
 
-          SizedBox(height: 20),
+          SizedBox(height: 150),
           ElevatedButton(
             onPressed: () {
               BodyMetricsSingleton singleton = BodyMetricsSingleton.getInstance();
@@ -141,7 +141,7 @@ class _unitState extends State<UnitOfMeasure> {
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(
                   const Color(0xFF0dbab4)), // Change color to blue
-              fixedSize: MaterialStateProperty.all<Size>(const Size(250, 30)),
+              fixedSize: MaterialStateProperty.all<Size>(const Size(300, 50)),
               shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                     (Set<MaterialState> states) {
                   return RoundedRectangleBorder(

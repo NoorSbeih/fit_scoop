@@ -170,7 +170,7 @@ class _Weight_HeightUpdate extends State<Weight_HeightUpdate> {
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(
                   const Color(0xFF0dbab4)), // Change color to blue
-              fixedSize: MaterialStateProperty.all<Size>(const Size(250, 30)),
+              fixedSize: MaterialStateProperty.all<Size>(const Size(300, 50)),
               shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
                 (Set<MaterialState> states) {
                   return RoundedRectangleBorder(
