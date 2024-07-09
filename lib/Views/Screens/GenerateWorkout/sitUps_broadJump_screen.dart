@@ -11,7 +11,6 @@ import '../../../Models/user_singleton.dart';
 import '../../../Services/tensorflow_service.dart';
 import 'Female_goals_screen.dart';
 import 'Male_goals_screen.dart';
-import '../Registration pages/page_view.screen.dart';
 import 'diastolic_systolic_screen.dart';
 
 class SitupsBroadjumpScreen extends StatefulWidget {
@@ -159,7 +158,7 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
                       });
                       double age=calculateAge(metrics!.birthDate);
 
-                      int x= await predictTensor.predict(age:age,gender:metrics!.gender,
+                      int x= await predictTensor.predict(age:age,gender:metrics.gender,
                           height :metrics.height,
                           weight:metrics.weight,
                           bodyFat: metrics.bodyFat,
@@ -168,10 +167,10 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
                           sitUps:double.parse(selectedSitUp.text),
                           broadJump:double.parse(selectedBroadJump.text)
                       );
-                      print("predictttt");
-                      print(x);
+                      //print("predictttt");
+                      //print(x);
                       metrics.performanceLevel=x;
-                      bodyMetricsController.updateBodyMetrics(user.bodyMetrics, metrics!);
+                      bodyMetricsController.updateBodyMetrics(user.bodyMetrics, metrics);
                       if(metrics.gender.compareTo("Male")==0){
                         Navigator.push(
                           context,

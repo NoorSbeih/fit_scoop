@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
-import 'package:fit_scoop/Views/Widgets/card_widget.dart';
 
 import '../../../Controllers/body_metrics_controller.dart';
 import '../../../Models/body_metrics_model.dart';
@@ -97,8 +96,8 @@ class _RegisterPageState extends State<RegisterPage4M> {
                   UserSingleton userSingleton = UserSingleton.getInstance();
                   User_model user = userSingleton.getUser();
                   await bodyMetricsController.generateWorkoutSchedule(metrics!,user);
-                  bodyMetricsController.updateBodyMetrics(
-                      userSingleton.getUser().bodyMetrics!, metrics!);
+                  // bodyMetricsController.updateBodyMetrics(
+                  //     userSingleton.getUser().bodyMetrics!, metrics!);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
