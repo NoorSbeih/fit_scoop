@@ -322,7 +322,7 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(width: 8),
                     // Adjust the spacing between the icon and text
                     const Text(
-                      'Sign up with GOOGLE',
+                      'Sign in with GOOGLE',
                       style: TextStyle(
                         fontSize: 18,
                         color: Color(0xFF2C2A2A),

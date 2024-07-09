@@ -80,7 +80,7 @@ class _BeginWorkoutPageState extends State<BeginWorkoutPage> {
       context: context,
       dialogBackgroundColor: const Color(0xFF2C2A2A),
       dialogType: DialogType.question,
-      title: 'End Workout',
+      title: 'Cancel Workout',
       titleTextStyle: const TextStyle(
         fontFamily: 'Inter',
         fontSize: 20,
