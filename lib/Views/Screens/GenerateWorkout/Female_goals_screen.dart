@@ -1,5 +1,3 @@
-import 'package:fit_scoop/Views/Widgets/card_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 
@@ -8,7 +6,6 @@ import '../../../Models/body_metrics_model.dart';
 import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
 import '../WorkoutScheduling/Schedule.dart';
-import 'Male_goals_screen.dart';
 class Page4 extends StatelessWidget {
 
   @override
@@ -99,8 +96,8 @@ class _RegisterPageState extends State<RegisterPage4F> {
                   UserSingleton userSingleton = UserSingleton.getInstance();
                   User_model user = userSingleton.getUser();
                   await bodyMetricsController.generateWorkoutSchedule(metrics!,user);
-                  bodyMetricsController.updateBodyMetrics(
-                      userSingleton.getUser().bodyMetrics!, metrics!);
+                  // bodyMetricsController.updateBodyMetrics(
+                  //     userSingleton.getUser().bodyMetrics!, metrics!);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
