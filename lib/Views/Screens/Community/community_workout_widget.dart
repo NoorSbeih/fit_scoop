@@ -45,13 +45,13 @@ class communityWorkoutWidget {
                           children: [
                             user.imageLink != null
                                 ? CircleAvatar(
-                                    radius: 30,
+                                    radius: 35,
                                     backgroundColor: Colors.transparent,
                                     backgroundImage:
                                         NetworkImage(user.imageLink!),
                                   )
                                 : CircleAvatar(
-                                    radius: 30,
+                                    radius: 35,
                                     backgroundColor: Colors.transparent,
                                     child: SvgPicture.asset(
                                       'images/profile-circle-svgrepo-com.svg',
@@ -62,7 +62,7 @@ class communityWorkoutWidget {
                                   ),
                           ],
                         ),
-                        SizedBox(width: 5),
+                        SizedBox(width: 10),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +71,7 @@ class communityWorkoutWidget {
                                 '${user.name} has posted a new workout',
                                 style: const TextStyle(
                                   color: Color(0xFF0dbab4),
-                                  fontSize: 14,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Montserrat',
                                 ),

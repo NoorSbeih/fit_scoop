@@ -26,12 +26,12 @@ class communityReviewsWidget {
                     children: [
                       creator.imageLink != null
                           ? CircleAvatar(
-                        radius: 30,
+                        radius: 35,
                         backgroundColor: Colors.transparent,
                         backgroundImage: NetworkImage(creator.imageLink!),
                       )
                           : CircleAvatar(
-                        radius: 30,
+                        radius: 35,
                         backgroundColor: Colors.transparent,
                         child: SvgPicture.asset(
                           'images/profile-circle-svgrepo-com.svg',
@@ -42,12 +42,12 @@ class communityReviewsWidget {
                       ),
                     ],
                   ),
-                  SizedBox(width: 5), // Add spacing between icon and text
+                  SizedBox(width: 10), // Add spacing between icon and text
                   Text(
                     '${creator.name} has reviewed a workout',
                     style: const TextStyle(
                       color: Color(0xFF0dbab4),
-                      fontSize: 14,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Montserrat',
                     ),

@@ -45,6 +45,11 @@ class _profileState extends State<ProfileUser> {
       setState(() {
         _controller.text = widget.user.bio ?? '';
 
+        String? imageUrl = widget.user.imageLink;
+        setState(() {
+          this.imageUrl = imageUrl;
+        });
+
       });
 
       WorkoutController controller = WorkoutController();
