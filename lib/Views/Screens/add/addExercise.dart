@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:fit_scoop/Models/user_singleton.dart';
 import 'package:fit_scoop/Views/Screens/add/createworkout1.dart';
+import 'package:fit_scoop/Views/Screens/login_screen.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_scoop/Views/Widgets/exercises_card_widget.dart';
@@ -46,19 +47,17 @@ class addExercise extends StatefulWidget {
 class _addExerciseState extends State<addExercise> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   String imageUrl = "";
-  List<BodyPart> parts = [];
+  List<BodyPart> parts = LoginPage.parts;
   UserSingleton userSingleton = UserSingleton.getInstance();
   List<Exercise> allExercises = [];
   List<Exercise> filteredExercises = [];
   Timer? _debounce;
 
   TextEditingController searchController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    fetchBodyParts();
     fetchAllExercises();
     searchController.addListener(_onSearchChanged);
   }
@@ -71,25 +70,14 @@ class _addExerciseState extends State<addExercise> with SingleTickerProviderStat
     super.dispose();
   }
 
-  Future<void> fetchBodyParts() async {
-    try {
-      ExerciseController controller = ExerciseController();
-      List<BodyPart> equipments = await controller.getAllBoyImages();
-      setState(() {
-        parts = equipments;
-      });
-    } catch (e) {
-      print('Error fetching data: $e');
-    }
-  }
-
   Future<void> fetchAllExercises() async {
     try {
       ExerciseController controller = ExerciseController();
-      List<Exercise> allExercisesData = await controller.getExercisesByAvailableEquipments(userSingleton.getUser().savedEquipmentIds);
+      List<Exercise> allExercisesData = await controller.getAllExersices();
+      filteredExercises=controller.getExercisesByAvailableEquipments(userSingleton.getUser().savedEquipmentIds,allExercisesData);
       setState(() {
         allExercises = allExercisesData;
-        filteredExercises = allExercisesData;
+      //  filteredExercises = allExercisesData;
       });
     } catch (e) {
       print('Error fetching exercises: $e');
@@ -120,6 +108,7 @@ class _addExerciseState extends State<addExercise> with SingleTickerProviderStat
       return exercise.name.toLowerCase().contains(query.toLowerCase());
     }).toList();
     setState(() {
+
       filteredExercises = filteredList;
     });
   }
@@ -206,35 +195,24 @@ class _addExerciseState extends State<addExercise> with SingleTickerProviderStat
     ExerciseController controller = ExerciseController();
     return ListView(
       children: mainMuscles.map((mainMuscle) {
+        // Filter exercises by main muscle synchronously
+        List<Exercise> filtered = controller.getExercisesByMainMuscle(mainMuscle,filteredExercises);
+
         return ExpansionTile(
           title: custom_widget.customTextWidgetForExersiceCard(mainMuscle, 16),
           children: [
-            FutureBuilder<List<Exercise>>(
-              future: controller.getExercisesByMainMuscle(mainMuscle, userSingleton.getUser().savedEquipmentIds),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                } else if (snapshot.hasData) {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      Exercise exercise = snapshot.data![index];
-                      getImageUrl(exercise);
-                      return exercises_card.addingExersiceWidget(
-                        exercise.name,
-                        exercise.id,
-                        getImageUrl(exercise),
-                        context,
-                      );
-                    },
-                  );
-                } else {
-                  return Center(child: Text('No exercises found.'));
-                }
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: filtered.length,
+              itemBuilder: (context, index) {
+                Exercise exercise = filtered[index];
+                return exercises_card.addingExersiceWidget(
+                  exercise.name,
+                  exercise.id,
+                  getImageUrl(exercise),
+                  context,
+                );
               },
             ),
           ],
@@ -242,4 +220,5 @@ class _addExerciseState extends State<addExercise> with SingleTickerProviderStat
       }).toList(),
     );
   }
+
 }

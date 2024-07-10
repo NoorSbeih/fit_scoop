@@ -78,12 +78,15 @@ class ExerciseService {
       throw e;
     }
   }
-  Future<List<Exercise>> getExercisesByMainMuscle(String mainMuscle,List<String> equipments) async {
+ List<Exercise>getExercisesByMainMuscle(String mainMuscle,allExercises) {
 
-      try {
-        List<String> tempEquipment = equipments + ["body weight"];
-        List<Exercise> exercises=[];
-        for (String equipment in tempEquipment ) {
+
+        List<Exercise> filteredExercises = allExercises.where((exercise) {
+          return exercise.bodyPart == mainMuscle;
+        }).toList();
+
+        return filteredExercises;
+       /* for (String equipment in tempEquipment ) {
           QuerySnapshot querySnapshot = await _exercisesRef
               .where('equipment', isEqualTo: equipment)
               .get();
@@ -110,15 +113,20 @@ class ExerciseService {
 
         print('Error getting exercises by available equipments and muscle: $e');
         throw Exception('Error getting exercises by available equipments and muscle: $e');
-      }
+      }*/
     }
 
-  Future<List<Exercise>> getExercisesByAvailableEquipments(List<String> equipments) async {
+  List<Exercise>getExercisesByAvailableEquipments(List<String> equipments, List<Exercise> allExercises) {
     try {
-      List<String> tempEquipment = List.from(equipments)..add("body weight")..add('weighted');
+      List<String> tempEquipment = equipments+["body weight"];
       List<Exercise> exercises = [];
+      List<Exercise> filteredExercises = allExercises.where((exercise) {
+        return tempEquipment.contains(exercise.equipment);
+      }).toList();
 
-      for (String equipment in tempEquipment) {
+      return filteredExercises;
+
+     /* for (String equipment in tempEquipment) {
         QuerySnapshot querySnapshot = await _exercisesRef
             .where('equipment', isEqualTo: equipment)
             .get();
@@ -128,7 +136,7 @@ class ExerciseService {
             .toList();
 
         exercises.addAll(ex);
-      }
+      }*/
 
       return exercises;
     } catch (e) {

@@ -5,16 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 import '../../Controllers/exercise_controller.dart';
 import '../../Controllers/login_controller.dart';
-
 import '../../Models/bodyPart.dart';
-import '../../Models/user_singleton.dart';
 import '../../Services/authentication_service.dart';
 import '../../Services/email.dart';
 import 'main_page_screen.dart';
-import 'Workout/current_workout_screen.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -36,7 +32,7 @@ class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});
 
   final String title;
-  static List<BodyPart> parts = [];
+  static List<BodyPart> parts = LoginPage.parts;
 
   @override
   State<LoginPage> createState() => _LoginPageState();
