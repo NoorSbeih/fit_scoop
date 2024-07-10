@@ -84,7 +84,6 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.0,
-                        fontFamily: 'BebasNeue'
                     ),
                     children: [
                       TextSpan(
@@ -115,7 +114,6 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.0,
-                        fontFamily: 'BebasNeue'
                     ),
                     children: [
                       TextSpan(
