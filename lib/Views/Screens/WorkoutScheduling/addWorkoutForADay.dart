@@ -66,7 +66,44 @@ class _AddWorkoutForADayState extends State<AddWorkoutForADayy> {
             createWorkout2();
           },
         ),
+        actions: [
+          TextButton(
+            child: const Text(
+              'Skip',
+              style: TextStyle(color: Color(0xFF0dbab4)),
+            ),
+            onPressed: () async {
+              UserSingleton userSingleton = UserSingleton.getInstance();
+              User_model user = userSingleton.getUser();
+
+              Workout workout = Workout(
+                name: createWorkout1.name,
+                description: createWorkout2.descriptionController.text,
+                exercises: addExercise.exercises,
+                intensity: createWorkout2.label,
+                creatorId: user.id,
+                numberOfSaves: 0,
+                reviews: [],
+                isPrivate: createWorkout2.isPrivate,
+                timestamp: DateTime.now(),
+              );
+
+              WorkoutController workoutController = WorkoutController();
+              await workoutController.createWorkout(workout);
+              addExercise.exercises.clear();
+              createWorkout2.descriptionController.clear();
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (context) => HomePage(initialIndex: 0)),
+                // Set initialIndex to 1 for ProfilePage
+                    (Route<dynamic> route) => false,
+              );
+
+            },
+          ),
+        ],
       ),
+
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
