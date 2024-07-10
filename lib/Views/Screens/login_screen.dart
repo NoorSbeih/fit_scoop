@@ -204,31 +204,35 @@ class _LoginPageState extends State<LoginPage> {
                     return;
                   }
 
-                  if (eV.validateEmail(email) == "" && !password.isEmpty) {
+
+                  try {
                     LoginController loginController = LoginController();
-                    loginController
-                        .signInWithEmailAndPassword(email, password)
-                        .then((user) async {
-                      if (user != null) {
-                        if (await loginController.getUserBodyMetric() == null) {
-                          //print("empty");
-                        } else {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    HomePage()), // Replace HomePage() with the desired page widget
-                          );
+                    User? user = await loginController.signInWithEmailAndPassword(email, password);
+                    if (user != null) {
+                      if (await loginController.getUserBodyMetric() == null) {
+                        // Handle if user metric is not found
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomePage()), // Replace HomePage() with the desired page widget
+                        );
+                      }
+                    }
+                  } catch (error) {
+                    setState(() {
+                      if (error is FirebaseAuthException) {
+                        switch (error.code) {
+                          case 'user-not-found':
+                            emailErrorText = 'Email not found';
+                            break;
+                          case 'wrong-password':
+                            _passwordErrorText = 'Incorrect password';
+                            break;
+                          default:
+                            _passwordErrorText = 'Login failed. Please try again.';
                         }
                       } else {
-                        //print('User authentication failed.');
-                        setState(() {
-                          if (user == null) {
-                            emailErrorText = 'Email not found';
-                          } else {
-                            _passwordErrorText = 'Incorrect password';
-                          }
-                        });
+                        _passwordErrorText = 'Login failed. Please try again.';
                       }
                     });
                   }

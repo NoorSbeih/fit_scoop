@@ -88,12 +88,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
     typeOfPlace = metrics.gymType;
     goal = metrics.fitnessGoal;
     gender = metrics.gender;
-    //print(gender);
+
     UserSingleton usersingleton = UserSingleton.getInstance();
     User_model user = usersingleton.getUser();
     equipments = user.savedEquipmentIds.length.toString();
     bodyfat = metrics.bodyFat;
-
+    print("jnnjjn");
+print(typeOfPlace);
     return Drawer(
       backgroundColor: Color(0xFF2C2A2A),
       child: ListView(

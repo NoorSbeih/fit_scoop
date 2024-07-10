@@ -75,7 +75,7 @@ class BodyMetrics {
       workoutSchedule = workoutSchedule.sublist(0, 7);
     }
 
-    //print("Parsed workoutSchedule: $workoutSchedule");
+
 
     return BodyMetrics(
       userId: map['userId'] ?? '',
@@ -89,7 +89,7 @@ class BodyMetrics {
       unitOfMeasure: map['unitOfMeasure'] ?? '',
       diastolic: (map['diastolic'] as num?)?.toDouble(),
       systolic: (map['systolic'] as num?)?.toDouble(),
-      gymType: map['gymType'] ?? '',
+      gymType: map['gymsType'] ?? '',
       sitUpCount: (map['sitUpCount'] as num?)?.toDouble(),
       broadJumpCm: (map['broadJumpCm'] as num?)?.toDouble(),
       performanceLevel: (map['performanceLevel'] is String && map['performanceLevel'].isEmpty)
@@ -98,33 +98,3 @@ class BodyMetrics {
     );
   }
 }
-
-
-
-/*List<String> convert(List<dynamic> x){
-List<dynamic> fitnessGoalList =x;
-List<String> fitnessGoal = fitnessGoalList.cast<String>();
-return fitnessGoal;
-}
-List<List<String>> convert2(dynamic x) {
-  if (x is List<dynamic>) {
-
-    return x.map((dynamic item) {
-      if (item is List<dynamic>) {
-        return item.map((dynamic innerItem) => innerItem.toString()).toList();
-      } else {
-        return [item.toString()];
-      }
-    }).toList();
-  } else if (x is String) {
-    try {
-      List<dynamic> parsedList = jsonDecode(x);
-      if (parsedList is List<dynamic>) {
-        return convert2(parsedList);
-      }
-    } catch (e) {
-      //print('Error parsing workout schedule JSON: $e');
-    }
-  }
-  return [];
-}*/
