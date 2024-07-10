@@ -32,7 +32,7 @@ class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});
 
   final String title;
-  static List<BodyPart> parts = LoginPage.parts;
+  //static List<BodyPart> parts = [];
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -49,20 +49,9 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     passwordVisible = false;
-    fetchBodyParts();
+   // fetchBodyParts();
   }
 
-  Future<void> fetchBodyParts() async {
-    try {
-      ExerciseController controller = ExerciseController();
-      List<BodyPart> equipments = await controller.getAllBoyImages();
-      setState(() {
-        LoginPage.parts = equipments;
-      });
-    } catch (e) {
-      //print('Error fetching data: $e');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

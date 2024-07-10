@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../Controllers/exercise_controller.dart';
+import '../../Models/bodyPart.dart';
 import '../../Models/user_model.dart';
 import '../../Services/authentication_service.dart';
 import '../../Services/email.dart';
@@ -27,13 +29,11 @@ class Register extends StatelessWidget {
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key, required this.title});
-
+ // static List<BodyPart> parts = [];
   final String title;
-
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
-
 class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -48,7 +48,9 @@ class _RegisterPageState extends State<RegisterPage> {
   void initState() {
     super.initState();
     passwordVisible = false;
+
   }
+
 
   @override
   Widget build(BuildContext context) {

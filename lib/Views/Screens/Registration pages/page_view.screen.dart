@@ -210,6 +210,7 @@ class _CustomPageViewState extends State<CustomPageView> {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => HomePage()),
+
       );
     }).catchError((error) {
       //print('Error navigating to HomePage: $error');

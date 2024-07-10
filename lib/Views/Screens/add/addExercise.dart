@@ -8,6 +8,7 @@ import 'package:fit_scoop/Views/Widgets/exercises_card_widget.dart';
 import '../../../Controllers/exercise_controller.dart';
 import '../../../Models/bodyPart.dart';
 import '../../../Models/exercise_model.dart';
+import '../Workout/current_workout_screen.dart';
 
 class AddExercisePage extends StatelessWidget {
   final OnExerciseAddedCallback onExerciseAdded;
@@ -47,7 +48,7 @@ class addExercise extends StatefulWidget {
 class _addExerciseState extends State<addExercise> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   String imageUrl = "";
-  List<BodyPart> parts = LoginPage.parts;
+  List<BodyPart> parts = WorkoutPagee.parts;
   UserSingleton userSingleton = UserSingleton.getInstance();
   List<Exercise> allExercises = [];
   List<Exercise> filteredExercises = [];

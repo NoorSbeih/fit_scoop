@@ -4,9 +4,11 @@ import 'package:fit_scoop/Models/body_metrics_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_scoop/Models/user_model.dart';
+import '../../../Controllers/exercise_controller.dart';
 import '../../../Controllers/workout_controller.dart';
 import 'package:fit_scoop/Views/Widgets/exercises_card_widget.dart';
 import 'package:fit_scoop/Views/Widgets/workout_widget.dart';
+import '../../../Models/bodyPart.dart';
 import '../../../Models/user_singleton.dart';
 import '../../../Models/workout_log.dart';
 import '../../../Models/workout_model.dart';
@@ -15,6 +17,7 @@ import '../WorkoutScheduling/Schedule.dart';
 import 'begin_workout_screen.dart';
 
 class WorkoutPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
@@ -27,7 +30,7 @@ class WorkoutPagee extends StatefulWidget {
   static late List<Map<String, dynamic>> exercises = [];
   static List<Map<String, dynamic>> exerciseslog = [];
   static late String currentWorkoutId;
-
+  static List<BodyPart> parts = [];
   static void copyExercisesToLog() {
     exerciseslog = [];
     for (var exercise in exercises) {
@@ -58,9 +61,19 @@ class _WorkoutPageState extends State<WorkoutPagee> {
   void initState() {
     super.initState();;
     fetchData();
-
+    fetchBodyParts();
   }
-
+  Future<void> fetchBodyParts() async {
+    try {
+      ExerciseController controller = ExerciseController();
+      List<BodyPart> bodyPart = await controller.getAllBoyImages();
+      setState(() {
+        WorkoutPagee.parts = bodyPart;
+      });
+    } catch (e) {
+      //print('Error fetching data: $e');
+    }
+  }
 
   void fetchData() async {
     try {

@@ -5,6 +5,7 @@ import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 import '../../Controllers/exercise_controller.dart';
 import '../../Models/exercise_model.dart';
 import '../Screens/Workout/adding_exercise_details_screen.dart';
+import '../Screens/Workout/current_workout_screen.dart';
 import '../Screens/login_screen.dart';
 
 class exercises_card {
@@ -106,10 +107,10 @@ class exercises_card {
                     String? target = exercise?.target;
                     String imageUrl = "";
 
-                    for (int i = 0; i < LoginPage.parts.length; i++) {
-                      if (LoginPage.parts[i].name == bodyPart ||
-                          LoginPage.parts[i].name == target) {
-                        imageUrl = LoginPage.parts[i].imageUrl;
+                    for (int i = 0; i < WorkoutPagee.parts.length; i++) {
+                      if (WorkoutPagee.parts[i].name == bodyPart ||
+                          WorkoutPagee.parts[i].name == target) {
+                        imageUrl = WorkoutPagee.parts[i].imageUrl;
                         break; // exit loop when match is found
                       }
                     }
