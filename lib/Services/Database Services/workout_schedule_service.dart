@@ -24,7 +24,7 @@ Map<String, Map<String, Map<String, List<String>>>> workoutPlans = {
     },
     'C':{
       'Bodybuilding': [
-        'OnMoUTHJ8w5WX5QaCLAN', 'JJ1rYJ2UGzWEN6NiugFr', 'LJXI8gyOSYLvFLq7xsE9', 'IkgJJqRidbHc6MYsbu2R', 'QYHPcICxY7y0ywnTJBJD', 'gSLvawFmV2Oj0T8Ef2ga', 'No workout'
+        'tGrHp8x7K6HU8sQtsyxe', 'No workout', 'lNEAy2Gx9vc5YLkIrlUO', 'No workout', 'eP4QxK0zplvt7rANJbPB', 'No workout', 'MMjmHw7yDeyqMxrULboQ'
       ],
       'muscle_gain': [
         'workoutId36', 'workoutId37', 'workoutId38', 'workoutId39', 'workoutId40', 'workoutId41', 'workoutId42'

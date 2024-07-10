@@ -97,7 +97,7 @@ class _RegisterPageState extends State<RegisterPage4M> {
                   User_model user = userSingleton.getUser();
                   await bodyMetricsController.generateWorkoutSchedule(metrics!,user);
                   // bodyMetricsController.updateBodyMetrics(
-                  //     userSingleton.getUser().bodyMetrics!, metrics!);
+                  // userSingleton.getUser().bodyMetrics!, metrics!);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
