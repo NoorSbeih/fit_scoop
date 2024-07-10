@@ -52,6 +52,64 @@ class _AddWorkoutForADayState extends State<AddWorkoutForADayy> {
     super.initState();
   }
 
+  void showAlertDialogg(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogBackgroundColor: const Color(0xFF2C2A2A),
+      dialogType: DialogType.success,
+      title: "Workout Creation",
+      titleTextStyle: const TextStyle(
+        fontFamily: 'Inter',
+        fontSize: 20,
+        color: Colors.white,
+      ),
+      desc: 'Your workout is created successfully!',
+      descTextStyle: const TextStyle(
+        fontFamily: 'Inter',
+        fontSize: 13,
+        color: Color(0xFFA1A1A1),
+      ),
+      // btnCancelText:'Dismiss',
+      btnOkText: 'Ok',
+      btnCancelColor: const Color(0xFF383838),
+      btnOkColor:  Colors.greenAccent,
+      dialogBorderRadius: BorderRadius.circular(15),
+      buttonsBorderRadius: BorderRadius.circular(15),
+      dismissOnTouchOutside: true,
+      animType: AnimType.leftSlide,
+
+      btnOkOnPress: () async {
+
+        UserSingleton userSingleton = UserSingleton.getInstance();
+        User_model user = userSingleton.getUser();
+
+        Workout workout = Workout(
+          name: createWorkout1.name,
+          description: createWorkout2.descriptionController.text,
+          exercises: addExercise.exercises,
+          intensity: createWorkout2.label,
+          creatorId: user.id,
+          numberOfSaves: 0,
+          reviews: [],
+          isPrivate: createWorkout2.isPrivate,
+          timestamp: DateTime.now(),
+        );
+
+        WorkoutController workoutController = WorkoutController();
+        await workoutController.createWorkout(workout);
+        addExercise.exercises.clear();
+        createWorkout2.descriptionController.clear();
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (context) => HomePage(initialIndex: 0)),
+          // Set initialIndex to 1 for ProfilePage
+              (Route<dynamic> route) => false,
+        );
+
+      },
+    ).show();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,31 +131,8 @@ class _AddWorkoutForADayState extends State<AddWorkoutForADayy> {
               style: TextStyle(color: Color(0xFF0dbab4)),
             ),
             onPressed: () async {
-              UserSingleton userSingleton = UserSingleton.getInstance();
-              User_model user = userSingleton.getUser();
 
-              Workout workout = Workout(
-                name: createWorkout1.name,
-                description: createWorkout2.descriptionController.text,
-                exercises: addExercise.exercises,
-                intensity: createWorkout2.label,
-                creatorId: user.id,
-                numberOfSaves: 0,
-                reviews: [],
-                isPrivate: createWorkout2.isPrivate,
-                timestamp: DateTime.now(),
-              );
-
-              WorkoutController workoutController = WorkoutController();
-              await workoutController.createWorkout(workout);
-              addExercise.exercises.clear();
-              createWorkout2.descriptionController.clear();
-              Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                    builder: (context) => HomePage(initialIndex: 0)),
-                // Set initialIndex to 1 for ProfilePage
-                    (Route<dynamic> route) => false,
-              );
+              showAlertDialogg(context);
 
             },
           ),
