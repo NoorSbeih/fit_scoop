@@ -204,8 +204,9 @@ class _CustomPageViewState extends State<CustomPageView> {
     model.BodyMetrics bodyMetrics= model.BodyMetrics(userId:id,height: RegisterPage2.heightresult,weight: RegisterPage2.weightresult,birthDate: dateString ,
     bodyFat: RegisterPage3.currentValue,gender: RegisterPage1.selectedgender,fitnessGoal:CustomPageView.Goal,gymType: RegisterPage5.typeOfPlace,workoutSchedule: workoutSchedule,unitOfMeasure: unit);
     await _bodyMetricController.addBodyMetrics(bodyMetrics);
-
    RegisterController controller=RegisterController();
+    RegisterPage1.clearData();
+
     controller.getUserBodyMetric(id).then((_) {
       Navigator.push(
         context,

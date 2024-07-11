@@ -5,6 +5,7 @@ import 'package:numberpicker/numberpicker.dart';
 import 'package:fit_scoop/Views/Widgets/custom_widget.dart';
 
 import '../../../Controllers/body_metrics_controller.dart';
+import '../../../Models/bodyMetricsSingleton.dart';
 import '../../../Models/body_metrics_model.dart';
 import '../../../Models/user_model.dart';
 import '../../../Models/user_singleton.dart';
@@ -26,11 +27,15 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
   TensorFlowService predictTensor=TensorFlowService();
   late TextEditingController selectedSitUp = TextEditingController();
   late TextEditingController selectedBroadJump= TextEditingController();
+
+  late BodyMetrics metrics;
   @override
   void initState() {
+    BodyMetricsSingleton singleton = BodyMetricsSingleton.getInstance();
+    metrics = singleton.getMetrices();
     super.initState();
 
-    // Initialize text controllers or perform other setup if needed
+
   }
 
   @override
@@ -240,7 +245,7 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildNumberPicker(10, "", 5, 60, 80, selectedSitUp),
+        _buildNumberPicker(60, "", 10, 200, 80, selectedSitUp),
       ],
     );
   }
@@ -249,7 +254,7 @@ class _SitupsBroadjumpScreen extends State<SitupsBroadjumpScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildNumberPicker(100, "cm", 90, 400, 80, selectedBroadJump),
+        _buildNumberPicker(metrics.height.toInt(), "cm", 90, 400, 80, selectedBroadJump),
       ],
     );
   }

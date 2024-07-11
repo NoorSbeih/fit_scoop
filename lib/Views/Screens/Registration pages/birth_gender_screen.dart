@@ -24,6 +24,12 @@ class RegisterPage1 extends StatefulWidget {
 
   static String selectedgender="Male";
   static String formateddate="";
+
+  static void clearData() {
+    RegisterPage1.selectedgender = " ";
+    RegisterPage1.formateddate= "";
+  }
+
   const RegisterPage1({Key? key}) : super(key: key);
 
 
@@ -41,6 +47,7 @@ class _RegisterPageState extends State<RegisterPage1> {
     _dateController.text = RegisterPage1.formateddate;
 
   }
+
   DateTime? _selectedDate; // Initialize with null or another default value
 
   void _selectDate(BuildContext context) async {
@@ -250,6 +257,7 @@ class _RegisterPageState extends State<RegisterPage1> {
     );
 
   }
+
 }
 
 
