@@ -25,7 +25,10 @@ class RegisterPage2 extends StatefulWidget{
   static double weightresult=0;
   static String textResultHeight="";
   static String textResultWeight="";
-
+  static void clearData() {
+   heightresult = 0;
+   weightresult = 0;
+  }
   const RegisterPage2({Key? key}) : super(key: key);
 
 @override

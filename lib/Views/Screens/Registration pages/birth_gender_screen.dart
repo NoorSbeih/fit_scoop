@@ -26,8 +26,8 @@ class RegisterPage1 extends StatefulWidget {
   static String formateddate="";
 
   static void clearData() {
-    RegisterPage1.selectedgender = " ";
-    RegisterPage1.formateddate= "";
+    selectedgender = " ";
+    formateddate= "";
   }
 
   const RegisterPage1({Key? key}) : super(key: key);

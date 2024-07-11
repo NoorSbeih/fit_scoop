@@ -15,6 +15,10 @@ class Page3 extends StatelessWidget {
 class RegisterPage3 extends StatefulWidget {
   static double currentValue = 12;
 
+  static void clearData() {
+    currentValue = 12;
+
+  }
   RegisterPage3();
 
   @override

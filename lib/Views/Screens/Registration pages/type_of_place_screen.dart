@@ -16,6 +16,9 @@ class Page5 extends StatelessWidget {
 
 class RegisterPage5 extends StatefulWidget {
   static String typeOfPlace="";
+  static void clearData() {
+  typeOfPlace="";
+  }
   RegisterPage5();
   @override
   State<RegisterPage5> createState() => _RegisterPageState();

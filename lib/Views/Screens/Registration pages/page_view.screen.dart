@@ -3,7 +3,6 @@
 import 'package:fit_scoop/Controllers/login_controller.dart';
 import 'package:fit_scoop/Views/Screens/main_page_screen.dart';
 import 'package:fit_scoop/Views/Screens/register_screen.dart';
-import 'package:fit_scoop/Views/Screens/Registration%20pages/select_day_screen.dart';
 import 'package:fit_scoop/Views/Screens/Registration%20pages/type_of_place_screen.dart';
 
 import 'package:fit_scoop/Views/Screens/Workout/current_workout_screen.dart';
@@ -196,7 +195,6 @@ class _CustomPageViewState extends State<CustomPageView> {
     UserController userController= UserController();
 
     userController.saveEquipments(RegisterController.userId, selectedEquipmentIds);
-    print("djjdjdjd");
     print(RegisterController.userId);
     BodyMetricsController _bodyMetricController=new BodyMetricsController();
     String id=RegisterController.userId;
@@ -206,6 +204,8 @@ class _CustomPageViewState extends State<CustomPageView> {
     await _bodyMetricController.addBodyMetrics(bodyMetrics);
    RegisterController controller=RegisterController();
     RegisterPage1.clearData();
+    RegisterPage3.clearData();
+    RegisterPage5.clearData();
 
     controller.getUserBodyMetric(id).then((_) {
       Navigator.push(
