@@ -1,7 +1,6 @@
 // services/workout_schedule_service.dart
 
 // Define workout plans
-// Define workout plans
 Map<String, Map<String, Map<String, List<String>>>> workoutPlans = {
   'Male': {
     'A': {
@@ -12,9 +11,8 @@ Map<String, Map<String, Map<String, List<String>>>> workoutPlans = {
         'YFcsG8x0gzXmbmGOWb6q', 'wVeBCrwg0UM3S36sEKo9', '0a9CyzWMF1BTUxnAuv6Q', 'ZYAuWWZX6ZnYGfSGNuBj', 'KSby5H1oZLMEQychgGXH', 'No workout', 'AxAO30bT6xAcWrKCV6Mm'
       ],
       'Powerlifting': [
-        'YFcsG8x0gzXmbmGOWb6q', 'wVeBCrwg0UM3S36sEKo9', '0a9CyzWMF1BTUxnAuv6Q', 'ZYAuWWZX6ZnYGfSGNuBj', 'KSby5H1oZLMEQychgGXH', 'No workout', 'AxAO30bT6xAcWrKCV6Mm'
+        'GCZIirjz7XRupQVmId0B', 'No workout', 'ODxJ3CPW9Ll1BgDaBMtD', 'navQqEcgl3r46kMBjXtI', 'oYoBOIhGcnd3n1A1O85h', 'No workout', 'vWZdmBAoOf86zHCmlNxE'
       ],
-      // Add more goals and corresponding workout IDs
     },
     'B': {
       'Bodybuilding': [
@@ -24,9 +22,8 @@ Map<String, Map<String, Map<String, List<String>>>> workoutPlans = {
         'lykZ4pto9mKwmNZjq1S0', 'No workout', 'No workout', '0dMLGlGrKFmWA1Z0Kj7d', 'nUsnL1YCUZ4Uv4832ZMb', 'No workout', 'j3rPbYE4gulhcfw5yq5k'
       ],
       'Powerlifting': [
-        'YFcsG8x0gzXmbmGOWb6q', 'wVeBCrwg0UM3S36sEKo9', '0a9CyzWMF1BTUxnAuv6Q', 'ZYAuWWZX6ZnYGfSGNuBj', 'KSby5H1oZLMEQychgGXH', 'No workout', 'AxAO30bT6xAcWrKCV6Mm'
+        'GCZIirjz7XRupQVmId0B', 'No workout', 'ODxJ3CPW9Ll1BgDaBMtD', 'navQqEcgl3r46kMBjXtI', 'oYoBOIhGcnd3n1A1O85h', 'No workout', 'vWZdmBAoOf86zHCmlNxE'
       ],
-      // Add more goals and corresponding workout IDs
     },
     'C':{
       'Bodybuilding': [
@@ -37,56 +34,55 @@ Map<String, Map<String, Map<String, List<String>>>> workoutPlans = {
       ],
     },
     'D':{
-      'Bodybuilding': [ // sunday, monday, tuesday, wednesday, thursday, friday, saturday
+      'Bodybuilding': [
         'workoutId43', 'eP4QxK0zplvt7rANJbPB', 'workoutId45', 'tGrHp8x7K6HU8sQtsyxe', 'MMjmHw7yDeyqMxrULboQ', 'workoutId48', 'lNEAy2Gx9vc5YLkIrlUO'
       ],
     }
-    // Define plans for other body levels (C, D, E) similarly
   },
   'Female': {
     'A': {
       'Toning/Shaping': [
-        'workoutId29', 'workoutId30', 'workoutId31', 'workoutId32', 'workoutId33', 'workoutId34', 'workoutId35'
+        'hnfAlDnIB9Ru34mbASsR', 'QYe16zY3AtFelnujecMp', 'No workout', 'e8YHCCMrcRPpAmrR4IQm', 'BbHax2GqI6apjFjR6Db2', 'No workout', 'YseWQxMpDtTt66k4JRYK'
       ],
       'Muscle Gain': [
         'QPS6K2kpMOarTE3ISIQb', 'JnRjU9afPtjaNF9opNab', 'kBSRAKYop14v6AOylUvr', 'CwLIAtpLK6kZaZjG2LfQ', 'ce6k40tvOYA2RiQ3hrW8', 'No workout', '6J6yDFRBitqOhP5i4LXx'
       ],
       'Strength Training': [
-        'workoutId43', 'workoutId44', 'workoutId45', 'workoutId46', 'workoutId47', 'workoutId48', 'workoutId49'
+        'No workout', 'DYZySYaNrF13HIh4vVV0', 'qHXp5nFrXoa79n9yveGG', 'No workout', 'DvFpaAVFVhynaX1DsbyN', 'lbdlcviv698xIb1GSRGV', '0beHw4m8pgPJHWXOGsJC'
       ],
-      // Add more goals and corresponding workout IDs
+
     },
     'B': {
       'Toning/Shaping': [
-        'workoutId43', 'workoutId44', 'workoutId45', 'workoutId46', 'workoutId47', 'workoutId48', 'workoutId49'
+        '3GnI38Vy96MjGFYLhtWQ', 'QLKqgunqMi2T5Fh54Mv7', 'No workout', 'ZsLmN5d10a7WIROL4zZ3', 'BLpNH571kWv25Jat3ALd', 'No workout', '3omgckZfkjYZX8lAKacU'
       ],
       'Muscle Gain': [
-        'workoutId50', 'workoutId51', 'workoutId52', 'workoutId53', 'workoutId54', 'workoutId55', 'workoutId56'
+        'xQDEtCYtee9ksbURNciB', 'ClKzp5ExPbyVTixgCHqq', 'atrIpEYrAba6tKrIZ1bJ', '9hcUNuamrtWHZFxUcOl1', 'Y6mzrPlaqYhLhFzRUm2v', 'No workout', '0N3itqGMcxcCwTRMU2Az'
       ],
       'Strength Training': [
-        'workoutId57', 'workoutId58', 'workoutId59', 'workoutId60', 'workoutId61', 'workoutId62', 'workoutId63'
+        'No workout', 'FP1OJG5TmzSl7ITmVlZb', 'lS9ZVcTRSwsqZ69D0ko3', 'No workout', 'JrEkbUllILksTR7e9qZg', 'opaWX2UgJeMZEwZEqQ5o', 'xyoNBE0eHrWjh88Z6kg8'
       ],
-      // Add more goals and corresponding workout IDs
+
     },
     'C': {
       'Toning/Shaping': [
-        'workoutId57', 'workoutId58', 'workoutId59', 'workoutId60', 'workoutId61', 'workoutId62', 'workoutId63'
+        '3GnI38Vy96MjGFYLhtWQ', 'QLKqgunqMi2T5Fh54Mv7', 'No workout', 'ZsLmN5d10a7WIROL4zZ3', 'BLpNH571kWv25Jat3ALd', 'No workout', '3omgckZfkjYZX8lAKacU'
       ],
       'Muscle Gain': [
-        'workoutId64', 'workoutId65', 'workoutId66', 'workoutId67', 'workoutId68', 'workoutId69', 'workoutId70'
+        'D3a2G8g1tnqdJyRkQoEo', 'workoutId65', 'workoutId66', 'K5LV7WyYYEhbiehcNLJ9', 'D3a2G8g1tnqdJyRkQoEo', 'workoutId69', 'K5LV7WyYYEhbiehcNLJ9'
       ],
       'Strength Training': [
-        'workoutId71', 'workoutId72', 'workoutId73', 'workoutId74', 'workoutId75', 'workoutId76', 'workoutId77'
+        'No workout', 'pENFRMuvJxXLZCarkeI5', 'qlKV93UjYxHUPvr9MMfv', 'No workout', 'G8YKvehoWcQYllQdNii6', 'IxdPowOG7Fx95iBghAUX', 'HoKbmmUklIn8LpNQxBbB'
       ],
-      // Add more goals and corresponding workout IDs
+
     },
     'D': {
       'Toning/Shaping': [
-        'workoutId71', 'workoutId72', 'workoutId73', 'workoutId74', 'workoutId75', 'workoutId76', 'workoutId77'
+        'vNCKEqPxgiCbm0QtZS1u', 'RyPiTp2XOl03uLAVFnaO', 'No workout', 'bvN02veTdM5hOj2XJcPR', '6itY9NTiRGnLD3QnIhKc', 'workoutId76', 'FvkhvRJKyluQLwiq4zDT'
       ],
-      // Add more goals and corresponding workout IDs
+
     }
-    // Define plans for other body levels (C, D, E) similarly
+
   }
 };
 
