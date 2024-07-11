@@ -26,6 +26,8 @@ class RegisterPage2 extends StatefulWidget{
   static String textResultHeight="";
   static String textResultWeight="";
   static void clearData() {
+    textResultHeight="";
+    textResultWeight="";
    heightresult = 0;
    weightresult = 0;
   }
