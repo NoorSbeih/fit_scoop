@@ -10,7 +10,7 @@ class Page4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return  const MaterialApp(
       home: RegisterPage4F(),
     );
   }
@@ -95,9 +95,9 @@ class _RegisterPageState extends State<RegisterPage4F> {
                   BodyMetricsController();
                   UserSingleton userSingleton = UserSingleton.getInstance();
                   User_model user = userSingleton.getUser();
+                  bodyMetricsController.updateBodyMetrics(userSingleton.getUser().bodyMetrics!, metrics!);
                   await bodyMetricsController.generateWorkoutSchedule(metrics!,user);
-                  // bodyMetricsController.updateBodyMetrics(
-                  //     userSingleton.getUser().bodyMetrics!, metrics!);
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(
