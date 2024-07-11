@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_scoop/Controllers/register_controller.dart';
+import 'package:fit_scoop/Controllers/user_controller.dart';
 import 'package:fit_scoop/Views/Screens/Registration%20pages/page_view.screen.dart';
 import 'package:fit_scoop/Views/Screens/login_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -44,11 +45,29 @@ class _RegisterPageState extends State<RegisterPage> {
   bool passwordVisible = false;
   String? _selectedUnitMeasure = "metric";
 
+  String emailUsed="";
+
   @override
   void initState() {
     super.initState();
     passwordVisible = false;
 
+  }
+
+
+  Future<void> check(String email) async {
+    UserController controller = UserController();
+    bool emailExists = await controller.checkEmail(email);
+    if (emailExists) {
+      setState(() {
+        emailUsed = 'Email is already in use';
+        print("Email is already in use");
+      });
+    } else {
+      setState(() {
+        emailUsed = '';
+      });
+    }
   }
 
 
@@ -283,6 +302,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       });
                     }
                   }
+                  await check(email);
+                  if (emailUsed.isNotEmpty) {
+                    setState(() {
+                      emailErrorText = emailUsed;
+                    });
+                    return;
+                  }
+
 
                   EmailValidator eV = new EmailValidator();
                   if (eV.validateEmail(email) != "") {
@@ -292,13 +319,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     return;
                   }
 
-                  if (eV.validateEmail(email) == "" && !password.isEmpty && !fullName.isEmpty) {
+                  if (eV.validateEmail(email) == "" && !password.isEmpty && !fullName.isEmpty && emailUsed=="") {
                     try {
                       SharedPreferences prefs =
                           await SharedPreferences.getInstance();
                       prefs.setString('unitOfMeasure', _selectedUnitMeasure!);
                       RegisterController register = RegisterController();
-                      register.storeRegisterData(fullName, email, password);
+                     await register.storeRegisterData(fullName, email, password);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -309,7 +336,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       //print('Error initializing SharedPreferences: $e');
                     }
                   }
-
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(

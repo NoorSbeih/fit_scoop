@@ -151,6 +151,16 @@ class UserController {
     }
   }
 
+  Future<bool> checkEmail(String email) async {
+    try {
+      // Check if the email exists
+      return await _userService.emailExists(email);
+    } catch (e) {
+      //print('Error checking email: $e');
+      throw e;
+    }
+  }
+
 
 
 

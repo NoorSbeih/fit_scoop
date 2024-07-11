@@ -228,6 +228,15 @@ class UserService {
     }
   }
 
+  Future<bool> emailExists(String email) async {
+    try {
+      var result = await _usersRef.where('email', isEqualTo: email).limit(1).get();
+      return result.docs.isNotEmpty;
+    } catch (e) {
+      //print('Error checking if email exists: $e');
+      throw e;
+    }
+  }
 
 }
 
