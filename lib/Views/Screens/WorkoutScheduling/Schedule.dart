@@ -105,6 +105,14 @@ class _SchedulePageScreenState extends State<SchedulePageScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Color(0xFF0dbab4)),
           onPressed: () {
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) =>
+            //       WorkoutPagee()), // Replace SecondPage() with the desired page widget
+            // );
+
+            Navigator.pop(context);
+
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) =>
