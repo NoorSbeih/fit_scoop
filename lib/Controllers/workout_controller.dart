@@ -82,6 +82,14 @@ class WorkoutController {
       throw e;
     }
   }
+  Future<List<Map<String, dynamic>>> transformExercises(List<Map<String, dynamic>> exercises, List<String> userEquipmentList) async {
+    try {
+      return await _workoutService.transformExercises(exercises, userEquipmentList);
+    } catch (e) {
+      //print('Error transforming exercises: $e');
+      throw e;
+    }
+  }
 
 
 // Add more methods as needed

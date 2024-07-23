@@ -1,6 +1,7 @@
 import 'package:fit_scoop/Controllers/body_metrics_controller.dart';
 import 'package:fit_scoop/Controllers/workout_log_controller.dart';
 import 'package:fit_scoop/Models/body_metrics_model.dart';
+import 'package:fit_scoop/Services/Database%20Services/workout_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_scoop/Models/user_model.dart';
@@ -52,6 +53,7 @@ class _WorkoutPageState extends State<WorkoutPagee> {
   bool checkingLog=false;
   WorkoutLog? log;
   int intensity = 0;
+  WorkoutService workoutService = WorkoutService();
   String name = "";
   int duration = 0;
   late User_model user;
@@ -59,9 +61,14 @@ class _WorkoutPageState extends State<WorkoutPagee> {
 
   @override
   void initState() {
-    super.initState();;
-    fetchData();
-    fetchBodyParts();
+    super.initState();
+    initializeData();
+  }
+
+  void initializeData() async {
+    await fetchData();
+    await fetchBodyParts();
+    await fetchTransformedExercises();
   }
   Future<void> fetchBodyParts() async {
     try {
@@ -74,8 +81,14 @@ class _WorkoutPageState extends State<WorkoutPagee> {
       //print('Error fetching data: $e');
     }
   }
+  Future<void> fetchTransformedExercises() async {
+    UserSingleton userSingleton = UserSingleton.getInstance();
+    User_model user = userSingleton.getUser();
+    List<Map<String, dynamic>> exercises = await workoutService.transformExercises(WorkoutPagee.exercises, user.savedEquipmentIds )  ;
+    WorkoutPagee.exercises = exercises;
+  }
 
-  void fetchData() async {
+  Future<void> fetchData() async {
     try {
       UserSingleton userSingleton = UserSingleton.getInstance();
       user = userSingleton.getUser();
