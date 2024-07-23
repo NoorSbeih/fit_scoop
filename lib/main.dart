@@ -1,17 +1,19 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'Views/Screens/home_page_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await  Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: 'AIzaSyBXWcnXjHZZh_mOf-ecwAne3lMwFqihMS8',
-      appId: '1:737437055403:android:dac3a4f9d5a141cf26baee',
-      messagingSenderId: '737437055403',
-      projectId: 'fitscoop-eac87',
-      storageBucket: 'fitscoop-eac87.appspot.com',
-  ),
+  await dotenv.load(fileName: ".env");
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+      apiKey: dotenv.env['API_KEY']!,
+      appId: dotenv.env['APP_ID']!,
+      messagingSenderId: dotenv.env['MESSAGING_SENDER_ID']!,
+      projectId: dotenv.env['PROJECT_ID']!,
+      storageBucket: dotenv.env['STORAGE_BUCKET']!,
+    ),
   );
   runApp(const MyApp());
 }
@@ -25,9 +27,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async {
-          // Define your custom behavior here
-          // Returning true allows the app to be popped
-          // Returning false prevents the app from being popped
           return await _onWillPop(context);
         },
     child: MaterialApp(
