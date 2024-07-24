@@ -1,4 +1,4 @@
-# fit Scoop
+# FitScoop
 
  FitScoop is an innovative fitness application designed to revolutionize the way people approach their health and wellness routines. Our goal was to create an all-encompassing platform that not only motivates users to stay fit but also provides them with personalized tools and resources to achieve their fitness goals.
 
