@@ -10,7 +10,7 @@
 - Core Feature - Workout Plan Generation: The core feature of our app is the workout plan generation. Our machine learning algorithms analyze users’ inputs, then the app generates a tailored workout schedule that 
  aligns with their fitness goals and preferences.
 
-📱 Technology Stack: FitScoop is built using Flutter for a seamless cross-platform experience. The machine learning components are integrated using Python and TensorFlow to provide real-time, data-driven insights.
+Technology Stack: FitScoop is built using Flutter for a seamless cross-platform experience. The machine learning components are integrated using Python and TensorFlow to provide real-time, data-driven insights.
 
 This project is a starting point for a Flutter application.
 
