@@ -1,8 +1,8 @@
 # fit_scoop
 
- What is FitScoop? FitScoop is an innovative fitness application designed to revolutionize the way people approach their health and wellness routines. Our goal was to create an all-encompassing platform that not only motivates users to stay fit but also provides them with personalized tools and resources to achieve their fitness goals.
+ FitScoop is an innovative fitness application designed to revolutionize the way people approach their health and wellness routines. Our goal was to create an all-encompassing platform that not only motivates users to stay fit but also provides them with personalized tools and resources to achieve their fitness goals.
 
-💡 Key Features of FitScoop:
+ Key Features of FitScoop:
 - Workout Reviews: Users can read and write reviews for various workouts, helping them choose routines that best fit their needs.
 - User Profiles: Detailed profiles allow users to track their progress, set goals, and share their achievements with the community.
 - Workout Schedules: Users can create and manage personalized workout schedules to stay on track.
